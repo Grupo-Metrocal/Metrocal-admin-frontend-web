@@ -1,11 +1,13 @@
+@use '@/sass/index' as *;
+
 .signin {
   display: flex;
   align-items: center;
   min-height: 100vh;
   margin: auto;
-  padding: 0 8em;
   justify-content: space-between;
   max-width: 1500px;
+  @include padding-control;
   &-login {
     position: relative;
     width: 50%;
