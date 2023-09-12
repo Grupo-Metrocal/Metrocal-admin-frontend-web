@@ -1,0 +1,48 @@
+.c-input {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0;
+  position: relative;
+
+  label {
+    margin-bottom: 0.5em;
+    color: #222;
+    font-weight: 600;
+  }
+
+  input {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+
+    &:focus {
+      border-color: #09f;
+    }
+
+    &:disabled {
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+  }
+
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .icon {
+      position: absolute;
+      left: 0.3em;
+      cursor: pointer;
+      width: 1.2em;
+    }
+
+    &:has(.icon) input {
+      padding-left: 2em;
+    }
+  }
+}
