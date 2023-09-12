@@ -1,7 +1,11 @@
 'use client'
+import Link from 'next/link'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { useForm } from '@/hooks/useForm'
+import mailIcon from '@/assets/icons/mail.svg'
+import lockIcon from '@/assets/icons/lock.svg'
+
 export default function Signin(): JSX.Element {
   const initialValues = {
     email: '',
@@ -32,6 +36,7 @@ export default function Signin(): JSX.Element {
             value={values.email}
             name="email"
             onChange={handleInputChange}
+            icon={mailIcon}
           />
 
           <CInput
@@ -41,9 +46,20 @@ export default function Signin(): JSX.Element {
             value={values.password}
             name="password"
             onChange={handleInputChange}
+            icon={lockIcon}
           />
 
-          <CButton className="signin-login__button" type="submit">
+          <div className="signin-login__remember">
+            <Link href="/login">
+              <small>Olvidastes tu contraseña?</small>
+            </Link>
+          </div>
+
+          <CButton
+            className="signin-login__button"
+            type="submit"
+            uppercase={true}
+          >
             Iniciar Sesión
           </CButton>
         </form>
