@@ -1,0 +1,37 @@
+interface CInputProps {
+  value: string
+  onChange: (e: any) => void
+  placeholder?: string
+  className?: string
+  type?: string
+  label?: string
+  required?: boolean
+  name?: string
+  id?: string
+}
+export const CInput = ({
+  value,
+  onChange,
+  placeholder,
+  className,
+  type,
+  label,
+  required,
+  name,
+  id,
+}: CInputProps) => {
+  return (
+    <div className={`c-input ${className}`}>
+      <label htmlFor={id}>{label}</label>
+      <input
+        id={id}
+        name={name}
+        type={type}
+        defaultValue={value}
+        onChange={(e) => onChange(e.target)}
+        placeholder={placeholder}
+        required={required}
+      />
+    </div>
+  )
+}
