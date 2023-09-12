@@ -1,10 +1,13 @@
 'use client'
+import './page.scss'
 import Link from 'next/link'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { useForm } from '@/hooks/useForm'
 import mailIcon from '@/assets/icons/mail.svg'
 import lockIcon from '@/assets/icons/lock.svg'
+import Image from 'next/image'
+import metrocalComplete from '@/assets/images/metrocal_completo.svg'
 
 export default function Signin(): JSX.Element {
   const initialValues = {
@@ -25,7 +28,7 @@ export default function Signin(): JSX.Element {
         <header>
           <small>METROCAL</small>
           <h1>Iniciar Sesión.</h1>
-          <p>Inicie sesion con los datos que ingresó durante su registro</p>
+          <p>Inicie sesión con los datos que ingresó durante su registro</p>
         </header>
 
         <form onSubmit={handleSubmit}>
@@ -50,7 +53,7 @@ export default function Signin(): JSX.Element {
           />
 
           <div className="signin-login__remember">
-            <Link href="/login">
+            <Link href="/">
               <small>Olvidastes tu contraseña?</small>
             </Link>
           </div>
@@ -59,12 +62,34 @@ export default function Signin(): JSX.Element {
             className="signin-login__button"
             type="submit"
             uppercase={true}
+            widht="full"
           >
             Iniciar Sesión
           </CButton>
+
+          <footer className="signin-login__privacy">
+            <Link href="/">
+              <small>Politicas de privacidad</small>
+            </Link>
+            <span>Metrocal</span>
+          </footer>
         </form>
       </section>
-      <section className="signin-metrocal"></section>
+      <section className="signin-metrocal">
+        <div className="signin-metrocal__image">
+          <Image src={metrocalComplete} alt="metrocal" />
+        </div>
+
+        <div className="signin-metrocal__description">
+          <p>
+            <span>manteniendo la visión general</span>
+            <small>
+              No deberías hacer uso de inicio de sesión si no eres un empleado
+              de Metrocal.
+            </small>
+          </p>
+        </div>
+      </section>
     </div>
   )
 }
