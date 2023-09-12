@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .c-input {
   display: flex;
   flex-direction: column;
@@ -20,7 +22,7 @@
     width: 100%;
 
     &:focus {
-      border-color: #09f;
+      border-color: $primary-color;
     }
 
     &:disabled {
