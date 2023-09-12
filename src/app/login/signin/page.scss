@@ -27,8 +27,13 @@
       small {
         font-weight: bold;
       }
+      h1 {
+        margin-bottom: 1em;
+      }
       p {
         margin-top: -2em;
+        line-height: normal;
+        margin-bottom: 2em;
       }
     }
 
@@ -36,6 +41,12 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
+    }
+
+    &__remember {
+      small {
+        color: $primary-color;
+      }
     }
 
     &__button {
@@ -80,6 +91,32 @@
         span {
           text-transform: uppercase;
           font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .signin {
+    flex-direction: column;
+    gap: 2em;
+    &-login {
+      width: 100%;
+      padding: 0;
+      &::after {
+        display: none;
+      }
+    }
+
+    &-metrocal {
+      width: 100%;
+      padding: 0;
+      margin-bottom: 2em;
+      &__image {
+        img {
+          width: 100%;
+          margin-bottom: 1em;
         }
       }
     }
