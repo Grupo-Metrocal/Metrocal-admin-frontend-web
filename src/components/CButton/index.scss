@@ -6,6 +6,10 @@
   padding: 1em 2em;
   font-weight: bold;
   color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in-out;
+  font-family: 'Montserrat';
 
   &[data-uppercase='true'] {
     text-transform: uppercase;
@@ -13,5 +17,10 @@
 
   &[data-width='full'] {
     width: 100%;
+  }
+
+  &:active {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: #0179a8;
   }
 }
