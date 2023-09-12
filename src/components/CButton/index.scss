@@ -1,0 +1,17 @@
+.c-button {
+  background-color: #0199d4;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 1em 2em;
+  font-weight: bold;
+  color: #fff;
+
+  &[data-uppercase='true'] {
+    text-transform: uppercase;
+  }
+
+  &[data-width='full'] {
+    width: 100%;
+  }
+}
