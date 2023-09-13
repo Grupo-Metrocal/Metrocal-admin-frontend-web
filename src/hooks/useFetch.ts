@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react'
 interface IUseFetch {
   url: string
   options?: RequestInit
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
   body?: BodyInit
 }
 
-export const useFetch = ({ url, options, method, body }: IUseFetch) => {
+export const useFetch = ({ url, options, body }: IUseFetch) => {
   const [response, setResponse] = useState<Response | null>(null)
   const [error, setError] = useState<Error | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -15,7 +14,7 @@ export const useFetch = ({ url, options, method, body }: IUseFetch) => {
   useEffect(() => {
     setIsLoading(true)
     fetch(url, {
-      method,
+      method: 'GET',
       body,
       ...options,
     })
@@ -28,7 +27,7 @@ export const useFetch = ({ url, options, method, body }: IUseFetch) => {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [url, options, method, body])
+  }, [url, options, body])
 
   return { response, error, isLoading }
 }
