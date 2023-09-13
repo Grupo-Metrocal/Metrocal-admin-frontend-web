@@ -8,6 +8,7 @@ import mailIcon from '@/assets/icons/mail.svg'
 import lockIcon from '@/assets/icons/lock.svg'
 import Image from 'next/image'
 import metrocalComplete from '@/assets/images/metrocal_completo.svg'
+import { signin } from '@/utils/auth'
 
 export default function Signin(): JSX.Element {
   const initialValues = {
@@ -17,9 +18,9 @@ export default function Signin(): JSX.Element {
 
   const { values, handleInputChange } = useForm(initialValues)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(values)
+    await signin(values)
   }
 
   return (
