@@ -5,6 +5,12 @@
   min-height: 100vh;
   @include padding-control;
 
+  &-body {
+    background-image: url('..//assets/images/metrocal_black_white.png');
+    background-repeat: no-repeat;
+    background-position: center 0;
+  }
+
   header {
     margin-top: 1.5em;
     width: 100%;
@@ -100,5 +106,58 @@
     background-color: $primary-color-dark;
     border: 1px solid transparent;
     color: #fff;
+  }
+}
+
+footer {
+  background-color: #fcfcfc;
+  margin-top: 1em;
+  @include padding-control();
+  padding-top: 2em;
+  padding-bottom: 2em;
+
+  .main-footer__version {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5em 0;
+    h5 {
+      margin-top: 2em;
+      font-weight: 400;
+    }
+  }
+
+  .main-footer__signature {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      font-weight: 600;
+    }
+
+    &__review {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+    }
+  }
+
+  .main-footer__note {
+    display: flex;
+    flex-direction: column;
+    span {
+      font-weight: 400;
+
+      .italic {
+        font-style: italic;
+      }
+    }
+  }
+
+  .main-footer__contact {
+    margin: 3.5em 0 1.5em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 500;
   }
 }
