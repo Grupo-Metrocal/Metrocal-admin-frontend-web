@@ -1,17 +1,6 @@
 import DBLineIcon from '@/assets/icons/doble-line.svg'
 import Image from 'next/image'
 
-const CONTROLLERS_ITEMS = [
-  {
-    id: 1,
-    name: 'Información de contacto',
-  },
-  {
-    id: 2,
-    name: 'Registro de equipos',
-  },
-]
-
 interface IControllersProps {
   stepCounter: number
   setStepCounter: (step: number) => void
@@ -25,23 +14,25 @@ export const Controllers = ({
 
   return (
     <section className="main-controllers">
-      {CONTROLLERS_ITEMS.map((item, index) => (
-        <>
-          <button
-            key={item.id}
-            className={`main-controllers-button ${
-              stepCounter === item.id && 'active'
-            }`}
-            onClick={() => handleCurrentStep(item.id)}
-          >
-            <span>{item.name}</span>
-          </button>
+      <div>
+        <button
+          className={`main-controllers-button ${stepCounter === 1 && 'active'}`}
+          onClick={() => handleCurrentStep(1)}
+        >
+          <span>Información de contacto</span>
+        </button>
+      </div>
 
-          {index % 1 === 0 && index !== CONTROLLERS_ITEMS.length - 1 && (
-            <Image src={DBLineIcon} alt="DBLineIcon" />
-          )}
-        </>
-      ))}
+      <Image src={DBLineIcon} alt="DBLineIcon" />
+
+      <div>
+        <button
+          className={`main-controllers-button ${stepCounter === 2 && 'active'}`}
+          onClick={() => handleCurrentStep(2)}
+        >
+          <span>Registro de equipos</span>
+        </button>
+      </div>
     </section>
   )
 }
