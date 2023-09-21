@@ -1,11 +1,12 @@
 interface IFetchData {
   url: string
-  method: string
+  method?: string
   body?: string
   headers?: HeadersInit
 }
 export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
-  const BASE_URL = process.env.BASE_URL
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method,
