@@ -25,6 +25,11 @@
       border-color: $primary-color;
     }
 
+    &:valid {
+      background-color: #fcfcff;
+      border: 1px solid#eee;
+    }
+
     &:disabled {
       background-color: #eee;
       cursor: not-allowed;
