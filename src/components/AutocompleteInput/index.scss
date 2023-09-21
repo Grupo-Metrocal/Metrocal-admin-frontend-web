@@ -1,0 +1,44 @@
+@use '@/sass/index' as *;
+
+.autocomplete-input {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0;
+  position: relative;
+
+  span {
+    color: #222;
+    font-weight: 600;
+    position: relative;
+  }
+
+  span:has(.required) {
+    background-color: tomato;
+  }
+
+  input {
+    margin-top: 0.5em;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+
+    // styled list of options
+
+    &:focus {
+      border-color: $primary-color;
+    }
+
+    &:disabled {
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+  }
+
+  input[type='list'] {
+    background-color: red;
+  }
+}
