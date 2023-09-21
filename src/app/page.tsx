@@ -11,6 +11,12 @@ import { Controllers } from './controllers'
 export default function Home() {
   const initialForm = {
     enterprise: '',
+    address: '',
+    requested_by: '',
+    no: '',
+    phone: '',
+    email: '',
+    no_ruc: '',
   }
   const [companySelected, setCompanySelected] = useState(-1)
   const { values, handleInputChange } = useForm(initialForm)
@@ -25,6 +31,8 @@ export default function Home() {
     console.log('companySelected', companySelected)
   }, [companySelected])
 
+  const handleNextStep = () => setStepCounter(stepCounter + 1)
+
   const RenderStep = () => {
     switch (stepCounter) {
       case 1:
@@ -32,6 +40,8 @@ export default function Home() {
           <ContactInformation
             onChange={handleInputChange}
             setItemSelected={setCompanySelected}
+            state={values}
+            handleNextStep={handleNextStep}
           />
         )
       case 2:
@@ -73,10 +83,6 @@ export default function Home() {
       </section>
 
       <section className="main-body">{RenderStep()}</section>
-
-      <button className="main-submit" onClick={handleSubmitQuoteRequest}>
-        <span>Enviar</span>
-      </button>
     </main>
   )
 }
