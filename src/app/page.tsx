@@ -8,6 +8,7 @@ import ContactInformation from './contactInformation'
 import RegisterEquipment from './registerEquipment'
 import { Controllers } from './controllers'
 import { codeGenerator } from '@/utils/codeGenerator'
+import { fetchData } from '@/utils/fetch'
 
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
@@ -19,7 +20,7 @@ const NOTE_ITEMS = [
 
 export default function Home() {
   const initialContactInformationForm = {
-    enterprise: '',
+    company_name: '',
     address: '',
     requested_by: '',
     no: '',
@@ -39,9 +40,11 @@ export default function Home() {
   }
 
   const [companySelected, setCompanySelected] = useState(-1)
-  const { values: contactInfValue, handleInputChange } = useForm(
-    initialContactInformationForm,
-  )
+  const {
+    values: contactInfValue,
+    setValues: setContactInfValue,
+    handleInputChange,
+  } = useForm(initialContactInformationForm)
   const [equipmentValue, setEquipmentValue] = useState<
     (typeof initialEquipmentForm)[]
   >([initialEquipmentForm])
@@ -86,16 +89,23 @@ export default function Home() {
     setEquipmentValue(newEquipment)
   }
 
-  const handleSubmitQuoteRequest = (e: any) => {
-    e.preventDefault()
+  const handleSubmitQuoteRequest = () => {
     console.log(contactInfValue)
+    console.log(equipmentValue)
   }
 
   useEffect(() => {
-    console.log('companySelected', companySelected)
+    if (companySelected === -1) return
+
+    fetchData({ url: `clients/${companySelected}` }).then(
+      (data: typeof contactInfValue) => {
+        setContactInfValue(data)
+      },
+    )
   }, [companySelected])
 
   const handleNextStep = () => setStepCounter(stepCounter + 1)
+  const handleBackStep = () => setStepCounter(stepCounter - 1)
 
   const RenderStep = () => {
     switch (stepCounter) {
@@ -115,6 +125,8 @@ export default function Home() {
             handleRemoveEquipment={handleRemoveEquipment}
             state={equipmentValue}
             updateEquipmentValue={updateEquipmentValue}
+            handleBackStep={handleBackStep}
+            handleSubmitQuoteRequest={handleSubmitQuoteRequest}
           />
         )
     }
