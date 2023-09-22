@@ -16,6 +16,7 @@ interface IAutocompleteInputProps {
   name: string
   id?: string
   requiredLabel?: boolean
+  value?: string
   setItemSelected?: (id: number) => void
 }
 export const AutocompleteInput = ({
@@ -28,6 +29,7 @@ export const AutocompleteInput = ({
   required,
   name,
   id,
+  value,
   setItemSelected,
 }: IAutocompleteInputProps) => {
   const datalistRef = useRef<HTMLDataListElement>(null)
@@ -43,13 +45,14 @@ export const AutocompleteInput = ({
           placeholder={placeholder}
           required={required}
           name={name}
+          value={value}
           id={id}
           autoComplete="off"
           onChange={(e) => {
+            onChange(e.target)
             const option = datalistRef.current?.querySelector(
               `option[value="${e.target.value}"]`,
             )
-
             setItemSelected && setItemSelected(option ? +option.id : -1)
 
             onChange(e.target)
