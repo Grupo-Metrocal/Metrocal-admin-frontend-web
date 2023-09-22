@@ -1,3 +1,6 @@
+import RemoveIcon from '@/assets/icons/remove.svg'
+import Image from 'next/image'
+
 interface IState {
   id: number
   name: string
@@ -174,7 +177,7 @@ const renderTableTr = ({
           className="delete-equipment__btn"
           onClick={() => deleteEquipment(id)}
         >
-          Eliminar
+          <Image src={RemoveIcon} alt="remove" />
         </button>
       </div>
     </div>
