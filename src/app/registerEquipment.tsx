@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-interface IRegisterEquipmentProps {
+interface IState {
   id: number
   name: string
   type_service: string
@@ -10,12 +10,20 @@ interface IRegisterEquipmentProps {
   calibration_method: string
   additional_remarks: string
 }
+interface IRegisterEquipmentProps {
+  handleAddEquipment: () => void
+  handleRemoveEquipment: (id: number) => void
+  state: IState[]
+}
 
-export default function RegisterEquipment() {
-  const [equipmentRendered, setEquipmentRendered] = useState(1)
-  const [equipment, setEquipment] = useState<IRegisterEquipmentProps[]>([])
+export default function RegisterEquipment({
+  state,
+  handleAddEquipment,
+}: IRegisterEquipmentProps) {
+  const tableBodyRef = useRef<HTMLDivElement>(null)
 
-  const handleAddEquipment = () => {}
+  console.log('state', state)
+  console.log('table ref', tableBodyRef)
 
   return (
     <div className="register-equipment">
@@ -41,10 +49,25 @@ export default function RegisterEquipment() {
               <span>Puntos de calibración y/u observaciones adicionales</span>
             </div>
           </div>
-          <div className="table__body">
-            {Array(equipmentRendered)
-              .fill(0)
-              .map((_, i) => renderTableTr({} as ITableTrProps))}
+          <div className="table__body" ref={tableBodyRef}>
+            {state.map((item, index) => {
+              return renderTableTr({
+                key: index,
+                id: item.id,
+                onChange: () => console.log('change'),
+              })
+            })}
+
+            <div className="table__body__tr">
+              <div className="table__body__tr__td">
+                <button
+                  className="table__body__tr__td__btn"
+                  onClick={() => handleAddEquipment()}
+                >
+                  Agregar un nuevo equipo
+                </button>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -54,52 +77,43 @@ export default function RegisterEquipment() {
 
 interface ITableTrProps {
   id: number
-  name: string
-  type_service: string
-  count: number
-  model: string
-  measuring_range: string
-  calibration_method: string
-  additional_remarks: string
+  key: number
+  onChange: (e: any) => void
 }
 
-const renderTableTr = ({
-  id,
-  name,
-  type_service,
-  count,
-  model,
-  measuring_range,
-  calibration_method,
-  additional_remarks,
-}: ITableTrProps) => {
+const renderTableTr = ({ key, id, onChange }: ITableTrProps) => {
   return (
-    <div className="table__body__tr" key={id}>
+    <div className="table__body__tr" key={key} id={'tr' + id.toString()}>
       <div className="table__body__tr__td">
-        <select name="" id="">
+        <select name="type_service">
           <option value="">Calibración</option>
           <option value="">Verificación</option>
         </select>
       </div>
       <div className="table__body__tr__td">
-        <input type="text" placeholder="Nombre del equipo" />
+        <input
+          type="text"
+          placeholder="Nombre del equipo"
+          name="name"
+          autoComplete="off"
+        />
       </div>
       <div className="table__body__tr__td">
-        <input type="number" placeholder="Cantidad" min="1" />
+        <input type="number" placeholder="Cantidad" min="1" name="count" />
       </div>
       <div className="table__body__tr__td">
-        <input type="text" placeholder="Modelo" />
+        <input type="text" placeholder="Modelo" name="model" />
       </div>
       <div className="table__body__tr__td">
-        <input type="checkbox" />
+        <input type="checkbox" name="measuring_range" />
       </div>
       <div className="table__body__tr__td">
-        <select name="" id="">
+        <select name="calibration_method">
           <option value="">Comp. Directa Trazable</option>
         </select>
       </div>
       <div className="table__body__tr__td">
-        <select name="" id="">
+        <select name="additional_remarks">
           <option value="">vacio</option>
         </select>
       </div>
