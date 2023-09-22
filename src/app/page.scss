@@ -120,6 +120,7 @@
           gap: 1em;
           align-items: center;
           animation: fadeIn 0.5s ease-in-out;
+          position: relative;
 
           @keyframes fadeIn {
             from {
@@ -127,6 +128,17 @@
             }
             to {
               opacity: 1;
+            }
+          }
+
+          .delete-equipment {
+            position: absolute;
+            right: -40px;
+            button {
+              cursor: pointer;
+              background: none;
+              outline: none !important;
+              border: none;
             }
           }
 
