@@ -1,5 +1,3 @@
-import { useState, useRef, useEffect } from 'react'
-
 interface IState {
   id: number
   name: string
