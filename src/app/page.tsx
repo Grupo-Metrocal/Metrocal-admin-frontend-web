@@ -7,6 +7,7 @@ import metrocalLogo from 'public/metrocal.svg'
 import ContactInformation from './contactInformation'
 import RegisterEquipment from './registerEquipment'
 import { Controllers } from './controllers'
+import { codeGenerator } from '@/utils/codeGenerator'
 
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
@@ -17,7 +18,7 @@ const NOTE_ITEMS = [
 ]
 
 export default function Home() {
-  const initialForm = {
+  const initialContactInformationForm = {
     enterprise: '',
     address: '',
     requested_by: '',
@@ -26,13 +27,43 @@ export default function Home() {
     email: '',
     no_ruc: '',
   }
+  const initialEquipmentForm = {
+    id: 1000,
+    name: '',
+    type_service: '',
+    count: 0,
+    model: '',
+    measuring_range: '',
+    calibration_method: '',
+    additional_remarks: '',
+  }
+
   const [companySelected, setCompanySelected] = useState(-1)
-  const { values, handleInputChange } = useForm(initialForm)
+  const { values: contactInfValue, handleInputChange } = useForm(
+    initialContactInformationForm,
+  )
+  const [equipmentValue, setEquipmentValue] = useState<
+    (typeof initialEquipmentForm)[]
+  >([initialEquipmentForm])
   const [stepCounter, setStepCounter] = useState(1)
+
+  const handleAddEquipment = () => {
+    const id: number = codeGenerator({ length: 4 })
+    const newEquipment = {
+      ...initialEquipmentForm,
+      id,
+    } as typeof initialEquipmentForm
+
+    setEquipmentValue([...equipmentValue, newEquipment])
+  }
+
+  const handleRemoveEquipment = (id: number) => {
+    console.log('remove equipment', id)
+  }
 
   const handleSubmitQuoteRequest = (e: any) => {
     e.preventDefault()
-    console.log(values)
+    console.log(contactInfValue)
   }
 
   useEffect(() => {
@@ -48,12 +79,18 @@ export default function Home() {
           <ContactInformation
             onChange={handleInputChange}
             setItemSelected={setCompanySelected}
-            state={values}
+            state={contactInfValue}
             handleNextStep={handleNextStep}
           />
         )
       case 2:
-        return <RegisterEquipment />
+        return (
+          <RegisterEquipment
+            handleAddEquipment={handleAddEquipment}
+            handleRemoveEquipment={handleRemoveEquipment}
+            state={equipmentValue}
+          />
+        )
     }
   }
 
