@@ -9,6 +9,7 @@ import RegisterEquipment from './registerEquipment'
 import { Controllers } from './controllers'
 import { codeGenerator } from '@/utils/codeGenerator'
 import { fetchData } from '@/utils/fetch'
+import { Toaster, toast } from 'sonner'
 
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
@@ -92,6 +93,11 @@ export default function Home() {
   const handleSubmitQuoteRequest = () => {
     console.log(contactInfValue)
     console.log(equipmentValue)
+
+    toast.success('Solicitud enviada con éxito', {
+      description:
+        'En breve nos pondremos en contacto con usted. Gracias por preferirnos 👋',
+    })
   }
 
   useEffect(() => {
@@ -232,6 +238,8 @@ export default function Home() {
           </span>
         </div>
       </footer>
+
+      <Toaster richColors />
     </>
   )
 }
