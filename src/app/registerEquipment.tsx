@@ -99,7 +99,6 @@ const renderTableTr = ({
         <select
           name="type_service"
           onChange={(e) => updateEquipmentValue(id, e.target)}
-          defaultValue={state?.type_service}
           value={state?.type_service}
         >
           <option value="" disabled>
@@ -149,7 +148,6 @@ const renderTableTr = ({
         <select
           name="calibration_method"
           onChange={(e) => updateEquipmentValue(id, e.target)}
-          defaultValue={state?.calibration_method}
           value={state?.calibration_method}
         >
           <option value="" disabled>
@@ -162,7 +160,6 @@ const renderTableTr = ({
         <select
           name="additional_remarks"
           onChange={(e) => updateEquipmentValue(id, e.target)}
-          defaultValue={state?.additional_remarks}
           value={state?.additional_remarks}
         >
           <option value="" disabled>
