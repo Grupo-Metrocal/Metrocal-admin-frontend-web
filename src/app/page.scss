@@ -220,6 +220,37 @@
       }
     }
   }
+
+  .controllers {
+    margin: 2em 0;
+    display: flex;
+    justify-content: space-between;
+
+    &__btn__back {
+      border: 0;
+      background-color: none;
+      outline: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      gap: 0.5em;
+      color: #555;
+      cursor: pointer;
+
+      img {
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:hover {
+        img {
+          transform: translateX(-5px);
+        }
+      }
+    }
+  }
 }
 .main-controllers {
   display: flex;
