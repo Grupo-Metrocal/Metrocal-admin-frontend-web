@@ -1,5 +1,7 @@
 import RemoveIcon from '@/assets/icons/remove.svg'
 import Image from 'next/image'
+import { CButton } from '@/components/CButton'
+import vectorIcon from '@/assets/icons/vector.svg'
 
 interface IState {
   id: number
@@ -15,6 +17,8 @@ interface IRegisterEquipmentProps {
   handleAddEquipment: () => void
   handleRemoveEquipment: (id: number) => void
   updateEquipmentValue: (id: number, target: any) => void
+  handleBackStep: () => void
+  handleSubmitQuoteRequest: () => void
   state: any
 }
 
@@ -23,6 +27,8 @@ export default function RegisterEquipment({
   handleAddEquipment,
   handleRemoveEquipment,
   updateEquipmentValue,
+  handleBackStep,
+  handleSubmitQuoteRequest,
 }: IRegisterEquipmentProps) {
   return (
     <div className="register-equipment">
@@ -73,6 +79,22 @@ export default function RegisterEquipment({
           </div>
         </section>
       </div>
+
+      <section className="controllers">
+        <button
+          className="controllers__btn__back"
+          onClick={() => handleBackStep()}
+        >
+          <Image src={vectorIcon} alt="back" />
+          REGRESAR
+        </button>
+        <CButton
+          className="controllers__btn__next"
+          onClick={handleSubmitQuoteRequest}
+        >
+          ENVIAR SOLICITUD
+        </CButton>
+      </section>
     </div>
   )
 }
