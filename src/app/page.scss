@@ -119,8 +119,51 @@
           grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
           gap: 1em;
           align-items: center;
+          animation: fadeIn 0.5s ease-in-out;
+
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
 
           &__td {
+            &__btn {
+              padding: 0.5em 1em;
+              width: 100%;
+              text-align: start;
+              background: none;
+              outline: none;
+              border: none;
+              color: #999;
+              font-family: 'Montserrat', sans-serif;
+              position: relative;
+              font-weight: bold;
+              transition: all 0.3s ease-in-out;
+              cursor: pointer;
+
+              &::after {
+                content: '';
+                position: absolute;
+                width: 4px;
+                border-radius: 30px;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: #999;
+              }
+
+              &:hover {
+                color: #555;
+                &::after {
+                  background-color: #555;
+                }
+              }
+            }
+
             select {
               font-family: 'Montserrat', sans-serif;
               padding: 0.5em 1em;
