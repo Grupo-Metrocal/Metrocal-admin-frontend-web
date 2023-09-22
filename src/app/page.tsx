@@ -31,9 +31,9 @@ export default function Home() {
     id: 1000,
     name: '',
     type_service: '',
-    count: 0,
+    count: '',
     model: '',
-    measuring_range: '',
+    measuring_range: false,
     calibration_method: '',
     additional_remarks: '',
   }
@@ -58,7 +58,32 @@ export default function Home() {
   }
 
   const handleRemoveEquipment = (id: number) => {
-    console.log('remove equipment', id)
+    const newEquipment = equipmentValue.filter((item) => item.id !== id)
+    setEquipmentValue(newEquipment)
+  }
+
+  const updateEquipmentValue = (id: number, target: any) => {
+    let { name, value } = target
+
+    if (name === 'measuring_range') {
+      value = target.checked
+    }
+
+    if (name === 'count') {
+      value === '' ? (value = '') : (value = parseInt(value))
+    }
+
+    const newEquipment = equipmentValue.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          [name]: value,
+        }
+      }
+      return item
+    })
+
+    setEquipmentValue(newEquipment)
   }
 
   const handleSubmitQuoteRequest = (e: any) => {
@@ -89,6 +114,7 @@ export default function Home() {
             handleAddEquipment={handleAddEquipment}
             handleRemoveEquipment={handleRemoveEquipment}
             state={equipmentValue}
+            updateEquipmentValue={updateEquipmentValue}
           />
         )
     }
