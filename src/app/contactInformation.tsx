@@ -18,7 +18,7 @@ export interface IClient {
 }
 
 interface IState {
-  enterprise: string
+  company_name: string
   address: string
   requested_by: string
   no: string
@@ -70,8 +70,9 @@ export default function ContactInformation({
                   }))
                 : []
             }
+            value={state.company_name}
             label="Empresa"
-            name="enterprise"
+            name="company_name"
             onChange={onChange}
             setItemSelected={setItemSelected}
             required={true}
