@@ -1,17 +1,13 @@
 interface ICodeGenerator {
-  suffix?: string
   length: number
 }
 
-export const passwordResetCodeGenerator = ({
-  suffix,
-  length,
-}: ICodeGenerator) => {
+export const codeGenerator = ({ length }: ICodeGenerator): number => {
   const min = 1000
   const max = 9999
 
   const code = Math.floor(Math.random() * (max - min + 1)) + min
-  const lenghtCode = code.toString().padStart(length, '0')
 
-  return suffix ? `${suffix}_${lenghtCode}` : lenghtCode
+  // return code by length
+  return Number(code.toString().slice(0, length))
 }
