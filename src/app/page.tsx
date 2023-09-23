@@ -91,13 +91,97 @@ export default function Home() {
   }
 
   const handleSubmitQuoteRequest = () => {
-    console.log(contactInfValue)
-    console.log(equipmentValue)
+    if (!isInfoContactValid()) {
+      toast.error('Por favor, seleccione la empresa desde donde solicita')
+      return
+    }
 
-    toast.success('Solicitud enviada con éxito', {
-      description:
-        'En breve nos pondremos en contacto con usted. Gracias por preferirnos 👋',
+    if (!isEquipmentValid()) {
+      toast.error('Por favor, complete los siguientes campos', {
+        description:
+          'Tipo de servicio, Equipo, Cantidad, y Modelo son campos obligatorios',
+      })
+      return
+    }
+
+    const requestBody = {
+      client_id: companySelected,
+      equipment_quote_request: equipmentValue.map((item) => {
+        const { id, ...rest } = item
+        return { ...rest, discount: 0 }
+      }),
+      general_discount: 0,
+      tax: 0,
+      price: 0,
+    }
+
+    fetchData({
+      url: 'quotes/request',
+      method: 'POST',
+      body: requestBody,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
+      .then((res) => {
+        console.log(res)
+
+        if (res.statusCode === 400) {
+          return toast.error('Ocurrió un error al enviar la solicitud', {
+            description: res.message,
+          })
+        }
+
+        resetState()
+
+        toast.success('Solicitud enviada con éxito', {
+          description:
+            'En breve nos pondremos en contacto con usted. Gracias por preferirnos 👋',
+        })
+      })
+      .catch((err) => {
+        toast.error('Ocurrió un error al enviar la solicitud', {
+          description: 'Por favor, intente nuevamente',
+        })
+      })
+  }
+
+  const isInfoContactValid = () => {
+    const { company_name, address, requested_by, no, phone, email, no_ruc } =
+      contactInfValue
+    if (
+      !company_name ||
+      !address ||
+      !requested_by ||
+      !no ||
+      !phone ||
+      !email ||
+      !no_ruc
+    ) {
+      return false
+    }
+    return true
+  }
+
+  const isEquipmentValid = () => {
+    const equipment = equipmentValue.filter(
+      (item) =>
+        item.name === '' ||
+        item.count === '' ||
+        item.model === '' ||
+        item.type_service === '',
+    )
+
+    if (equipment.length > 0) {
+      return false
+    }
+    return true
+  }
+
+  const resetState = () => {
+    setContactInfValue(initialContactInformationForm)
+    setEquipmentValue([initialEquipmentForm])
+    setStepCounter(1)
   }
 
   useEffect(() => {
