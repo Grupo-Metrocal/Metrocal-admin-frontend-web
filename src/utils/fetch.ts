@@ -1,7 +1,7 @@
 interface IFetchData {
   url: string
   method?: string
-  body?: string
+  body?: {}
   headers?: HeadersInit
 }
 export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
@@ -10,7 +10,7 @@ export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method,
-      body,
+      body: JSON.stringify(body),
       headers,
     })
     const data = await response.json()
