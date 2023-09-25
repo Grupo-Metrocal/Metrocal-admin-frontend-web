@@ -243,7 +243,7 @@ export default function Home() {
             </h5>
           </div>
 
-          <span>
+          <span className="main-header__note">
             Si aun no es cliente de Metrología Consultores de Nicaragua, S.A. y
             desea solicitar un servicio, por favor registrese en el siguiente
             enlace:{' '}

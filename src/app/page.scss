@@ -20,7 +20,7 @@
     flex-wrap: wrap;
     gap: 1em;
 
-    span {
+    .main-header__note {
       display: block;
       width: 100%;
       text-align: center;
@@ -327,5 +327,137 @@ footer {
     flex-direction: column;
     align-items: center;
     font-weight: 500;
+  }
+}
+
+@include mobile {
+  .main {
+    header {
+      flex-direction: column;
+
+      .main-header__note {
+        font-size: 0.8em;
+      }
+
+      .main {
+        &-title {
+          width: 100%;
+          font-size: 0.9em;
+        }
+        &-code {
+          width: 100%;
+          h5 {
+            align-items: center;
+            span {
+              text-align: center;
+            }
+          }
+        }
+
+        &-image {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  .main-controllers {
+    gap: 1em;
+    &-button {
+      font-size: 0.8em;
+    }
+  }
+
+  .contact-information {
+    h5 {
+      gap: 2em;
+      justify-content: space-between;
+    }
+
+    &__body {
+      flex-direction: column;
+      gap: 0;
+      section {
+        width: 100%;
+      }
+
+      &__section-right__button {
+        justify-content: center;
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+
+    .main-footer__version {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1em;
+      h5 {
+        margin-top: 0;
+      }
+    }
+
+    .main-footer__signature {
+      flex-direction: column;
+
+      div:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        span {
+          width: 50%;
+        }
+      }
+
+      &__review {
+        margin-top: 1em;
+        div {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          span {
+            width: 50%;
+          }
+        }
+      }
+    }
+
+    .main-footer__note {
+      margin-top: 1em;
+      span {
+        font-size: 0.8em;
+      }
+    }
+
+    .main-footer__contact {
+      margin-top: 1em;
+      font-size: 0.8em;
+      text-align: center;
+    }
+  }
+  .register-equipment {
+    h5 {
+      gap: 2em;
+    }
+
+    &__body {
+      max-width: 100%;
+      overflow: auto;
+      position: relative;
+
+      &::after {
+        content: 'desliza --->';
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .table {
+        width: 350%;
+      }
+    }
   }
 }
