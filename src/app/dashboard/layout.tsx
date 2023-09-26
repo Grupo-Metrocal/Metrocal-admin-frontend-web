@@ -5,6 +5,10 @@ import NavLink from './NavLink'
 import Image from 'next/image'
 import metrocalLogo from 'public/metrocal.svg'
 import vectorIcon from '@/assets/icons/vector.svg'
+import notificationIcon from '@/assets/icons/notification.svg'
+import profileImg from '@/assets/images/profile.jpg'
+import { CButton } from '@/components/CButton'
+import Link from 'next/link'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -36,7 +40,32 @@ export default function RootLayout({
               }
             </nav>
           </section>
-          <div className="content">{children}</div>
+          <div className="content">
+            <header className="header">
+              <div className="hello">
+                <h4>
+                  Bienvenido <span>Francisco G</span>
+                </h4>
+              </div>
+
+              <div className="user">
+                <div className="quote">
+                  <CButton>
+                    <span>+</span> SOLICITAR COTIZACIÓN
+                  </CButton>
+                </div>
+                <div className="notification" data-badge="+9">
+                  <Image src={notificationIcon} alt="Notification" />
+                </div>
+                <div className="profile">
+                  <Link href="/profile">
+                    <Image src={profileImg} alt="Profile" />
+                  </Link>
+                </div>
+              </div>
+            </header>
+            <section className="content-container">{children}</section>
+          </div>
         </main>
       </body>
     </html>
