@@ -4,6 +4,7 @@
   width: 100%;
   min-height: 100vh;
   @include padding-control;
+  margin: auto;
 
   &-body {
     background-image: url('..//assets/images/metrocal_black_white.png');
@@ -283,6 +284,7 @@ footer {
   padding-top: 2em;
   width: 100%;
   padding-bottom: 2em;
+  margin: auto;
 
   .main-footer__version {
     display: flex;
