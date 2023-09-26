@@ -1,3 +1,8 @@
+import { LayoutPage } from '@/components/LayoutPage'
 export default function Page() {
-  return <h1>request</h1>
+  return (
+    <LayoutPage title="Cotizaciones / solicitudes">
+      <span>contenido</span>
+    </LayoutPage>
+  )
 }

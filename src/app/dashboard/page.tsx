@@ -1,8 +1,8 @@
-import './page.scss'
+import { LayoutPage } from '@/components/LayoutPage'
 export default function Page() {
   return (
-    <section className="dashboard-page">
-      <h1>Dashboard</h1>
-    </section>
+    <LayoutPage title="Panel de control">
+      <span>contenido</span>
+    </LayoutPage>
   )
 }

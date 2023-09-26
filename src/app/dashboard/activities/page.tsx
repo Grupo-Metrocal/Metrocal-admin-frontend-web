@@ -1,7 +1,8 @@
+import { LayoutPage } from '@/components/LayoutPage'
 export default function Page() {
   return (
-    <div>
-      <h1>Activities</h1>
-    </div>
+    <LayoutPage title="Actividades">
+      <span>contenido</span>
+    </LayoutPage>
   )
 }
