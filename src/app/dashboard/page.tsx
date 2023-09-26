@@ -1,7 +1,8 @@
+import './page.scss'
 export default function Page() {
   return (
-    <div>
-      <h1>Quotes</h1>
-    </div>
+    <section className="dashboard-page">
+      <h1>Dashboard</h1>
+    </section>
   )
 }
