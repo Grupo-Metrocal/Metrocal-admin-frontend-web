@@ -4,9 +4,10 @@ import { CButton } from '../CButton'
 
 interface IProps {
   quote: IRoot
+  onClick?: (id: number) => void
 }
 
-export const QuoteRequestItem = ({ quote }: IProps) => {
+export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
   const QUOTE_STATUS: { [key: string]: string } = {
     pending: 'Por revisar',
     approved: 'Aprobado',
@@ -32,7 +33,7 @@ export const QuoteRequestItem = ({ quote }: IProps) => {
         <span>{quote.status !== 'pending' && quote.updated_at}</span>
 
         <CButton
-          onClick={() => console.log('Ver')}
+          onClick={() => onClick && onClick(quote.id)}
           className="quote-container__item__button"
         >
           Ver
