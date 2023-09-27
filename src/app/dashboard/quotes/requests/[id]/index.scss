@@ -1,0 +1,90 @@
+@use '@/sass/index' as *;
+
+.only-quote {
+  display: grid;
+  grid-template-columns: 1fr 3.5fr;
+  gap: 3em;
+  margin-right: 1em;
+  margin-top: 1.5em;
+
+  .equipment-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      background: #dfdfdf;
+      top: 0;
+      right: -1.5em;
+      width: 3px;
+      height: calc(100%);
+      cursor: auto;
+      border-radius: 30px;
+    }
+    .equipment {
+      background-color: #fff;
+      padding: 1em;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: calc(-1.5em - 19px);
+        width: 20px;
+        height: 20px;
+        background: #dfdfdf;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: auto;
+      }
+
+      span {
+        font-weight: bold;
+      }
+
+      .status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .img {
+          background-color: #dfdfdf;
+          width: 37px;
+          height: 37px;
+          border-radius: 50%;
+          display: grid;
+          place-items: center;
+        }
+
+        small {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__body {
+    &__client {
+      background-color: #fff;
+      padding: 1em;
+      border-radius: 10px;
+      display: flex;
+      gap: 1em;
+
+      div {
+        width: 50%;
+      }
+    }
+  }
+}
