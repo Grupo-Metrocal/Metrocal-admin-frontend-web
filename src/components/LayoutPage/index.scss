@@ -1,7 +1,17 @@
 .layout-page {
   margin: 1em 0 1.5em 1.5em;
 
-  h1 {
-    font-size: 1.5em;
+  &__header {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    img {
+      width: 25px;
+      cursor: pointer;
+      margin-top: 0.2em;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
   }
 }
