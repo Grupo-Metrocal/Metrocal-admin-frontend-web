@@ -37,6 +37,7 @@ li {
           margin-bottom: 0.5em;
           font-size: 0.8em;
           font-family: 400;
+          padding: 0 1.8em;
         }
 
         .nav-links-list {
@@ -53,16 +54,17 @@ li {
           a {
             display: flex;
             height: 2.5em;
-            padding: 0 0.5em;
+            padding: 0 1.5em;
             align-items: center;
             border-radius: 5px;
             font-weight: 600;
             transition: all 0.2s ease-in-out;
-            color: #555;
+            color: #222;
 
             img {
               margin-right: 1.5em;
-              width: 1em;
+              width: 1.2em;
+              height: 1.2em;
               object-fit: contain;
             }
 
