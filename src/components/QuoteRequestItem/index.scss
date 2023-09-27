@@ -1,0 +1,52 @@
+.quotes-container__item {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  margin-bottom: 2em;
+  padding: 1.5em;
+  position: relative;
+  border-radius: 10px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 27%;
+    left: 0;
+    width: 4px;
+    border-radius: 30px;
+    height: 40px;
+  }
+
+  &[data-status='pending'] {
+    &::after {
+      background: #d5303e;
+    }
+  }
+
+  &[data-status='waiting'] {
+    &::after {
+      background: #ff8000;
+    }
+  }
+
+  &[data-status='done'] {
+    &::after {
+      background: #00b894;
+    }
+  }
+
+  .status-info,
+  .action {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      color: #999;
+    }
+  }
+
+  &__button {
+    background: red;
+  }
+}
