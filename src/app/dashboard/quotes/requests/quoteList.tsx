@@ -3,6 +3,7 @@ import './index.scss'
 import { useEffect, useState } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { QuoteRequestItem } from '@/components/QuoteRequestItem'
+import { useRouter } from 'next/navigation'
 
 export interface IRoot {
   id: number
@@ -52,6 +53,11 @@ export const QuoteList = () => {
   const [quotesWaiting, setQuotesWaiting] = useState<IRoot[]>([])
   const [quotesDone, setQuotesDone] = useState<IRoot[]>([])
 
+  const router = useRouter()
+
+  const handleNavigation = (id: number) =>
+    router.push(`/dashboard/quotes/requests/${id}`)
+
   useEffect(() => {
     const getQuotes = async () => {
       const quotes = await fetchQuotes()
@@ -72,7 +78,7 @@ export const QuoteList = () => {
     <div className="quotes-container">
       <div className="quotes-container__section quotes-container__section--pending">
         <h3 data-status="pending">Pendientes de revisión</h3>
-        <RendererQuoteList quotes={quotesPending} />
+        <RendererQuoteList quotes={quotesPending} onClick={handleNavigation} />
       </div>
       <div className="quotes-container__section quotes-container__section--waiting">
         <h3 data-status="waiting">En espera de aprobación</h3>
@@ -86,13 +92,19 @@ export const QuoteList = () => {
   )
 }
 
-const RendererQuoteList = ({ quotes }: { quotes: IRoot[] }) => {
+interface IRendererQuoteList {
+  quotes: IRoot[]
+  onClick?: (id: number) => void
+}
+const RendererQuoteList = ({ quotes, onClick }: IRendererQuoteList) => {
   return (
     <div className="quotes-container__list">
       {quotes.length <= 0 ? (
         <div className="quotes-container__empty">No hay cotizaciones</div>
       ) : (
-        quotes.map((quote) => <QuoteRequestItem key={quote.id} quote={quote} />)
+        quotes.map((quote) => (
+          <QuoteRequestItem key={quote.id} quote={quote} onClick={onClick} />
+        ))
       )}
     </div>
   )
