@@ -12,6 +12,7 @@ export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
       method,
       body: JSON.stringify(body),
       headers,
+      cache: 'no-cache',
     })
     const data = await response.json()
     return data
