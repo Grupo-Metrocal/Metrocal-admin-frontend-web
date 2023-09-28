@@ -3,9 +3,15 @@ import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import { fetchData } from '@/utils/fetch'
 import { useEffect, useState } from 'react'
+import { CInput } from '@/components/CInput'
 import checkMarkIcon from '@/assets/icons/checkmark.svg'
 import pencilIcon from '@/assets/icons/pencil.svg'
+import xMarkIcon from '@/assets/icons/xmark.svg'
+import dollarIcon from '@/assets/icons/dollar.svg'
+import percentIcon from '@/assets/icons/percent.svg'
 import Image from 'next/image'
+import { Content } from '@/components/Content'
+import { CButton } from '@/components/CButton'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -17,6 +23,7 @@ export interface IEquipmentQuoteRequest {
   calibration_method: string
   additional_remarks: string
   discount: number
+  status: string
 }
 
 export interface IClient {
@@ -88,6 +95,11 @@ export default function Page({ params }: IRoot) {
         <section
           className="equipment-container"
           data-equipment-length={quote?.equipment_quote_request.length}
+          style={{
+            height: quote?.equipment_quote_request?.length
+              ? quote.equipment_quote_request.length * 150 + 'px'
+              : '0',
+          }}
         >
           {quote?.equipment_quote_request.map((equipment, index) => (
             <RenderEquipment
@@ -103,7 +115,12 @@ export default function Page({ params }: IRoot) {
           <div className="only-quote__body__client">
             <RenderClient client={quote?.client} />
           </div>
-          <div className="only-quote__body__info"></div>
+          <div className="only-quote__body__info">
+            <RenderEquipmentInfoSelected equipment={equipmentSelected} />
+          </div>
+          <div className="only-quote__body__prices">
+            <RenderPrices equipment={equipmentSelected} />
+          </div>
         </section>
       </div>
     </LayoutPage>
@@ -147,20 +164,146 @@ const RenderClient = ({ client }: { client?: IClient }) => {
     </>
   )
 }
-const RenderEquipment = ({ equipment, status, onClick, selected }: IProps) => {
+const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
   return (
     <div
-      className={`equipment ${selected && 'equipment--selected'}`}
+      className={`equipment 
+      ${selected && 'equipment--selected'}
+      ${
+        equipment.status === 'rejected'
+          ? 'equipment--rejected'
+          : equipment.status === 'done'
+          ? 'equipment--reviewed'
+          : ''
+      }
+      `}
       onClick={onClick}
     >
       <div className="status">
         <div className="img">
-          <Image src={status ? checkMarkIcon : pencilIcon} alt="status" />
+          <Image
+            src={
+              equipment.status === 'done'
+                ? checkMarkIcon
+                : equipment.status === 'rejected'
+                ? xMarkIcon
+                : pencilIcon
+            }
+            alt="status"
+          />
         </div>
         <small>{equipment.count}</small>
       </div>
       <span>{equipment.name}</span>
       <small>{equipment.type_service}</small>
     </div>
+  )
+}
+
+const RenderEquipmentInfoSelected = ({
+  equipment,
+}: {
+  equipment?: IEquipmentQuoteRequest
+}) => {
+  return (
+    <div className="equipment-info-selected">
+      <div className="equipment-info-selected__header">
+        <h4>
+          Método de calibración: <span>{equipment?.calibration_method} </span>
+        </h4>
+
+        <h4>
+          Modelo: <span>{equipment?.model}</span>
+        </h4>
+      </div>
+
+      <div className="equipment-info-selected__body">
+        <div>
+          <h4>Puntos de calibración y/un observación adicional: </h4>
+          <CInput
+            value={equipment?.additional_remarks as string}
+            onChange={() => {}}
+          />
+        </div>
+        <div>
+          <h4>Rango de medición</h4>
+          <CInput value={''} onChange={() => {}} />
+        </div>
+
+        <div>
+          <h4>Enviar comentario</h4>
+          <CInput value={''} onChange={() => {}} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const RenderPrices = ({
+  equipment,
+}: {
+  equipment?: IEquipmentQuoteRequest
+}) => {
+  const [discount, setDiscount] = useState<number>(equipment?.discount || 0)
+  const [price, setPrice] = useState<number>(equipment?.discount || 0)
+  const [total, setTotal] = useState<number>(equipment?.discount || 0)
+
+  console.log(equipment)
+
+  return (
+    <Content title="Precios" colorTitle="purple" className="prices-equipment">
+      <div className="prices">
+        <div className="prices__item">
+          <h4>Descuento</h4>
+          <CInput
+            type="number"
+            value={discount.toString()}
+            onChange={(e) => setDiscount(Number(e.value))}
+            icon={percentIcon}
+          />
+        </div>
+        <div className="prices__item">
+          <h4>Precio unitario</h4>
+          <CInput
+            type="number"
+            value={price.toString()}
+            onChange={(e) => setPrice(Number(e.value))}
+            icon={dollarIcon}
+          />
+        </div>
+        <div className="prices__item">
+          <h4>Equipos</h4>
+          <CInput
+            type="number"
+            value={equipment ? equipment.count.toString() : ''}
+            onChange={(e) => {}}
+            icon={dollarIcon}
+          />
+        </div>
+        <div className="prices__item">
+          <h4>Total</h4>
+          <CInput
+            type="number"
+            value={total.toString()}
+            onChange={(e) => setTotal(Number(e.value))}
+            icon={dollarIcon}
+            dissabled={true}
+          />
+        </div>
+      </div>
+
+      <div className="prices__footer">
+        <CButton
+          style={{
+            background: 'none',
+            color: 'tomato',
+            boxShadow: 'none',
+          }}
+        >
+          Rechazar equipo
+        </CButton>
+        <CButton style={{ boxShadow: 'none' }}>Aprobar equipo</CButton>
+      </div>
+    </Content>
   )
 }
