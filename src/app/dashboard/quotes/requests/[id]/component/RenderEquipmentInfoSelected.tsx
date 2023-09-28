@@ -29,7 +29,11 @@ export const RenderEquipmentInfoSelected = ({
         </div>
         <div>
           <h4>Rango de medición</h4>
-          <CInput value={''} onChange={() => {}} />
+          <CInput
+            value={''}
+            onChange={() => {}}
+            dissabled={equipment?.measuring_range && equipment?.measuring_range}
+          />
         </div>
 
         <div>
