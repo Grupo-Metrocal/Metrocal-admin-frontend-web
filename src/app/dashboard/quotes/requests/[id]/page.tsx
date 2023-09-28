@@ -59,6 +59,8 @@ const getQuote = async (id: string) => {
 export default function Page({ params }: IRoot) {
   const [quote, setQuote] = useState<IQuote>()
   const [error, setError] = useState<boolean>(false)
+  const [equipmentSelected, setEquipmentSelected] =
+    useState<IEquipmentQuoteRequest>()
   const id = params.id
 
   useEffect(() => {
@@ -67,12 +69,18 @@ export default function Page({ params }: IRoot) {
 
       if (response) {
         setQuote(response)
+        setEquipmentSelected(response.equipment_quote_request[0])
       } else {
         setError(true)
       }
     }
     getQuoteRequest()
   }, [id])
+
+  const handleSelectEquipment = (equipment: IEquipmentQuoteRequest) => {
+    console.log(equipment)
+    setEquipmentSelected(equipment)
+  }
 
   return (
     <LayoutPage title="Cotizaciones / solicitudes" rollBack={true}>
@@ -86,6 +94,8 @@ export default function Page({ params }: IRoot) {
               key={index}
               equipment={equipment}
               status={equipment.discount > 0}
+              onClick={() => handleSelectEquipment(equipment)}
+              selected={equipmentSelected?.id === equipment.id}
             />
           ))}
         </section>
@@ -103,10 +113,12 @@ export default function Page({ params }: IRoot) {
 interface IProps {
   equipment: IEquipmentQuoteRequest
   status: boolean
+  onClick: () => void
+  selected?: boolean
 }
 const RenderClient = ({ client }: { client?: IClient }) => {
   return (
-    <section className="client">
+    <>
       <div>
         <h5>
           Empresa: <span>{client?.company_name}</span>
@@ -132,12 +144,15 @@ const RenderClient = ({ client }: { client?: IClient }) => {
           Dirección: <span>{client?.address}</span>
         </h5>
       </div>
-    </section>
+    </>
   )
 }
-const RenderEquipment = ({ equipment, status }: IProps) => {
+const RenderEquipment = ({ equipment, status, onClick, selected }: IProps) => {
   return (
-    <div className="equipment">
+    <div
+      className={`equipment ${selected && 'equipment--selected'}`}
+      onClick={onClick}
+    >
       <div className="status">
         <div className="img">
           <Image src={status ? checkMarkIcon : pencilIcon} alt="status" />
