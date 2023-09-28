@@ -59,6 +59,7 @@ export const RenderPrices = ({
             value={count.toString()}
             onChange={(e) => {}}
             icon={dollarIcon}
+            dissabled={true}
           />
         </div>
         <div className="prices__item">
