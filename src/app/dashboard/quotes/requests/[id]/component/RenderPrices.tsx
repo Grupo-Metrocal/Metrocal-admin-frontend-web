@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CInput } from '@/components/CInput'
 import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
@@ -13,10 +13,24 @@ export const RenderPrices = ({
 }) => {
   const [discount, setDiscount] = useState<number>(equipment?.discount || 0)
   const [price, setPrice] = useState<number>(equipment?.discount || 0)
+  const [count, setCount] = useState<number>(equipment?.count || 0)
   const [total, setTotal] = useState<number>(equipment?.discount || 0)
 
-  console.log(equipment)
+  const calculateTotal = () => {
+    const total = price * count
+    const discountTotal = total * (discount / 100)
 
+    setTotal(total - discountTotal)
+  }
+
+  useEffect(() => {
+    setCount(equipment?.count || 0)
+  }, [equipment?.count])
+
+  // calculateTotal()
+  useEffect(() => {
+    calculateTotal()
+  }, [discount, price, count])
   return (
     <Content title="Precios" colorTitle="purple" className="prices-equipment">
       <div className="prices">
@@ -42,7 +56,7 @@ export const RenderPrices = ({
           <h4>Equipos</h4>
           <CInput
             type="number"
-            value={equipment ? equipment.count.toString() : ''}
+            value={count.toString()}
             onChange={(e) => {}}
             icon={dollarIcon}
           />
