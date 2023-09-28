@@ -77,7 +77,10 @@ export default function Page({ params }: IRoot) {
   return (
     <LayoutPage title="Cotizaciones / solicitudes" rollBack={true}>
       <div className="only-quote">
-        <section className="equipment-container">
+        <section
+          className="equipment-container"
+          data-equipment-length={quote?.equipment_quote_request.length}
+        >
           {quote?.equipment_quote_request.map((equipment, index) => (
             <RenderEquipment
               key={index}
