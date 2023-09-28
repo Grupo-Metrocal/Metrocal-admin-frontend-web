@@ -3,12 +3,9 @@ import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import { fetchData } from '@/utils/fetch'
 import { useEffect, useState } from 'react'
-import checkMarkIcon from '@/assets/icons/checkmark.svg'
-import pencilIcon from '@/assets/icons/pencil.svg'
-import xMarkIcon from '@/assets/icons/xmark.svg'
-import Image from 'next/image'
 import { RenderPrices } from './component/RenderPrices'
 import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSelected'
+import { RenderEquipment } from './component/RenderEquipment'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -124,12 +121,6 @@ export default function Page({ params }: IRoot) {
   )
 }
 
-interface IProps {
-  equipment: IEquipmentQuoteRequest
-  status: boolean
-  onClick: () => void
-  selected?: boolean
-}
 const RenderClient = ({ client }: { client?: IClient }) => {
   return (
     <>
@@ -159,40 +150,5 @@ const RenderClient = ({ client }: { client?: IClient }) => {
         </h5>
       </div>
     </>
-  )
-}
-const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
-  return (
-    <div
-      className={`equipment 
-      ${selected && 'equipment--selected'}
-      ${
-        equipment.status === 'rejected'
-          ? 'equipment--rejected'
-          : equipment.status === 'done'
-          ? 'equipment--reviewed'
-          : ''
-      }
-      `}
-      onClick={onClick}
-    >
-      <div className="status">
-        <div className="img">
-          <Image
-            src={
-              equipment.status === 'done'
-                ? checkMarkIcon
-                : equipment.status === 'rejected'
-                ? xMarkIcon
-                : pencilIcon
-            }
-            alt="status"
-          />
-        </div>
-        <small>{equipment.count}</small>
-      </div>
-      <span>{equipment.name}</span>
-      <small>{equipment.type_service}</small>
-    </div>
   )
 }
