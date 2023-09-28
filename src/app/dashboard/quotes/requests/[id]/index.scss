@@ -58,6 +58,10 @@
         cursor: auto;
       }
 
+      &:hover {
+        border: 1px solid $primary-color;
+      }
+
       span {
         font-weight: bold;
       }
@@ -81,6 +85,10 @@
         }
       }
     }
+
+    .equipment--selected {
+      border: 1px solid $primary-color;
+    }
   }
 
   &__body {
@@ -89,10 +97,19 @@
       padding: 1em;
       border-radius: 10px;
       display: flex;
-      gap: 1em;
+      gap: 3em;
 
       div {
         width: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        h5 {
+          span {
+            font-weight: 400;
+          }
+        }
       }
     }
   }
