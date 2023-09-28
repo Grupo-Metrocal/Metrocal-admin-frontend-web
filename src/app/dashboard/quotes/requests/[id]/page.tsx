@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { RenderPrices } from './component/RenderPrices'
 import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSelected'
 import { RenderEquipment } from './component/RenderEquipment'
+import { RenderClient } from './component/RenderClient'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -118,37 +119,5 @@ export default function Page({ params }: IRoot) {
         </section>
       </div>
     </LayoutPage>
-  )
-}
-
-const RenderClient = ({ client }: { client?: IClient }) => {
-  return (
-    <>
-      <div>
-        <h5>
-          Empresa: <span>{client?.company_name}</span>
-        </h5>
-        <h5>
-          Solicitado por <span>{client?.requested_by}</span>
-        </h5>
-        <h5>
-          Teléfono: <span>{client?.phone}</span>
-        </h5>
-        <h5>
-          Email: <span>{client?.email}</span>
-        </h5>
-      </div>
-      <div>
-        <h5>
-          No: <span>{client?.no}</span>
-        </h5>
-        <h5>
-          No RUC: <span>{client?.no_ruc}</span>
-        </h5>
-        <h5>
-          Dirección: <span>{client?.address}</span>
-        </h5>
-      </div>
-    </>
   )
 }
