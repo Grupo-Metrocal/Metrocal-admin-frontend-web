@@ -1,0 +1,55 @@
+.content-content {
+  background-color: #fff;
+  padding: 1em;
+  font-weight: 600;
+  border-radius: 10px;
+
+  .content__title {
+    margin-bottom: 1.5em;
+
+    h4 {
+      margin-bottom: 1.5em;
+      position: relative;
+      padding-left: 1em;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 6px;
+        border-radius: 30px;
+        height: 100%;
+      }
+
+      &[data-color-title='blue'] {
+        &::after {
+          background: #c1d1ff;
+        }
+      }
+
+      &[data-color-title='purple'] {
+        &::after {
+          background: #d1c1ff;
+        }
+      }
+
+      &[data-color-title='green'] {
+        &::after {
+          background: #c1ffcb;
+        }
+      }
+
+      &[data-color-title='yellow'] {
+        &::after {
+          background: #fffbc1;
+        }
+      }
+
+      &[data-color-title='red'] {
+        &::after {
+          background: #ffc1c1;
+        }
+      }
+    }
+  }
+}
