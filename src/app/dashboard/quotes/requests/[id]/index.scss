@@ -49,9 +49,9 @@
         content: '';
         position: absolute;
         top: 50%;
-        right: calc(-1.5em - 19px);
-        width: 20px;
-        height: 20px;
+        right: calc(-1.5em - 16.5px);
+        width: 17px;
+        height: 17px;
         background: #dfdfdf;
         border-radius: 50%;
         transform: translate(-50%, -50%);
@@ -87,7 +87,23 @@
     }
 
     .equipment--selected {
-      border: 1px solid $primary-color;
+      border: 1px solid #00b894;
+    }
+
+    .equipment--reviewed {
+      .status {
+        .img {
+          background-color: #00b894;
+        }
+      }
+    }
+
+    .equipment--rejected {
+      .status {
+        .img {
+          background-color: #d5303e;
+        }
+      }
     }
   }
 
@@ -106,11 +122,55 @@
         gap: 1em;
 
         h5 {
+          font-weight: 600;
+          font-size: 0.9em;
           span {
             font-weight: 400;
           }
         }
       }
+    }
+  }
+
+  .equipment-info-selected {
+    background-color: #fff;
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    h4 {
+      font-weight: 600;
+      span {
+        font-weight: 400;
+      }
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .prices-equipment {
+    margin-top: 1em;
+    h4 {
+      font-weight: 600;
+    }
+
+    .prices {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+    }
+
+    .prices__footer {
+      margin: 1.5em 0 1em 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1em;
     }
   }
 }
