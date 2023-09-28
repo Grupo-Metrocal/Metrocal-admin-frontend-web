@@ -17,13 +17,21 @@
       content: '';
       position: absolute;
       background: #dfdfdf;
-      top: 0;
+      top: 25%;
       right: -1.5em;
       width: 3px;
-      height: calc(100%);
+      height: calc(100% - 150px);
       cursor: auto;
       border-radius: 30px;
     }
+
+    &[data-equipment-length='1'] {
+      &::before {
+        height: 150px;
+        top: 0;
+      }
+    }
+
     .equipment {
       background-color: #fff;
       padding: 1em;
@@ -35,6 +43,7 @@
       gap: 1em;
       transition: all 0.3s ease-in-out;
       position: relative;
+      height: 150px;
 
       &::after {
         content: '';
