@@ -94,6 +94,7 @@ export default function Page({ params }: IRoot) {
         dispatch(setClient(response.client))
         dispatch(setEquipment(response.equipment_quote_request))
         dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
+        dispatch(calculateTotal())
       } else {
         setError(true)
       }
