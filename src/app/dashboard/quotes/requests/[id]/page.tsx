@@ -7,6 +7,13 @@ import { RenderPrices } from './component/RenderPrices'
 import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSelected'
 import { RenderEquipment } from './component/RenderEquipment'
 import { RenderClient } from './component/RenderClient'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import {
+  setEquipment,
+  setClient,
+  setSelectedEquipment,
+  calculateTotal,
+} from '@/redux/features/quote/quoteSlice'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -19,6 +26,8 @@ export interface IEquipmentQuoteRequest {
   additional_remarks: string
   discount: number
   status: string
+  comment: string
+  price: number
 }
 
 export interface IClient {
@@ -59,19 +68,32 @@ const getQuote = async (id: string) => {
 }
 
 export default function Page({ params }: IRoot) {
-  const [quote, setQuote] = useState<IQuote>()
   const [error, setError] = useState<boolean>(false)
-  const [equipmentSelected, setEquipmentSelected] =
-    useState<IEquipmentQuoteRequest>()
+  const equipment = useAppSelector((state) => state.quote.equipment)
+  const client = useAppSelector((state) => state.quote.client)
+  const selectedEquipment = useAppSelector(
+    (state) => state.quote.selectedEquipment,
+  )
+
+  const dispatch = useAppDispatch()
+  useState<IEquipmentQuoteRequest>()
+
   const id = params.id
+
+  const handleSelectEquipment = (id: number) => {
+    const equipmentSelected = equipment.find((item) => item.id === id)
+    dispatch(setSelectedEquipment(equipmentSelected))
+    dispatch(calculateTotal())
+  }
 
   useEffect(() => {
     const getQuoteRequest = async () => {
-      const response = await getQuote(id)
+      const response: IQuote = await getQuote(id)
 
       if (response) {
-        setQuote(response)
-        setEquipmentSelected(response.equipment_quote_request[0])
+        dispatch(setClient(response.client))
+        dispatch(setEquipment(response.equipment_quote_request))
+        dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
       } else {
         setError(true)
       }
@@ -79,42 +101,35 @@ export default function Page({ params }: IRoot) {
     getQuoteRequest()
   }, [id])
 
-  const handleSelectEquipment = (equipment: IEquipmentQuoteRequest) => {
-    console.log(equipment)
-    setEquipmentSelected(equipment)
-  }
-
   return (
     <LayoutPage title="Cotizaciones / solicitudes" rollBack={true}>
       <div className="only-quote">
         <section
           className="equipment-container"
-          data-equipment-length={quote?.equipment_quote_request.length}
+          data-equipment-length={equipment?.length}
           style={{
-            height: quote?.equipment_quote_request?.length
-              ? quote.equipment_quote_request.length * 150 + 'px'
-              : '0',
+            height: equipment?.length ? equipment.length * 150 + 'px' : '0',
           }}
         >
-          {quote?.equipment_quote_request.map((equipment, index) => (
+          {equipment?.map((equipment, index) => (
             <RenderEquipment
               key={index}
               equipment={equipment}
               status={equipment.discount > 0}
-              onClick={() => handleSelectEquipment(equipment)}
-              selected={equipmentSelected?.id === equipment.id}
+              onClick={() => handleSelectEquipment(equipment.id)}
+              selected={selectedEquipment?.id === equipment.id}
             />
           ))}
         </section>
         <section className="only-quote__body">
           <div className="only-quote__body__client">
-            <RenderClient client={quote?.client} />
+            <RenderClient client={client && client} />
           </div>
           <div className="only-quote__body__info">
-            <RenderEquipmentInfoSelected equipment={equipmentSelected} />
+            <RenderEquipmentInfoSelected equipment={selectedEquipment} />
           </div>
           <div className="only-quote__body__prices">
-            <RenderPrices equipment={equipmentSelected} />
+            <RenderPrices />
           </div>
         </section>
       </div>
