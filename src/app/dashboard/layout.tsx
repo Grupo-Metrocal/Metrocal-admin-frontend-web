@@ -10,6 +10,7 @@ import profileImg from '@/assets/images/profile.jpg'
 import { CButton } from '@/components/CButton'
 import Link from 'next/link'
 import { ReduxProvider } from '@/redux/providers'
+import { Toaster } from 'sonner'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -70,6 +71,8 @@ export default function RootLayout({
             </section>
           </div>
         </main>
+
+        <Toaster richColors />
       </body>
     </html>
   )
