@@ -78,45 +78,41 @@ export const RenderPrices = () => {
     <Content title="Precios" colorTitle="purple" className="prices-equipment">
       <div className="prices">
         <div className="prices__item">
-          <h4>Descuento</h4>
           <CInput
             type="number"
+            label="Descuento"
             name="discount"
             value={
-              selectedEquipment?.discount
-                ? selectedEquipment?.discount.toString()
+              selectedEquipment.discount
+                ? selectedEquipment.discount.toString()
                 : ''
             }
             onChange={(e) =>
-              dispatch(handleDiscount(selectedEquipment?.id || 0, e))
+              dispatch(handleDiscount(selectedEquipment.id || 0, e))
             }
             icon={percentIcon}
           />
         </div>
         <div className="prices__item">
-          <h4>Precio unitario</h4>
           <CInput
             type="number"
+            label="Precio unitario"
             value={
-              selectedEquipment?.price
-                ? selectedEquipment?.price.toString()
-                : ''
+              selectedEquipment.price ? selectedEquipment.price.toString() : ''
             }
             name="price"
             onChange={(e) =>
-              dispatch(handlePrice(selectedEquipment?.id || 0, e))
+              dispatch(handlePrice(selectedEquipment.id || 0, e))
             }
             icon={dollarIcon}
           />
         </div>
         <div className="prices__item">
-          <h4>Equipos</h4>
           <CInput
             type="number"
+            label="Cantidad"
             value={
-              selectedEquipment?.count
-                ? selectedEquipment?.count.toString()
-                : ''
+              selectedEquipment.count ? selectedEquipment.count.toString() : ''
             }
             name="count"
             onChange={(e) => {}}
@@ -125,9 +121,9 @@ export const RenderPrices = () => {
           />
         </div>
         <div className="prices__item">
-          <h4>Total</h4>
           <CInput
             type="number"
+            label="Total"
             value={total.toString()}
             onChange={(e) => {}}
             icon={dollarIcon}
