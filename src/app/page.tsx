@@ -124,8 +124,6 @@ export default function Home() {
       },
     })
       .then((res) => {
-        console.log(res)
-
         if (res.statusCode === 400) {
           return toast.error('Ocurrió un error al enviar la solicitud', {
             description: res.message,
