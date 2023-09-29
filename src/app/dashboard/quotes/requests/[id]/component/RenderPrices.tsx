@@ -1,36 +1,21 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { CInput } from '@/components/CInput'
 import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import { Content } from '@/components/Content'
 import { CButton } from '@/components/CButton'
-import type { IEquipmentQuoteRequest } from '../page'
-export const RenderPrices = ({
-  equipment,
-}: {
-  equipment?: IEquipmentQuoteRequest
-}) => {
-  const [discount, setDiscount] = useState<number>(equipment?.discount || 0)
-  const [price, setPrice] = useState<number>(equipment?.discount || 0)
-  const [count, setCount] = useState<number>(equipment?.count || 0)
-  const [total, setTotal] = useState<number>(equipment?.discount || 0)
+import { handlePrice, handleDiscount } from '@/redux/features/quote/quoteSlice'
+import { useAppSelector, useAppDispatch } from '@/redux/hook'
 
-  const calculateTotal = () => {
-    const total = price * count
-    const discountTotal = total * (discount / 100)
+export const RenderPrices = () => {
+  const selectedEquipment = useAppSelector(
+    (state) => state.quote.selectedEquipment,
+  )
 
-    setTotal(total - discountTotal)
-  }
+  const total = useAppSelector((state) => state.quote.total)
 
-  useEffect(() => {
-    setCount(equipment?.count || 0)
-  }, [equipment?.count])
+  const dispatch = useAppDispatch()
 
-  // calculateTotal()
-  useEffect(() => {
-    calculateTotal()
-  }, [discount, price, count])
   return (
     <Content title="Precios" colorTitle="purple" className="prices-equipment">
       <div className="prices">
@@ -38,8 +23,15 @@ export const RenderPrices = ({
           <h4>Descuento</h4>
           <CInput
             type="number"
-            value={discount.toString()}
-            onChange={(e) => setDiscount(Number(e.value))}
+            name="discount"
+            value={
+              selectedEquipment?.discount
+                ? selectedEquipment?.discount.toString()
+                : ''
+            }
+            onChange={(e) =>
+              dispatch(handleDiscount(selectedEquipment?.id || 0, e))
+            }
             icon={percentIcon}
           />
         </div>
@@ -47,8 +39,15 @@ export const RenderPrices = ({
           <h4>Precio unitario</h4>
           <CInput
             type="number"
-            value={price.toString()}
-            onChange={(e) => setPrice(Number(e.value))}
+            value={
+              selectedEquipment?.price
+                ? selectedEquipment?.price.toString()
+                : ''
+            }
+            name="price"
+            onChange={(e) =>
+              dispatch(handlePrice(selectedEquipment?.id || 0, e))
+            }
             icon={dollarIcon}
           />
         </div>
@@ -56,7 +55,12 @@ export const RenderPrices = ({
           <h4>Equipos</h4>
           <CInput
             type="number"
-            value={count.toString()}
+            value={
+              selectedEquipment?.count
+                ? selectedEquipment?.count.toString()
+                : ''
+            }
+            name="count"
             onChange={(e) => {}}
             icon={dollarIcon}
             dissabled={true}
@@ -67,7 +71,7 @@ export const RenderPrices = ({
           <CInput
             type="number"
             value={total.toString()}
-            onChange={(e) => setTotal(Number(e.value))}
+            onChange={(e) => {}}
             icon={dollarIcon}
             dissabled={true}
           />
