@@ -4,8 +4,14 @@ import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import { Content } from '@/components/Content'
 import { CButton } from '@/components/CButton'
-import { handlePrice, handleDiscount } from '@/redux/features/quote/quoteSlice'
+import {
+  handlePrice,
+  handleDiscount,
+  handleStatus,
+} from '@/redux/features/quote/quoteSlice'
 import { useAppSelector, useAppDispatch } from '@/redux/hook'
+import { fetchData } from '@/utils/fetch'
+import { toast } from 'sonner'
 
 export const RenderPrices = () => {
   const selectedEquipment = useAppSelector(
@@ -15,6 +21,58 @@ export const RenderPrices = () => {
   const total = useAppSelector((state) => state.quote.total)
 
   const dispatch = useAppDispatch()
+
+  const handleApprove = async () => {
+    dispatch(handleStatus(selectedEquipment?.id || 0, 'done'))
+    const equipment = {
+      ...selectedEquipment,
+      status: 'done',
+    }
+
+    const response = await fetchData({
+      method: 'POST',
+      url: `quotes/request/equipment/update`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: equipment,
+    })
+
+    if (response) {
+      toast.success('Equipo aprobado')
+    } else {
+      dispatch(handleStatus(selectedEquipment?.id || 0, 'waiting'))
+      toast.error('No se pudo aprobar el equipo', {
+        description: 'Hubo un error inesperado',
+      })
+    }
+  }
+
+  const handleReject = async () => {
+    dispatch(handleStatus(selectedEquipment?.id || 0, 'rejected'))
+    const equipment = {
+      ...selectedEquipment,
+      status: 'rejected',
+    }
+
+    const response = await fetchData({
+      method: 'POST',
+      url: `quotes/request/equipment/update`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: equipment,
+    })
+
+    if (response) {
+      toast.success('Equipo no aprobado')
+    } else {
+      dispatch(handleStatus(selectedEquipment?.id || 0, 'waiting'))
+      toast.error('No se pudo rechazar el equipo', {
+        description: 'Hubo un error inesperado',
+      })
+    }
+  }
 
   return (
     <Content title="Precios" colorTitle="purple" className="prices-equipment">
@@ -85,10 +143,13 @@ export const RenderPrices = () => {
             color: 'tomato',
             boxShadow: 'none',
           }}
+          onClick={handleReject}
         >
           Rechazar equipo
         </CButton>
-        <CButton style={{ boxShadow: 'none' }}>Aprobar equipo</CButton>
+        <CButton style={{ boxShadow: 'none' }} onClick={handleApprove}>
+          Aprobar equipo
+        </CButton>
       </div>
     </Content>
   )
