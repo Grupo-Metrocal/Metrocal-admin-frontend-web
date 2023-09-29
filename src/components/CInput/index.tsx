@@ -37,7 +37,7 @@ export const CInput = ({
           id={id}
           name={name}
           type={type}
-          defaultValue={value}
+          value={value}
           onChange={(e) => onChange(e.target)}
           placeholder={placeholder}
           required={required}
