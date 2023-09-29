@@ -28,6 +28,23 @@ export const quoteSlice = createSlice({
     setTotal: (state, action) => {
       state.total = action.payload
     },
+    changeStatusSelectedEquipment: (state, action) => {
+      const { status } = action.payload
+      state.selectedEquipment.status = status
+    },
+    changeStatus: (state, action) => {
+      const { id, status } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            status,
+          }
+        }
+        return item
+      })
+      state.equipment = equipment
+    },
     changePriceSelectedEquipment: (state, action) => {
       const { price } = action.payload
       state.selectedEquipment.price = Number(price)
@@ -75,9 +92,16 @@ export const {
   changePriceSelectedEquipment,
   changeDiscount,
   changeDiscountSelectedEquipment,
+  changeStatus,
+  changeStatusSelectedEquipment,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
+
+export const handleStatus = (id: number, status: string) => (dispatch: any) => {
+  dispatch(changeStatus({ id, status }))
+  dispatch(changeStatusSelectedEquipment({ status }))
+}
 
 export const handlePrice = (id: number, target: any) => (dispatch: any) => {
   dispatch(changePrice({ id, price: target.value }))
