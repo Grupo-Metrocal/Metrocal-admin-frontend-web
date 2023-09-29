@@ -9,6 +9,7 @@ import notificationIcon from '@/assets/icons/notification.svg'
 import profileImg from '@/assets/images/profile.jpg'
 import { CButton } from '@/components/CButton'
 import Link from 'next/link'
+import { ReduxProvider } from '@/redux/providers'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -64,7 +65,9 @@ export default function RootLayout({
                 </div>
               </div>
             </header>
-            <section className="content-container">{children}</section>
+            <section className="content-container">
+              <ReduxProvider>{children}</ReduxProvider>
+            </section>
           </div>
         </main>
       </body>
