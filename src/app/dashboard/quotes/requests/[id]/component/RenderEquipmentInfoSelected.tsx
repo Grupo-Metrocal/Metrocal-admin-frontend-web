@@ -2,11 +2,11 @@
 import type { IEquipmentQuoteRequest } from '../page'
 import { CInput } from '@/components/CInput'
 
-export const RenderEquipmentInfoSelected = ({
-  equipment,
-}: {
+interface IProps {
   equipment?: IEquipmentQuoteRequest
-}) => {
+}
+
+export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
   return (
     <div className="equipment-info-selected">
       <div className="equipment-info-selected__header">
