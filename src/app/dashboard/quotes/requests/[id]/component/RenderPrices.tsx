@@ -18,8 +18,6 @@ export const RenderPrices = () => {
     (state) => state.quote.selectedEquipment,
   )
 
-  const total = useAppSelector((state) => state.quote.total)
-
   const dispatch = useAppDispatch()
 
   const handleApprove = async () => {
@@ -124,7 +122,9 @@ export const RenderPrices = () => {
           <CInput
             type="number"
             label="Total"
-            value={total.toString()}
+            value={
+              selectedEquipment.total ? selectedEquipment.total.toString() : ''
+            }
             onChange={(e) => {}}
             icon={dollarIcon}
             dissabled={true}

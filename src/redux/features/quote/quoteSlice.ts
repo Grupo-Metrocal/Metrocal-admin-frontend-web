@@ -9,7 +9,6 @@ const initialState = {
   equipment: [] as IEquipmentQuoteRequest[],
   client: {} as IClient,
   selectedEquipment: {} as IEquipmentQuoteRequest,
-  total: 0,
 }
 
 export const quoteSlice = createSlice({
@@ -26,7 +25,7 @@ export const quoteSlice = createSlice({
       state.selectedEquipment = action.payload
     },
     setTotal: (state, action) => {
-      state.total = action.payload
+      state.selectedEquipment.total = action.payload
     },
     changeStatusSelectedEquipment: (state, action) => {
       const { status } = action.payload

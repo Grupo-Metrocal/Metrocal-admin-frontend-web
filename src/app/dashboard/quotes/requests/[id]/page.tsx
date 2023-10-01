@@ -28,6 +28,7 @@ export interface IEquipmentQuoteRequest {
   status: string
   comment: string
   price: number
+  total: number
 }
 
 export interface IClient {
