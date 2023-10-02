@@ -1,5 +1,6 @@
 .layout-page {
   margin: 1em 0 1.5em 1.5em;
+  position: relative;
 
   &__header {
     display: flex;
@@ -13,5 +14,15 @@
     h1 {
       font-size: 1.5em;
     }
+  }
+
+  &__footer {
+    position: fixed;
+    background-color: #fff;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 280px);
+    margin-left: -1.5em;
+    padding: 1.5em;
   }
 }
