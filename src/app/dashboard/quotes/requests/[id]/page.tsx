@@ -8,12 +8,21 @@ import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSele
 import { RenderEquipment } from './component/RenderEquipment'
 import { RenderClient } from './component/RenderClient'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import dollarIcon from '@/assets/icons/dollar.svg'
+import percentIcon from '@/assets/icons/percent.svg'
 import {
   setEquipment,
   setClient,
   setSelectedEquipment,
   calculateTotal,
+  handleDispatchOnLoad,
+  handleIVA,
+  setIVA,
+  setTotalQuote,
+  handleDiscountQuote,
 } from '@/redux/features/quote/quoteSlice'
+import { CButton } from '@/components/CButton'
+import { CInput } from '@/components/CInput'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -95,7 +104,9 @@ export default function Page({ params }: IRoot) {
         dispatch(setClient(response.client))
         dispatch(setEquipment(response.equipment_quote_request))
         dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
-        dispatch(calculateTotal())
+        dispatch(setIVA(response.tax))
+        dispatch(setTotalQuote(response.price))
+        dispatch(handleDispatchOnLoad())
       } else {
         setError(true)
       }
@@ -104,7 +115,11 @@ export default function Page({ params }: IRoot) {
   }, [id])
 
   return (
-    <LayoutPage title="Cotizaciones / solicitudes" rollBack={true}>
+    <LayoutPage
+      title="Cotizaciones / solicitudes"
+      rollBack={true}
+      Footer={Footer}
+    >
       <div className="only-quote">
         <section
           className="equipment-container"
@@ -136,5 +151,74 @@ export default function Page({ params }: IRoot) {
         </section>
       </div>
     </LayoutPage>
+  )
+}
+
+const Footer = (): JSX.Element => {
+  const total = useAppSelector((state) => state.quote.total)
+  const IVA = useAppSelector((state) => state.quote.IVA)
+  const discount = useAppSelector((state) => state.quote.discount)
+  const subtotal = useAppSelector((state) => state.quote.subtotal)
+
+  const dispatch = useAppDispatch()
+
+  return (
+    <div className="only-quote__footer">
+      <div className="only-quote__footer__prices">
+        <CInput
+          onChange={(e) => dispatch(handleIVA(e))}
+          value={IVA.toString()}
+          label="IVA"
+          icon={percentIcon}
+          min={0}
+          type="number"
+        />
+        <CInput
+          onChange={(e) => dispatch(handleDiscountQuote(e))}
+          value={discount.toString()}
+          label="Descuento"
+          icon={percentIcon}
+          min={0}
+          type="number"
+        />
+        <CInput
+          onChange={(e) => console.log(e.value)}
+          value={subtotal.toString()}
+          label="Subtotal"
+          dissabled={true}
+          icon={dollarIcon}
+          min={0}
+          type="number"
+        />
+        <CInput
+          onChange={(e) => console.log(e.value)}
+          value={total.toString()}
+          label="Total"
+          dissabled={true}
+          icon={dollarIcon}
+          min={0}
+          type="number"
+        />
+      </div>
+      <div className="only-quote__footer__buttons">
+        <CButton
+          style={{
+            color: 'tomato',
+            background: '#fff',
+            boxShadow: 'none',
+            border: '1px solid #999',
+          }}
+        >
+          No aprobar
+        </CButton>
+        <CButton
+          style={{
+            boxShadow: 'none',
+          }}
+        >
+          Aprobar cotización
+        </CButton>
+      </div>
+    </div>
   )
 }
