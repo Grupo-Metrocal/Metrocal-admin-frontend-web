@@ -12,6 +12,8 @@ interface CInputProps {
   id?: string
   icon?: any
   dissabled?: boolean
+  min?: number
+  max?: number
 }
 export const CInput = ({
   value,
@@ -25,6 +27,8 @@ export const CInput = ({
   id,
   icon,
   dissabled,
+  min,
+  max,
 }: CInputProps) => {
   return (
     <div className={`c-input ${className}`}>
@@ -42,6 +46,8 @@ export const CInput = ({
           placeholder={placeholder}
           required={required}
           disabled={dissabled}
+          min={min}
+          max={max}
         />
       </div>
     </div>
