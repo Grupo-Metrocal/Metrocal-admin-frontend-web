@@ -9,6 +9,7 @@ interface LayoutPageProps {
   classNme?: string
   title: string
   rollBack?: boolean
+  Footer?: () => JSX.Element
 }
 
 export const LayoutPage = ({
@@ -16,6 +17,7 @@ export const LayoutPage = ({
   classNme,
   title,
   rollBack,
+  Footer,
 }: LayoutPageProps) => {
   const router = useRouter()
 
@@ -33,7 +35,15 @@ export const LayoutPage = ({
         )}
         <h1 className="layout-page__title">{title}</h1>
       </div>
-      <div className="layout-page__content">{children}</div>
+      <div
+        className="layout-page__content"
+        style={{
+          paddingBottom: Footer ? '8em' : '0',
+        }}
+      >
+        {children}
+      </div>
+      {Footer && <footer className="layout-page__footer">{<Footer />}</footer>}
     </section>
   )
 }
