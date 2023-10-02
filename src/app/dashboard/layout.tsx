@@ -52,8 +52,13 @@ export default function RootLayout({
 
               <div className="user">
                 <div className="quote">
-                  <CButton>
-                    <span>+</span> SOLICITAR COTIZACIÓN
+                  <CButton
+                    style={{
+                      boxShadow: 'none',
+                    }}
+                    uppercase={true}
+                  >
+                    <span>+</span> Solicitar cotización
                   </CButton>
                 </div>
                 <div className="notification" data-badge="+9">
