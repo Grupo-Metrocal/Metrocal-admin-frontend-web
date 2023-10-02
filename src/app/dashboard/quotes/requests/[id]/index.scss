@@ -174,3 +174,20 @@
     }
   }
 }
+
+.only-quote__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+
+  &__prices,
+  &__buttons {
+    display: flex;
+    gap: 1em;
+  }
+
+  &__prices {
+    width: 60%;
+  }
+}
