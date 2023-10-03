@@ -8,7 +8,7 @@ export const RenderClient = ({ client }: { client?: IClient }) => {
           Empresa: <span>{client?.company_name}</span>
         </h5>
         <h5>
-          Solicitado por <span>{client?.requested_by}</span>
+          Solicitado por: <span>{client?.requested_by}</span>
         </h5>
         <h5>
           Teléfono: <span>{client?.phone}</span>
