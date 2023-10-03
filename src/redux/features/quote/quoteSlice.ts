@@ -178,7 +178,6 @@ export const calculateTotal = () => (dispatch: any, getState: any) => {
   dispatch(changeTotalEquipment({ id: selectedEquipment.id, total }))
 }
 export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
-  console.log('calculateTotalQuote')
   const { subtotal, discount, IVA } = getState().quote
   const totalQuote = subtotal - (subtotal * discount) / 100
   const totalIVA = totalQuote * (IVA / 100)
@@ -186,14 +185,12 @@ export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
 }
 
 export const calculateSubtotal = () => (dispatch: any, getState: any) => {
-  console.log('calculateSubtotal')
   const { equipment } = getState().quote
   let subtotal = 0
 
   equipment.forEach((item: any) => {
     subtotal += item.total
   })
-  console.log('subtotal', equipment)
 
   dispatch(setSubtotal(subtotal.toFixed(2)))
 }

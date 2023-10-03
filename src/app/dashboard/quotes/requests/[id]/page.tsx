@@ -266,7 +266,7 @@ const Footer = (): JSX.Element => {
           type="number"
         />
         <CInput
-          onChange={(e) => console.log(e.value)}
+          onChange={(e) => {}}
           value={subtotal.toString()}
           label="Subtotal"
           dissabled={true}
@@ -275,7 +275,7 @@ const Footer = (): JSX.Element => {
           type="number"
         />
         <CInput
-          onChange={(e) => console.log(e.value)}
+          onChange={(e) => {}}
           value={total.toString()}
           label="Total"
           dissabled={true}

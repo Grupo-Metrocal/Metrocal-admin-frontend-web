@@ -60,7 +60,7 @@ export default function RegisterEquipment({
                 key: index,
                 id: item.id,
                 deleteEquipment: handleRemoveEquipment,
-                onChange: () => console.log('change'),
+                onChange: () => {},
                 updateEquipmentValue,
                 state: item,
               })
