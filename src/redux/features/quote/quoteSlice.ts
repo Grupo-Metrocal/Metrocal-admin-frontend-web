@@ -189,7 +189,7 @@ export const calculateSubtotal = () => (dispatch: any, getState: any) => {
   let subtotal = 0
 
   equipment.forEach((item: any) => {
-    subtotal += item.total
+    if (item.status !== 'rejected') subtotal += item.total
   })
 
   dispatch(setSubtotal(subtotal.toFixed(2)))
