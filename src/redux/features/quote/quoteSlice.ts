@@ -5,6 +5,7 @@ import type {
 } from '@/app/dashboard/quotes/requests/[id]/page'
 
 const initialState = {
+  id: 0,
   equipment: [] as IEquipmentQuoteRequest[],
   client: {} as IClient,
   selectedEquipment: {} as IEquipmentQuoteRequest,
@@ -18,6 +19,15 @@ export const quoteSlice = createSlice({
   name: 'quote',
   initialState,
   reducers: {
+    setID: (state, action) => {
+      state.id = action.payload
+    },
+    setDiscount: (state, action) => {
+      state.discount = action.payload
+    },
+    setTotalPrice: (state, action) => {
+      state.total = action.payload
+    },
     setEquipment: (state, action) => {
       state.equipment = action.payload
     },
@@ -126,6 +136,9 @@ export const {
   setSubtotal,
   setDiscountQuote,
   changeTotalEquipment,
+  setID,
+  setTotalPrice,
+  setDiscount,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -160,6 +173,7 @@ export const calculateTotal = () => (dispatch: any, getState: any) => {
     discount: 0,
   }
   const total = price * count - (price * count * discount) / 100
+  total.toFixed(2)
   dispatch(setTotal(total))
   dispatch(changeTotalEquipment({ id: selectedEquipment.id, total }))
 }
@@ -181,7 +195,7 @@ export const calculateSubtotal = () => (dispatch: any, getState: any) => {
   })
   console.log('subtotal', equipment)
 
-  dispatch(setSubtotal(subtotal))
+  dispatch(setSubtotal(subtotal.toFixed(2)))
 }
 
 export const handleIVA = (target: any) => (dispatch: any) => {
