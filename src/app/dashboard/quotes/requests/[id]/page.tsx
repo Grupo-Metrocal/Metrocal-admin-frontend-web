@@ -8,6 +8,7 @@ import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSele
 import { RenderEquipment } from './component/RenderEquipment'
 import { RenderClient } from './component/RenderClient'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import Swal from 'sweetalert2'
 import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import {
@@ -20,9 +21,13 @@ import {
   setIVA,
   setTotalQuote,
   handleDiscountQuote,
+  setID,
+  setTotalPrice,
+  setDiscount,
 } from '@/redux/features/quote/quoteSlice'
 import { CButton } from '@/components/CButton'
 import { CInput } from '@/components/CInput'
+import { toast } from 'sonner'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -101,6 +106,9 @@ export default function Page({ params }: IRoot) {
       const response: IQuote = await getQuote(id)
 
       if (response) {
+        dispatch(setID(response.id))
+        dispatch(setTotalPrice(response.price))
+        dispatch(setDiscount(response.general_discount))
         dispatch(setClient(response.client))
         dispatch(setEquipment(response.equipment_quote_request))
         dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
@@ -155,12 +163,83 @@ export default function Page({ params }: IRoot) {
 }
 
 const Footer = (): JSX.Element => {
+  const id = useAppSelector((state) => state.quote.id)
   const total = useAppSelector((state) => state.quote.total)
   const IVA = useAppSelector((state) => state.quote.IVA)
   const discount = useAppSelector((state) => state.quote.discount)
   const subtotal = useAppSelector((state) => state.quote.subtotal)
+  const equipment = useAppSelector((state) => state.quote.equipment)
 
   const dispatch = useAppDispatch()
+
+  const handleApproveQuote = () => {
+    if (!isAllEquipmentReviewed())
+      return toast.error('Debe revisar todos los equipos')
+
+    Swal.fire({
+      title: '¿Está seguro que desea aprobar la cotización?',
+      text: 'Una vez aprobada la cotización no podrá volver a editarla',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, aprobar',
+      cancelButtonText: 'No, cancelar',
+      cancelButtonColor: 'tomato',
+      confirmButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Cotización aprobada',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#3085d6',
+        }).then(async () => {
+          const response = await fetchData({
+            url: 'quotes/request/update',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: {
+              id,
+              price: Number(total),
+              tax: Number(IVA),
+              general_discount: Number(discount),
+              status: 'waiting',
+            },
+          })
+        })
+      }
+    })
+  }
+
+  const handleRejectQuote = () => {
+    Swal.fire({
+      title: '¿Está seguro que desea rechazar la cotización?',
+      text: 'Una vez rechazada la cotización no podrá volver a editarla',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, rechazar',
+      cancelButtonText: 'No, cancelar',
+      cancelButtonColor: 'tomato',
+      confirmButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Cotización rechazada',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#3085d6',
+        }).then(() => {
+          // dispatch(handleApproveQuote())
+        })
+      }
+    })
+  }
+
+  const isAllEquipmentReviewed = () => {
+    const reviewed = equipment.filter((item) => item.status === 'pending')
+    return reviewed.length === 0
+  }
 
   return (
     <div className="only-quote__footer">
@@ -208,6 +287,7 @@ const Footer = (): JSX.Element => {
             boxShadow: 'none',
             border: '1px solid #999',
           }}
+          onClick={handleRejectQuote}
         >
           No aprobar
         </CButton>
@@ -215,6 +295,7 @@ const Footer = (): JSX.Element => {
           style={{
             boxShadow: 'none',
           }}
+          onClick={handleApproveQuote}
         >
           Aprobar cotización
         </CButton>
