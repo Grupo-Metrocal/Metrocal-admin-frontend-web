@@ -21,6 +21,7 @@
     "react-redux": "^8.1.2",
     "sass": "^1.66.1",
     "sonner": "^1.0.3",
+    "sweetalert2": "^11.7.31",
     "typescript": "5.2.2"
   },
   "devDependencies": {
