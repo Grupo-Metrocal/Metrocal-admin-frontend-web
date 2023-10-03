@@ -32,6 +32,12 @@
       }
     }
 
+    &[data-equipment-length='3'] {
+      &::before {
+        top: 17%;
+      }
+    }
+
     .equipment {
       background-color: #fff;
       padding: 1em;
@@ -107,6 +113,14 @@
     }
   }
 
+  .with-before {
+    overflow: auto;
+    width: calc(100% + 2.5em);
+    padding-right: 2.5em;
+    &::before {
+      display: none;
+    }
+  }
   &__body {
     &__client {
       background-color: #fff;
