@@ -1,4 +1,5 @@
 import './layout.scss'
+import 'sweetalert2/src/sweetalert2.scss'
 import { Montserrat } from 'next/font/google'
 import { NAVLINK_MENU_LIST } from '@/constans/navLinkMenuItems'
 import NavLink from './NavLink'
