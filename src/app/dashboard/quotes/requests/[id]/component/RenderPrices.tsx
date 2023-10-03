@@ -8,6 +8,8 @@ import {
   handlePrice,
   handleDiscount,
   handleStatus,
+  calculateSubtotal,
+  calculateTotalQuote,
 } from '@/redux/features/quote/quoteSlice'
 import { useAppSelector, useAppDispatch } from '@/redux/hook'
 import { fetchData } from '@/utils/fetch'
@@ -44,6 +46,9 @@ export const RenderPrices = () => {
         description: 'Hubo un error inesperado',
       })
     }
+
+    dispatch(calculateSubtotal())
+    dispatch(calculateTotalQuote())
   }
 
   const handleReject = async () => {
@@ -70,6 +75,9 @@ export const RenderPrices = () => {
         description: 'Hubo un error inesperado',
       })
     }
+
+    dispatch(calculateSubtotal())
+    dispatch(calculateTotalQuote())
   }
 
   return (
