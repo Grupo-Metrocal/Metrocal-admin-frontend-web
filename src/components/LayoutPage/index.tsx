@@ -6,34 +6,42 @@ import { useRouter } from 'next/navigation'
 
 interface LayoutPageProps {
   children: React.ReactNode
-  classNme?: string
+  className?: string
   title: string
   rollBack?: boolean
   Footer?: () => JSX.Element
+  subTitle?: string
 }
 
 export const LayoutPage = ({
   children,
-  classNme,
+  className,
   title,
   rollBack,
   Footer,
+  subTitle,
 }: LayoutPageProps) => {
   const router = useRouter()
 
   const handleRollBack = () => router.back()
 
   return (
-    <section className={`layout-page ${classNme}`}>
+    <section className={`layout-page ${className}`}>
       <div className="layout-page__header">
-        {rollBack && (
-          <Image
-            src={RollBackIcon}
-            alt="RollBackIcon"
-            onClick={handleRollBack}
-          />
-        )}
-        <h1 className="layout-page__title">{title}</h1>
+        <div className="layout-page__header__left">
+          {rollBack && (
+            <Image
+              src={RollBackIcon}
+              alt="RollBackIcon"
+              onClick={handleRollBack}
+            />
+          )}
+          <h1 className="layout-page__title">{title}</h1>
+        </div>
+
+        <div className="layout-page__header__right">
+          <h4 className="layout-page__header__right__title">{subTitle}</h4>
+        </div>
       </div>
       <div
         className="layout-page__content"
