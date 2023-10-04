@@ -78,7 +78,8 @@ export default function RootLayout({
           </div>
         </main>
 
-        <Toaster richColors />
+        {/* richColor for colored toast*/}
+        <Toaster expand={true} />
       </body>
     </html>
   )
