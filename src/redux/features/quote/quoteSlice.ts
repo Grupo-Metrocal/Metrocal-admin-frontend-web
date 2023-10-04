@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type {
   IClient,
   IEquipmentQuoteRequest,
+  IQuote,
 } from '@/app/dashboard/quotes/requests/[id]/page'
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   discount: 0,
   total: 0,
   subtotal: 0,
+  status: '',
 }
 
 export const quoteSlice = createSlice({
@@ -21,6 +23,9 @@ export const quoteSlice = createSlice({
   reducers: {
     setID: (state, action) => {
       state.id = action.payload
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload
     },
     setDiscount: (state, action) => {
       state.discount = action.payload
@@ -139,6 +144,7 @@ export const {
   setID,
   setTotalPrice,
   setDiscount,
+  setStatus,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -205,7 +211,16 @@ export const handleDiscountQuote = (target: any) => (dispatch: any) => {
   dispatch(calculateTotalQuote())
 }
 
-export const handleDispatchOnLoad = () => (dispatch: any) => {
+export const handleDispatchOnLoad = (response: IQuote) => (dispatch: any) => {
+  dispatch(setID(response.id))
+  dispatch(setTotalPrice(response.price))
+  dispatch(setStatus(response.status))
+  dispatch(setDiscount(response.general_discount))
+  dispatch(setClient(response.client))
+  dispatch(setEquipment(response.equipment_quote_request))
+  dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
+  dispatch(setIVA(response.tax))
+  dispatch(setTotalQuote(response.price))
   dispatch(calculateTotal())
   dispatch(calculateSubtotal())
   dispatch(calculateTotalQuote())
