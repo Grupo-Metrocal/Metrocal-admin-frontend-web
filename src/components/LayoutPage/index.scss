@@ -4,16 +4,28 @@
 
   &__header {
     display: flex;
-    gap: 1em;
-    align-items: center;
-    img {
-      width: 25px;
-      cursor: pointer;
-      margin-top: 0.2em;
-    }
-    h1 {
-      font-size: 1.5em;
-      font-weight: 600;
+    justify-content: space-between;
+    div {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      img {
+        width: 25px;
+        cursor: pointer;
+        margin-top: 0.2em;
+      }
+      h1 {
+        font-size: 1.5em;
+        font-weight: 600;
+      }
+
+      &:nth-child(2) {
+        margin-right: 1em;
+
+        h4 {
+          font-weight: 600;
+        }
+      }
     }
   }
 
