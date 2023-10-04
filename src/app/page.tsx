@@ -6,10 +6,12 @@ import Image from 'next/image'
 import metrocalLogo from 'public/metrocal.svg'
 import ContactInformation from './contactInformation'
 import RegisterEquipment from './registerEquipment'
+import ClientRegister from './clientRegister'
 import { Controllers } from './controllers'
 import { codeGenerator } from '@/utils/codeGenerator'
 import { fetchData } from '@/utils/fetch'
 import { Toaster, toast } from 'sonner'
+import { Modal } from '@/components/Modal'
 
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
@@ -245,15 +247,16 @@ export default function Home() {
             Si aun no es cliente de Metrología Consultores de Nicaragua, S.A. y
             desea solicitar un servicio, por favor registrese en el siguiente
             enlace:{' '}
-            <a
-              style={{
+            <Modal
+              nameButton="Registro de clientes"
+              title="Complete el formulario para registrarse"
+              Component={ClientRegister}
+              buttonStyle={{
                 color: '#09f',
                 fontWeight: 'bold',
               }}
-              href="#"
-            >
-              Registro de clientes
-            </a>
+              size="xl"
+            />
           </span>
         </header>
 
@@ -321,7 +324,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <Toaster richColors />
+      <Toaster />
     </>
   )
 }
