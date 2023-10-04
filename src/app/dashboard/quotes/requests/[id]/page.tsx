@@ -23,6 +23,7 @@ import {
   setID,
   setTotalPrice,
   setDiscount,
+  setStatus,
 } from '@/redux/features/quote/quoteSlice'
 import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
@@ -89,6 +90,8 @@ export default function Page({ params }: IRoot) {
     (state) => state.quote.selectedEquipment,
   )
 
+  const status = useAppSelector((state) => state.quote.status)
+
   const dispatch = useAppDispatch()
   useState<IEquipmentQuoteRequest>()
 
@@ -105,15 +108,7 @@ export default function Page({ params }: IRoot) {
       const response: IQuote = await getQuote(id)
 
       if (response) {
-        dispatch(setID(response.id))
-        dispatch(setTotalPrice(response.price))
-        dispatch(setDiscount(response.general_discount))
-        dispatch(setClient(response.client))
-        dispatch(setEquipment(response.equipment_quote_request))
-        dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
-        dispatch(setIVA(response.tax))
-        dispatch(setTotalQuote(response.price))
-        dispatch(handleDispatchOnLoad())
+        dispatch(handleDispatchOnLoad(response))
       } else {
         setError(true)
       }
@@ -126,6 +121,15 @@ export default function Page({ params }: IRoot) {
       title="Cotizaciones / solicitudes"
       rollBack={true}
       Footer={Footer}
+      subTitle={
+        status && status === 'waiting'
+          ? 'En espera de aprobación del cliente'
+          : status === 'done'
+          ? 'Cotización aprobada'
+          : status === 'rejected'
+          ? 'Cotización rechazada'
+          : ''
+      }
     >
       <div className="only-quote">
         <section
