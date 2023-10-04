@@ -8,7 +8,6 @@ import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSele
 import { RenderEquipment } from './component/RenderEquipment'
 import { RenderClient } from './component/RenderClient'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import Swal from 'sweetalert2'
 import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import {
@@ -25,9 +24,9 @@ import {
   setTotalPrice,
   setDiscount,
 } from '@/redux/features/quote/quoteSlice'
-import { CButton } from '@/components/CButton'
 import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -177,68 +176,65 @@ const Footer = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
-  const handleApproveQuote = () => {
+  const handleApproveQuote = async () => {
     if (!isAllEquipmentReviewed())
       return toast.error('Debe revisar todos los equipos')
 
-    Swal.fire({
-      title: '¿Está seguro que desea aprobar la cotización?',
-      text: 'Una vez aprobada la cotización no podrá volver a editarla',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, aprobar',
-      cancelButtonText: 'No, cancelar',
-      cancelButtonColor: 'tomato',
-      confirmButtonColor: '#3085d6',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Cotización aprobada',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#3085d6',
-        }).then(async () => {
-          const response = await fetchData({
-            url: 'quotes/request/update',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: {
-              id,
-              price: Number(total),
-              tax: Number(IVA),
-              general_discount: Number(discount),
-              status: 'waiting',
-            },
-          })
-        })
-      }
+    toast.loading('Aprobando cotización', {
+      description: 'Espere un momento por favor...',
     })
+
+    const response = await fetchData({
+      url: 'quotes/request/update',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id,
+        price: Number(total),
+        tax: Number(IVA),
+        general_discount: Number(discount),
+        status: 'waiting',
+      },
+    })
+
+    if (response) {
+      toast.success('Cotización aprobada')
+    } else {
+      toast.error('Error al aprobar la cotización')
+    }
   }
 
   const handleRejectQuote = () => {
-    Swal.fire({
-      title: '¿Está seguro que desea rechazar la cotización?',
-      text: 'Una vez rechazada la cotización no podrá volver a editarla',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, rechazar',
-      cancelButtonText: 'No, cancelar',
-      cancelButtonColor: 'tomato',
-      confirmButtonColor: '#3085d6',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Cotización rechazada',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: '#3085d6',
-        }).then(() => {
-          // dispatch(handleApproveQuote())
-        })
-      }
+    toast.loading('Rechazando cotización', {
+      description: 'Espere un momento por favor...',
     })
+
+    fetchData({
+      url: 'quotes/request/update',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id,
+        status: 'rejected',
+        price: Number(total),
+        tax: Number(IVA),
+        general_discount: Number(discount),
+      },
+    })
+      .then((response) => {
+        if (response) {
+          toast.success('Cotización rechazada')
+        } else {
+          toast.error('Error al rechazar la cotización')
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al rechazar la cotización')
+      })
   }
 
   const isAllEquipmentReviewed = () => {
@@ -285,25 +281,27 @@ const Footer = (): JSX.Element => {
         />
       </div>
       <div className="only-quote__footer__buttons">
-        <CButton
-          style={{
+        <AlertDialogModal
+          nameButton="Rechazar cotización"
+          onConfirm={handleRejectQuote}
+          title="Rechazar cotización"
+          description="Una vez rechazada la cotización no podrá volver a editarla."
+          buttonStyle={{
             color: 'tomato',
             background: '#fff',
             boxShadow: 'none',
             border: '1px solid #999',
           }}
-          onClick={handleRejectQuote}
-        >
-          No aprobar
-        </CButton>
-        <CButton
-          style={{
+        />
+        <AlertDialogModal
+          nameButton="Aprobar cotización"
+          onConfirm={handleApproveQuote}
+          title="Aprobar cotización"
+          description="Una vez aprobada la cotización se enviará un correo al cliente con la cotización aprobada."
+          buttonStyle={{
             boxShadow: 'none',
           }}
-          onClick={handleApproveQuote}
-        >
-          Aprobar cotización
-        </CButton>
+        />
       </div>
     </div>
   )
