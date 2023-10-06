@@ -1,0 +1,159 @@
+@use '@/sass/index' as *;
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+
+  &-body {
+    background-image: url('../../../assets/images/metrocal_black_white.png');
+    background-repeat: no-repeat;
+    background-position: center 0;
+  }
+
+  header {
+    @include padding-control;
+
+    margin-top: 1.5em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    color: #333;
+
+    .main-header__note {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .main {
+      &-image {
+        min-width: 100px;
+
+        img {
+          width: 80px;
+          height: 80px;
+        }
+      }
+      &-title {
+        h4 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-weight: bold;
+        }
+      }
+
+      &-code {
+        min-width: 100px;
+
+        h5 {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          font-weight: bold;
+          span {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+
+  &-client {
+    margin-top: 3em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1em;
+    color: #333;
+    @include padding-control;
+  }
+  .table {
+    width: 100%;
+    margin-top: 2em;
+    color: #333333;
+    @include padding-control;
+
+    &__header {
+      &__th {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 1em;
+        align-items: center;
+        margin-top: 1em;
+        padding: 0.5em 0;
+        border-bottom: 1px solid #eaeaea;
+        font-weight: 700;
+      }
+    }
+
+    &__body {
+      &__tr {
+        border-bottom: 1px solid #eaeaea;
+        padding: 1.5em 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 1em;
+        align-items: center;
+        animation: fadeIn 0.5s ease-in-out;
+        position: relative;
+        font-weight: 600;
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .section {
+    display: flex;
+    justify-content: space-between;
+    @include padding-control;
+
+    .observation {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      padding: 1em 0;
+
+      h4 {
+        font-weight: 600;
+      }
+
+      ul {
+        list-style: disc;
+        padding-left: 1.2em;
+      }
+    }
+    .prices {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      background-color: #f4f4f4;
+      padding: 1em 3em;
+      h4 {
+        display: flex;
+        gap: 1em;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        span {
+          font-weight: 700;
+
+          &:nth-child(2) {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
