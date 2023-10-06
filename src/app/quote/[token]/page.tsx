@@ -9,6 +9,8 @@ import type {
   IQuote,
   IEquipmentQuoteRequest,
 } from '@/app/dashboard/quotes/requests/[id]/page'
+import { Footer } from '@/app/page'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 interface Props {
   params: {
@@ -44,7 +46,7 @@ export default function Page({ params }: Props) {
   }, [token])
 
   return (
-    <main className="main">
+    <main className="main-quote">
       <header>
         <div className="main-image">
           <Image src={metrocalLogo} alt="Metrocal" />
@@ -63,7 +65,7 @@ export default function Page({ params }: Props) {
           </h5>
         </div>
       </header>
-      <section className="main-client">
+      <section className="main-quote-client">
         <h4>
           <span className="font-bold">Empresa: </span>
           <span className="font-medium">{quote?.client.company_name}</span>
@@ -185,7 +187,55 @@ export default function Page({ params }: Props) {
           El certiticado de calibración se entrega en 10 (diez) días hábiles
           después de realizada la calibración.
         </p>
+
+        <div className="actions">
+          <div>
+            <Modal
+              nameButton="SOLICITAR MODIFICACIÓN"
+              title="Solicitar modificación"
+              Component={() => <h1>Editar</h1>}
+              buttonStyle={{
+                color: '#09f',
+                fontWeight: 'bold',
+              }}
+            />
+          </div>
+          <div>
+            <AlertDialogModal
+              nameButton="No Aprobar"
+              title="¿Estas seguro de eliminar esta cotización?"
+              onConfirm={() => console.log('confirm')}
+              buttonStyle={{
+                boxShadow: 'none',
+                color: 'tomato',
+                backgroundColor: '#fff',
+                border: '1px solid #999',
+              }}
+            />
+            <AlertDialogModal
+              nameButton="Guardar como PDF"
+              title="Guardar como PDF"
+              onConfirm={() => console.log('confirm')}
+              buttonStyle={{
+                boxShadow: 'none',
+                color: '#333',
+                backgroundColor: '#fff',
+                border: '1px solid #999',
+              }}
+            />
+            <AlertDialogModal
+              nameButton="Aprobar cotización"
+              title="Aprobar"
+              onConfirm={() => console.log('confirm')}
+              buttonStyle={{
+                boxShadow: 'none',
+              }}
+            />
+          </div>
+        </div>
       </section>
+
+      <Footer />
     </main>
   )
 }
