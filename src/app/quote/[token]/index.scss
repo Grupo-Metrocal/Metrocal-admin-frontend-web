@@ -1,6 +1,6 @@
 @use '@/sass/index' as *;
 
-.main {
+.main-quote {
   width: 100%;
   min-height: 100vh;
   margin: auto;
@@ -154,6 +154,18 @@
           }
         }
       }
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 2.5em 0;
+    @include padding-control;
+
+    div {
+      display: flex;
+      gap: 1em;
     }
   }
 }
