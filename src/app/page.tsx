@@ -269,62 +269,66 @@ export default function Home() {
 
         <section className="main-body">{RenderStep()}</section>
       </main>
-      <footer>
-        <div className="main-footer__signature">
-          <div>
-            <span>Elaborado por: </span>
-            <span>__________NE__________</span>
-          </div>
 
-          <div className="main-footer__signature__review">
-            <div>
-              <span>Revisado y aprobado por: </span>
-              <span>______________________</span>
-            </div>
-            <br />
-            <div>
-              <span>Fecha de aprobación: </span>
-              <span>______________________</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="main-footer__version">
-          <h5>versión 1 Aprobado en NI-MCPR-02 v7 con fecha 2019-10-18</h5>
-          <h5>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</h5>
-        </div>
-
-        <div className="main-footer__note">
-          {NOTE_ITEMS.map((item, index) => (
-            <span key={index}>
-              <span className="italic">{`Nota(${index + 1}): `}</span> {item}
-            </span>
-          ))}
-        </div>
-
-        <div className="main-footer__contact">
-          <span>
-            Bello Horizonte VI etapa. Iglesia Pio X 350 m este, Managua
-          </span>
-          <span>
-            Tel: (505) 22490-758{' '}
-            <a
-              href="https://grupometrocal.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: '#09f',
-                fontWeight: 'bold',
-              }}
-            >
-              grupometrocal.com
-            </a>{' '}
-            , info@metrocal.co.ni
-          </span>
-        </div>
-      </footer>
-
+      <Footer />
       <Toaster />
     </>
+  )
+}
+
+export const Footer = () => {
+  return (
+    <footer>
+      <div className="main-footer__signature">
+        <div>
+          <span>Elaborado por: </span>
+          <span>__________NE__________</span>
+        </div>
+
+        <div className="main-footer__signature__review">
+          <div>
+            <span>Revisado y aprobado por: </span>
+            <span>______________________</span>
+          </div>
+          <br />
+          <div>
+            <span>Fecha de aprobación: </span>
+            <span>______________________</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="main-footer__version">
+        <h5>versión 1 Aprobado en NI-MCPR-02 v7 con fecha 2019-10-18</h5>
+        <h5>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</h5>
+      </div>
+
+      <div className="main-footer__note">
+        {NOTE_ITEMS.map((item, index) => (
+          <span key={index}>
+            <span className="italic">{`Nota(${index + 1}): `}</span> {item}
+          </span>
+        ))}
+      </div>
+
+      <div className="main-footer__contact">
+        <span>Bello Horizonte VI etapa. Iglesia Pio X 350 m este, Managua</span>
+        <span>
+          Tel: (505) 22490-758{' '}
+          <a
+            href="https://grupometrocal.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: '#09f',
+              fontWeight: 'bold',
+            }}
+          >
+            grupometrocal.com
+          </a>{' '}
+          , info@metrocal.co.ni
+        </span>
+      </div>
+    </footer>
   )
 }
