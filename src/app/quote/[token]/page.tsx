@@ -11,6 +11,7 @@ import type {
 } from '@/app/dashboard/quotes/requests/[id]/page'
 import { Footer } from '@/app/page'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { Toaster, toast } from 'sonner'
 
 interface Props {
   params: {
@@ -44,6 +45,28 @@ export default function Page({ params }: Props) {
 
     getQuoteRequest()
   }, [token])
+
+  const handleGeneratePDF = async () => {
+    toast.loading('Generando PDF...')
+    const response = await fetchData({
+      url: `quotes/request/pdf/${quote?.id}`,
+      method: 'GET',
+      responseType: 'blob',
+    })
+
+    console.log(response)
+
+    if (response) {
+      const blob = new Blob([response], { type: 'application/pdf' })
+      const link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.download = 'Cotizacion.pdf'
+      link.click()
+      toast.success('PDF generado correctamente')
+    } else {
+      toast.error('Error al generar el PDF')
+    }
+  }
 
   return (
     <main className="main-quote">
@@ -215,7 +238,7 @@ export default function Page({ params }: Props) {
             <AlertDialogModal
               nameButton="Guardar como PDF"
               title="Guardar como PDF"
-              onConfirm={() => console.log('confirm')}
+              onConfirm={handleGeneratePDF}
               buttonStyle={{
                 boxShadow: 'none',
                 color: '#333',
@@ -236,6 +259,8 @@ export default function Page({ params }: Props) {
       </section>
 
       <Footer />
+
+      <Toaster />
     </main>
   )
 }
