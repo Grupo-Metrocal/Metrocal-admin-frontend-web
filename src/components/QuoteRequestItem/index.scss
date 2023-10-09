@@ -47,13 +47,11 @@
   .action {
     display: flex;
     justify-content: space-between;
-
     span {
       color: #999;
     }
   }
-
-  &__button {
-    background: red;
+  .action {
+    margin-top: auto;
   }
 }

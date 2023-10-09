@@ -10,7 +10,8 @@ interface IProps {
 export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
   const QUOTE_STATUS: { [key: string]: string } = {
     pending: 'Por revisar',
-    approved: 'Aprobado',
+    waiting: 'En espera',
+    done: 'Aprobado',
     rejected: 'Rechazado',
   }
 
@@ -37,7 +38,13 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
           className="quote-container__item__button"
           style={{ boxShadow: 'none' }}
         >
-          Ver
+          {quote.status === 'pending'
+            ? 'Revisar'
+            : quote.status === 'waiting'
+            ? 'Enviar recordatorio'
+            : quote.status === 'done'
+            ? 'Asignar equipo'
+            : ''}
         </CButton>
       </div>
     </div>
