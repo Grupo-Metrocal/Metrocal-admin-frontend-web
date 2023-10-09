@@ -47,7 +47,9 @@ export default function Page({ params }: Props) {
   }, [token])
 
   const handleGeneratePDF = async () => {
-    toast.loading('Generando PDF...')
+    toast.loading('Generando PDF...', {
+      description: 'Espere un momento por favor',
+    })
     const response = await fetchData({
       url: `quotes/request/pdf/${quote?.id}`,
       method: 'GET',
@@ -65,6 +67,54 @@ export default function Page({ params }: Props) {
       toast.success('PDF generado correctamente')
     } else {
       toast.error('Error al generar el PDF')
+    }
+  }
+
+  const handleApproveQuote = async () => {
+    toast.loading('Aprobando cotización...', {
+      description: 'Espere un momento por favor',
+    })
+    const response = await fetchData({
+      url: 'quotes/request/change-status',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id: quote?.id,
+        status: 'done',
+      },
+    })
+    if (response) {
+      toast.success('Cotización aprobada correctamente', {
+        description: 'Pronto nos pondremos en contacto con usted. 😊',
+      })
+    } else {
+      toast.error('Error al aprobar la cotización')
+    }
+  }
+
+  const handleRejectQuote = async () => {
+    toast.loading('Rechazando cotización...', {
+      description: 'Espere un momento por favor',
+    })
+    const response = await fetchData({
+      url: 'quotes/request/change-status',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id: quote?.id,
+        status: 'rejected',
+      },
+    })
+    if (response) {
+      toast.success('La cotización fue rechazada', {
+        description: '😢',
+      })
+    } else {
+      toast.error('Error al rechazar la cotización')
     }
   }
 
@@ -224,20 +274,24 @@ export default function Page({ params }: Props) {
             />
           </div>
           <div>
-            <AlertDialogModal
+            <Modal
               nameButton="No Aprobar"
-              title="¿Estas seguro de eliminar esta cotización?"
-              onConfirm={() => console.log('confirm')}
+              title="¿Estas seguro de no aprobar esta cotización?"
+              description="Nos gustaría recibir tus comentarios. Si decidiste no aprobar nuestra cotización, por favor cuéntanos cuál fue el motivo. Tu opinión es muy valiosa para nosotros y nos ayudará a mejorar nuestros servicios."
               buttonStyle={{
                 boxShadow: 'none',
                 color: 'tomato',
                 backgroundColor: '#fff',
                 border: '1px solid #999',
+                padding: '0.5rem 1rem',
+                borderRadius: '5px',
+                fontWeight: 600,
               }}
             />
             <AlertDialogModal
               nameButton="Guardar como PDF"
               title="Guardar como PDF"
+              description="¿Estas seguro de guardar esta cotización como PDF?, se descargara automaticamente"
               onConfirm={handleGeneratePDF}
               buttonStyle={{
                 boxShadow: 'none',
@@ -248,8 +302,9 @@ export default function Page({ params }: Props) {
             />
             <AlertDialogModal
               nameButton="Aprobar cotización"
-              title="Aprobar"
-              onConfirm={() => console.log('confirm')}
+              description="Una vez aprobada la cotización, el equipo de Metrología Consultores de Nicaragua, S.A. se pondrá en contacto con usted para llevar a cabo los servicios solicitados."
+              title="Aprobar cotización"
+              onConfirm={handleApproveQuote}
               buttonStyle={{
                 boxShadow: 'none',
               }}
@@ -263,4 +318,9 @@ export default function Page({ params }: Props) {
       <Toaster />
     </main>
   )
+}
+
+const CommentRejectedQuote = () => {
+  const [comment, setComment] = useState<string>('')
+  const [checkeds, setCheckeds] = useState<string[]>([])
 }
