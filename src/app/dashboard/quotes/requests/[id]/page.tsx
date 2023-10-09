@@ -114,7 +114,7 @@ export default function Page({ params }: IRoot) {
       }
     }
     getQuoteRequest()
-  }, [id])
+  }, [id, dispatch])
 
   return (
     <LayoutPage
