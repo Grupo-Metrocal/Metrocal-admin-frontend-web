@@ -3,8 +3,15 @@ interface IFetchData {
   method?: string
   body?: {}
   headers?: HeadersInit
+  responseType?: 'json' | 'text' | 'blob' | 'formData' | 'arrayBuffer'
 }
-export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
+export const fetchData = async ({
+  url,
+  method,
+  body,
+  headers,
+  responseType = 'json',
+}: IFetchData) => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
   try {
@@ -14,7 +21,7 @@ export const fetchData = async ({ url, method, body, headers }: IFetchData) => {
       headers,
       cache: 'no-cache',
     })
-    const data = await response.json()
+    const data = await response[responseType]()
     return data
   } catch (error) {
     return false
