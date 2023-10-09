@@ -192,7 +192,7 @@ export default function Home() {
         setContactInfValue(data)
       },
     )
-  }, [companySelected])
+  }, [companySelected, setContactInfValue])
 
   const handleNextStep = () => setStepCounter(stepCounter + 1)
   const handleBackStep = () => setStepCounter(stepCounter - 1)
