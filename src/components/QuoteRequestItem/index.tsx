@@ -35,6 +35,7 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
         <CButton
           onClick={() => onClick && onClick(quote.id)}
           className="quote-container__item__button"
+          style={{ boxShadow: 'none' }}
         >
           Ver
         </CButton>
