@@ -12,6 +12,8 @@ import type {
 import { Footer } from '@/app/page'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Toaster, toast } from 'sonner'
+import { useForm } from '@/hooks/useForm'
+import { CButton } from '@/components/CButton'
 
 interface Props {
   params: {
@@ -94,31 +96,12 @@ export default function Page({ params }: Props) {
     }
   }
 
-  const handleRejectQuote = async () => {
-    toast.loading('Rechazando cotización...', {
-      description: 'Espere un momento por favor',
-    })
-    const response = await fetchData({
-      url: 'quotes/request/change-status',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        id: quote?.id,
-        status: 'rejected',
-      },
-    })
-    if (response) {
-      toast.success('La cotización fue rechazada', {
-        description: '😢',
-      })
-    } else {
-      toast.error('Error al rechazar la cotización')
-    }
-  }
-
-  return (
+  return error ? (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-2xl font-bold">Error</h1>
+      <p className="text-gray-500">La cotización no existe o fue eliminada</p>
+    </div>
+  ) : (
     <main className="main-quote">
       <header>
         <div className="main-image">
@@ -287,6 +270,9 @@ export default function Page({ params }: Props) {
                 borderRadius: '5px',
                 fontWeight: 600,
               }}
+              Component={() => (
+                <CommentRejectedQuote quote={quote ? quote : ({} as IQuote)} />
+              )}
             />
             <AlertDialogModal
               nameButton="Guardar como PDF"
@@ -320,7 +306,94 @@ export default function Page({ params }: Props) {
   )
 }
 
-const CommentRejectedQuote = () => {
-  const [comment, setComment] = useState<string>('')
+const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
+  const { values, handleInputChange } = useForm({ comment: '' })
   const [checkeds, setCheckeds] = useState<string[]>([])
+
+  const handleChecked = (e: any) => {
+    const value = e.target.value
+    if (checkeds.includes(value)) {
+      setCheckeds(checkeds.filter((item) => item !== value))
+    } else {
+      setCheckeds([...checkeds, value])
+    }
+  }
+
+  const handleRejectQuote = async () => {
+    const commentRejected = `${values.comment} - ${checkeds.join(', ')}`
+
+    toast.loading('Rechazando cotización...', {
+      description: 'Espere un momento por favor',
+    })
+    const response = await fetchData({
+      url: 'quotes/request/change-status',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id: quote?.id,
+        status: 'rejected',
+      },
+    })
+    if (response) {
+      toast.success('La cotización fue rechazada', {
+        description: '😢',
+      })
+    } else {
+      toast.error('Error al rechazar la cotización')
+    }
+  }
+
+  const OPTION_CHECKED = [
+    'Precio muy alto',
+    'Presupuesto limitado',
+    'Cambios de circunstancia',
+    'No se ajusta a sus necesidades',
+    'Tiempo de entrega inadecuado',
+    'Elementos adicionales no deseados',
+    'Otro',
+  ]
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
+        {OPTION_CHECKED.map((item, index) => (
+          <div key={index} className="flex items-center gap-2">
+            <input
+              className="w-4 h-4 "
+              type="checkbox"
+              name={item}
+              id={item}
+              value={item}
+              onChange={handleChecked}
+            />
+            <label htmlFor={item}>{item}</label>
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col gap-2">
+        <textarea
+          name="comment"
+          id="comment"
+          className="w-full h-24 border mt-2 mb-8 border-gray-300 rounded-md resize-none p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Escribe un comentario"
+          onChange={(e) => handleInputChange(e.target)}
+        >
+          {values.comment}
+        </textarea>
+      </div>
+
+      <div className="flex justify-end gap-2">
+        <CButton
+          onClick={() => handleRejectQuote()}
+          style={{
+            backgroundColor: 'tomato',
+          }}
+        >
+          No aprobar
+        </CButton>
+      </div>
+    </div>
+  )
 }
