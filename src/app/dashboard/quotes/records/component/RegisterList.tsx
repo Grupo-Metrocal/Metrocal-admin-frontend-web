@@ -147,7 +147,7 @@ export const RegisterQuoteList = () => {
 
   return (
     <div>
-      {data && data.length > 0 && (
+      {
         <DataTableDemo<IQuoteRequestRegistered>
           columns={columns}
           data={filteredData}
@@ -163,7 +163,7 @@ export const RegisterQuoteList = () => {
           }}
           filters={filters as filter[]}
         />
-      )}
+      }
     </div>
   )
 }
