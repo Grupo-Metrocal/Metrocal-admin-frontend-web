@@ -12,6 +12,7 @@ import { codeGenerator } from '@/utils/codeGenerator'
 import { fetchData } from '@/utils/fetch'
 import { Toaster, toast } from 'sonner'
 import { Modal } from '@/components/Modal'
+import { useRouter } from 'next/navigation'
 
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
@@ -41,6 +42,8 @@ export default function Home() {
     calibration_method: '',
     additional_remarks: '',
   }
+
+  const router = useRouter()
 
   const [companySelected, setCompanySelected] = useState(-1)
   const {
@@ -227,7 +230,11 @@ export default function Home() {
       <main className="main">
         <header>
           <div className="main-image">
-            <Image src={metrocalLogo} alt="Metrocal" />
+            <Image
+              src={metrocalLogo}
+              alt="Metrocal"
+              onDoubleClick={() => router.push('/login/signin')}
+            />
           </div>
           <div className="main-title">
             <h4>
