@@ -256,7 +256,6 @@ const columns: ColumnDef<IQuoteRequestRegistered>[] = [
     header: () => <div className="text-right">Estado</div>,
     cell: ({ row }) => {
       const status: string = row.getValue('quote_request_status')
-      console.log(status)
       return (
         <div
           style={{
