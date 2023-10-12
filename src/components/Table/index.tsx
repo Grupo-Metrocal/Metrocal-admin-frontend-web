@@ -32,6 +32,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { FilterItem } from './filter'
+import { useAppDispatch } from '@/redux/hook'
+import { setRowSelectionTable } from '@/redux/features/data_table/rowSelection'
 
 export type filter = {
   id: string
@@ -64,6 +66,8 @@ export function DataTableDemo<T>({
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const distpatch = useAppDispatch()
+
   const table = useReactTable({
     data,
     columns,
@@ -82,6 +86,16 @@ export function DataTableDemo<T>({
       rowSelection,
     },
   })
+
+  React.useEffect(() => {
+    // get id of selected rows
+    const selectedRows = table
+      .getFilteredSelectedRowModel()
+      .rows.map((row: any) => row.original.id)
+
+    // dispatch to redux store
+    distpatch(setRowSelectionTable(selectedRows))
+  }, [rowSelection, distpatch, table])
 
   return (
     <div className="w-full">
