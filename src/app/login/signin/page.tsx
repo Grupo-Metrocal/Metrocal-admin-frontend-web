@@ -8,7 +8,8 @@ import mailIcon from '@/assets/icons/mail.svg'
 import lockIcon from '@/assets/icons/lock.svg'
 import Image from 'next/image'
 import metrocalComplete from '@/assets/images/metrocal_completo.svg'
-import { signin } from '@/utils/auth'
+import { Toaster, toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export default function Signin(): JSX.Element {
   const initialValues = {
@@ -18,9 +19,12 @@ export default function Signin(): JSX.Element {
 
   const { values, handleInputChange } = useForm(initialValues)
 
+  const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await signin(values)
+    toast.loading('Inicio de sesión en proceso...')
+    //
   }
 
   return (
@@ -91,6 +95,8 @@ export default function Signin(): JSX.Element {
           </p>
         </div>
       </section>
+
+      <Toaster />
     </div>
   )
 }
