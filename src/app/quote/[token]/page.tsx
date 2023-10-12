@@ -73,6 +73,16 @@ export default function Page({ params }: Props) {
   }
 
   const handleApproveQuote = async () => {
+    if (quote?.status === 'done') {
+      toast.error('La cotización ya fue aprobada')
+      return
+    }
+
+    if (quote?.status === 'rejected') {
+      toast.error('La cotización fue rechazada')
+      return
+    }
+
     toast.loading('Aprobando cotización...', {
       description: 'Espere un momento por favor',
     })
@@ -121,6 +131,20 @@ export default function Page({ params }: Props) {
           </h5>
         </div>
       </header>
+
+      <div className="mt-4 -mb-2">
+        <h4 className="text-center font-bold ">
+          Estado de la cotización:{' '}
+          <span className="font-medium">
+            {quote?.status === 'waiting'
+              ? 'aprobada y lista para su aceptación.'
+              : quote?.status === 'done'
+              ? 'Aprobada y aceptada.'
+              : 'No aprobada.'}
+          </span>
+        </h4>
+      </div>
+
       <section className="main-quote-client">
         <h4>
           <span className="font-bold">Empresa: </span>
