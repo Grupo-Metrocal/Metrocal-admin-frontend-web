@@ -21,6 +21,7 @@
     "@types/react-dom": "18.2.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cookies-next": "^4.0.0",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "lucide-react": "^0.284.0",
@@ -31,7 +32,6 @@
     "react-redux": "^8.1.2",
     "sass": "^1.66.1",
     "sonner": "^1.0.3",
-    "sweetalert2": "^11.7.31",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2"
