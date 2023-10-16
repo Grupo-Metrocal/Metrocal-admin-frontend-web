@@ -5,7 +5,11 @@ import { CButton } from '@/components/CButton'
 import { fetchData } from '@/utils/fetch'
 import { toast } from 'sonner'
 
-export default function ClientRegister() {
+interface IProps {
+  reload?: () => void
+}
+
+export default function ClientRegister({ reload }: IProps) {
   const initialContactInformationForm = {
     company_name: '',
     address: '',
@@ -42,6 +46,10 @@ export default function ClientRegister() {
       toast.success('Cliente registrado con éxito', {
         description: 'Porfavor recargue la página para ver los cambios',
       })
+
+      if (reload) {
+        reload()
+      }
     } else {
       toast.error('Ops! Ocurrió un error al registrar el cliente', {
         description: 'Inténtelo nuevamente',
