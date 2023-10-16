@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Linking, deleteQuoteRequest } from '@/utils/functions'
 
 export type IQuoteRequestRegistered = {
   id: number
@@ -310,11 +311,25 @@ const columns: ColumnDef<IQuoteRequestRegistered>[] = [
             >
               copiar ID de cotización
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>Ver cotización</DropdownMenuItem>
-            <DropdownMenuItem>Eliminar cotización</DropdownMenuItem>
-            <DropdownMenuItem>Editar cotización</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
+                Actualizar cotización
+              </Linking>
+            </DropdownMenuItem>
             <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              style={{
+                color: 'tomato',
+                fontWeight: 'bold',
+              }}
+              onClick={() => {
+                deleteQuoteRequest(payment.id)
+              }}
+            >
+              Eliminar cotización
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
