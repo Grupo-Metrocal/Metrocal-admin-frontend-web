@@ -1,48 +1,32 @@
-type ISigninResponse = {
-  username: string
-  token: string
-}
-
-type ISigninRequest = {
-  email: string
-  password: string
-}
-
-export const signin = async ({
-  email,
-  password,
-}: ISigninRequest): Promise<ISigninResponse> => {
-  const response = await fetch('http://localhost:3000/auth/signin', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  const data = await response.json()
-
-  if (!data.token) {
-    return data.message
-  }
-
-  authenticate(data)
-  return data
-}
+import { cookies } from 'next/headers'
 
 const setCookie = (name: string, value: string, days: number) => {
   const date = new Date()
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`
+  const cookieStore = cookies()
+  cookieStore.set(name, value, {
+    expires: date,
+    sameSite: 'lax',
+    path: '/',
+  })
 }
 
-const getCookie = (name: string) => {
-  const cookie = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`)
-  return cookie ? cookie[2] : null
+export const getCookie = (name: string, defaultValue: string | null = null) => {
+  const cookieStore = cookies()
+  const cookieValue = cookieStore.get(name)
+
+  // Verifica si la cookie se encontró
+  if (cookieValue !== undefined) {
+    return cookieValue
+  } else {
+    // Si la cookie no se encontró, devuelve un valor por defecto o null
+    return defaultValue
+  }
 }
 
 const removeCookie = (name: string) => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`
+  const cookieStore = cookies()
+  cookieStore.delete(name)
 }
 
 export const isAuth = () => {
@@ -53,13 +37,11 @@ export const isAuth = () => {
 
   return false
 }
+export const getUserNameAuth = () => {
+  const cookieChecked = getCookie('username')
+  if (cookieChecked) {
+    return cookieChecked
+  }
 
-export const authenticate = (data: ISigninResponse) => {
-  setCookie('token', data.token, 7)
-  setCookie('username', data.username, 7)
-}
-
-export const signout = () => {
-  removeCookie('token')
-  removeCookie('username')
+  return false
 }
