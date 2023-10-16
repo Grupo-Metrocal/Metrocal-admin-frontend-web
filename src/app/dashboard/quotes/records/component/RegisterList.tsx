@@ -15,6 +15,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Linking, deleteQuoteRequest } from '@/utils/functions'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import {
+  deleteItemQuoteRequestRegisters,
+  setQuoteRequest,
+} from '@/redux/features/quote/quoteRequestSlice'
+import { useDispatch } from 'react-redux'
 
 export type IQuoteRequestRegistered = {
   id: number
@@ -27,12 +33,14 @@ export type IQuoteRequestRegistered = {
 }
 
 export const RegisterQuoteList = () => {
-  const [data, setData] = useState<IQuoteRequestRegistered[]>([])
+  const data = useAppSelector((state) => state.quoteRequest.data)
   const [nextExpiredFilter, setNextExpiredFilter] = useState(false)
   const [approvedFilter, setApprovedFilter] = useState(false)
   const [rejectedFilter, setRejectedFilter] = useState(false)
   const [canceledFilter, setCanceledFilter] = useState(false)
   const [expiredFilter, setExpiredFilter] = useState(false)
+
+  const dispatch = useAppDispatch()
 
   const filters: filter[] = [
     {
@@ -74,12 +82,12 @@ export const RegisterQuoteList = () => {
       })
 
       if (response) {
-        setData(response)
+        dispatch(setQuoteRequest(response))
       }
     }
 
     fetch()
-  }, [])
+  }, [dispatch])
 
   const filteredData = useMemo(() => {
     return data.filter((item) => {
@@ -146,11 +154,18 @@ export const RegisterQuoteList = () => {
     expiredFilter,
   ])
 
+  const deleteItemRegister = async (id: number) => {
+    if (await deleteQuoteRequest(id))
+      return dispatch(deleteItemQuoteRequestRegisters(id))
+
+    return false
+  }
+
   return (
     <div>
       {
         <DataTableDemo<IQuoteRequestRegistered>
-          columns={columns}
+          columns={columns({ onDelete: deleteItemRegister })}
           data={filteredData}
           search_by="client_company_name"
           search_placeholder="Buscar por empresa"
@@ -169,170 +184,180 @@ export const RegisterQuoteList = () => {
   )
 }
 
-const columns: ColumnDef<IQuoteRequestRegistered>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-        aria-label="Selccionar todo"
-      />
-    ),
+type IColumns = {
+  onDelete: (id: number) => void
+}
 
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Seleccionar"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'client_company_name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant={'ghost'}
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Empresa
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
+const columns = ({
+  onDelete,
+}: IColumns): ColumnDef<IQuoteRequestRegistered>[] => {
+  return [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={table.getIsAllRowsSelected()}
+          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+          aria-label="Selccionar todo"
+        />
+      ),
+
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Seleccionar"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
     },
-    cell: ({ row }) => {
-      return (
-        <div className="capitalize">{row.getValue('client_company_name')}</div>
-      )
+    {
+      accessorKey: 'client_company_name',
+      header: ({ column }) => {
+        return (
+          <Button
+            variant={'ghost'}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            Empresa
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="capitalize">
+            {row.getValue('client_company_name')}
+          </div>
+        )
+      },
     },
-  },
-  {
-    accessorKey: 'client_phone',
-    header: () => <div className="text-right">Teléfono</div>,
-    cell: ({ row }) => (
-      <div className="text-right">{row.getValue('client_phone')}</div>
-    ),
-  },
-  {
-    accessorKey: 'quote_request_price',
-    header: () => <div className="text-right">Precio</div>,
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue('quote_request_price'))
-
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(price)
-
-      return <div className="text-right">{formatted}</div>
+    {
+      accessorKey: 'client_phone',
+      header: () => <div className="text-right">Teléfono</div>,
+      cell: ({ row }) => (
+        <div className="text-right">{row.getValue('client_phone')}</div>
+      ),
     },
-  },
-  {
-    accessorKey: 'quote_request_created_at',
-    header: () => <div className="text-right">Fecha de registro</div>,
-    cell: ({ row }) => {
-      const date = new Date(row.getValue('quote_request_created_at'))
+    {
+      accessorKey: 'quote_request_price',
+      header: () => <div className="text-right">Precio</div>,
+      cell: ({ row }) => {
+        const price = parseFloat(row.getValue('quote_request_price'))
 
-      const formmatted = date.toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
+        const formatted = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(price)
 
-      return <div className="text-right">{formmatted}</div>
+        return <div className="text-right">{formatted}</div>
+      },
     },
-  },
-  {
-    accessorKey: 'approved_by',
-    header: () => <div className="text-right">Aprobado por</div>,
-    cell: ({ row }) => (
-      <div className="text-right">{row.getValue('approved_by')}</div>
-    ),
-  },
-  {
-    accessorKey: 'quote_request_status',
-    header: () => <div className="text-right">Estado</div>,
-    cell: ({ row }) => {
-      const status: string = row.getValue('quote_request_status')
-      return (
-        <div
-          style={{
-            backgroundColor:
-              status === 'done'
-                ? '#10B981'
-                : status === 'rejected'
-                ? 'tomato'
-                : 'gray',
+    {
+      accessorKey: 'quote_request_created_at',
+      header: () => <div className="text-right">Fecha de registro</div>,
+      cell: ({ row }) => {
+        const date = new Date(row.getValue('quote_request_created_at'))
 
-            borderRadius: '5px',
-            color: status === 'canceled' ? '#333' : 'white',
-            padding: '0.2rem 0.5rem',
-            display: 'inline-block',
-            float: 'right',
-          }}
-        >
-          {status === 'done'
-            ? 'Aprobado'
-            : status === 'rejected'
-            ? 'Rechazado'
-            : 'Cancelado'}
-        </div>
-      )
+        const formmatted = date.toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })
+
+        return <div className="text-right">{formmatted}</div>
+      },
     },
-  },
-  {
-    id: 'actions',
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
+    {
+      accessorKey: 'approved_by',
+      header: () => <div className="text-right">Aprobado por</div>,
+      cell: ({ row }) => (
+        <div className="text-right">{row.getValue('approved_by')}</div>
+      ),
+    },
+    {
+      accessorKey: 'quote_request_status',
+      header: () => <div className="text-right">Estado</div>,
+      cell: ({ row }) => {
+        const status: string = row.getValue('quote_request_status')
+        return (
+          <div
             style={{
-              backgroundColor: 'white',
+              backgroundColor:
+                status === 'done'
+                  ? '#10B981'
+                  : status === 'rejected'
+                  ? 'tomato'
+                  : 'gray',
+
+              borderRadius: '5px',
+              color: status === 'canceled' ? '#333' : 'white',
+              padding: '0.2rem 0.5rem',
+              display: 'inline-block',
+              float: 'right',
             }}
           >
-            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(payment.id.toString())
-              }
-            >
-              copiar ID de cotización
-            </DropdownMenuItem>
-            <DropdownMenuItem>Ver cotización</DropdownMenuItem>
-            <DropdownMenuItem>
-              <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
-                Actualizar cotización
-              </Linking>
-            </DropdownMenuItem>
-            <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              style={{
-                color: 'tomato',
-                fontWeight: 'bold',
-              }}
-              onClick={() => {
-                deleteQuoteRequest(payment.id)
-              }}
-            >
-              Eliminar cotización
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+            {status === 'done'
+              ? 'Aprobado'
+              : status === 'rejected'
+              ? 'Rechazado'
+              : 'Cancelado'}
+          </div>
+        )
+      },
     },
-  },
-]
+    {
+      id: 'actions',
+      enableHiding: false,
+      cell: ({ row }) => {
+        const payment = row.original
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              style={{
+                backgroundColor: 'white',
+              }}
+            >
+              <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(payment.id.toString())
+                }
+              >
+                copiar ID de cotización
+              </DropdownMenuItem>
+              <DropdownMenuItem>Ver cotización</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
+                  Actualizar cotización
+                </Linking>
+              </DropdownMenuItem>
+              <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                style={{
+                  color: 'tomato',
+                  fontWeight: 'bold',
+                }}
+                onClick={async () => {
+                  onDelete(payment.id)
+                }}
+              >
+                Eliminar cotización
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ]
+}
