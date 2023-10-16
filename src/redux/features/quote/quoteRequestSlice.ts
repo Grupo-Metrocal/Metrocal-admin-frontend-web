@@ -20,7 +20,6 @@ export default quoteRequestSlice.reducer
 
 export const deleteItemQuoteRequestRegisters =
   (id: number) => (dispatch: any, getState: any) => {
-    console.log('id', id)
     const { quoteRequest } = getState()
     const { data } = quoteRequest
     const newData = data.filter(
