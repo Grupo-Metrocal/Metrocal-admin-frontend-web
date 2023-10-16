@@ -10,6 +10,7 @@ import Image from 'next/image'
 import metrocalComplete from '@/assets/images/metrocal_completo.svg'
 import { Toaster, toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { signin } from '@/services/auth'
 
 export default function Signin(): JSX.Element {
   const initialValues = {
@@ -24,7 +25,19 @@ export default function Signin(): JSX.Element {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     toast.loading('Inicio de sesión en proceso...')
-    //
+
+    const auth = await signin(values)
+
+    if (auth) {
+      toast.loading('Inicio de sesión exitoso', {
+        description: `Bienvenido ${auth.username} a Metrocal`,
+      })
+      router.push('/dashboard')
+    } else {
+      toast.error('Inicio de sesión fallido', {
+        description: 'Verifica tus credenciales',
+      })
+    }
   }
 
   return (
