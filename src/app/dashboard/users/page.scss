@@ -1,0 +1,76 @@
+.users-sections {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+
+  .search_users-container {
+    width: 35%;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .users-content {
+    width: 65%;
+    padding: 1em;
+    border-radius: 10px;
+    height: 100%;
+
+    &-body {
+      display: grid;
+      padding: 1em;
+      background-color: #fff;
+      border-radius: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1em;
+
+      .user {
+        background-color: #fbfbfb;
+        border-radius: 5px;
+        padding: 1em;
+
+        &-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid #e6e6e6;
+          padding-bottom: 1em;
+
+          &-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+
+            img {
+              border-radius: 50%;
+            }
+
+            &-text {
+              display: flex;
+              flex-direction: column;
+
+              span {
+                font-weight: 600;
+                text-transform: capitalize;
+              }
+
+              small {
+                color: #fff;
+                background-color: #c6c6c6;
+                padding: 0.2em 0.5em;
+                border-radius: 2px;
+                width: fit-content;
+              }
+            }
+          }
+        }
+
+        &-email {
+          padding: 0.8em 0;
+          border-bottom: 1px solid #e6e6e6;
+        }
+      }
+    }
+  }
+}
