@@ -44,7 +44,11 @@ export default function ContactInformation({
   useEffect(() => {
     fetchData({
       url: 'clients',
-    }).then((data) => setClients(data))
+    }).then((data) => {
+      if (data.status === 200) {
+        setClients(data.data)
+      }
+    })
 
     return () => {}
   }, [])

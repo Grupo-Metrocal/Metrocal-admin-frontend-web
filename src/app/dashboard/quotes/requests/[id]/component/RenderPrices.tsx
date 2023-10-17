@@ -38,7 +38,7 @@ export const RenderPrices = () => {
       body: equipment,
     })
 
-    if (response) {
+    if (response.status === 200) {
       toast.success('Equipo aprobado')
     } else {
       dispatch(handleStatus(selectedEquipment?.id || 0, 'waiting'))
@@ -67,7 +67,7 @@ export const RenderPrices = () => {
       body: equipment,
     })
 
-    if (response) {
+    if (response.status === 200) {
       toast.success('Equipo no aprobado')
     } else {
       dispatch(handleStatus(selectedEquipment?.id || 0, 'waiting'))

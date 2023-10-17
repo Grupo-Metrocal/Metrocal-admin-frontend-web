@@ -134,17 +134,18 @@ export default function Home() {
       },
     })
       .then((res) => {
-        if (res.statusCode === 400) {
-          return toast.error('Ocurrió un error al enviar la solicitud', {
-            description: res.message,
+        if (res.status === 200) {
+          toast.success('Solicitud enviada con éxito', {
+            description:
+              'En breve nos pondremos en contacto con usted. Gracias por preferirnos 👋',
           })
+
+          resetState()
+          return
         }
 
-        resetState()
-
-        toast.success('Solicitud enviada con éxito', {
-          description:
-            'En breve nos pondremos en contacto con usted. Gracias por preferirnos 👋',
+        return toast.error('Ocurrió un error al enviar la solicitud', {
+          description: res.message,
         })
       })
       .catch((err) => {
@@ -197,7 +198,9 @@ export default function Home() {
 
     fetchData({ url: `clients/${companySelected}` }).then(
       (data: typeof contactInfValue) => {
-        setContactInfValue(data)
+        if (data.status === 200) {
+          setContactInfValue(data.data)
+        }
       },
     )
   }, [companySelected, setContactInfValue])

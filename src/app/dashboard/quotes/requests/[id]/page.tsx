@@ -203,7 +203,7 @@ const Footer = (): JSX.Element => {
       },
     })
 
-    if (response) {
+    if (response.status === 200) {
       toast.success('Cotización aprobada')
     } else {
       toast.error('Error al aprobar la cotización')

@@ -42,17 +42,15 @@ export default function ClientRegister({ reload }: IProps) {
       body: values,
     })
 
-    if (response.id) {
+    if (response.status === 200) {
       toast.success('Cliente registrado con éxito', {
         description: 'Porfavor recargue la página para ver los cambios',
       })
 
-      if (reload) {
-        reload()
-      }
+      reload && reload()
     } else {
       toast.error('Ops! Ocurrió un error al registrar el cliente', {
-        description: 'Inténtelo nuevamente',
+        description: response.details,
       })
     }
   }

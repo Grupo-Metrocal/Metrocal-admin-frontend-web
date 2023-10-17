@@ -32,7 +32,7 @@ export default function Signin(): JSX.Element {
 
     if (auth) {
       toast.loading('Inicio de sesión exitoso', {
-        description: `Bienvenido ${auth.username} a Metrocal`,
+        description: `Bienvenido ${auth?.data?.username} a Metrocal`,
       })
       router.push('/dashboard')
     } else {
