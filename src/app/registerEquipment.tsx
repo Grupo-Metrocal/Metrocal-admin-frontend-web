@@ -145,8 +145,13 @@ const renderTableTr = ({
           type="number"
           placeholder="0"
           name="count"
-          onChange={(e) => updateEquipmentValue(id, e.target)}
+          onChange={(e) => {
+            if (Number(e.target.value) >= 0) {
+              updateEquipmentValue(id, e.target)
+            }
+          }}
           value={state?.count}
+          min={0}
         />
       </div>
       <div className="table__body__tr__td">
