@@ -24,9 +24,9 @@ export const signin = async ({
     },
   })
 
-  if (response.token) {
-    setCookie('token', response.token)
-    setCookie('username', response.username)
+  if (response.status === 200) {
+    setCookie('token', response.data.token)
+    setCookie('username', response.data.username)
     return response
   } else {
     return false
