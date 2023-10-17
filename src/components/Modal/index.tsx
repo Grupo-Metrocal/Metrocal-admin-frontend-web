@@ -23,6 +23,7 @@ interface ModalProps {
   Component?: React.FC
   buttonStyle?: React.CSSProperties
   size?: keyof typeof SIZE_DIALOG
+  className?: string
 }
 
 export const Modal = ({
@@ -32,10 +33,13 @@ export const Modal = ({
   buttonStyle,
   description,
   size = '3xl',
+  className,
 }: ModalProps) => {
   return (
     <Dialog>
-      <DialogTrigger style={buttonStyle}>{nameButton}</DialogTrigger>
+      <DialogTrigger className={className} style={buttonStyle}>
+        {nameButton}
+      </DialogTrigger>
       <DialogContent
         style={{
           backgroundColor: '#fff',
