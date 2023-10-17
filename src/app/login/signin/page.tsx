@@ -28,6 +28,8 @@ export default function Signin(): JSX.Element {
 
     const auth = await signin(values)
 
+    toast.dismiss()
+
     if (auth) {
       toast.loading('Inicio de sesión exitoso', {
         description: `Bienvenido ${auth.username} a Metrocal`,
