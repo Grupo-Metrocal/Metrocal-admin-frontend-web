@@ -109,6 +109,11 @@ export default function Home() {
       return
     }
 
+    if (equipmentValue.length === 0) {
+      toast.error('Por favor, agregue al menos un equipo')
+      return
+    }
+
     const requestBody = {
       client_id: companySelected,
       equipment_quote_request: equipmentValue.map((item) => {
