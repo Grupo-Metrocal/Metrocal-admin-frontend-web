@@ -89,7 +89,7 @@ export const RenderPrices = () => {
             label="Descuento"
             name="discount"
             value={
-              selectedEquipment.discount
+              selectedEquipment?.discount
                 ? selectedEquipment.discount.toString()
                 : ''
             }

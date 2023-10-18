@@ -27,6 +27,21 @@ export const quoteSlice = createSlice({
     setStatus: (state, action) => {
       state.status = action.payload
     },
+    setComment: (state, action) => {
+      const { id, comment } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            comment,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.comment = comment
+    },
     setDiscount: (state, action) => {
       state.discount = action.payload
     },
@@ -145,6 +160,7 @@ export const {
   setTotalPrice,
   setDiscount,
   setStatus,
+  setComment,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -171,6 +187,11 @@ export const handleDiscount = (id: number, target: any) => (dispatch: any) => {
   dispatch(calculateTotalQuote())
 }
 
+export const handleComment =
+  (id: number, comment: string) => (dispatch: any) => {
+    dispatch(setComment({ id, comment }))
+    dispatch
+  }
 export const calculateTotal = () => (dispatch: any, getState: any) => {
   const { selectedEquipment } = getState().quote
   const { price, count, discount } = selectedEquipment || {
