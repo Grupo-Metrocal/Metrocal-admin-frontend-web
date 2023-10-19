@@ -14,13 +14,43 @@
   .users-content {
     width: 65%;
     padding: 1em;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     height: 100%;
+    background-color: #fff;
+    color: #333;
+    margin-top: -3.3em;
+
+    &-header {
+      h4 {
+        font-size: 1.1em;
+        font-weight: 600;
+        padding-bottom: 0.5em;
+      }
+
+      &-info {
+        border-bottom: 1px solid #e6e6e6;
+        padding: 1em 0;
+        display: flex;
+        gap: 2em;
+        div {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+
+      &-actions {
+        padding: 1.5em 0;
+        margin-bottom: 1em;
+        border-bottom: 1px solid #e6e6e6;
+      }
+    }
 
     &-body {
       display: grid;
-      padding: 1em;
-      background-color: #fff;
       border-radius: 10px;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1em;
@@ -40,6 +70,7 @@
           &-name {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 0.5em;
 
             img {
@@ -59,7 +90,7 @@
                 color: #fff;
                 background-color: #c6c6c6;
                 padding: 0.2em 0.5em;
-                border-radius: 2px;
+                border-radius: 4px;
                 width: fit-content;
               }
             }
@@ -69,6 +100,7 @@
         &-email {
           padding: 0.8em 0;
           border-bottom: 1px solid #e6e6e6;
+          width: 100%;
         }
       }
     }
