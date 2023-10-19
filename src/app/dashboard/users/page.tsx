@@ -7,13 +7,14 @@ import { useEffect, useState } from 'react'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { ListUsers } from './components/listUsers'
+import { Roles } from './components/roles'
 
 export type IUser = {
   id: number
   username: string
   email: string
-  image: string
-  roles: any
+  image?: string
+  roles?: any
 }
 const getUsers = async (token: string) => {
   return await fetchData({
@@ -24,8 +25,26 @@ const getUsers = async (token: string) => {
   })
 }
 
+export interface IRole {
+  id: number
+  name: string
+  description: string
+  createdAt: string
+  users: IUser[]
+}
+
+const getRoles = async (token: string) => {
+  return await fetchData({
+    url: 'roles',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
 export default function Page() {
   const [users, setUsers] = useState<IUser[]>([])
+  const [roles, setRoles] = useState<IRole[]>([])
   const [error, setError] = useState<string>('')
 
   useEffect(() => {
@@ -39,6 +58,16 @@ export default function Page() {
         })
       }
     })
+
+    getRoles(token as string).then((res) => {
+      if (res.status === 200) {
+        setRoles(res.data)
+      } else {
+        toast.error('Error al obtener los roles', {
+          description: res.message as string,
+        })
+      }
+    })
   }, [])
 
   return (
@@ -46,7 +75,7 @@ export default function Page() {
       <div className="users-sections">
         <section className="search_users-container">
           <SearchUsers users={users} />
-          <div className="roles">roles</div>
+          <Roles roles={roles} />
         </section>
 
         <ListUsers users={users} />
