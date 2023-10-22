@@ -58,3 +58,33 @@ export const deleteUser = async (id: number, token: string) => {
     return false
   }
 }
+
+export const assignRole = async ({
+  idUser,
+  idRole,
+  token,
+}: {
+  idUser: number
+  idRole: number
+  token: string
+}) => {
+  toast.loading('Asignando rol')
+  const response = await fetchData({
+    url: `users/assign/${idUser}/role/${idRole}`,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Rol asignado')
+    return true
+  } else {
+    toast.error('Error al asignar rol')
+    return false
+  }
+}
