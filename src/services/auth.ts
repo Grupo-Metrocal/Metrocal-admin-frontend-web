@@ -25,8 +25,12 @@ export const signin = async ({
   })
 
   if (response.status === 200) {
-    setCookie('token', response.data.token)
-    setCookie('username', response.data.username)
+    setCookie('token', response.data.token, {
+      maxAge: 20 * 60 * 60,
+    })
+    setCookie('username', response.data.username, {
+      maxAge: 20 * 60 * 60,
+    })
     return response
   } else {
     return false
