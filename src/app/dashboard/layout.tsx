@@ -47,7 +47,7 @@ export default function RootLayout({
             <header className="header">
               <div className="hello">
                 <h4>
-                  Bienvenid@ <span>{getCookie('username')?.value}</span>
+                  Bienvenid@ <span>{getCookie('username')}</span>
                 </h4>
               </div>
 

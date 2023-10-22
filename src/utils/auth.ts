@@ -13,10 +13,10 @@ const setCookie = (name: string, value: string, days: number) => {
 
 export const getCookie = (name: string, defaultValue: string | null = null) => {
   const cookieStore = cookies()
-  const cookieValue = cookieStore.get(name)
+  const cookieValue = cookieStore.get(name)?.value
 
   // Verifica si la cookie se encontró
-  if (cookieValue !== undefined) {
+  if (cookieValue) {
     return cookieValue
   } else {
     // Si la cookie no se encontró, devuelve un valor por defecto o null
