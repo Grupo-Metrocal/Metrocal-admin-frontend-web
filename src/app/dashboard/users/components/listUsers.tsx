@@ -1,27 +1,33 @@
-import { useState, useEffect } from 'react'
-import type { IUser } from '../page'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
-import metrocalLogo from 'public/metrocal.svg'
 import usersIcon from '@/assets/icons/users.svg'
 import quotesIcon from '@/assets/icons/quotes.svg'
 import { Modal } from '@/components/Modal'
+import { useAppSelector, useAppDispatch } from '@/redux/hook'
+import { ItemListUser } from './ItemListUser'
+import { getCookie } from 'cookies-next'
+import { setUsers } from '@/redux/features/user/usersSlice'
+import { deleteUserFromRole } from '@/redux/features/user/rolesSlice'
 import { deleteUser } from '@/utils/functions'
 
-type Props = {
-  users: IUser[]
-  onDelete: (id: number) => void
-}
-export const ListUsers = ({ users, onDelete }: Props) => {
+export const ListUsers = () => {
+  const users = useAppSelector((state) => state.users.users)
+  const roles = useAppSelector((state) => state.roles.roles)
+
+  const dispatch = useAppDispatch()
+
+  const handleDeleteUser = async (id: number) => {
+    const token = getCookie('token')
+    const response = await deleteUser(id, token as string)
+
+    if (response) {
+      const newUsers = users.filter((user) => user.id !== id)
+      const userDeleted = users.find((user) => user.id === id)
+
+      dispatch(setUsers(newUsers))
+      dispatch(deleteUserFromRole({ user: userDeleted }))
+    }
+  }
+
   return (
     <div className="users-content ">
       <header className="users-content-header">
@@ -51,102 +57,14 @@ export const ListUsers = ({ users, onDelete }: Props) => {
       </header>
       <div className="users-content-body">
         {users?.map((user) => (
-          <ItemListUser onDelete={onDelete} key={user.id} user={user} />
+          <ItemListUser
+            key={user.id}
+            user={user}
+            handleDeleteUser={handleDeleteUser}
+            roles={roles}
+          />
         ))}
       </div>
     </div>
-  )
-}
-
-type PropsUser = {
-  user: IUser
-  onDelete: (id: number) => void
-}
-export const ItemListUser = ({ user, onDelete }: PropsUser) => {
-  const [image, setImage] = useState(metrocalLogo)
-
-  useEffect(() => {
-    if (user.image) {
-      setImage(user.image)
-    }
-  }, [user])
-
-  return (
-    <div className="user">
-      <div className="user-info">
-        <div className="user-info-name">
-          <Image src={image} alt="user" width={50} height={50} />
-          <div className="user-info-name-text">
-            <span
-              className="
-                overflow-hidden
-                whitespace-nowrap
-                overflow-ellipsis
-                w-[150px]
-                "
-              title={user.username}
-            >
-              {user.username}
-            </span>
-            <small>{user.roles[0].name}</small>
-          </div>
-        </div>
-        <div className="actions">
-          <ActionItemUser id={user?.id} onDelete={onDelete} />
-        </div>
-      </div>
-
-      <div
-        className="user-email
-      overflow-hidden
-      whitespace-nowrap
-      overflow-ellipsis
-      "
-        title={user.email}
-      >
-        {user.email}
-      </div>
-    </div>
-  )
-}
-
-type PropsActionItemUser = {
-  id: number
-  onDelete: (id: number) => void
-}
-export const ActionItemUser = ({ id, onDelete }: PropsActionItemUser) => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        style={{
-          backgroundColor: 'white',
-        }}
-      >
-        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Asignar rol</DropdownMenuItem>
-        <DropdownMenuItem>Asignar actividad</DropdownMenuItem>
-        <DropdownMenuItem>Reestablecer contraseña</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          style={{
-            color: 'tomato',
-            fontWeight: 'bold',
-          }}
-          onClick={() => {
-            onDelete(id)
-          }}
-        >
-          Eliminar usuario
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   )
 }
