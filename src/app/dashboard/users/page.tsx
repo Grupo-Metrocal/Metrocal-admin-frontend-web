@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { ListUsers } from './components/listUsers'
 import { Roles } from './components/roles'
+import { deleteUser } from '@/utils/functions'
 
 export type IUser = {
   id: number
@@ -47,6 +48,16 @@ export default function Page() {
   const [roles, setRoles] = useState<IRole[]>([])
   const [error, setError] = useState<string>('')
 
+  const handleDeleteUser = async (id: number) => {
+    const token = getCookie('token')
+    const response = await deleteUser(id, token as string)
+
+    if (response) {
+      const newUsers = users.filter((user) => user.id !== id)
+      setUsers(newUsers)
+    }
+  }
+
   useEffect(() => {
     const token = getCookie('token')
     getUsers(token as string).then((res) => {
@@ -78,7 +89,7 @@ export default function Page() {
           <Roles roles={roles} />
         </section>
 
-        <ListUsers users={users} />
+        <ListUsers users={users} onDelete={handleDeleteUser} />
       </div>
     </LayoutPage>
   )

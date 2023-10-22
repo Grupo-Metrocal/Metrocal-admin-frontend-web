@@ -15,11 +15,13 @@ import metrocalLogo from 'public/metrocal.svg'
 import usersIcon from '@/assets/icons/users.svg'
 import quotesIcon from '@/assets/icons/quotes.svg'
 import { Modal } from '@/components/Modal'
+import { deleteUser } from '@/utils/functions'
 
 type Props = {
   users: IUser[]
+  onDelete: (id: number) => void
 }
-export const ListUsers = ({ users }: Props) => {
+export const ListUsers = ({ users, onDelete }: Props) => {
   return (
     <div className="users-content ">
       <header className="users-content-header">
@@ -49,7 +51,7 @@ export const ListUsers = ({ users }: Props) => {
       </header>
       <div className="users-content-body">
         {users?.map((user) => (
-          <ItemListUser key={user.id} user={user} />
+          <ItemListUser onDelete={onDelete} key={user.id} user={user} />
         ))}
       </div>
     </div>
@@ -58,9 +60,9 @@ export const ListUsers = ({ users }: Props) => {
 
 type PropsUser = {
   user: IUser
-  onClick?: () => void
+  onDelete: (id: number) => void
 }
-export const ItemListUser = ({ user, onClick }: PropsUser) => {
+export const ItemListUser = ({ user, onDelete }: PropsUser) => {
   const [image, setImage] = useState(metrocalLogo)
 
   useEffect(() => {
@@ -90,7 +92,7 @@ export const ItemListUser = ({ user, onClick }: PropsUser) => {
           </div>
         </div>
         <div className="actions">
-          <ActionItemUser />
+          <ActionItemUser id={user?.id} onDelete={onDelete} />
         </div>
       </div>
 
@@ -108,7 +110,11 @@ export const ItemListUser = ({ user, onClick }: PropsUser) => {
   )
 }
 
-export const ActionItemUser = () => {
+type PropsActionItemUser = {
+  id: number
+  onDelete: (id: number) => void
+}
+export const ActionItemUser = ({ id, onDelete }: PropsActionItemUser) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -133,6 +139,9 @@ export const ActionItemUser = () => {
           style={{
             color: 'tomato',
             fontWeight: 'bold',
+          }}
+          onClick={() => {
+            onDelete(id)
           }}
         >
           Eliminar usuario

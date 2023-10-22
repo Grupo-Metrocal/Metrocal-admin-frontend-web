@@ -36,3 +36,25 @@ export const deleteQuoteRequest = async (id: number) => {
     return false
   }
 }
+
+export const deleteUser = async (id: number, token: string) => {
+  toast.loading('Eliminando usuario')
+  const response = await fetchData({
+    url: `users/${id}`,
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Usuario eliminado')
+    return true
+  } else {
+    toast.error('Error al eliminar usuario')
+    return false
+  }
+}
