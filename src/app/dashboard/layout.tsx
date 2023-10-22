@@ -11,6 +11,7 @@ import { CButton } from '@/components/CButton'
 import Link from 'next/link'
 import { ReduxProvider } from '@/redux/providers'
 import { Toaster } from 'sonner'
+import { getCookie } from '@/utils/auth'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -46,7 +47,7 @@ export default function RootLayout({
             <header className="header">
               <div className="hello">
                 <h4>
-                  Bienvenido <span>Francisco G</span>
+                  Bienvenid@ <span>{getCookie('username')?.value}</span>
                 </h4>
               </div>
 
