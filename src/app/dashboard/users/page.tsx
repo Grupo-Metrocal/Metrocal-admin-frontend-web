@@ -9,6 +9,9 @@ import { toast } from 'sonner'
 import { ListUsers } from './components/listUsers'
 import { Roles } from './components/roles'
 import { deleteUser } from '@/utils/functions'
+import { useAppDispatch, useAppSelector } from '@/redux/hook'
+import { setUsers } from '@/redux/features/user/usersSlice'
+import { deleteUserFromRole, setRoles } from '@/redux/features/user/rolesSlice'
 
 export type IUser = {
   id: number
@@ -44,11 +47,12 @@ const getRoles = async (token: string) => {
 }
 
 export default function Page() {
-  const [users, setUsers] = useState<IUser[]>([])
-  const [roles, setRoles] = useState<IRole[]>([])
   const [error, setError] = useState<string>('')
+  const users = useAppSelector((state) => state.users.users)
+  const roles = useAppSelector((state) => state.roles.roles)
+  const dispatch = useAppDispatch()
 
-  const handleDeleteUser = async (id: number) => {
+  const handleAssignRole = async (id: number) => {
     const token = getCookie('token')
     const response = await deleteUser(id, token as string)
 
@@ -62,7 +66,7 @@ export default function Page() {
     const token = getCookie('token')
     getUsers(token as string).then((res) => {
       if (res.status === 200) {
-        setUsers(res.data)
+        dispatch(setUsers(res.data))
       } else {
         toast.error('Error al obtener los usuarios', {
           description: res.message as string,
@@ -72,14 +76,14 @@ export default function Page() {
 
     getRoles(token as string).then((res) => {
       if (res.status === 200) {
-        setRoles(res.data)
+        dispatch(setRoles(res.data))
       } else {
         toast.error('Error al obtener los roles', {
           description: res.message as string,
         })
       }
     })
-  }, [])
+  }, [dispatch])
 
   return (
     <LayoutPage title="Usuarios">
@@ -89,7 +93,7 @@ export default function Page() {
           <Roles roles={roles} />
         </section>
 
-        <ListUsers users={users} onDelete={handleDeleteUser} />
+        <ListUsers />
       </div>
     </LayoutPage>
   )
