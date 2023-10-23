@@ -15,23 +15,34 @@ export const rolesSlice = createSlice({
     addUserToRole: (state, action) => {
       console.log({ action, state })
       const { user } = action.payload
+      const existingRoleIds = new Set(state.roles.map((r) => r.id))
+
       user.roles.forEach((role: any) => {
-        const index = state.roles.findIndex((r) => r.id === role.id)
-        if (index !== -1) {
-          state.roles[index].users.push(user)
+        if (existingRoleIds.has(role.id)) {
+          const roleIndex = state.roles.findIndex((r) => r.id === role.id)
+          const userIndex = state.roles[roleIndex].users.findIndex(
+            (u) => u.id === user.id,
+          )
+
+          if (userIndex === -1) {
+            state.roles[roleIndex].users.push(user)
+          }
         }
       })
     },
     deleteUserFromRole: (state, action) => {
       const { user } = action.payload
+      const existingRoleIds = new Set(state.roles.map((r) => r.id))
+
       user.roles.forEach((role: any) => {
-        const index = state.roles.findIndex((r) => r.id === role.id)
-        if (index !== -1) {
-          const userIndex = state.roles[index].users.findIndex(
+        if (existingRoleIds.has(role.id)) {
+          const roleIndex = state.roles.findIndex((r) => r.id === role.id)
+          const userIndex = state.roles[roleIndex].users.findIndex(
             (u) => u.id === user.id,
           )
+
           if (userIndex !== -1) {
-            state.roles[index].users.splice(userIndex, 1)
+            state.roles[roleIndex].users.splice(userIndex, 1)
           }
         }
       })
