@@ -9,15 +9,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { Checkbox } from '../ui/checkbox'
 
 interface AlertDialogModalProps {
-  nameButton: string
+  nameButton?: string
   title?: string
   description?: string
   onConfirm: () => void
   nameButtonConfirm?: string
   nameButtonCancel?: string
   buttonStyle?: React.CSSProperties
+  useCheckbox?: boolean
+  id?: string
+  nameCheckbox?: string
+  checked?: boolean
+  label?: string
+  useButton?: boolean
 }
 
 export const AlertDialogModal = ({
@@ -28,12 +35,30 @@ export const AlertDialogModal = ({
   nameButtonConfirm,
   nameButtonCancel,
   buttonStyle,
+  useCheckbox,
+  id,
+  nameCheckbox,
+  checked,
+  label,
+  useButton = true,
 }: AlertDialogModalProps) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="c-button" style={buttonStyle}>
-        {nameButton}
-      </AlertDialogTrigger>
+      {nameButton && (
+        <AlertDialogTrigger
+          className={`${useButton && 'c-button'}`}
+          style={buttonStyle}
+        >
+          {nameButton}
+        </AlertDialogTrigger>
+      )}
+      {useCheckbox && (
+        <AlertDialogTrigger className="flex items-center gap-2">
+          <Checkbox checked={checked} id={id} name={nameCheckbox} />
+          <label htmlFor={id}>{label}</label>
+        </AlertDialogTrigger>
+      )}
+
       <AlertDialogContent
         style={{
           backgroundColor: '#fff',
