@@ -11,7 +11,7 @@ import { Roles } from './components/roles'
 import { deleteUser } from '@/utils/functions'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import { setUsers } from '@/redux/features/user/usersSlice'
-import { deleteUserFromRole, setRoles } from '@/redux/features/user/rolesSlice'
+import { setRoles } from '@/redux/features/user/rolesSlice'
 
 export type IUser = {
   id: number
@@ -34,6 +34,8 @@ export interface IRole {
   name: string
   description: string
   createdAt: string
+  label: string
+  priority: number
   users: IUser[]
 }
 
@@ -47,7 +49,6 @@ const getRoles = async (token: string) => {
 }
 
 export default function Page() {
-  const [error, setError] = useState<string>('')
   const users = useAppSelector((state) => state.users.users)
   const roles = useAppSelector((state) => state.roles.roles)
   const dispatch = useAppDispatch()
