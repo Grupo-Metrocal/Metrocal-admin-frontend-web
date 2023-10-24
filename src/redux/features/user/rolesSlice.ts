@@ -47,10 +47,15 @@ export const rolesSlice = createSlice({
         }
       })
     },
+    renameLabel: (state, action) => {
+      const { id, label } = action.payload
+      const roleIndex = state.roles.findIndex((r) => r.id === id)
+      state.roles[roleIndex].label = label
+    },
   },
 })
 
-export const { setRoles, addUserToRole, deleteUserFromRole } =
+export const { setRoles, addUserToRole, deleteUserFromRole, renameLabel } =
   rolesSlice.actions
 
 export default rolesSlice.reducer
