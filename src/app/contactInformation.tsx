@@ -90,13 +90,13 @@ export default function ContactInformation({
             required={true}
           />
 
-          <CInput
+          {/* <CInput
             label="No."
             value={state.no}
             name="no"
             onChange={onChange}
             required={true}
-          />
+          /> */}
 
           <CInput
             label="Teléfono"

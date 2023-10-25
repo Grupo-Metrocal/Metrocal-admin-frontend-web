@@ -156,17 +156,9 @@ export default function Home() {
   }
 
   const isInfoContactValid = () => {
-    const { company_name, address, requested_by, no, phone, email, no_ruc } =
+    const { company_name, address, requested_by, phone, email } =
       contactInfValue
-    if (
-      !company_name ||
-      !address ||
-      !requested_by ||
-      !no ||
-      !phone ||
-      !email ||
-      !no_ruc
-    ) {
+    if (!company_name || !address || !requested_by || !phone || !email) {
       return false
     }
     return true

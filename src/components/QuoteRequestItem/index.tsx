@@ -29,7 +29,7 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
         <span>{formattedDate(quote.created_at)}</span>
       </div>
       <h4>{quote.client.company_name}</h4>
-      <span>{quote.client.no}</span>
+      <span>{quote.no || ''}</span>
       <div className="action">
         <span>{quote.status !== 'pending' && quote.updated_at}</span>
 
