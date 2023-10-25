@@ -62,10 +62,10 @@ export default function ClientRegister({ reload }: IProps) {
       !company_name ||
       !address ||
       !requested_by ||
-      !no ||
+      // !no ||
       !phone ||
-      !email ||
-      !no_ruc
+      !email
+      // !no_ruc
     ) {
       return false
     }
@@ -110,14 +110,14 @@ export default function ClientRegister({ reload }: IProps) {
           type="text"
         />
 
-        <CInput
+        {/* <CInput
           name="no"
           label="No."
           value={values.no}
           onChange={handleInputChange}
           id="no"
           type="text"
-        />
+        /> */}
       </section>
       <section
         style={{
