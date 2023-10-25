@@ -1,6 +1,8 @@
-'use client'
 import type { IClient } from '../page'
+import { useAppSelector } from '@/redux/hook'
+
 export const RenderClient = ({ client }: { client?: IClient }) => {
+  const { no } = useAppSelector((state) => state.quote)
   return (
     <>
       <div>
@@ -19,7 +21,7 @@ export const RenderClient = ({ client }: { client?: IClient }) => {
       </div>
       <div>
         <h5>
-          No: <span>{client?.no}</span>
+          No: <span>{no}</span>
         </h5>
         <h5>
           No RUC: <span>{client?.no_ruc}</span>

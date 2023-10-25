@@ -15,6 +15,7 @@ const initialState = {
   total: 0,
   subtotal: 0,
   status: '',
+  no: '',
 }
 
 export const quoteSlice = createSlice({
@@ -137,6 +138,9 @@ export const quoteSlice = createSlice({
     setDiscountQuote: (state, action) => {
       state.discount = action.payload
     },
+    setNo: (state, action) => {
+      state.no = action.payload
+    },
   },
 })
 
@@ -161,6 +165,7 @@ export const {
   setDiscount,
   setStatus,
   setComment,
+  setNo,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -238,6 +243,7 @@ export const handleDispatchOnLoad = (response: IQuote) => (dispatch: any) => {
   dispatch(setStatus(response.status))
   dispatch(setDiscount(response.general_discount))
   dispatch(setClient(response.client))
+  dispatch(setNo(response.no))
   dispatch(setEquipment(response.equipment_quote_request))
   dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
   dispatch(setIVA(response.tax))

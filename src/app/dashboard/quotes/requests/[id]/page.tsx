@@ -28,6 +28,7 @@ import {
 import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { getCookie } from 'cookies-next'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -65,6 +66,7 @@ export interface IQuote {
   price: number
   created_at: string
   updated_at: any
+  no: string
   equipment_quote_request: IEquipmentQuoteRequest[]
   client: IClient
 }
@@ -83,7 +85,6 @@ const getQuote = async (id: string) => {
 }
 
 export default function Page({ params }: IRoot) {
-  const [error, setError] = useState<boolean>(false)
   const equipment = useAppSelector((state) => state.quote.equipment)
   const client = useAppSelector((state) => state.quote.client)
   const selectedEquipment = useAppSelector(
@@ -109,8 +110,6 @@ export default function Page({ params }: IRoot) {
 
       if (response) {
         dispatch(handleDispatchOnLoad(response))
-      } else {
-        setError(true)
       }
     }
     getQuoteRequest()
@@ -200,6 +199,7 @@ const Footer = (): JSX.Element => {
         tax: Number(IVA),
         general_discount: Number(discount),
         status: 'waiting',
+        // authorized_token: getCookie('token'),
       },
     })
 

@@ -13,6 +13,7 @@ export interface IRoot {
   price: number
   created_at: string
   updated_at: any
+  no?: string
   equipment_quote_request: IEquipmentQuoteRequest[]
   client: IClient
 }
@@ -32,7 +33,6 @@ export interface IEquipmentQuoteRequest {
 export interface IClient {
   id: number
   company_name: string
-  no: string
   phone: string
   address: string
   no_ruc: string
