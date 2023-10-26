@@ -199,7 +199,7 @@ const Footer = (): JSX.Element => {
         tax: Number(IVA),
         general_discount: Number(discount),
         status: 'waiting',
-        // authorized_token: getCookie('token'),
+        authorized_token: getCookie('token'),
       },
     })
 
