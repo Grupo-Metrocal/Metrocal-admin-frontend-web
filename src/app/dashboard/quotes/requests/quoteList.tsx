@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { QuoteRequestItem } from '@/components/QuoteRequestItem'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { getCookie } from 'cookies-next'
 
 export interface IRoot {
   id: number
@@ -58,6 +60,29 @@ export const QuoteList = () => {
   const handleNavigation = (id: number) =>
     router.push(`/dashboard/quotes/requests/${id}`)
 
+  const handleRememberQuote = async (id: number) => {
+    toast.loading('Enviando recordatorio...')
+    const response = await fetchData({
+      url: `quotes/request/${id}/remember`,
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Haz enviado un recordatorio al cliente', {
+        description:
+          'Se ha enviado un correo al cliente para que revise la cotización',
+      })
+    } else {
+      toast.error('No se pudo enviar el recordatorio', {
+        description: response.message || response.details,
+      })
+    }
+  }
+
   useEffect(() => {
     const getQuotes = async () => {
       const quotes = await fetchQuotes()
@@ -82,7 +107,10 @@ export const QuoteList = () => {
       </div>
       <div className="quotes-container__section quotes-container__section--waiting">
         <h3 data-status="waiting">En espera de aprobación</h3>
-        <RendererQuoteList quotes={quotesWaiting} />
+        <RendererQuoteList
+          quotes={quotesWaiting}
+          onClick={handleRememberQuote}
+        />
       </div>
       <div className="quotes-container__section quotes-container__section--done">
         <h3 data-status="done">Aprobadas</h3>
