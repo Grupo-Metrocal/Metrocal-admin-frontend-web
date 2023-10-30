@@ -6,9 +6,7 @@ import Image from 'next/image'
 import metrocalLogo from 'public/metrocal.svg'
 import vectorIcon from '@/assets/icons/vector.svg'
 import notificationIcon from '@/assets/icons/notification.svg'
-import profileImg from '@/assets/images/profile.jpg'
 import { CButton } from '@/components/CButton'
-import Link from 'next/link'
 import { ReduxProvider } from '@/redux/providers'
 import { Toaster } from 'sonner'
 import { getCookie } from '@/utils/auth'
@@ -28,7 +26,7 @@ export default function RootLayout({
         <main className="dashboard-container">
           <section className="sidebar">
             <div className="logo">
-              <Image src={metrocalLogo} alt="Metrocal" />
+              <h3>Metrocal</h3>
             </div>
             <nav>
               {
@@ -55,14 +53,15 @@ export default function RootLayout({
 
               <div className="user">
                 <div className="quote">
-                  <CButton
-                    style={{
-                      boxShadow: 'none',
-                    }}
-                    uppercase={true}
-                  >
-                    <span>+</span> Solicitar cotización
-                  </CButton>
+                  <CSheet position="top">
+                    <CButton
+                      style={{
+                        boxShadow: 'none',
+                      }}
+                    >
+                      <span>+</span> Solicitar cotización
+                    </CButton>
+                  </CSheet>
                 </div>
                 <div className="notification" data-badge="+9">
                   <Image src={notificationIcon} alt="Notification" />
@@ -73,7 +72,7 @@ export default function RootLayout({
                     description="Haz cambios en tu perfil aquí. Haz clic en guardar cuando hayas terminado."
                     Component={<Profile />}
                   >
-                    <Image src={profileImg} alt="Profile" />
+                    <Image src={metrocalLogo} alt="Profile" />
                   </CSheet>
                 </div>
               </div>
