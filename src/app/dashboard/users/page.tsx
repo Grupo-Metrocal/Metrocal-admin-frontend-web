@@ -53,16 +53,6 @@ export default function Page() {
   const roles = useAppSelector((state) => state.roles.roles)
   const dispatch = useAppDispatch()
 
-  const handleAssignRole = async (id: number) => {
-    const token = getCookie('token')
-    const response = await deleteUser(id, token as string)
-
-    if (response) {
-      const newUsers = users.filter((user) => user.id !== id)
-      setUsers(newUsers)
-    }
-  }
-
   useEffect(() => {
     const token = getCookie('token')
     getUsers(token as string).then((res) => {
