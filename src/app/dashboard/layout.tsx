@@ -12,6 +12,8 @@ import Link from 'next/link'
 import { ReduxProvider } from '@/redux/providers'
 import { Toaster } from 'sonner'
 import { getCookie } from '@/utils/auth'
+import { CSheet } from '@/components/Sheet/inde'
+import { Profile } from './ComponentLayout/Profile'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -66,9 +68,13 @@ export default function RootLayout({
                   <Image src={notificationIcon} alt="Notification" />
                 </div>
                 <div className="profile">
-                  <Link href="/profile">
+                  <CSheet
+                    title="Edita tu perfil"
+                    description="Haz cambios en tu perfil aquí. Haz clic en guardar cuando hayas terminado."
+                    Component={<Profile />}
+                  >
                     <Image src={profileImg} alt="Profile" />
-                  </Link>
+                  </CSheet>
                 </div>
               </div>
             </header>
@@ -79,7 +85,7 @@ export default function RootLayout({
         </main>
 
         {/* richColor for colored toast*/}
-        <Toaster expand={true} />
+        <Toaster expand={true} richColors={true} />
       </body>
     </html>
   )
