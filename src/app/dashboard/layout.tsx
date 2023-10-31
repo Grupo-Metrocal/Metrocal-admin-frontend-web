@@ -12,6 +12,7 @@ import { Toaster } from 'sonner'
 import { getCookie } from '@/utils/auth'
 import { CSheet } from '@/components/Sheet/inde'
 import { Profile } from './ComponentLayout/Profile'
+import { QuoteRequest } from './ComponentLayout/quoteRequest'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -53,7 +54,16 @@ export default function RootLayout({
 
               <div className="user">
                 <div className="quote">
-                  <CSheet position="top">
+                  <CSheet
+                    position="top"
+                    styles={{
+                      width: 'fit-content',
+                      margin: '0 auto',
+                    }}
+                    title="Solicitar cotización"
+                    description="Escribe el correo electronico o nombre de la empresa del cliente para solicitar una cotización."
+                    Component={<QuoteRequest />}
+                  >
                     <CButton
                       style={{
                         boxShadow: 'none',
