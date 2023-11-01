@@ -9,7 +9,7 @@ interface LayoutPageProps {
   className?: string
   title: string
   rollBack?: boolean
-  Footer?: () => JSX.Element
+  Footer?: React.FC
   subTitle?: string
 }
 

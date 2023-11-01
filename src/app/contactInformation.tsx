@@ -39,7 +39,7 @@ export default function ContactInformation({
   state,
   setItemSelected,
   handleNextStep,
-}: IContactInformationProps): JSX.Element {
+}: IContactInformationProps) {
   const [clients, setClients] = useState<IClient[]>([])
   useEffect(() => {
     fetchData({

@@ -169,7 +169,7 @@ export default function Page({ params }: IRoot) {
   )
 }
 
-const Footer = (): JSX.Element => {
+const Footer = () => {
   const id = useAppSelector((state) => state.quote.id)
   const total = useAppSelector((state) => state.quote.total)
   const IVA = useAppSelector((state) => state.quote.IVA)
