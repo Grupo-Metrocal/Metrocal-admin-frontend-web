@@ -9,7 +9,7 @@ import type {
   IQuote,
   IEquipmentQuoteRequest,
 } from '@/app/dashboard/quotes/requests/[id]/page'
-import { Footer } from '@/app/page'
+import { FooterComponent } from '@/app/footer'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Toaster, toast } from 'sonner'
 import { useForm } from '@/hooks/useForm'
@@ -323,7 +323,7 @@ export default function Page({ params }: Props) {
         </div>
       </section>
 
-      <Footer />
+      <FooterComponent />
 
       <Toaster />
     </main>
