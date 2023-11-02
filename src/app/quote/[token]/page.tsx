@@ -58,8 +58,6 @@ export default function Page({ params }: Props) {
       responseType: 'blob',
     })
 
-    console.log(response)
-
     if (response) {
       const blob = new Blob([response], { type: 'application/pdf' })
       const link = document.createElement('a')
@@ -73,16 +71,6 @@ export default function Page({ params }: Props) {
   }
 
   const handleApproveQuote = async () => {
-    if (quote?.status === 'done') {
-      toast.error('La cotización ya fue aprobada')
-      return
-    }
-
-    if (quote?.status === 'rejected') {
-      toast.error('La cotización fue rechazada')
-      return
-    }
-
     toast.loading('Aprobando cotización...', {
       description: 'Espere un momento por favor',
     })
@@ -97,12 +85,17 @@ export default function Page({ params }: Props) {
         status: 'done',
       },
     })
-    if (response) {
+
+    toast.dismiss()
+
+    if (response.success) {
       toast.success('Cotización aprobada correctamente', {
         description: 'Pronto nos pondremos en contacto con usted. 😊',
       })
     } else {
-      toast.error('Error al aprobar la cotización')
+      toast.error('Error al aprobar la cotización', {
+        description: response.details,
+      })
     }
   }
 
@@ -360,12 +353,17 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
         status: 'rejected',
       },
     })
-    if (response) {
+
+    toast.dismiss()
+
+    if (response.success) {
       toast.success('La cotización fue rechazada', {
-        description: '😢',
+        description: 'Esperamos poder servirle en otra ocasión. 😊',
       })
     } else {
-      toast.error('Error al rechazar la cotización')
+      toast.error('Error al rechazar la cotización', {
+        description: response.details,
+      })
     }
   }
 
