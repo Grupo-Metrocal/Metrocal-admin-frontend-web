@@ -14,6 +14,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Toaster, toast } from 'sonner'
 import { useForm } from '@/hooks/useForm'
 import { CButton } from '@/components/CButton'
+import { TermsAndConditions } from '@/components/TermsAndConditions'
 
 interface Props {
   params: {
@@ -315,6 +316,7 @@ export default function Page({ params }: Props) {
           </div>
         </div>
       </section>
+      <TermsAndConditions />
 
       <FooterComponent />
 
