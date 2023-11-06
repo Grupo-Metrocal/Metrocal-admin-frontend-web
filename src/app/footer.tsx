@@ -1,3 +1,4 @@
+import './page.scss'
 const NOTE_ITEMS = [
   'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
   'En este campo se definen los puntos específicos de calibración requeridos por el cliente.',
