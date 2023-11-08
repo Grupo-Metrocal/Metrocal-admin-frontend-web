@@ -29,6 +29,8 @@ import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { getCookie } from 'cookies-next'
+import { useLoading } from '@/hooks/useLoading'
+import { Spinner } from '@/components/Spinner'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -87,6 +89,7 @@ const getQuote = async (id: string) => {
 export default function Page({ params }: IRoot) {
   const equipment = useAppSelector((state) => state.quote.equipment)
   const client = useAppSelector((state) => state.quote.client)
+  const { loading, toggleLoading } = useLoading()
   const selectedEquipment = useAppSelector(
     (state) => state.quote.selectedEquipment,
   )
@@ -105,6 +108,7 @@ export default function Page({ params }: IRoot) {
   }
 
   useEffect(() => {
+    toggleLoading()
     const getQuoteRequest = async () => {
       const response: IQuote = await getQuote(id)
 
@@ -112,7 +116,8 @@ export default function Page({ params }: IRoot) {
         dispatch(handleDispatchOnLoad(response))
       }
     }
-    getQuoteRequest()
+    getQuoteRequest.call(null).finally(() => toggleLoading())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dispatch])
 
   return (
@@ -143,15 +148,19 @@ export default function Page({ params }: IRoot) {
                 : equipment?.length * 150 + 'px',
           }}
         >
-          {equipment?.map((equipment, index) => (
-            <RenderEquipment
-              key={index}
-              equipment={equipment}
-              status={equipment.discount > 0}
-              onClick={() => handleSelectEquipment(equipment.id)}
-              selected={selectedEquipment?.id === equipment.id}
-            />
-          ))}
+          {loading ? (
+            equipment?.map((equipment, index) => (
+              <RenderEquipment
+                key={index}
+                equipment={equipment}
+                status={equipment.discount > 0}
+                onClick={() => handleSelectEquipment(equipment.id)}
+                selected={selectedEquipment?.id === equipment.id}
+              />
+            ))
+          ) : (
+            <Spinner />
+          )}
         </section>
         <section className="only-quote__body">
           <div className="only-quote__body__client">
@@ -227,6 +236,7 @@ const Footer = () => {
         price: Number(total),
         tax: Number(IVA),
         general_discount: Number(discount),
+        authorized_token: getCookie('token'),
       },
     })
       .then((response) => {
