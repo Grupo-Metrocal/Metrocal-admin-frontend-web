@@ -6,6 +6,8 @@ import { QuoteRequestItem } from '@/components/QuoteRequestItem'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { getCookie } from 'cookies-next'
+import { useLoading } from '@/hooks/useLoading'
+import { Spinner } from '@/components/Spinner'
 
 export interface IRoot {
   id: number
@@ -54,7 +56,7 @@ export const QuoteList = () => {
   const [quotesPending, setQuotesPending] = useState<IRoot[]>([])
   const [quotesWaiting, setQuotesWaiting] = useState<IRoot[]>([])
   const [quotesDone, setQuotesDone] = useState<IRoot[]>([])
-
+  const { loading, toggleLoading } = useLoading()
   const router = useRouter()
 
   const handleNavigation = (id: number) =>
@@ -84,6 +86,7 @@ export const QuoteList = () => {
   }
 
   useEffect(() => {
+    toggleLoading()
     const getQuotes = async () => {
       const quotes = await fetchQuotes()
 
@@ -96,25 +99,37 @@ export const QuoteList = () => {
       setQuotesDone(quotes.filter((quote: IRoot) => quote.status === 'done'))
     }
 
-    getQuotes()
+    getQuotes.call(null).finally(() => toggleLoading())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div className="quotes-container">
       <div className="quotes-container__section quotes-container__section--pending">
         <h3 data-status="pending">Pendientes de revisión</h3>
-        <RendererQuoteList quotes={quotesPending} onClick={handleNavigation} />
+        {loading ? (
+          <RendererQuoteList
+            quotes={quotesPending}
+            onClick={handleNavigation}
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
       <div className="quotes-container__section quotes-container__section--waiting">
         <h3 data-status="waiting">En espera de aprobación</h3>
-        <RendererQuoteList
-          quotes={quotesWaiting}
-          onClick={handleRememberQuote}
-        />
+        {loading ? (
+          <RendererQuoteList
+            quotes={quotesWaiting}
+            onClick={handleRememberQuote}
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
       <div className="quotes-container__section quotes-container__section--done">
         <h3 data-status="done">Aprobadas</h3>
-        <RendererQuoteList quotes={quotesDone} />
+        {loading ? <RendererQuoteList quotes={quotesDone} /> : <Spinner />}
       </div>
     </div>
   )
