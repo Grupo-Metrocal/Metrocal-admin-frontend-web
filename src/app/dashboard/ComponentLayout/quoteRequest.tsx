@@ -44,8 +44,23 @@ export const QuoteRequest = () => {
       })
   }, [])
 
-  const handleSendQuoteRequest = () => {
-    toast.loading('Funcion en desarrollo...')
+  const handleSendQuoteRequest = async () => {
+    toast.loading('Enviando invitación...')
+    const response = await fetchData({
+      url: `users/invitation-user/${selectedEmail}`,
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+    if (response.success) {
+      toast.success('Invitación enviada')
+    } else {
+      toast.error('No se pudo enviar la invitación', {
+        description: response.message || response.details,
+      })
+    }
   }
 
   return (
