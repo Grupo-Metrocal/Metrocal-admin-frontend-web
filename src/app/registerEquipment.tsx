@@ -127,7 +127,17 @@ const renderTableTr = ({
             Seleccione una opción
           </option>
           <option value="Calibración">Calibración</option>
-          <option value="Verificación">Verificación</option>
+          <option value="Caracterización">Caracterización</option>
+          <option value="Calificación">Calificación</option>
+          <option value="Diagnóstico">Diagnóstico</option>
+          <option value="Informe Técnico">Informe Técnico</option>
+          <option value="Mant. Preventivo">Mant. Preventivo</option>
+          <option value="Mant. Correctivo">Mant. Correctivo</option>
+          <option value="Proyecto">Proyecto</option>
+          <option value="Suministro">Suministro</option>
+          <option value="Verificación de Cal">Verificación de Cal</option>
+          <option value="Otros">Otros</option>
+          <option value="No Aplica (N/A)">No Aplica (N/A)</option>
         </select>
       </div>
       <div className="table__body__tr__td">
@@ -181,6 +191,38 @@ const renderTableTr = ({
             Seleccione una opción
           </option>
           <option value="Comp. Directa Trazable">Comp. Directa Trazable</option>
+          <option value="NI-MCIT-B-01 Acreditado">
+            NI-MCIT-B-01 Acreditado
+          </option>
+          <option value="NI-MCIT-D-01 Acreditado">
+            NI-MCIT-D-01 Acreditado
+          </option>
+          <option value="NI-MCIT-D-02 Acreditado">
+            NI-MCIT-D-02 Acreditado
+          </option>
+          <option value="NI-MCIT-FQ-01 Trazable">NI-MCIT-FQ-01 Trazable</option>
+          <option value="NI-MCIT-M-01 Acreditado">
+            NI-MCIT-M-01 Acreditado
+          </option>
+          <option value="NI-MCIT-P-01 Acreditado">
+            NI-MCIT-P-01 Acreditado
+          </option>
+          <option value="NI-MCIT-P-02 Trazable">NI-MCIT-P-02 Trazable</option>
+          <option value="NI-MCIT-T-01 Acreditado">
+            NI-MCIT-T-01 Acreditado
+          </option>
+          <option value="NI-MCIT-T-02 Trazable">NI-MCIT-T-02 Trazable</option>
+          <option value="NI-MCIT-T-03 Acreditado">
+            NI-MCIT-T-03 Acreditado
+          </option>
+          <option value="NI-MCIT-T-04 Trazable">NI-MCIT-T-04 Trazable</option>
+          <option value="NI-MCIT-T-05 Acreditado">
+            NI-MCIT-T-05 Acreditado
+          </option>
+          <option value="NI-MCIT-V-01 Acreditado">
+            NI-MCIT-V-01 Acreditado
+          </option>
+          <option value="No Aplica (N/A)">No Aplica (N/A)</option>
         </select>
       </div>
       <div className="table__body__tr__td">
