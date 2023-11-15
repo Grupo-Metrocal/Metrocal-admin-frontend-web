@@ -2,6 +2,7 @@ import RemoveIcon from '@/assets/icons/remove.svg'
 import Image from 'next/image'
 import { CButton } from '@/components/CButton'
 import vectorIcon from '@/assets/icons/vector.svg'
+import { AutocompleteInput } from '@/components/AutocompleteInput'
 
 interface IState {
   id: number
@@ -9,7 +10,7 @@ interface IState {
   type_service: string
   count: number
   model: string
-  measuring_range: boolean
+  measuring_range: string
   calibration_method: string
   additional_remarks: string
 }
@@ -50,7 +51,7 @@ export default function RegisterEquipment({
               <span>Cantidad</span>
               <span>Modelo</span>
               <span>Rango de medición</span>
-              <span>Metodo de calibración</span>
+              {/* <span>Metodo de calibración</span> */}
               <span>Puntos de calibración y/u observaciones adicionales</span>
             </div>
           </div>
@@ -115,6 +116,20 @@ const renderTableTr = ({
   updateEquipmentValue,
   state,
 }: ITableTrProps) => {
+  const equipments = [
+    {
+      id: 1,
+      name: 'horno',
+    },
+    {
+      id: 2,
+      name: 'refrigerador',
+    },
+    {
+      id: 3,
+      name: 're microondas',
+    },
+  ]
   return (
     <div className="table__body__tr" key={key} id={'tr' + id.toString()}>
       <div className="table__body__tr__td">
@@ -124,7 +139,7 @@ const renderTableTr = ({
           value={state?.type_service}
         >
           <option value="" disabled>
-            Seleccione una opción
+            Servicio
           </option>
           <option value="Calibración">Calibración</option>
           <option value="Caracterización">Caracterización</option>
@@ -141,19 +156,29 @@ const renderTableTr = ({
         </select>
       </div>
       <div className="table__body__tr__td">
-        <input
-          type="text"
-          placeholder="Nombre del equipo"
+        <AutocompleteInput
+          setItemSelected={(item: any) => {
+            const selected = equipments.find((e) => e.id === item) || {
+              name: '',
+            }
+            const target = { name: 'name', value: selected.name }
+            console.log(target)
+            updateEquipmentValue(id, target)
+          }}
+          onChange={(e) => {
+            updateEquipmentValue(id, e)
+          }}
+          list={equipments}
           name="name"
-          autoComplete="off"
-          onChange={(e) => updateEquipmentValue(id, e.target)}
+          className="register-equipment__body__autocomplete"
           value={state?.name}
+          placeholder="nombre del equipo"
         />
       </div>
       <div className="table__body__tr__td">
         <input
           type="number"
-          placeholder="0"
+          placeholder="1"
           name="count"
           onChange={(e) => {
             if (Number(e.target.value) >= 0) {
@@ -174,68 +199,32 @@ const renderTableTr = ({
         />
       </div>
       <div className="table__body__tr__td">
-        <input
-          type="checkbox"
+        <AutocompleteInput
+          setItemSelected={(item: any) => {
+            const selected = equipments.find((e) => e.id === item) || {
+              name: '',
+            }
+            const target = { name: 'measuring_range', value: selected.name }
+            updateEquipmentValue(id, target)
+          }}
+          onChange={(e) => {
+            updateEquipmentValue(id, e)
+          }}
+          list={equipments}
           name="measuring_range"
-          onChange={(e) => updateEquipmentValue(id, e.target)}
-          checked={state?.measuring_range}
+          value={state?.measuring_range}
+          placeholder="(0 - 100) mm"
         />
       </div>
+
       <div className="table__body__tr__td">
-        <select
-          name="calibration_method"
-          onChange={(e) => updateEquipmentValue(id, e.target)}
-          value={state?.calibration_method}
-        >
-          <option value="" disabled>
-            Seleccione una opción
-          </option>
-          <option value="Comp. Directa Trazable">Comp. Directa Trazable</option>
-          <option value="NI-MCIT-B-01 Acreditado">
-            NI-MCIT-B-01 Acreditado
-          </option>
-          <option value="NI-MCIT-D-01 Acreditado">
-            NI-MCIT-D-01 Acreditado
-          </option>
-          <option value="NI-MCIT-D-02 Acreditado">
-            NI-MCIT-D-02 Acreditado
-          </option>
-          <option value="NI-MCIT-FQ-01 Trazable">NI-MCIT-FQ-01 Trazable</option>
-          <option value="NI-MCIT-M-01 Acreditado">
-            NI-MCIT-M-01 Acreditado
-          </option>
-          <option value="NI-MCIT-P-01 Acreditado">
-            NI-MCIT-P-01 Acreditado
-          </option>
-          <option value="NI-MCIT-P-02 Trazable">NI-MCIT-P-02 Trazable</option>
-          <option value="NI-MCIT-T-01 Acreditado">
-            NI-MCIT-T-01 Acreditado
-          </option>
-          <option value="NI-MCIT-T-02 Trazable">NI-MCIT-T-02 Trazable</option>
-          <option value="NI-MCIT-T-03 Acreditado">
-            NI-MCIT-T-03 Acreditado
-          </option>
-          <option value="NI-MCIT-T-04 Trazable">NI-MCIT-T-04 Trazable</option>
-          <option value="NI-MCIT-T-05 Acreditado">
-            NI-MCIT-T-05 Acreditado
-          </option>
-          <option value="NI-MCIT-V-01 Acreditado">
-            NI-MCIT-V-01 Acreditado
-          </option>
-          <option value="No Aplica (N/A)">No Aplica (N/A)</option>
-        </select>
-      </div>
-      <div className="table__body__tr__td">
-        <select
+        <input
+          type="text"
+          placeholder="Escriba aquí"
           name="additional_remarks"
           onChange={(e) => updateEquipmentValue(id, e.target)}
           value={state?.additional_remarks}
-        >
-          <option value="" disabled>
-            Seleccione una opción
-          </option>
-          <option value="vacio">vacio</option>
-        </select>
+        />
       </div>
 
       <div className="delete-equipment">

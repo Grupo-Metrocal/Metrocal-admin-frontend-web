@@ -31,7 +31,7 @@ export default function Home() {
     type_service: '',
     count: '',
     model: '',
-    measuring_range: false,
+    measuring_range: '',
     calibration_method: '',
     additional_remarks: '',
   }
@@ -66,10 +66,6 @@ export default function Home() {
 
   const updateEquipmentValue = (id: number, target: any) => {
     let { name, value } = target
-
-    if (name === 'measuring_range') {
-      value = target.checked
-    }
 
     if (name === 'count') {
       value === '' ? (value = '') : (value = parseInt(value))
@@ -163,7 +159,8 @@ export default function Home() {
         item.name === '' ||
         item.count === '' ||
         item.model === '' ||
-        item.type_service === '',
+        item.type_service === '' ||
+        item.measuring_range === '',
     )
 
     if (equipment.length > 0) {
