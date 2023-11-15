@@ -43,6 +43,36 @@ export const quoteSlice = createSlice({
       state.equipment = equipment
       state.selectedEquipment.comment = comment
     },
+    setMeasuringRange: (state, action) => {
+      const { id, measuring_range } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            measuring_range,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.measuring_range = measuring_range
+    },
+    setCalibrationRethod: (state, action) => {
+      const { id, calibration_method } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            calibration_method,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.calibration_method = calibration_method
+    },
     setDiscount: (state, action) => {
       state.discount = action.payload
     },
@@ -166,6 +196,8 @@ export const {
   setStatus,
   setComment,
   setNo,
+  setMeasuringRange,
+  setCalibrationRethod,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
