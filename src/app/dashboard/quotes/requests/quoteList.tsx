@@ -45,9 +45,15 @@ export interface IClient {
   created_at: string
 }
 
-const fetchQuotes = async () => {
+const fetchQuotes = async ({
+  limit,
+  offset,
+}: {
+  limit: number
+  offset: number
+}) => {
   const response = await fetchData({
-    url: 'quotes/request/all',
+    url: `quotes/request/all?limit=${limit}&offset=${offset}`,
   })
   return response
 }
@@ -56,6 +62,7 @@ export const QuoteList = () => {
   const [quotesPending, setQuotesPending] = useState<IRoot[]>([])
   const [quotesWaiting, setQuotesWaiting] = useState<IRoot[]>([])
   const [quotesDone, setQuotesDone] = useState<IRoot[]>([])
+  const [page, setPage] = useState(0)
   const { loading, toggleLoading } = useLoading()
   const router = useRouter()
 
@@ -88,15 +95,19 @@ export const QuoteList = () => {
   useEffect(() => {
     toggleLoading()
     const getQuotes = async () => {
-      const quotes = await fetchQuotes()
+      const response = await fetchQuotes({ limit: 5, offset: page })
 
-      setQuotesPending(
-        quotes.filter((quote: IRoot) => quote.status === 'pending'),
-      )
-      setQuotesWaiting(
-        quotes.filter((quote: IRoot) => quote.status === 'waiting'),
-      )
-      setQuotesDone(quotes.filter((quote: IRoot) => quote.status === 'done'))
+      if (response.success) {
+        setQuotesPending(
+          response.data.filter((quote: IRoot) => quote.status === 'pending'),
+        )
+        setQuotesWaiting(
+          response.data.filter((quote: IRoot) => quote.status === 'waiting'),
+        )
+        setQuotesDone(
+          response.data.filter((quote: IRoot) => quote.status === 'done'),
+        )
+      }
     }
 
     getQuotes.call(null).finally(() => toggleLoading())
