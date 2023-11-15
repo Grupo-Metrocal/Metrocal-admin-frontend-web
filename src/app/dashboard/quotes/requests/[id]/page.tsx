@@ -38,7 +38,7 @@ export interface IEquipmentQuoteRequest {
   type_service: string
   count: number
   model: string
-  measuring_range: boolean
+  measuring_range: string
   calibration_method: string
   additional_remarks: string
   discount: number
