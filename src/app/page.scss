@@ -33,29 +33,30 @@
         min-width: 100px;
 
         img {
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
         }
       }
       &-title {
-        width: calc(66% - 2em);
+        width: calc(100% - (17% + 17%) - 2em);
         h4 {
           display: flex;
           flex-direction: column;
           align-items: center;
           font-weight: bold;
+          font-size: 0.9em;
         }
       }
 
       &-code {
-        width: 14%;
+        width: 17%;
         min-width: 100px;
-
         h5 {
           display: flex;
           flex-direction: column;
           align-items: flex-end;
           font-weight: bold;
+          font-size: 0.9em;
           span {
             text-align: right;
           }
@@ -203,10 +204,8 @@
               padding: 0.8em;
               border: 1px solid #ccc;
               border-radius: 5px;
-              font-size: 1em;
+              font-size: 0.9em;
               transition: all 0.3s ease-in-out;
-
-              // styled list of options
 
               &:focus {
                 border-color: $primary-color;
@@ -268,7 +267,8 @@
     outline: none;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
+    width: 260px;
   }
 
   .active {
@@ -280,20 +280,19 @@
 
 footer {
   background-color: #fcfcfc;
-  margin-top: 1em;
   @include padding-control();
   padding-top: 2em;
   width: 100%;
   padding-bottom: 2em;
-  margin: auto;
+  margin: 2em auto;
 
   .main-footer__version {
     display: flex;
-    justify-content: space-between;
-    margin: 1.5em 0;
+    justify-content: center;
+    margin: 0 0 1.5em 0;
     h5 {
       margin-top: 2em;
-      font-weight: 400;
+      font-weight: 600;
     }
   }
 
@@ -302,7 +301,7 @@ footer {
     justify-content: space-between;
 
     span {
-      font-weight: 600;
+      font-weight: 5 00;
     }
 
     &__review {
