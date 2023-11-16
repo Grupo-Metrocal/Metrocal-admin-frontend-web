@@ -8,6 +8,7 @@ li {
   background-color: #f7f7f7;
   min-height: 100vh;
   display: flex;
+  font-size: 0.9em;
 
   .sidebar {
     background-color: #fff;
@@ -39,8 +40,8 @@ li {
           color: #999;
           margin-bottom: 0.5em;
           font-size: 0.8em;
-          font-family: 400;
           padding: 0 1.8em;
+          font-weight: 600;
         }
 
         .nav-links-list {
@@ -49,9 +50,20 @@ li {
           gap: 1.3em;
 
           .active {
-            border-radius: 10px;
-            background-color: #fcfcfc;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            background: rgb($primary-color, 0.1);
+            position: relative;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 5px;
+              height: 100%;
+              background-color: $primary-color;
+              border-radius: 2px;
+            }
           }
 
           a {
@@ -103,7 +115,7 @@ li {
               transform: translateX(2em);
               width: calc(100% - 2em);
               font-size: 0.9em;
-              font-weight: 400;
+              font-weight: 500;
               letter-spacing: 1px;
               margin-top: 1em;
             }
@@ -122,7 +134,7 @@ li {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 1em 1.5em;
+      padding: 0.7em 1.5em;
 
       h4 {
         font-weight: 600;
@@ -131,12 +143,16 @@ li {
       .user {
         display: flex;
         align-items: center;
-        gap: 3em;
+        gap: 2em;
 
         .notification {
           position: relative;
           cursor: pointer;
-
+          img {
+            width: 1.4em;
+            height: 1.4em;
+            object-fit: contain;
+          }
           &::before {
             content: attr(data-badge);
             position: absolute;
