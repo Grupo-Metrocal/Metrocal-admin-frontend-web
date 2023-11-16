@@ -90,6 +90,7 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="company_name"
           type="text"
+          required
         />
 
         <CInput
@@ -99,6 +100,8 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="address"
           type="text"
+          required
+          placeholder="Dirección de la empresa"
         />
 
         <CInput
@@ -108,6 +111,8 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="requested_by"
           type="text"
+          required
+          placeholder="Ej. Juan Pérez"
         />
 
         {/* <CInput
@@ -131,6 +136,8 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="phone"
           type="number"
+          required
+          placeholder="12345678"
         />
 
         <CInput
@@ -140,6 +147,8 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="email"
           type="email"
+          required
+          placeholder="Correo electrónico de contacto"
         />
 
         <CInput
@@ -149,6 +158,7 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="no_ruc"
           type="text"
+          placeholder="No. RUC (opcional)"
         />
       </section>
       <CButton

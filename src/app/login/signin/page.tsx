@@ -60,6 +60,7 @@ export default function Signin(): JSX.Element {
             name="email"
             onChange={handleInputChange}
             icon={mailIcon}
+            required
           />
 
           <CInput
@@ -70,6 +71,7 @@ export default function Signin(): JSX.Element {
             name="password"
             onChange={handleInputChange}
             icon={lockIcon}
+            required
           />
 
           <div className="signin-login__remember">
@@ -89,7 +91,7 @@ export default function Signin(): JSX.Element {
 
           <footer className="signin-login__privacy">
             <Link href="/">
-              <small>Politicas de privacidad</small>
+              <span>Politicas de privacidad</span>
             </Link>
             <span>Metrocal</span>
           </footer>

@@ -80,6 +80,7 @@ export default function ContactInformation({
             onChange={onChange}
             setItemSelected={setItemSelected}
             required={true}
+            placeholder="Seleccione una empresa"
           />
 
           <CInput
@@ -88,6 +89,7 @@ export default function ContactInformation({
             name="requested_by"
             onChange={onChange}
             required={true}
+            placeholder="Nombre de la persona que solicita el servicio"
           />
 
           {/* <CInput
@@ -105,6 +107,7 @@ export default function ContactInformation({
             onChange={onChange}
             type="number"
             required={true}
+            placeholder="Teléfono de la empresa o persona que solicita el servicio"
           />
         </section>
         <section className="contact-information__body__section-right">
@@ -115,6 +118,7 @@ export default function ContactInformation({
             onChange={onChange}
             type="email"
             required={true}
+            placeholder="Correo electrónico de contacto"
           />
 
           <CInput
@@ -123,6 +127,7 @@ export default function ContactInformation({
             name="address"
             onChange={onChange}
             required={true}
+            placeholder="Dirección de la empresa"
           />
 
           <CInput
@@ -131,6 +136,7 @@ export default function ContactInformation({
             name="no_ruc"
             onChange={onChange}
             required={true}
+            placeholder="Número de RUC de la empresa"
           />
 
           <div className="contact-information__body__section-right__button">

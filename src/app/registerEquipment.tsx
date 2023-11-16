@@ -139,7 +139,7 @@ const renderTableTr = ({
           value={state?.type_service}
         >
           <option value="" disabled>
-            Servicio
+            Seleccione
           </option>
           <option value="Calibración">Calibración</option>
           <option value="Caracterización">Caracterización</option>
