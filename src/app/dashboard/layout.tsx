@@ -82,7 +82,12 @@ export default function RootLayout({
                     description="Haz cambios en tu perfil aquí. Haz clic en guardar cuando hayas terminado."
                     Component={<Profile />}
                   >
-                    <Image src={metrocalLogo} alt="Profile" />
+                    <div className="flex gap-2 justify-center items-center">
+                      <Image src={metrocalLogo} alt="Profile" />
+                      <span className="font-bold">
+                        {getCookie('username')?.split(' ')[0]}
+                      </span>
+                    </div>
                   </CSheet>
                 </div>
               </div>
