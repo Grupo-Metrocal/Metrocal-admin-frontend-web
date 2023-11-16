@@ -9,8 +9,14 @@ const NOTE_ITEMS = [
 
 type TFooterComponent = {
   requested_by?: string
+  approved_by?: string
+  approved_date?: string
 }
-export const FooterComponent = ({ requested_by }: TFooterComponent) => {
+export const FooterComponent = ({
+  requested_by,
+  approved_by,
+  approved_date,
+}: TFooterComponent) => {
   return (
     <footer>
       <div className="main-footer__signature">
@@ -24,12 +30,18 @@ export const FooterComponent = ({ requested_by }: TFooterComponent) => {
         <div className="main-footer__signature__review">
           <div>
             <span className="font-medium">Revisado y aprobado por: </span>
-            <span>____________________</span>
+            <span>
+              {' '}
+              {approved_by ? `__${approved_by}__` : '____________________'}
+            </span>
           </div>
           <br />
           <div>
             <span className="font-medium">Fecha de aprobación: </span>
-            <span>____________________</span>
+            <span>
+              {' '}
+              {approved_date ? `__${approved_date}__` : '____________________'}
+            </span>
           </div>
         </div>
       </div>
