@@ -119,10 +119,12 @@ export const TermsAndConditions = () => {
         </li>
 
         <li>
-          <p>
-            Para realizar cancelación de servicios, favor elaborar cheque a
-            nombre de Metrología Consultores de Nicaragua, S.A. o depositar en
-            las siguientes cuentas bancarias.
+          <div>
+            <p>
+              Para realizar cancelación de servicios, favor elaborar cheque a
+              nombre de Metrología Consultores de Nicaragua, S.A. o depositar en
+              las siguientes cuentas bancarias.
+            </p>
             <h4 className="mt-4">Dólares:</h4>
             <ul>
               <li>Lafise # 711202382</li>
@@ -134,7 +136,7 @@ export const TermsAndConditions = () => {
               <li>Bac # 358-61683-7</li>
               <li>Banpro # 10010207782463</li>
             </ul>
-          </p>
+          </div>
         </li>
 
         <li>
