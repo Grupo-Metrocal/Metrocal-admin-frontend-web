@@ -267,7 +267,7 @@ export default function Home() {
         <section className="main-body">{RenderStep()}</section>
       </main>
 
-      <FooterComponent />
+      <FooterComponent requested_by={contactInfValue.requested_by} />
       <Toaster />
     </>
   )
