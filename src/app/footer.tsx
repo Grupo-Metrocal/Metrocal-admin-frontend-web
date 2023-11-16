@@ -6,30 +6,35 @@ const NOTE_ITEMS = [
   'En este campo se define el tipo de servicio requerido por el cliente.',
   'La tabla anterior es modificable. se pueden anexar las celdas necesarias hasta completar los datos de los equioos a calibrar.',
 ]
-export const FooterComponent = () => {
+
+type TFooterComponent = {
+  requested_by?: string
+}
+export const FooterComponent = ({ requested_by }: TFooterComponent) => {
   return (
     <footer>
       <div className="main-footer__signature">
         <div>
-          <span>Elaborado por: </span>
-          <span>__________NE__________</span>
+          <span className="font-medium">Solicitado por: </span>
+          <span>
+            {requested_by ? `__${requested_by}__` : '____________________'}
+          </span>
         </div>
 
         <div className="main-footer__signature__review">
           <div>
-            <span>Revisado y aprobado por: </span>
-            <span>______________________</span>
+            <span className="font-medium">Revisado y aprobado por: </span>
+            <span>____________________</span>
           </div>
           <br />
           <div>
-            <span>Fecha de aprobación: </span>
-            <span>______________________</span>
+            <span className="font-medium">Fecha de aprobación: </span>
+            <span>____________________</span>
           </div>
         </div>
       </div>
 
       <div className="main-footer__version">
-        <h5>versión 1 Aprobado en NI-MCPR-02 v7 con fecha 2019-10-18</h5>
         <h5>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</h5>
       </div>
 
