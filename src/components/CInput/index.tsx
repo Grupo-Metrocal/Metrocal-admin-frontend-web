@@ -32,7 +32,11 @@ export const CInput = ({
 }: CInputProps) => {
   return (
     <div className={`c-input ${className}`}>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label className={`${required ? 'required' : ''}`} htmlFor={id}>
+          {label}
+        </label>
+      )}
 
       <div className="c-input__container">
         {icon && <Image className="icon" src={icon} alt="icon" />}
