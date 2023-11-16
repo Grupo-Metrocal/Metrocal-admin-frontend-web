@@ -16,7 +16,7 @@
       position: relative;
       padding-left: 1em;
       font-weight: 700;
-      font-size: 1.2em;
+      font-size: 1em;
       color: #333;
       &::after {
         content: '';
@@ -61,7 +61,33 @@
         right: -2em;
         width: 0;
         height: 100%;
-        border-right: 3px dashed #999;
+        border-right: 2px solid #c2c2c2;
+      }
+    }
+  }
+
+  &__section--done,
+  &__section--waiting {
+    .quotes-container__list {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        // dashed line right
+        top: 0;
+        left: -2.15em;
+        width: 0;
+        height: 100%;
+        border-right: 2px solid #c2c2c2;
+      }
+    }
+  }
+
+  &__section--waiting {
+    .quotes-container__list {
+      &::after {
+        left: -2.1em;
       }
     }
   }
