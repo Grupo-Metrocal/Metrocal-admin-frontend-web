@@ -83,12 +83,4 @@
       }
     }
   }
-
-  &__section--waiting {
-    .quotes-container__list {
-      &::after {
-        left: -2.1em;
-      }
-    }
-  }
 }
