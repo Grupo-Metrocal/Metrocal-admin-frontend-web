@@ -30,8 +30,15 @@ const getQuote = async (token: string) => {
   return response
 }
 
+interface IUser {
+  username: string
+}
+interface TQuoteByToken extends IQuote {
+  approved_by: IUser
+}
+
 export default function Page({ params }: Props) {
-  const [quote, setQuote] = useState<IQuote>()
+  const [quote, setQuote] = useState<TQuoteByToken>()
   const [error, setError] = useState<boolean>(false)
   const token = params.token
 
@@ -76,7 +83,7 @@ export default function Page({ params }: Props) {
       description: 'Espere un momento por favor',
     })
     const response = await fetchData({
-      url: 'quotes/request/change-status',
+      url: 'quotes/request/approved-rejected/client',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -114,14 +121,14 @@ export default function Page({ params }: Props) {
         <div className="main-title">
           <h4>
             <span>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</span>
-            <span>RUC : J0310000169420</span>
+            <span>RUC : {quote?.client.no_ruc}</span>
             <span>SOLICITUD DE SERVICIOS</span>
           </h4>
         </div>
         <div className="main-code">
           <h5>
             código
-            <span>NI-R02-MCPR-02</span>
+            <span>{quote?.no}</span>
           </h5>
         </div>
       </header>
@@ -152,7 +159,7 @@ export default function Page({ params }: Props) {
 
         <h4>
           <span className="font-bold">No: </span>
-          <span className="font-medium">{quote?.client.no}</span>
+          <span className="font-medium">{quote?.no}</span>
         </h4>
 
         <h4>
@@ -184,7 +191,8 @@ export default function Page({ params }: Props) {
               <span>Equipo</span>
               <span>Cantidad</span>
               <span>Método de calibración</span>
-              <span>Precio unitario (USD)</span>
+              <span>Descuento U. (%)</span>
+              <span>Precio U. (USD)</span>
               <span>Precio total (USD)</span>
             </div>
           </div>
@@ -196,6 +204,7 @@ export default function Page({ params }: Props) {
                   <span>{equipment.name}</span>
                   <span>{equipment.count}</span>
                   <span>{equipment.calibration_method || 'N/A'}</span>
+                  <span>{equipment.discount}%</span>
                   <span>{equipment.price}$</span>
                   <span>{equipment.total}$</span>
                 </div>
@@ -318,7 +327,11 @@ export default function Page({ params }: Props) {
       </section>
       <TermsAndConditions />
 
-      <FooterComponent />
+      <FooterComponent
+        requested_by={quote?.client.requested_by}
+        approved_by={quote?.approved_by.username}
+        approved_date={quote?.updated_at}
+      />
 
       <Toaster />
     </main>
@@ -345,7 +358,7 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
       description: 'Espere un momento por favor',
     })
     const response = await fetchData({
-      url: 'quotes/request/change-status',
+      url: 'quotes/request/approved-rejected/client',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
