@@ -71,6 +71,8 @@ export interface IQuote {
   no: string
   equipment_quote_request: IEquipmentQuoteRequest[]
   client: IClient
+  comment: string
+  options: string[]
 }
 
 export interface IRoot {
