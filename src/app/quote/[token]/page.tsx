@@ -351,12 +351,20 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
     }
   }
 
+  const isButtonDisabled = () => {
+    return checkeds.length === 0 && values.comment.trim() === '';
+  };
+
   const handleRejectQuote = async () => {
     const commentRejected = `${values.comment} - ${checkeds.join(', ')}`
 
     toast.loading('Rechazando cotización...', {
       description: 'Espere un momento por favor',
     })
+
+    quote.comment = values.comment
+    quote.options = checkeds
+
     const response = await fetchData({
       url: 'quotes/request/approved-rejected/client',
       method: 'POST',
@@ -365,6 +373,8 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
       },
       body: {
         id: quote?.id,
+        comment: quote.comment,
+        options: quote.options,
         status: 'rejected',
       },
     })
@@ -427,6 +437,7 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
           style={{
             backgroundColor: 'tomato',
           }}
+          disabled={isButtonDisabled()}
         >
           No aprobar
         </CButton>
