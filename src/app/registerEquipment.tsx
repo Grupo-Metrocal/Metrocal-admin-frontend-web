@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { CButton } from '@/components/CButton'
 import vectorIcon from '@/assets/icons/vector.svg'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
+import type { TAuthorizedServices } from './page'
 
 interface IState {
   id: number
@@ -21,6 +22,7 @@ interface IRegisterEquipmentProps {
   handleBackStep: () => void
   handleSubmitQuoteRequest: () => void
   state: any
+  authorizedServices: TAuthorizedServices[]
 }
 
 export default function RegisterEquipment({
@@ -30,6 +32,7 @@ export default function RegisterEquipment({
   updateEquipmentValue,
   handleBackStep,
   handleSubmitQuoteRequest,
+  authorizedServices,
 }: IRegisterEquipmentProps) {
   return (
     <div className="register-equipment">
@@ -64,6 +67,7 @@ export default function RegisterEquipment({
                 onChange: () => {},
                 updateEquipmentValue,
                 state: item,
+                authorizedServices: authorizedServices,
               })
             })}
 
@@ -107,6 +111,7 @@ interface ITableTrProps {
   deleteEquipment: (id: number) => void
   updateEquipmentValue: (id: number, target: any) => void
   state?: IState
+  authorizedServices: TAuthorizedServices[]
 }
 
 const renderTableTr = ({
@@ -115,21 +120,28 @@ const renderTableTr = ({
   deleteEquipment,
   updateEquipmentValue,
   state,
+  authorizedServices,
 }: ITableTrProps) => {
-  const equipments = [
-    {
-      id: 1,
-      name: 'horno',
+  const equipmentList = authorizedServices.map(
+    (service: TAuthorizedServices) => {
+      return state?.type_service === service.service && service.equipment
+        ? {
+            id: service.id,
+            name: service.equipment,
+          }
+        : { id: 0, name: '' }
     },
-    {
-      id: 2,
-      name: 'refrigerador',
-    },
-    {
-      id: 3,
-      name: 're microondas',
-    },
-  ]
+  )
+
+  const rangeList = authorizedServices.map((service: TAuthorizedServices) => {
+    return state?.name === service.equipment && service.measuring_range !== ''
+      ? {
+          id: service.id,
+          name: service.measuring_range,
+        }
+      : { id: 0, name: '' }
+  })
+
   return (
     <div className="table__body__tr" key={key} id={'tr' + id.toString()}>
       <div className="table__body__tr__td">
@@ -158,21 +170,21 @@ const renderTableTr = ({
       <div className="table__body__tr__td">
         <AutocompleteInput
           setItemSelected={(item: any) => {
-            const selected = equipments.find((e) => e.id === item) || {
+            const selected = equipmentList.find((e: any) => e.id === item) || {
               name: '',
             }
             const target = { name: 'name', value: selected.name }
-            console.log(target)
             updateEquipmentValue(id, target)
           }}
           onChange={(e) => {
             updateEquipmentValue(id, e)
           }}
-          list={equipments}
+          list={equipmentList}
           name="name"
           className="register-equipment__body__autocomplete"
           value={state?.name}
           placeholder="nombre del equipo"
+          keyList="equipmentList"
         />
       </div>
       <div className="table__body__tr__td">
@@ -201,7 +213,7 @@ const renderTableTr = ({
       <div className="table__body__tr__td">
         <AutocompleteInput
           setItemSelected={(item: any) => {
-            const selected = equipments.find((e) => e.id === item) || {
+            const selected = rangeList.find((e: any) => e.id === item) || {
               name: '',
             }
             const target = { name: 'measuring_range', value: selected.name }
@@ -210,10 +222,11 @@ const renderTableTr = ({
           onChange={(e) => {
             updateEquipmentValue(id, e)
           }}
-          list={equipments}
+          list={rangeList}
           name="measuring_range"
           value={state?.measuring_range}
           placeholder="(0 - 100) mm"
+          keyList="rangeList"
         />
       </div>
 
