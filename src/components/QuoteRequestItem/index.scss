@@ -2,15 +2,16 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  gap: 1.2em;
+  gap: 1em;
   margin-bottom: 2em;
   padding: 1.5em;
   position: relative;
   border-radius: 10px;
-  height: 200px;
+  height: 185px;
   color: #333;
   font-weight: 600;
   font-size: 0.9em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   h4 {
     font-weight: 700;
     font-size: 1em;
@@ -48,6 +49,7 @@
   .action {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     span {
       color: #999;
     }
