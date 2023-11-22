@@ -1,6 +1,7 @@
 import './index.scss'
-import type { IRoot } from '@/app/dashboard/quotes/requests/quoteList'
+import type { IRoot } from '@/app/dashboard/quotes/requests/page'
 import { CButton } from '../CButton'
+import { formatDate } from '@/utils/formatDate'
 
 interface IProps {
   quote: IRoot
@@ -15,9 +16,6 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
     rejected: 'Rechazado',
   }
 
-  const formattedDate = (date: string) =>
-    date.split('T')[0].split('-').reverse().join('/')
-
   return (
     <div
       key={quote.id}
@@ -26,12 +24,13 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
     >
       <div className="status-info">
         <span>{QUOTE_STATUS[quote.status]}</span>
-        <span>{formattedDate(quote.created_at)}</span>
+        <span>{formatDate(quote.created_at)}</span>
       </div>
       <h4>{quote.client.company_name}</h4>
       <span>{quote.no || ''}</span>
       <div className="action">
-        <span>{quote.status !== 'pending' && quote.updated_at}</span>
+        {/* <span>{quote.status !== 'pending' && quote.updated_at}</span> */}
+        <span>Servicios: {quote.equipment_quote_request.length}</span>
 
         <CButton
           onClick={() => onClick && onClick(quote.id)}
