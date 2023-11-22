@@ -15,6 +15,17 @@ import { Modal } from '@/components/Modal'
 import { useRouter } from 'next/navigation'
 import { FooterComponent } from './footer'
 
+export type TAuthorizedServices = {
+  id: number
+  method: string
+  service: string
+  equipment: string
+  measuring_range: string
+  accuracy: string
+  document_delivered: string
+  price: number
+}
+
 export default function Home() {
   const initialContactInformationForm = {
     company_name: '',
@@ -48,6 +59,10 @@ export default function Home() {
     (typeof initialEquipmentForm)[]
   >([initialEquipmentForm])
   const [stepCounter, setStepCounter] = useState(1)
+
+  const [authorizedServices, setAuthorizedServices] = useState<
+    TAuthorizedServices[]
+  >([])
 
   const handleAddEquipment = () => {
     const id: number = codeGenerator({ length: 4 })
@@ -187,6 +202,22 @@ export default function Home() {
     )
   }, [companySelected, setContactInfValue])
 
+  useEffect(() => {
+    toast.loading('Cargando información...')
+    fetchData({ url: 'configuration/all/authorized_services' })
+      .then((res) => {
+        if (res.status === 200) {
+          setAuthorizedServices(res.data)
+        } else {
+          toast.error('Ocurrió un error al cargar la información')
+        }
+      })
+      .catch((err) => {
+        toast.error('Ocurrió un error al cargar la información')
+      })
+      .finally(() => toast.dismiss())
+  }, [])
+
   const handleNextStep = () => setStepCounter(stepCounter + 1)
   const handleBackStep = () => setStepCounter(stepCounter - 1)
 
@@ -210,6 +241,7 @@ export default function Home() {
             updateEquipmentValue={updateEquipmentValue}
             handleBackStep={handleBackStep}
             handleSubmitQuoteRequest={handleSubmitQuoteRequest}
+            authorizedServices={authorizedServices}
           />
         )
     }
