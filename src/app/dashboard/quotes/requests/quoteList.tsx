@@ -1,69 +1,25 @@
 'use client'
 import './index.scss'
-import { useEffect, useState } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { QuoteRequestItem } from '@/components/QuoteRequestItem'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { getCookie } from 'cookies-next'
-import { useLoading } from '@/hooks/useLoading'
 import { Spinner } from '@/components/Spinner'
+import type { IRoot } from './page'
 
-export interface IRoot {
-  id: number
-  status: string
-  general_discount: number
-  tax: number
-  price: number
-  created_at: string
-  updated_at: any
-  no?: string
-  equipment_quote_request: IEquipmentQuoteRequest[]
-  client: IClient
+type TQuotesProps = {
+  quotesPending: IRoot[]
+  quotesWaiting: IRoot[]
+  quotesDone: IRoot[]
+  loading: boolean
 }
-
-export interface IEquipmentQuoteRequest {
-  id: number
-  name: string
-  type_service: string
-  count: number
-  model: string
-  measuring_range: boolean
-  calibration_method: string
-  additional_remarks: string
-  discount: number
-}
-
-export interface IClient {
-  id: number
-  company_name: string
-  phone: string
-  address: string
-  no_ruc: string
-  email: string
-  requested_by: string
-  created_at: string
-}
-
-const fetchQuotes = async ({
-  limit,
-  offset,
-}: {
-  limit: number
-  offset: number
-}) => {
-  const response = await fetchData({
-    url: `quotes/request/all?limit=${limit}&offset=${offset}`,
-  })
-  return response
-}
-
-export const QuoteList = () => {
-  const [quotesPending, setQuotesPending] = useState<IRoot[]>([])
-  const [quotesWaiting, setQuotesWaiting] = useState<IRoot[]>([])
-  const [quotesDone, setQuotesDone] = useState<IRoot[]>([])
-  const [page, setPage] = useState(0)
-  const { loading, toggleLoading } = useLoading()
+export const QuoteList = ({
+  quotesPending,
+  quotesWaiting,
+  quotesDone,
+  loading,
+}: TQuotesProps) => {
   const router = useRouter()
 
   const handleNavigation = (id: number) =>
@@ -91,28 +47,6 @@ export const QuoteList = () => {
       })
     }
   }
-
-  useEffect(() => {
-    toggleLoading()
-    const getQuotes = async () => {
-      const response = await fetchQuotes({ limit: 5, offset: page })
-
-      if (response.success) {
-        setQuotesPending(
-          response.data.filter((quote: IRoot) => quote.status === 'pending'),
-        )
-        setQuotesWaiting(
-          response.data.filter((quote: IRoot) => quote.status === 'waiting'),
-        )
-        setQuotesDone(
-          response.data.filter((quote: IRoot) => quote.status === 'done'),
-        )
-      }
-    }
-
-    getQuotes.call(null).finally(() => toggleLoading())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <div className="quotes-container">
