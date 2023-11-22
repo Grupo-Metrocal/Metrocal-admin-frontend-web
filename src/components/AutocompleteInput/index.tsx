@@ -1,5 +1,5 @@
 import './index.scss'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface IList {
   id: number
@@ -18,6 +18,7 @@ interface IAutocompleteInputProps {
   requiredLabel?: boolean
   value?: string
   setItemSelected?: (id: number) => void
+  keyList?: string
 }
 export const AutocompleteInput = ({
   onChange,
@@ -31,17 +32,23 @@ export const AutocompleteInput = ({
   id,
   value,
   setItemSelected,
+  keyList,
 }: IAutocompleteInputProps) => {
   const datalistRef = useRef<HTMLDataListElement>(null)
+  const [listState, setListState] = useState<IList[]>(list)
+
+  useEffect(() => {
+    setListState(list)
+  }, [list, keyList]) // Agregamos keyList a las dependencias
 
   return (
     <div className={`autocomplete-input ${className}`}>
-      <label htmlFor="autocomplete-input">
+      <label htmlFor={`autocomplete-input-${keyList}`}>
         {label && (
           <span className={requiredLabel ? 'required' : ''}>{label}</span>
         )}
         <input
-          list="autocomplete-input-list"
+          list={`autocomplete-input-list-${keyList}`}
           placeholder={placeholder}
           required={required}
           name={name}
@@ -60,9 +67,9 @@ export const AutocompleteInput = ({
         />
       </label>
 
-      <datalist id="autocomplete-input-list" ref={datalistRef}>
-        {list ? (
-          list.map((item) => (
+      <datalist id={`autocomplete-input-list-${keyList}`} ref={datalistRef}>
+        {listState ? (
+          listState.map((item) => (
             <option key={item.id} value={item.name} id={item.id.toString()}>
               {item.name}
             </option>
