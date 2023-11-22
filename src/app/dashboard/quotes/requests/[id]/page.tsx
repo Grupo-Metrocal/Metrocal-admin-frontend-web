@@ -31,6 +31,9 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { getCookie } from 'cookies-next'
 import { useLoading } from '@/hooks/useLoading'
 import { Spinner } from '@/components/Spinner'
+import { useForm } from '@/hooks/useForm'
+import { Modal } from '@/components/Modal'
+import { CButton } from '@/components/CButton'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -221,38 +224,6 @@ const Footer = () => {
     }
   }
 
-  const handleRejectQuote = () => {
-    toast.loading('Rechazando cotización', {
-      description: 'Espere un momento por favor...',
-    })
-
-    fetchData({
-      url: 'quotes/request/update',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        id,
-        status: 'rejected',
-        price: Number(total),
-        tax: Number(IVA),
-        general_discount: Number(discount),
-        authorized_token: getCookie('token'),
-      },
-    })
-      .then((response) => {
-        if (response) {
-          toast.success('Cotización rechazada')
-        } else {
-          toast.error('Error al rechazar la cotización')
-        }
-      })
-      .catch((error) => {
-        toast.error('Error al rechazar la cotización')
-      })
-  }
-
   const isAllEquipmentReviewed = () => {
     const reviewed = equipment.filter((item) => item.status === 'pending')
     return reviewed.length === 0
@@ -297,17 +268,27 @@ const Footer = () => {
         />
       </div>
       <div className="only-quote__footer__buttons">
-        <AlertDialogModal
+        <Modal
           nameButton="Rechazar cotización"
-          onConfirm={handleRejectQuote}
           title="Rechazar cotización"
           description="Una vez rechazada la cotización no podrá volver a editarla."
           buttonStyle={{
-            color: 'tomato',
-            background: '#fff',
             boxShadow: 'none',
+            color: 'tomato',
+            backgroundColor: '#fff',
             border: '1px solid #999',
+            padding: '0.5rem 1rem',
+            borderRadius: '5px',
+            fontWeight: 600,
           }}
+          Component={() => (
+            <CommentRejectedQuote
+              id={id}
+              total={total}
+              IVA={IVA}
+              discount={discount}
+            />
+          )}
         />
         <AlertDialogModal
           nameButton="Aprobar cotización"
@@ -318,6 +299,81 @@ const Footer = () => {
             boxShadow: 'none',
           }}
         />
+      </div>
+    </div>
+  )
+}
+
+const CommentRejectedQuote = ({
+  id,
+  total,
+  IVA,
+  discount,
+}: {
+  id: number
+  total: number
+  IVA: number
+  discount: number
+}) => {
+  const { values, handleInputChange } = useForm({ comment: '' })
+
+  const handleRejectQuote = () => {
+    toast.loading('Rechazando cotización', {
+      description: 'Espere un momento por favor...',
+    })
+
+    fetchData({
+      url: 'quotes/request/update',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        id,
+        status: 'rejected',
+        price: Number(total),
+        tax: Number(IVA),
+        general_discount: Number(discount),
+        authorized_token: getCookie('token'),
+        rejected_comment: values.comment,
+      },
+    })
+      .then((response) => {
+        if (response) {
+          toast.success('Cotización rechazada')
+        } else {
+          toast.error('Error al rechazar la cotización')
+        }
+      })
+      .catch((_) => {
+        toast.error('Error al rechazar la cotización')
+      })
+  }
+
+  return (
+    <div>
+      <div className="flex flex-col gap-2">
+        <textarea
+          name="comment"
+          id="comment"
+          className="w-full h-24 border mt-2 mb-8 border-gray-300 rounded-md resize-none p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Escribe un comentario"
+          onChange={(e) => handleInputChange(e.target)}
+        >
+          {values.comment}
+        </textarea>
+      </div>
+
+      <div className="flex justify-end gap-2">
+        <CButton
+          onClick={() => handleRejectQuote()}
+          style={{
+            backgroundColor: 'tomato',
+          }}
+          disabled={values.comment.trim() === ''}
+        >
+          Rechazar cotización
+        </CButton>
       </div>
     </div>
   )
