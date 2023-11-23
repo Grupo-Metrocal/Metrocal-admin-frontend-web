@@ -1,10 +1,11 @@
 .layout-page {
   margin: 1em 0 1.5em 1.5em;
   position: relative;
-
   &__header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1.5em;
+
     div {
       display: flex;
       gap: 1em;
