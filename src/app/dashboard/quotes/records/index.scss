@@ -1,0 +1,43 @@
+.quotes-records {
+  .quotes-records__recent {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    gap: 1em;
+
+    .recent-activities {
+      width: 100% !important;
+
+      &__container {
+        height: 150px;
+        overflow-y: auto;
+      }
+
+      &__header {
+        &--title {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          color: #999;
+        }
+      }
+
+      &__body {
+        margin-top: 1em;
+        div {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          border-bottom: 1px solid rgb(204, 204, 204, 0.5);
+          padding: 1em 0;
+
+          .price {
+            color: #3d9b35;
+          }
+        }
+      }
+    }
+    .recent-quotes {
+      width: 100%;
+      max-width: 350px;
+    }
+  }
+}
