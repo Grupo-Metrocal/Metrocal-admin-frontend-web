@@ -335,7 +335,11 @@ const columns = ({
               >
                 copiar ID de cotización
               </DropdownMenuItem>
-              <DropdownMenuItem>Ver cotización</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Linking href={`/dashboard/quotes/view/${payment.id}`}>
+                  Ver cotización
+                </Linking>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
                   Actualizar cotización
