@@ -11,19 +11,11 @@ import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import dollarIcon from '@/assets/icons/dollar.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import {
-  setEquipment,
-  setClient,
   setSelectedEquipment,
   calculateTotal,
   handleDispatchOnLoad,
   handleIVA,
-  setIVA,
-  setTotalQuote,
   handleDiscountQuote,
-  setID,
-  setTotalPrice,
-  setDiscount,
-  setStatus,
 } from '@/redux/features/quote/quoteSlice'
 import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
@@ -87,6 +79,9 @@ export interface IRoot {
 const getQuote = async (id: string) => {
   const response = await fetchData({
     url: `quotes/request/${id}`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
   })
   return response
 }
@@ -115,10 +110,10 @@ export default function Page({ params }: IRoot) {
   useEffect(() => {
     toggleLoading()
     const getQuoteRequest = async () => {
-      const response: IQuote = await getQuote(id)
+      const response = await getQuote(id)
 
-      if (response) {
-        dispatch(handleDispatchOnLoad(response))
+      if (response.success) {
+        dispatch(handleDispatchOnLoad(response.data as IQuote))
       }
     }
     getQuoteRequest.call(null).finally(() => toggleLoading())
