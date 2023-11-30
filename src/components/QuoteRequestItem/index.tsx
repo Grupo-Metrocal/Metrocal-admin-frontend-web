@@ -6,9 +6,10 @@ import { formatDate } from '@/utils/formatDate'
 interface IProps {
   quote: IRoot
   onClick?: (id: number) => void
+  className?: string
 }
 
-export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
+export const QuoteRequestItem = ({ quote, onClick, className }: IProps) => {
   const QUOTE_STATUS: { [key: string]: string } = {
     pending: 'Por revisar',
     waiting: 'En espera',
@@ -19,7 +20,7 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
   return (
     <div
       key={quote.id}
-      className="quotes-container__item"
+      className={`quotes-container__item ${className}`}
       data-status={quote.status}
     >
       <div className="status-info">
@@ -42,7 +43,7 @@ export const QuoteRequestItem = ({ quote, onClick }: IProps) => {
             : quote.status === 'waiting'
             ? 'Enviar recordatorio'
             : quote.status === 'done'
-            ? 'Asignar equipo'
+            ? 'Asignar'
             : ''}
         </CButton>
       </div>
