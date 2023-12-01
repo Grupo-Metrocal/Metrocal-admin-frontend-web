@@ -9,7 +9,7 @@ type Props = {
 export const SearchUsers = ({ users }: Props) => {
   return (
     <div className="search_user-content">
-      <div className="search">
+      {/* <div className="search">
         <Combobox
           name="buscar usuario"
           list={
@@ -22,7 +22,7 @@ export const SearchUsers = ({ users }: Props) => {
           }
           style={{ width: '100%' }}
         />
-      </div>
+      </div> */}
       <div className="create-user mt-2">
         <Modal
           className="c-button"
