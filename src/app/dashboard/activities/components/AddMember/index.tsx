@@ -24,19 +24,19 @@ const getData = async () => {
 
 interface AddMemberProps {
   members: ITeammember[]
-  setMembers: React.Dispatch<React.SetStateAction<ITeammember[]>>
   responsable?: ITeammember
   handleChangeResponsable: (member: ITeammember) => void
   handleRemoveMember: (id: number) => void
   handleAddMember: (member: ITeammember) => void
+  sendMembersToServer: () => void
 }
 export const AddMember = ({
   members,
-  setMembers,
   responsable,
   handleChangeResponsable,
   handleRemoveMember,
   handleAddMember,
+  sendMembersToServer,
 }: AddMemberProps) => {
   const [users, setUsers] = useState<IUser[]>([])
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null)
@@ -44,6 +44,10 @@ export const AddMember = ({
   const useAddMember = () => {
     if (!selectedUser) toast.error('El usuario no existe')
     else handleAddMember(selectedUser as ITeammember)
+  }
+
+  const handleSaveChanges = () => {
+    sendMembersToServer()
   }
 
   useEffect(() => {
@@ -147,7 +151,7 @@ export const AddMember = ({
       </div>
 
       <div className="flex justify-center w-full mt-auto">
-        <CButton>Guardar cambios</CButton>
+        <CButton onClick={handleSaveChanges}>Guardar cambios</CButton>
       </div>
     </div>
   )
