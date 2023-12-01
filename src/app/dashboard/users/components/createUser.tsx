@@ -70,6 +70,7 @@ export const CreateUsers = () => {
           label="Correo electrónico"
           onChange={(e) => handleInputChange(e)}
           value={values.email}
+          required
         />
         <CInput
           name="password"
@@ -77,6 +78,7 @@ export const CreateUsers = () => {
           label="Contraseña"
           onChange={(e) => handleInputChange(e)}
           value={values.password}
+          required
         />
 
         <CButton className="mt-6" type="submit" widht="full" uppercase>
