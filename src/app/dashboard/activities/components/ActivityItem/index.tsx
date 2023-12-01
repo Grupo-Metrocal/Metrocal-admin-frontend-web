@@ -21,9 +21,30 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
   const [members, setMembers] = useState<ITeammember[]>([])
   const [flag, setFlag] = useState<boolean>(false)
 
-  const handleChangeResponsable = (member: ITeammember) => {
-    setResponsable(member)
-    toast.success('Has cambiado al responsable de la actividad')
+  const handleChangeResponsable = async (member: ITeammember) => {
+    const response = await fetchData({
+      url: 'activities/assign-responsable',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+      body: {
+        activityId: activity.id,
+        memberId: member.id,
+      },
+    })
+
+    if (response.success) {
+      toast.success('Se han guardado los cambios', {
+        description: 'Has asignado un nuevo responsable a la actividad',
+      })
+      setResponsable(member)
+    } else {
+      toast.error('No se han podido guardar los cambios', {
+        description: response.details || response.message,
+      })
+    }
   }
 
   const handleAddMember = (member: ITeammember) => {
