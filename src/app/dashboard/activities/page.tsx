@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next'
 import { Spinner } from '@/components/Spinner'
 import { Content } from '@/components/Content'
 import { ActivityItem } from './components/ActivityItem'
+import { toast } from 'sonner'
 
 const getData = async () => {
   const response = await fetchData({
@@ -30,6 +31,7 @@ export default function Page() {
         setActivities(response.data)
       } else {
         setActivities([])
+        toast.error(response.message || response.details)
       }
       setLoading(false)
     })
