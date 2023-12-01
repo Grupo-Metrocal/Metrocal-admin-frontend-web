@@ -32,14 +32,18 @@ export const RecentActivities = async () => {
         </header>
 
         <div className="recent-activities__body">
-          {response.data.map((item: any) => (
-            <div key={item.id} className="item">
-              <span>{formatDate(item.created_at)}</span>
-              <span>{item.company_name}</span>
-              <span className="price">{item.price} $</span>
-              <span>{item.approved_by}</span>
-            </div>
-          ))}
+          {!response?.data ? (
+            <div> No hay actividades recientes </div>
+          ) : (
+            response?.data.map((item: any) => (
+              <div key={item.id} className="item">
+                <span>{formatDate(item.created_at)}</span>
+                <span>{item.company_name}</span>
+                <span className="price">{item.price} $</span>
+                <span>{item.approved_by}</span>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </Content>
