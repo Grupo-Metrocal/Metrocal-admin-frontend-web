@@ -9,6 +9,8 @@ import { Modal } from '@/components/Modal'
 import Link from 'next/link'
 import { AddMember } from '../AddMember'
 import { toast } from 'sonner'
+import { fetchData } from '@/utils/fetch'
+import { getCookie } from 'cookies-next'
 
 export const ActivityItem = ({ activity }: { activity: IActivity }) => {
   const [responsable, setResponsable] = useState<ITeammember>({
@@ -17,6 +19,7 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
     email: '',
   })
   const [members, setMembers] = useState<ITeammember[]>([])
+  const [flag, setFlag] = useState<boolean>(false)
 
   const handleChangeResponsable = (member: ITeammember) => {
     setResponsable(member)
@@ -43,11 +46,81 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
     if (id === responsable.id) {
       toast.error('No se puede eliminar al responsable')
     } else {
-      const newMembers = members.filter((member) => member.id !== id)
-      setMembers(newMembers)
+      setRemoveMemberToServer(id)
     }
   }
 
+  const sendMembersToServer = async () => {
+    const membersOutActivity = [] as ITeammember[]
+    members.forEach((member) => {
+      const memberExist = activity.team_members.find(
+        (item) => item.id === member.id,
+      )
+
+      if (!memberExist) {
+        membersOutActivity.push(member)
+      }
+    })
+
+    if (!membersOutActivity.length) {
+      toast('No se han realizado cambios')
+      return
+    }
+
+    const response = await fetchData({
+      url: 'activities/assign-members',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+      body: {
+        activityId: activity.id,
+        teamMembersID: membersOutActivity.map((member) => member.id as number),
+      },
+    })
+
+    if (response.success) {
+      toast.success('Se han guardado los cambios', {
+        description: 'Has añadido nuevos trabajadores a la actividad',
+      })
+
+      activity.team_members.push(...membersOutActivity)
+
+      setFlag(!flag)
+    } else {
+      toast.error('No se han podido guardar los cambios', {
+        description: response.details,
+      })
+    }
+  }
+
+  const setRemoveMemberToServer = async (id: number) => {
+    const response = await fetchData({
+      url: 'activities/remove-member',
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+      body: {
+        activityId: activity.id,
+        memberId: id,
+      },
+    })
+
+    if (response.success) {
+      toast.success('Se han guardado los cambios', {
+        description: 'Has eliminado un trabajador de la actividad',
+      })
+
+      setMembers(response.data)
+    } else {
+      toast.error('No se han podido guardar los cambios', {
+        description: response.details,
+      })
+    }
+  }
   useEffect(() => {
     const responsable = activity.responsable
 
@@ -60,7 +133,7 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
     }
 
     setMembers(activity.team_members)
-  }, [activity])
+  }, [activity, flag])
 
   return (
     <div className="activity-item" id={activity.id.toString()}>
@@ -140,11 +213,11 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
             Component={() => (
               <AddMember
                 members={members}
-                setMembers={() => {}}
                 responsable={responsable}
                 handleChangeResponsable={handleChangeResponsable}
                 handleAddMember={handleAddMember}
                 handleRemoveMember={handleRemoveMember}
+                sendMembersToServer={sendMembersToServer}
               />
             )}
           />
@@ -162,7 +235,25 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
                       width={32}
                       height={32}
                     />
-                    <span className="font-medium">{member.username}</span>
+                    <span
+                      className="font-medium"
+                      style={{
+                        color: activity.team_members.find(
+                          (item) => item.id === member.id,
+                        )
+                          ? ''
+                          : 'tomato',
+                      }}
+                      title={
+                        activity.team_members.find(
+                          (item) => item.id === member.id,
+                        )
+                          ? ''
+                          : 'Guardar cambios para añadir al trabajador'
+                      }
+                    >
+                      {member.username}
+                    </span>
                   </div>
                 )
               )
