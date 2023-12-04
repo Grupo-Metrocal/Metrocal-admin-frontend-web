@@ -12,7 +12,6 @@
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.1s ease-in-out;
-  font-family: 'Montserrat';
 
   @include overlay-active-shadow($primary-color-dark);
 
