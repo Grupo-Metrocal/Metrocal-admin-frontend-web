@@ -334,6 +334,9 @@ footer {
 
 @include mobile {
   .main {
+    .date {
+      display: none;
+    }
     header {
       flex-direction: column;
 
@@ -367,8 +370,15 @@ footer {
 
   .main-controllers {
     gap: 1em;
+    flex-direction: column;
+    align-items: center;
+
     &-button {
       font-size: 0.8em;
+    }
+
+    img {
+      display: none;
     }
   }
 
@@ -394,14 +404,12 @@ footer {
   footer {
     display: flex;
     flex-direction: column;
+    gap: 2em;
 
     .main-footer__version {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1em;
       h5 {
         margin-top: 0;
+        text-align: center;
       }
     }
 
@@ -430,7 +438,6 @@ footer {
     }
 
     .main-footer__note {
-      margin-top: 1em;
       span {
         font-size: 0.8em;
       }
@@ -451,15 +458,16 @@ footer {
       max-width: 100%;
       overflow: auto;
       position: relative;
-
       &::after {
-        content: 'desliza --->';
+        content: 'desliza >>>';
         font-family: 'Montserrat', sans-serif;
       }
 
       .table {
         width: 350%;
-        background-color: #fcfcfc;
+        padding: 1em;
+        border-radius: 10px;
+        background-color: rgb(241, 238, 238);
       }
     }
   }
