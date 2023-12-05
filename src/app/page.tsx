@@ -209,11 +209,15 @@ export default function Home() {
         if (res.status === 200) {
           setAuthorizedServices(res.data)
         } else {
-          toast.error('Ocurrió un error al cargar la información')
+          toast.error('Ocurrió un error al cargar la información', {
+            description: res.details,
+          })
         }
       })
       .catch((err) => {
-        toast.error('Ocurrió un error al cargar la información')
+        toast.error('Ocurrió un error al cargar la información', {
+          description: 'Por favor, intente nuevamente',
+        })
       })
       .finally(() => toast.dismiss())
   }, [])
