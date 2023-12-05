@@ -59,7 +59,7 @@ export default function ContactInformation({
         <span>
           Llene todos los campos obligatorio para la información de contacto
         </span>
-        <span>Fecha: {new Date().toLocaleDateString()}</span>
+        <span className="date">Fecha: {new Date().toLocaleDateString()}</span>
       </h5>
 
       <div className="contact-information__body">
