@@ -38,7 +38,7 @@ export default function RegisterEquipment({
     <div className="register-equipment">
       <h5>
         <span>Registre los equipos necesarios para la cotización</span>
-        <span>Fecha: {new Date().toLocaleDateString()}</span>
+        <span className="date">Fecha: {new Date().toLocaleDateString()}</span>
       </h5>
 
       <div className="register-equipment__body">
@@ -55,7 +55,7 @@ export default function RegisterEquipment({
               <span>Modelo</span>
               <span>Rango de medición</span>
               {/* <span>Metodo de calibración</span> */}
-              <span>Puntos de calibración y/u observaciones adicionales</span>
+              <span>Observaciones adicionales</span>
             </div>
           </div>
           <div className="table__body">
