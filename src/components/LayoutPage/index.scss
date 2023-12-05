@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .layout-page {
   margin: 1em 0 1.5em 1.5em;
   position: relative;
@@ -38,5 +40,12 @@
     width: calc(100% - 280px);
     margin-left: -1.5em;
     padding: 1.5em;
+  }
+}
+
+@include mobile {
+  .layout-page {
+    margin: 0;
+    padding: 1em;
   }
 }
