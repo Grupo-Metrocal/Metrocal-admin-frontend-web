@@ -1,4 +1,4 @@
-// get status from data-status attribute
+@use '@/sass/index' as *;
 
 .quotes-container {
   display: grid;
@@ -80,6 +80,19 @@
         width: 0;
         height: 100%;
         border-right: 2px solid #c2c2c2;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .quotes-container {
+    grid-template-columns: 1fr;
+    gap: 2em;
+
+    &__section {
+      h3 {
+        font-size: 1.2em;
       }
     }
   }
