@@ -6,6 +6,7 @@ import { fetchData } from '@/utils/fetch'
 import { useLoading } from '@/hooks/useLoading'
 import { PaginationFooter } from './components/paginationFooter'
 import { toast } from 'sonner'
+import { getCookie } from 'cookies-next'
 
 export interface IRoot {
   id: number
@@ -51,7 +52,11 @@ const fetchQuotes = async ({
   offset: number
 }) => {
   const response = await fetchData({
-    url: `quotes/request/all?limit=${limit}&offset=${offset}`,
+    // url: `quotes/request/all?limit=${limit}&offset=${offset}`,
+    url: `quotes`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
   })
   return response
 }
@@ -88,7 +93,6 @@ export default function Page() {
   }
 
   useEffect(() => {
-    console.log('current_page', current_page)
     toggleLoading()
 
     const getQuotes = async () => {
@@ -117,20 +121,20 @@ export default function Page() {
       }
     }
 
-    getQuotes()
+    getQuotes().finally(() => toggleLoading())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current_page])
 
   return (
     <LayoutPage
       title="Cotizaciones / solicitudes"
-      Footer={() => <PaginationFooter onClick={handleNextPage} />}
+      // Footer={() => <PaginationFooter onClick={handleNextPage} />}
     >
       <QuoteList
         quotesPending={quotesPending}
         quotesWaiting={quotesWaiting}
         quotesDone={quotesDone}
-        loading={true}
+        loading={loading}
       />
     </LayoutPage>
   )
