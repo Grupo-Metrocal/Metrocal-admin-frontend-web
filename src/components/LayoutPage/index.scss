@@ -47,5 +47,16 @@
   .layout-page {
     margin: 0;
     padding: 1em;
+
+    &__content {
+      padding: 0 !important;
+      margin-bottom: 1em;
+    }
+
+    &__footer {
+      position: relative;
+      width: 100%;
+      margin: 0 !important;
+    }
   }
 }
