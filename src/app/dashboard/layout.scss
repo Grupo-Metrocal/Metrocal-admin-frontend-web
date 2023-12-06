@@ -242,11 +242,15 @@ li {
           .quote-text {
             display: none;
           }
+
+          // .quote-button {
+          //   display: none;
+          // }
         }
       }
 
       &-container {
-        max-width: 100%;
+        max-width: 100vw;
       }
     }
   }
