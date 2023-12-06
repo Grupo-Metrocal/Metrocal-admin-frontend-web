@@ -212,6 +212,7 @@ const Footer = () => {
       },
     })
 
+    toast.dismiss()
     if (response.status === 200) {
       toast.success('Cotización aprobada')
     } else {
@@ -334,6 +335,7 @@ const CommentRejectedQuote = ({
       },
     })
       .then((response) => {
+        toast.dismiss()
         if (response) {
           toast.success('Cotización rechazada')
         } else {

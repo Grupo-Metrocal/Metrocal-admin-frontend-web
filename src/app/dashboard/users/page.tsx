@@ -17,7 +17,7 @@ export type IUser = {
   id: number
   username: string
   email: string
-  image?: string
+  imageURL?: string
   roles?: any
 }
 const getUsers = async (token: string) => {
