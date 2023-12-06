@@ -46,8 +46,8 @@ export default function Page({ params }: Props) {
     const getQuoteRequest = async () => {
       const response = await getQuote(token)
 
-      if (response) {
-        setQuote(response)
+      if (response.success) {
+        setQuote(response.data)
       } else {
         setError(true)
       }
@@ -121,7 +121,7 @@ export default function Page({ params }: Props) {
         <div className="main-title">
           <h4>
             <span>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</span>
-            <span>RUC : {quote?.client.no_ruc}</span>
+            <span>RUC : {quote?.client?.no_ruc}</span>
             <span>SOLICITUD DE SERVICIOS</span>
           </h4>
         </div>
@@ -149,12 +149,12 @@ export default function Page({ params }: Props) {
       <section className="main-quote-client">
         <h4>
           <span className="font-bold">Empresa: </span>
-          <span className="font-medium">{quote?.client.company_name}</span>
+          <span className="font-medium">{quote?.client?.company_name}</span>
         </h4>
 
         <h4>
           <span className="font-bold">Telefono: </span>
-          <span className="font-medium">{quote?.client.phone}</span>
+          <span className="font-medium">{quote?.client?.phone}</span>
         </h4>
 
         <h4>
@@ -164,22 +164,22 @@ export default function Page({ params }: Props) {
 
         <h4>
           <span className="font-bold">Solicitado por: </span>
-          <span className="font-medium">{quote?.client.requested_by}</span>
+          <span className="font-medium">{quote?.client?.requested_by}</span>
         </h4>
 
         <h4>
           <span className="font-bold">E-Mail: </span>
-          <span className="font-medium">{quote?.client.email}</span>
+          <span className="font-medium">{quote?.client?.email}</span>
         </h4>
 
         <h4>
           <span className="font-bold">No. RUC: </span>
-          <span className="font-medium">{quote?.client.no_ruc}</span>
+          <span className="font-medium">{quote?.client?.no_ruc}</span>
         </h4>
 
         <h4>
           <span className="font-bold">Dirección: </span>
-          <span className="font-medium">{quote?.client.address}</span>
+          <span className="font-medium">{quote?.client?.address}</span>
         </h4>
       </section>
 
@@ -197,7 +197,7 @@ export default function Page({ params }: Props) {
             </div>
           </div>
           <div className="table__body">
-            {quote?.equipment_quote_request.map(
+            {quote?.equipment_quote_request?.map(
               (equipment: IEquipmentQuoteRequest, index: any) => (
                 <div className="table__body__tr" key={index}>
                   <span>{equipment.type_service}</span>
@@ -253,7 +253,7 @@ export default function Page({ params }: Props) {
               <span>Subtotal</span>
               <span>
                 {quote?.equipment_quote_request
-                  .map((equipment: IEquipmentQuoteRequest) => equipment.total)
+                  ?.map((equipment: IEquipmentQuoteRequest) => equipment.total)
                   .reduce((a, b) => a + b, 0)}
                 $
               </span>
@@ -328,8 +328,8 @@ export default function Page({ params }: Props) {
       <TermsAndConditions />
 
       <FooterComponent
-        requested_by={quote?.client.requested_by}
-        approved_by={quote?.approved_by.username}
+        requested_by={quote?.client?.requested_by}
+        approved_by={quote?.approved_by?.username}
         approved_date={quote?.updated_at}
       />
 
@@ -352,8 +352,8 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
   }
 
   const isButtonDisabled = () => {
-    return checkeds.length === 0 && values.comment.trim() === '';
-  };
+    return checkeds.length === 0 && values.comment.trim() === ''
+  }
 
   const handleRejectQuote = async () => {
     const commentRejected = `${values.comment} - ${checkeds.join(', ')}`
