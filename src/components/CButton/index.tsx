@@ -23,7 +23,7 @@ export const CButton = ({
 }: CButtonProps) => {
   return (
     <button
-      className={`c-button ${className}`}
+      className={`c-button ${className ? className : ''}`}
       type={type}
       onClick={onClick}
       disabled={disabled}
