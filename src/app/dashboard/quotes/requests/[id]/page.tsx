@@ -237,7 +237,7 @@ const Footer = () => {
         />
         <CInput
           onChange={(e) => dispatch(handleDiscountQuote(e))}
-          value={discount.toString()}
+          value={discount?.toString()}
           label="Descuento"
           icon={percentIcon}
           min={0}
