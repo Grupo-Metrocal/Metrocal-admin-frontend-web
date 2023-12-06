@@ -86,6 +86,7 @@ export default function RootLayout({
                       style={{
                         boxShadow: 'none',
                       }}
+                      className="quote-button"
                     >
                       <span>+</span>{' '}
                       <span className="quote-text">Solicitar cotización</span>
@@ -103,7 +104,7 @@ export default function RootLayout({
                   >
                     <div className="flex gap-2 justify-center items-center">
                       <Image src={metrocalLogo} alt="Profile" />
-                      <span className="name-userfont-bold">
+                      <span className="name-user font-bold">
                         {getCookie('username')?.split(' ')[0]}
                       </span>
                     </div>
