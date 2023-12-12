@@ -118,11 +118,10 @@ export const RenderPrices = () => {
             type="number"
             label="Cantidad"
             value={
-              selectedEquipment.count ? selectedEquipment.count.toString() : ''
+              selectedEquipment.count ? selectedEquipment.count.toFixed(2) : ''
             }
             name="count"
-            onChange={(e) => {}}
-            icon={dollarIcon}
+            onChange={(_) => {}}
             dissabled={true}
           />
         </div>
@@ -131,9 +130,9 @@ export const RenderPrices = () => {
             type="number"
             label="Total"
             value={
-              selectedEquipment.total ? selectedEquipment.total.toString() : ''
+              selectedEquipment.total ? selectedEquipment.total.toFixed(2) : ''
             }
-            onChange={(e) => {}}
+            onChange={(_) => {}}
             icon={dollarIcon}
             dissabled={true}
           />

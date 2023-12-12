@@ -215,6 +215,7 @@ const Footer = () => {
     toast.dismiss()
     if (response.status === 200) {
       toast.success('Cotización aprobada')
+      window.location.href = '/dashboard/quotes/requests'
     } else {
       toast.error('Error al aprobar la cotización')
     }
@@ -338,6 +339,7 @@ const CommentRejectedQuote = ({
         toast.dismiss()
         if (response) {
           toast.success('Cotización rechazada')
+          window.location.href = '/dashboard/quotes/requests'
         } else {
           toast.error('Error al rechazar la cotización')
         }
