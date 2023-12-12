@@ -16,6 +16,7 @@ import {
   handleDispatchOnLoad,
   handleIVA,
   handleDiscountQuote,
+  handleChangeExtras,
 } from '@/redux/features/quote/quoteSlice'
 import { CInput } from '@/components/CInput'
 import { toast } from 'sonner'
@@ -68,6 +69,7 @@ export interface IQuote {
   client: IClient
   comment: string
   options: string[]
+  extras: number
 }
 
 export interface IRoot {
@@ -179,12 +181,8 @@ export default function Page({ params }: IRoot) {
 }
 
 const Footer = () => {
-  const id = useAppSelector((state) => state.quote.id)
-  const total = useAppSelector((state) => state.quote.total)
-  const IVA = useAppSelector((state) => state.quote.IVA)
-  const discount = useAppSelector((state) => state.quote.discount)
-  const subtotal = useAppSelector((state) => state.quote.subtotal)
-  const equipment = useAppSelector((state) => state.quote.equipment)
+  const { id, total, IVA, discount, subtotal, equipment, extras } =
+    useAppSelector((state) => state.quote)
 
   const dispatch = useAppDispatch()
 
@@ -207,6 +205,7 @@ const Footer = () => {
         price: Number(total),
         tax: Number(IVA),
         general_discount: Number(discount),
+        extras: Number(extras),
         status: 'waiting',
         authorized_token: getCookie('token'),
       },
@@ -234,6 +233,16 @@ const Footer = () => {
           value={IVA.toString()}
           label="IVA"
           icon={percentIcon}
+          min={0}
+          type="number"
+        />
+        <CInput
+          onChange={(e) => {
+            dispatch(handleChangeExtras(e.value))
+          }}
+          value={extras.toString()}
+          label="Extras"
+          icon={dollarIcon}
           min={0}
           type="number"
         />

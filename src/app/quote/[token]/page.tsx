@@ -199,14 +199,26 @@ export default function Page({ params }: Props) {
           <div className="table__body">
             {quote?.equipment_quote_request?.map(
               (equipment: IEquipmentQuoteRequest, index: any) => (
-                <div className="table__body__tr" key={index}>
-                  <span>{equipment.type_service}</span>
-                  <span>{equipment.name}</span>
-                  <span>{equipment.count}</span>
-                  <span>{equipment.calibration_method || 'N/A'}</span>
-                  <span>{equipment.discount}%</span>
-                  <span>{equipment.price}$</span>
-                  <span>{equipment.total}$</span>
+                <div
+                  className="table__body__tr"
+                  key={index}
+                  data-index={`Producto #${index + 1}`}
+                >
+                  <span data-label="Tipo de servicio">
+                    {equipment.type_service}
+                  </span>
+                  <span data-label="Equipo">{equipment.name}</span>
+                  <span data-label="Cantidad">{equipment.count}</span>
+                  <span data-label="Método de calibración">
+                    {equipment.calibration_method || 'N/A'}
+                  </span>
+                  <span data-label="Descuento U. (%)">
+                    {equipment.discount}%
+                  </span>
+                  <span data-label="Precio U. (USD)">{equipment.price}$</span>
+                  <span data-label="Precio total (USD)">
+                    {equipment.total}$
+                  </span>
                 </div>
               ),
             )}

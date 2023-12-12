@@ -14,6 +14,7 @@ const initialState = {
   discount: 0,
   total: 0,
   subtotal: 0,
+  extras: 0,
   status: '',
   no: '',
 }
@@ -138,6 +139,9 @@ export const quoteSlice = createSlice({
       })
       state.equipment = equipment
     },
+    changeExtras: (state, action) => {
+      state.extras = action.payload
+    },
     changeDiscount: (state, action) => {
       const { id, discount } = action.payload
       const equipment = state.equipment.map((item) => {
@@ -198,6 +202,7 @@ export const {
   setNo,
   setMeasuringRange,
   setCalibrationRethod,
+  changeExtras,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -205,6 +210,11 @@ export default quoteSlice.reducer
 export const handleStatus = (id: number, status: string) => (dispatch: any) => {
   dispatch(changeStatus({ id, status }))
   dispatch(changeStatusSelectedEquipment({ status }))
+}
+
+export const handleChangeExtras = (extras: number) => (dispatch: any) => {
+  dispatch(changeExtras(extras))
+  dispatch(calculateTotalQuote())
 }
 
 export const handlePrice = (id: number, target: any) => (dispatch: any) => {
@@ -242,10 +252,11 @@ export const calculateTotal = () => (dispatch: any, getState: any) => {
   dispatch(changeTotalEquipment({ id: selectedEquipment.id, total }))
 }
 export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
-  const { subtotal, discount, IVA } = getState().quote
+  const { subtotal, discount, IVA, extras } = getState().quote
+
   const totalQuote = subtotal - (subtotal * discount) / 100
   const totalIVA = totalQuote * (IVA / 100)
-  dispatch(setTotalQuote((totalQuote + totalIVA).toFixed(2)))
+  dispatch(setTotalQuote((totalQuote + totalIVA + Number(extras)).toFixed(2)))
 }
 
 export const calculateSubtotal = () => (dispatch: any, getState: any) => {
@@ -276,6 +287,7 @@ export const handleDispatchOnLoad = (response: IQuote) => (dispatch: any) => {
   dispatch(setDiscount(response.general_discount))
   dispatch(setClient(response.client))
   dispatch(setNo(response.no))
+  dispatch(changeExtras(response.extras))
   dispatch(setEquipment(response.equipment_quote_request))
   dispatch(setSelectedEquipment(response.equipment_quote_request[0]))
   dispatch(setIVA(response.tax))

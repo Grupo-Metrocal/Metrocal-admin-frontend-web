@@ -77,6 +77,7 @@ export const QuoteRequest = () => {
               e.value,
           )
         }}
+        keyList="clients"
         name="cliente"
         setItemSelected={(id) => {
           setSelectedEmail(
