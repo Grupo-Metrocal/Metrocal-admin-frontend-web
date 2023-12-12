@@ -206,7 +206,7 @@ export default function Home() {
     toast.loading('Cargando información...')
     fetchData({ url: 'configuration/all/authorized_services' })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.success) {
           setAuthorizedServices(res.data)
         } else {
           toast.error('Ocurrió un error al cargar la información', {
