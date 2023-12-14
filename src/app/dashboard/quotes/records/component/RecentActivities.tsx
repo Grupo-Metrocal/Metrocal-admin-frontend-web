@@ -15,7 +15,6 @@ const getData = async (lastActivities: number) => {
 
 export const RecentActivities = async () => {
   const response = await getData(5)
-  console.log(response)
 
   return (
     <Content
