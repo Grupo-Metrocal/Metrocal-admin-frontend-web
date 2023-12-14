@@ -1,12 +1,13 @@
 import { Content } from '@/components/Content'
 import { fetchData } from '@/utils/fetch'
 import { formatDate } from '@/utils/formatDate'
-import { getCookie } from 'cookies-next'
+import { getCookie } from '@/utils/auth'
 
 const getData = async (lastActivities: number) => {
   return await fetchData({
     url: `activities/get-last-activities/${lastActivities}`,
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${getCookie('token')}`,
     },
   })
@@ -14,6 +15,7 @@ const getData = async (lastActivities: number) => {
 
 export const RecentActivities = async () => {
   const response = await getData(5)
+  console.log(response)
 
   return (
     <Content
