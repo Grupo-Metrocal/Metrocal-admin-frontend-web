@@ -1,3 +1,4 @@
+@use '@/sass/index' as *;
 .quotes-records {
   .quotes-records__recent {
     display: flex;
@@ -38,6 +39,34 @@
     .recent-quotes {
       width: 100%;
       max-width: 350px;
+    }
+  }
+}
+
+@include mobile {
+  .quotes-records {
+    .quotes-records__recent {
+      flex-direction: column;
+      .recent-activities {
+        width: 100% !important;
+        &__header {
+          width: 600px;
+          &--title {
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+          }
+        }
+
+        &__body {
+          width: 600px;
+          div {
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+          }
+        }
+      }
+      .recent-quotes {
+        width: 100%;
+        max-width: 100%;
+      }
     }
   }
 }
