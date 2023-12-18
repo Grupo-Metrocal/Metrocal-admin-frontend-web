@@ -15,6 +15,7 @@ import { Toaster, toast } from 'sonner'
 import { useForm } from '@/hooks/useForm'
 import { CButton } from '@/components/CButton'
 import { TermsAndConditions } from '@/components/TermsAndConditions'
+import { formatPrice } from '@/utils/formatPrice'
 
 interface Props {
   params: {
@@ -213,11 +214,19 @@ export default function Page({ params }: Props) {
                     {equipment.calibration_method || 'N/A'}
                   </span>
                   <span data-label="Descuento U. (%)">
-                    {equipment.discount}%
+                    {equipment.status === 'done'
+                      ? equipment.discount + '%'
+                      : '---'}
                   </span>
-                  <span data-label="Precio U. (USD)">{equipment.price}$</span>
+                  <span data-label="Precio U. (USD)">
+                    {equipment.status === 'done'
+                      ? formatPrice(equipment.price)
+                      : '---'}
+                  </span>
                   <span data-label="Precio total (USD)">
-                    {equipment.total}$
+                    {equipment.status === 'done'
+                      ? formatPrice(equipment.total)
+                      : 'No aprobado'}
                   </span>
                 </div>
               ),
@@ -262,18 +271,27 @@ export default function Page({ params }: Props) {
             </h4>
 
             <h4>
+              <span>Extras</span>
+              <span>{formatPrice(quote?.extras || 0)}</span>
+            </h4>
+
+            <h4>
               <span>Subtotal</span>
               <span>
-                {quote?.equipment_quote_request
-                  ?.map((equipment: IEquipmentQuoteRequest) => equipment.total)
-                  .reduce((a, b) => a + b, 0)}
-                $
+                {formatPrice(
+                  quote?.equipment_quote_request &&
+                    quote?.equipment_quote_request
+                      ?.map((equipment: IEquipmentQuoteRequest) =>
+                        equipment.status === 'done' ? equipment.total : 0,
+                      )
+                      .reduce((a, b) => a + b, 0),
+                )}
               </span>
             </h4>
 
             <h4>
               <span>Total</span>
-              <span>{quote?.price}$</span>
+              <span>{formatPrice(quote?.price)}</span>
             </h4>
           </div>
         </div>

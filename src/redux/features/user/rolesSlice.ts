@@ -13,7 +13,6 @@ export const rolesSlice = createSlice({
       state.roles = action.payload
     },
     addUserToRole: (state, action) => {
-      console.log({ action, state })
       const { user } = action.payload
       const existingRoleIds = new Set(state.roles.map((r) => r.id))
 

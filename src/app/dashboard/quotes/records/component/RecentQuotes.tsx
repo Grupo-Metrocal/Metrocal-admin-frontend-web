@@ -22,9 +22,7 @@ export const RecentQuotes = () => {
     getData(4).then((response) => {
       setMonth(
         response.data.map((item: any) => {
-          console.log(item)
           const date = new Date(item.month)
-          console.log(date.toLocaleString('es-ES', { month: 'short' }))
           return date.toLocaleString('es-ES', { month: 'long' })
         }),
       )

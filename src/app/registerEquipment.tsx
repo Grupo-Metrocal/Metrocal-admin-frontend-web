@@ -153,7 +153,7 @@ const renderTableTr = ({
           <option value="" disabled>
             Seleccione
           </option>
-          <option value="Calibración">Calibración</option>
+          <option value="Calibracion">Calibración</option>
           <option value="Caracterización">Caracterización</option>
           <option value="Calificación">Calificación</option>
           <option value="Diagnóstico">Diagnóstico</option>

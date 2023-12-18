@@ -1,12 +1,13 @@
 import { Content } from '@/components/Content'
 import { fetchData } from '@/utils/fetch'
 import { formatDate } from '@/utils/formatDate'
-import { getCookie } from 'cookies-next'
+import { getCookie } from '@/utils/auth'
 
 const getData = async (lastActivities: number) => {
   return await fetchData({
     url: `activities/get-last-activities/${lastActivities}`,
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${getCookie('token')}`,
     },
   })

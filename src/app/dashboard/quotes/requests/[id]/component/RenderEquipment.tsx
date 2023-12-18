@@ -26,6 +26,7 @@ export const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
       }
       `}
       onClick={onClick}
+      data-equipment-status={equipment.status}
     >
       <div className="status">
         <div className="img">

@@ -86,6 +86,20 @@ export const RenderPrices = () => {
         <div className="prices__item">
           <CInput
             type="number"
+            label="Precio unitario"
+            value={
+              selectedEquipment.price ? selectedEquipment.price.toString() : ''
+            }
+            name="price"
+            onChange={(e) =>
+              dispatch(handlePrice(selectedEquipment.id || 0, e))
+            }
+            icon={dollarIcon}
+          />
+        </div>
+        <div className="prices__item">
+          <CInput
+            type="number"
             label="Descuento"
             name="discount"
             value={
@@ -99,20 +113,7 @@ export const RenderPrices = () => {
             icon={percentIcon}
           />
         </div>
-        <div className="prices__item">
-          <CInput
-            type="number"
-            label="Precio unitario"
-            value={
-              selectedEquipment.price ? selectedEquipment.price.toString() : ''
-            }
-            name="price"
-            onChange={(e) =>
-              dispatch(handlePrice(selectedEquipment.id || 0, e))
-            }
-            icon={dollarIcon}
-          />
-        </div>
+
         <div className="prices__item">
           <CInput
             type="number"
