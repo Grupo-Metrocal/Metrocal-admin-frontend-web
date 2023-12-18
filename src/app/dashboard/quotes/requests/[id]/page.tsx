@@ -2,7 +2,7 @@
 import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import { fetchData } from '@/utils/fetch'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RenderPrices } from './component/RenderPrices'
 import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSelected'
 import { RenderEquipment } from './component/RenderEquipment'
@@ -78,8 +78,6 @@ export interface IRoot {
     id: string
   }
 }
-
-const route = useRouter()
 
 const getQuote = async (id: string) => {
   const response = await fetchData({
@@ -188,6 +186,8 @@ const Footer = () => {
     useAppSelector((state) => state.quote)
 
   const dispatch = useAppDispatch()
+
+  const route = useRouter()
 
   const handleApproveQuote = async () => {
     if (!isAllEquipmentReviewed())
@@ -325,6 +325,8 @@ const CommentRejectedQuote = ({
   discount: number
 }) => {
   const { values, handleInputChange } = useForm({ comment: '' })
+
+  const route = useRouter()
 
   const handleRejectQuote = () => {
     toast.loading('Rechazando cotización', {
