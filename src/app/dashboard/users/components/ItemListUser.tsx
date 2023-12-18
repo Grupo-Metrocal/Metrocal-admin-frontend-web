@@ -31,11 +31,11 @@ type PropsUser = {
   roles: IRole[]
 }
 export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
-  const [image, setImage] = useState(metrocalLogo)
+  const [image, setImage] = useState(user.imageURL || metrocalLogo)
 
   useEffect(() => {
-    if (user.image) {
-      setImage(user.image)
+    if (user.imageURL) {
+      setImage(user.imageURL)
     }
   }, [user])
 
@@ -56,7 +56,9 @@ export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
             >
               {user.username}
             </span>
-            <small>{user.roles?.[0].name}</small>
+            {user.roles.map((role: { id: number; name: string, description: string }) => (
+              <small key={role.id}>{role.name}</small>
+            ))}
           </div>
         </div>
         <div className="actions">

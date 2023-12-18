@@ -2,7 +2,7 @@
 import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import { fetchData } from '@/utils/fetch'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { RenderPrices } from './component/RenderPrices'
 import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSelected'
 import { RenderEquipment } from './component/RenderEquipment'
@@ -27,6 +27,7 @@ import { Spinner } from '@/components/Spinner'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
 import { CButton } from '@/components/CButton'
+import { useRouter } from 'next/navigation'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -77,6 +78,8 @@ export interface IRoot {
     id: string
   }
 }
+
+const route = useRouter()
 
 const getQuote = async (id: string) => {
   const response = await fetchData({
@@ -211,8 +214,10 @@ const Footer = () => {
       },
     })
 
+    toast.dismiss()
     if (response.status === 200) {
       toast.success('Cotización aprobada')
+      route.push('/dashboard/quotes/requests')
     } else {
       toast.error('Error al aprobar la cotización')
     }
@@ -343,8 +348,10 @@ const CommentRejectedQuote = ({
       },
     })
       .then((response) => {
+        toast.dismiss()
         if (response) {
           toast.success('Cotización rechazada')
+          route.push('/dashboard/quotes/requests')
         } else {
           toast.error('Error al rechazar la cotización')
         }

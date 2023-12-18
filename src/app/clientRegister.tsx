@@ -42,6 +42,7 @@ export default function ClientRegister({ reload }: IProps) {
       body: values,
     })
 
+    toast.dismiss()
     if (response.status === 200) {
       toast.success('Cliente registrado con éxito', {
         description: 'Porfavor recargue la página para ver los cambios',
