@@ -39,7 +39,7 @@ export const CreateUsers = () => {
         id: response.data.id,
         username: response.data.username,
         email: response.data.email,
-        image: response.data?.image,
+        imageURL: response.data?.image,
         roles: response.data.roles,
       }
 
