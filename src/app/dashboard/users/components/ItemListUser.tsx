@@ -32,11 +32,20 @@ type PropsUser = {
 }
 export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
   const [image, setImage] = useState(user.imageURL || metrocalLogo)
+  const [currentUser, setCurrentUser] = useState<IUser>({} as IUser)
 
   useEffect(() => {
     if (user.imageURL) {
       setImage(user.imageURL)
     }
+
+    const roleWithMinPriority = user.roles?.reduce(
+      (prev: any, current: any) => {
+        return prev.priority < current.priority ? prev : current
+      },
+    )
+
+    setCurrentUser({ ...user, roles: [roleWithMinPriority] })
   }, [user])
 
   return (
@@ -56,9 +65,12 @@ export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
             >
               {user.username}
             </span>
-            {user.roles.map((role: { id: number; name: string, description: string }) => (
-              <small key={role.id}>{role.name}</small>
-            ))}
+            {
+              <small>
+                {currentUser.roles?.map((role: any) => role.name).join(', ') ||
+                  'Sin rol asignado'}
+              </small>
+            }
           </div>
         </div>
         <div className="actions">
