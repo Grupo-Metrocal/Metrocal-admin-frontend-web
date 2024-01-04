@@ -102,7 +102,7 @@ export default function Page({ params }: Props) {
         description: 'Pronto nos pondremos en contacto con usted. 😊',
       })
     } else {
-      toast.error('Error al aprobar la cotización', {
+      toast('Error al aprobar la cotización', {
         description: response.details,
       })
     }
@@ -271,7 +271,7 @@ export default function Page({ params }: Props) {
             </h4>
 
             <h4>
-              <span>Extras</span>
+              <span>Traslado de equipo</span>
               <span>{formatPrice(quote?.extras || 0)}</span>
             </h4>
 
@@ -412,7 +412,7 @@ const CommentRejectedQuote = ({ quote }: { quote: IQuote }) => {
     toast.dismiss()
 
     if (response.success) {
-      toast.success('La cotización fue rechazada', {
+      toast('La cotización fue rechazada', {
         description: 'Esperamos poder servirle en otra ocasión. 😊',
       })
     } else {

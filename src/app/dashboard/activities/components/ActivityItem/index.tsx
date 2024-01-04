@@ -177,15 +177,15 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
         </div>
 
         <div className="client">
-          <h3>{activity.quote_request.client.company_name}</h3>
+          <h3>{activity.quote_request?.client.company_name}</h3>
           <span
             className="font-medium"
-            title={activity.quote_request.equipment_quote_request
+            title={activity.quote_request?.equipment_quote_request
               .map((item) => item.type_service)
               .join(', ')}
           >
             Servicios solicitados:{' '}
-            {activity.quote_request.equipment_quote_request.length}
+            {activity.quote_request?.equipment_quote_request.length}
             <Image src={alertIcon} alt="Alert" width={14} />
           </span>
         </div>
@@ -205,14 +205,14 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
         <div className="requested_by">
           <h3>Solicitado por</h3>
           <span className="font-medium">
-            {activity.quote_request.client.requested_by}
+            {activity.quote_request?.client.requested_by}
           </span>
         </div>
 
         <div className="phone">
           <h3>Teléfono</h3>
           <span className="font-medium">
-            {activity.quote_request.client.phone}
+            {activity.quote_request?.client.phone}
           </span>
         </div>
       </div>
@@ -294,7 +294,7 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
           <Link href={`/dashboard/activities/view/${activity.id}`}>
             Detalles de la actividad
           </Link>
-          <Link href={`/dashboard/quotes/view/${activity.quote_request.id}`}>
+          <Link href={`/dashboard/quotes/view/${activity.quote_request?.id}`}>
             Ver cotización
           </Link>
         </div>

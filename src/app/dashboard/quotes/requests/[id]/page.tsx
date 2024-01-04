@@ -244,7 +244,7 @@ const Footer = () => {
             dispatch(handleChangeExtras(e.value))
           }}
           value={extras.toString()}
-          label="Extras"
+          label="Traslado de equipo"
           icon={dollarIcon}
           min={0}
           type="number"
