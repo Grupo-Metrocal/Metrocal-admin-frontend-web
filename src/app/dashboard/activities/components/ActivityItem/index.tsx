@@ -88,6 +88,8 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
       return
     }
 
+    toast.loading('Guardando cambios...')
+
     const response = await fetchData({
       url: 'activities/assign-members',
       method: 'POST',
@@ -100,6 +102,8 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
         teamMembersID: membersOutActivity.map((member) => member.id as number),
       },
     })
+
+    toast.dismiss()
 
     if (response.success) {
       toast.success('Se han guardado los cambios', {
