@@ -52,7 +52,18 @@ export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
     <div className="user" key={user.id}>
       <div className="user-info">
         <div className="user-info-name">
-          <Image src={image} alt="user" width={50} height={50} />
+          <Image
+            src={image}
+            alt="user"
+            width={50}
+            height={50}
+            style={{
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              objectFit: 'cover',
+            }}
+          />
           <div className="user-info-name-text">
             <span
               className="
@@ -67,7 +78,7 @@ export const ItemListUser = ({ user, handleDeleteUser, roles }: PropsUser) => {
             </span>
             {
               <small>
-                {currentUser.roles?.map((role: any) => role.name).join(', ') ||
+                {currentUser.roles?.map((role: any) => role.label).join(', ') ||
                   'Sin rol asignado'}
               </small>
             }
