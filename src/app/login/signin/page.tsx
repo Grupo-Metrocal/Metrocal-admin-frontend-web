@@ -11,6 +11,8 @@ import metrocalComplete from '@/assets/images/metrocal_completo.svg'
 import { Toaster, toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { signin } from '@/services/auth'
+import { setProfile } from '@/redux/features/profile'
+import { useAppDispatch } from '@/redux/hook'
 
 export default function Signin(): JSX.Element {
   const initialValues = {
@@ -19,6 +21,8 @@ export default function Signin(): JSX.Element {
   }
 
   const { values, handleInputChange } = useForm(initialValues)
+
+  const dispatch = useAppDispatch()
 
   const router = useRouter()
 
@@ -34,6 +38,7 @@ export default function Signin(): JSX.Element {
       toast.loading('Inicio de sesión exitoso', {
         description: 'Redireccionando al dashboard',
       })
+      dispatch(setProfile(auth))
       router.push('/dashboard')
     } else {
       toast.error('Inicio de sesión fallido', {
