@@ -24,7 +24,7 @@ export const getCookie = (name: string, defaultValue: string | null = null) => {
   }
 }
 
-const removeCookie = (name: string) => {
+export const removeCookie = (name: string) => {
   const cookieStore = cookies()
   cookieStore.delete(name)
 }
