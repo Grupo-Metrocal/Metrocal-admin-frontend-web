@@ -167,8 +167,13 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
           <Image
             src={responsable.imageURL ? responsable.imageURL : metrocalLogo}
             alt="Profile"
-            width={40}
-            height={40}
+            width={45}
+            height={45}
+            style={{
+              width: '45px',
+              height: '45px',
+            }}
+            className="rounded-full"
           />
           <div className="user">
             <h3 className="font-bold">
@@ -259,6 +264,11 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
                       alt="Profile"
                       width={32}
                       height={32}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                      }}
+                      className="rounded-full"
                     />
                     <span
                       className="font-medium"
