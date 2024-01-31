@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import Image from 'next/image'
 
 const SIZE_DIALOG = {
   sm: 'sm:max-w-sm',
@@ -24,6 +25,8 @@ interface ModalProps {
   buttonStyle?: React.CSSProperties
   size?: keyof typeof SIZE_DIALOG
   className?: string
+  icon?: any
+  marginIcon?: string
 }
 
 export const Modal = ({
@@ -34,10 +37,24 @@ export const Modal = ({
   description,
   size = '3xl',
   className,
+  icon,
+  marginIcon,
 }: ModalProps) => {
   return (
     <Dialog>
-      <DialogTrigger className={className} style={buttonStyle}>
+      <DialogTrigger
+        className={`${className} ${icon && 'flex items-center'}`}
+        style={buttonStyle}
+      >
+        {icon && (
+          <Image
+            src={icon}
+            style={{ marginRight: marginIcon }}
+            alt="icon"
+            width={16}
+            height={16}
+          />
+        )}
         {nameButton}
       </DialogTrigger>
       <DialogContent
