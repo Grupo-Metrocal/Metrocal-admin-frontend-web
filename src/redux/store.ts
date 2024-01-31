@@ -4,6 +4,7 @@ import rowSelectionReducer from './features/data_table/rowSelection'
 import quoteRequestReducer from './features/quote/quoteRequestSlice'
 import usersReducer from './features/user/usersSlice'
 import rolesReducer from './features/user/rolesSlice'
+import profileReducer from './features/profile'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     quoteRequest: quoteRequestReducer,
     users: usersReducer,
     roles: rolesReducer,
+    profile: profileReducer,
   },
 })
 
