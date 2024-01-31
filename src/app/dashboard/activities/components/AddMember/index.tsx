@@ -119,6 +119,11 @@ export const AddMember = ({
                   alt="Profile"
                   width={32}
                   height={32}
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                  }}
+                  className="rounded-full"
                 />
                 <span className="font-medium flex flex-col">
                   {member.username}
