@@ -5,7 +5,6 @@ import { useForm } from '@/hooks/useForm'
 import { fetchData } from '@/utils/fetch'
 import { getCookie, setCookie } from 'cookies-next'
 import Image from 'next/image'
-import { useAppSelector } from '@/redux/hook'
 import { toast } from 'sonner'
 import metrocalLogo from 'public/metrocal.svg'
 import { useRef, useState } from 'react'
@@ -15,18 +14,21 @@ export const Profile = () => {
     username: getCookie('username') as string,
   })
 
-  const [image, setImage] = useState<File | null>(null)
-  const { profile } = useAppSelector((state) => state.profile)
+  const [image, setImage] = useState<File | string>(
+    getCookie('profile_img') as string,
+  )
 
   const inputRefImg = useRef<HTMLInputElement>(null)
 
   const handleUpdateProfile = async () => {
     toast.loading('Actualizando perfil...')
+
     const response = await fetchData({
       url: `users/profile/${getCookie('token')}`,
       method: 'PUT',
       body: {
         username: values.username,
+        image,
       },
       headers: {
         'Content-Type': 'application/json',
@@ -58,13 +60,15 @@ export const Profile = () => {
 
   return (
     <div className="profile-edit">
-      <div className="update-profile flex justify-center my-4">
+      <div className="update-profile flex justify-center my-4 flex-col items-center">
         <Image
           src={
             image
-              ? URL.createObjectURL(image)
-              : profile?.imageURL
-              ? profile?.imageURL
+              ? typeof image === 'string'
+                ? image === 'null'
+                  ? metrocalLogo
+                  : image
+                : URL.createObjectURL(image)
               : metrocalLogo
           }
           alt="Profile"
@@ -86,7 +90,7 @@ export const Profile = () => {
           accept=".jpg, .jpeg, .png"
           onChange={handleUploadImage}
         />
-        <span>{profile?.role?.label}</span>
+        <span>{getCookie('profile_role')}</span>
       </div>
 
       <CInput
