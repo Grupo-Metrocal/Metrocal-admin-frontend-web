@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .quote-viewer .layout-page__content {
   display: flex;
   width: 100%;
@@ -23,9 +25,13 @@
         .items {
           margin-top: 1em;
           display: flex;
-          justify-content: space-between;
-          gap: 1em;
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: 1.5em;
+          padding-left: 1.2em;
+
+          li {
+            list-style: decimal;
+          }
         }
       }
     }
@@ -41,9 +47,8 @@
 
       &__info {
         display: grid;
-        // responsive grid
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1em;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5em;
       }
     }
   }
@@ -54,10 +59,50 @@
     font-size: 1em;
     font-weight: 600;
     margin-bottom: 0.5em;
+    color: #6c757d;
   }
   p {
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0.5em;
-    color: #6c757d;
+  }
+}
+
+.equipment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+
+  &__title {
+    font-weight: bold;
+    font-size: 1.2em;
+
+    h2 {
+      color: #6c757d;
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1em;
+    p {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@include mobile {
+  .quote-viewer .layout-page__content {
+    flex-direction: column;
+    gap: 1em;
+
+    .quote-viewer__main-info {
+      width: 100%;
+    }
+
+    .aside-info {
+      width: 100%;
+    }
   }
 }
