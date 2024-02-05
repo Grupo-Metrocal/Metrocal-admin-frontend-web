@@ -57,8 +57,15 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
 
       if (responsable.id === -1) {
         setResponsable(member)
-
-        toast.success('Trabajador asignado como responsable de la actividad')
+        handleChangeResponsable(member)
+          .then(() => {
+            toast('Trabajador asignado como responsable de la actividad')
+          })
+          .catch((error) => {
+            toast.error('No se ha podido asignar el responsable', {
+              description: error,
+            })
+          })
       }
     }
   }
@@ -159,6 +166,8 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
 
     setMembers(activity.team_members)
   }, [activity, flag])
+
+  useEffect(() => {}, [responsable])
 
   return (
     <div className="activity-item" id={activity.id.toString()}>
