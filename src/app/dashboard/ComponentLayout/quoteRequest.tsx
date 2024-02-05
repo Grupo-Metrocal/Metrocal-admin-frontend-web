@@ -6,6 +6,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CButton } from '@/components/CButton'
+import { Linking } from '@/utils/functions'
 
 const getClientsEmails = async () => {
   const response = await fetchData({
@@ -86,7 +87,7 @@ export const QuoteRequest = () => {
         }}
       />
 
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-4 items-center">
         <CButton
           style={{
             boxShadow: 'none',
@@ -96,15 +97,7 @@ export const QuoteRequest = () => {
           Solicitar cotización
         </CButton>
 
-        <CButton
-          style={{
-            boxShadow: 'none',
-            background: 'none',
-            color: '#333',
-          }}
-        >
-          Crear solicitud
-        </CButton>
+        <Linking href="/">Crear cotización</Linking>
       </div>
     </div>
   )
