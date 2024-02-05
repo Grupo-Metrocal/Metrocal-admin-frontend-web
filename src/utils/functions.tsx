@@ -7,16 +7,7 @@ type LinkingProps = {
   children: React.ReactNode
 }
 export const Linking = ({ href, children }: LinkingProps) => {
-  return (
-    <Link
-      style={{
-        cursor: 'default',
-      }}
-      href={href}
-    >
-      {children}
-    </Link>
-  )
+  return <Link href={href}>{children}</Link>
 }
 
 export const deleteQuoteRequest = async (id: number) => {
