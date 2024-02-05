@@ -55,7 +55,7 @@ export default function Page({ params }: IRoot) {
   return (
     <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer">
       <Content
-        title="Información principal"
+        title="Detalles de la cotización"
         colorTitle="green"
         className="quote-viewer__main-info"
         titleStyle={{
@@ -71,7 +71,7 @@ export default function Page({ params }: IRoot) {
               <TextInfo title="Precio total" value={formatPrice(data?.price)} />
               <TextInfo title="IVA" value={`${data?.tax} %`} />
               <TextInfo
-                title="Descuento total"
+                title="Descuento general"
                 value={`${data?.general_discount} %`}
               />
               <TextInfo
@@ -89,6 +89,14 @@ export default function Page({ params }: IRoot) {
               />
               <TextInfo
                 title="Estado"
+                style={{
+                  color:
+                    data?.status === 'done'
+                      ? 'green'
+                      : data?.status === 'pending'
+                      ? 'gray'
+                      : 'tomato',
+                }}
                 value={
                   data?.status === 'done'
                     ? 'Aprobado'
@@ -133,8 +141,8 @@ export default function Page({ params }: IRoot) {
 
       <div className="aside-info">
         <Content
-          title="Cliente"
-          colorTitle="blue"
+          title="Información del cliente"
+          colorTitle="red"
           className="aside-info__content"
           titleStyle={{
             fontSize: '1.5em',
@@ -153,7 +161,14 @@ export default function Page({ params }: IRoot) {
                   title="Dirección"
                   value={data?.client?.address || ''}
                 />
-                <TextInfo title="Teléfono" value={data?.client?.phone || ''} />
+                <TextInfo
+                  title="Teléfono"
+                  value={
+                    data?.client?.phone
+                      .toString()
+                      .replace(/(\d{4})(\d{4})/, '$1 $2') || ''
+                  }
+                />
                 <TextInfo title="Correo" value={data?.client?.email || ''} />
                 <TextInfo
                   title="Solicitado por"
@@ -184,10 +199,11 @@ export default function Page({ params }: IRoot) {
 type TextInfoProps = {
   title?: string
   value?: string
+  style?: React.CSSProperties
 }
 
-const TextInfo = ({ title, value }: TextInfoProps) => (
-  <div className="text-info">
+const TextInfo = ({ title, value, style }: TextInfoProps) => (
+  <div className="text-info" style={style}>
     <h3>{title}</h3>
     <p>{value}</p>
   </div>
@@ -228,7 +244,16 @@ const EquipmentInfo = ({
       </p>
       <p>
         Estado:{' '}
-        <span>
+        <span
+          style={{
+            color:
+              status === 'done'
+                ? 'green'
+                : status === 'pending'
+                ? 'gray'
+                : 'tomato',
+          }}
+        >
           {status === 'done'
             ? 'Aprobado'
             : status === 'pending'
