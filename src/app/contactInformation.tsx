@@ -90,6 +90,7 @@ export default function ContactInformation({
             onChange={onChange}
             required={true}
             placeholder="Nombre de la persona que solicita el servicio"
+            dissabled={true}
           />
 
           {/* <CInput
@@ -107,6 +108,7 @@ export default function ContactInformation({
             onChange={onChange}
             type="number"
             required={true}
+            dissabled={true}
             placeholder="Teléfono de la empresa o persona que solicita el servicio"
           />
         </section>
@@ -118,6 +120,7 @@ export default function ContactInformation({
             onChange={onChange}
             type="email"
             required={true}
+            dissabled={true}
             placeholder="Correo electrónico de contacto"
           />
 
@@ -127,6 +130,7 @@ export default function ContactInformation({
             name="address"
             onChange={onChange}
             required={true}
+            dissabled={true}
             placeholder="Dirección de la empresa"
           />
 
@@ -136,6 +140,7 @@ export default function ContactInformation({
             name="no_ruc"
             onChange={onChange}
             required={true}
+            dissabled={true}
             placeholder="Número de RUC de la empresa"
           />
 
