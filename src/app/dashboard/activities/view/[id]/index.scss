@@ -8,6 +8,48 @@
 
   &__main-info {
     width: 60%;
+
+    .carousel-item {
+      border-radius: 5px;
+      max-width: 300px;
+      position: relative;
+      cursor: pointer;
+      padding: 1em;
+
+      &:hover {
+        background-color: rgb(0, 153, 255, 0.1);
+      }
+    }
+
+    .selected {
+      &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(0, 153, 255, 0.1);
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 5px;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-bottom: 2px solid rgb(0, 153, 255);
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 5px;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
   &__services-personal {
