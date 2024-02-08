@@ -1,0 +1,33 @@
+.activity-viewer__personal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+
+  &__image {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+
+    span {
+      font-size: 1.1em;
+
+      &:last-child {
+        font-weight: 400;
+      }
+    }
+  }
+}
