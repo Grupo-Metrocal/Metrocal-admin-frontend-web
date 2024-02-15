@@ -37,6 +37,7 @@ export default function Page({ params }: IRoot) {
   const [teamMember, setTeamMember] = useState<TeamMember[]>([])
   const [responsable, setResponsable] = useState<number>(0)
   const [selectedService, setSelectedService] = useState<number | null>(null)
+  const [stackServices, setStackServices] = useState<any[]>([])
 
   const onDeleteUserFromActivity = async (id: number) => {
     if (id === responsable) {
@@ -127,7 +128,7 @@ export default function Page({ params }: IRoot) {
         titleStyle={{ fontSize: '1.2em' }}
       >
         <span className="font-medium">
-          Seleccione un servicio para ver el detalle de la calibración
+          Seleccione un servicio para mas Información
         </span>
         <CarouselComp className="mt-4">
           {data?.quote_request.equipment_quote_request.map((equipment) => {
@@ -145,6 +146,22 @@ export default function Page({ params }: IRoot) {
             )
           })}
         </CarouselComp>
+
+        <div className="activity-viewer__main-info__details">
+          {!stackServices.length ? (
+            // center the text
+            <div className="h-[400px] w-full grid place-items-center">
+              <p className="text-center flex items-center gap-2 justify-center flex-col">
+                <span className=" font-bold bg-[#333] rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">
+                  !
+                </span>
+                <span>Seleccione un servicio para ver más detalles</span>
+              </p>
+            </div>
+          ) : (
+            <div className="activity-viewer__main-info__details__selected"></div>
+          )}
+        </div>
       </Content>
       <div className="activity-viewer__services-personal">
         <Content
