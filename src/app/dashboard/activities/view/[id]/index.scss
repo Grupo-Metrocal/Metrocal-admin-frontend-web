@@ -50,6 +50,14 @@
         background-color: transparent;
       }
     }
+
+    &__details {
+      width: 100%;
+      min-height: 400px;
+      background-color: rgb(245, 245, 245);
+      margin-top: 1em;
+      border-radius: 10px;
+    }
   }
 
   &__services-personal {
