@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { IUser } from '../page'
 import { addUserToRole } from '@/redux/features/user/rolesSlice'
+import { passwordGenerator } from '@/utils/codeGenerator'
 
 export const CreateUsers = () => {
   const { values, handleInputChange } = useForm({
@@ -53,6 +54,11 @@ export const CreateUsers = () => {
     }
   }
 
+  const handleGeneratePassword = () => {
+    const password = passwordGenerator({ length: 12 })
+    handleInputChange({ name: 'password', value: password })
+  }
+
   return (
     <div className="create-user">
       <form onSubmit={handleCreateUser}>
@@ -72,14 +78,17 @@ export const CreateUsers = () => {
           value={values.email}
           required
         />
-        <CInput
-          name="password"
-          type="password"
-          label="Contraseña"
-          onChange={(e) => handleInputChange(e)}
-          value={values.password}
-          required
-        />
+        <div className="password">
+          <span onClick={handleGeneratePassword}>Generar contraseña</span>
+          <CInput
+            name="password"
+            type="text"
+            label="Contraseña"
+            onChange={(e) => handleInputChange(e)}
+            value={values.password}
+            required
+          />
+        </div>
 
         <CButton className="mt-6" type="submit" widht="full" uppercase>
           Crear usuario
