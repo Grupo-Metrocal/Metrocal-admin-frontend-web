@@ -109,6 +109,26 @@
   }
 }
 
+.create-user {
+  .password {
+    position: relative;
+    margin-top: 1em;
+
+    span {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      color: #333;
+      z-index: 1;
+
+      &:hover {
+        color: $primary-color-dark;
+      }
+    }
+  }
+}
+
 @include mobile {
   .users-sections {
     flex-direction: column;
