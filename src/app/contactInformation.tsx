@@ -80,7 +80,7 @@ export default function ContactInformation({
             onChange={onChange}
             setItemSelected={setItemSelected}
             required={true}
-            placeholder="Seleccione una empresa"
+            placeholder="Escriba o seleccione su empresa"
           />
 
           <CInput
@@ -106,7 +106,7 @@ export default function ContactInformation({
             value={state.phone}
             name="phone"
             onChange={onChange}
-            type="number"
+            type="text"
             required={true}
             dissabled={true}
             placeholder="Teléfono de la empresa o persona que solicita el servicio"
