@@ -11,7 +11,9 @@ const initialState = {
   client: {} as IClient,
   selectedEquipment: {} as IEquipmentQuoteRequest,
   IVA: 0,
+  IVAValue: 0,
   discount: 0,
+  discountvalue: 0,
   total: 0,
   subtotal: 0,
   extras: 0,
@@ -25,6 +27,12 @@ export const quoteSlice = createSlice({
   reducers: {
     setID: (state, action) => {
       state.id = action.payload
+    },
+    setIVAValue: (state, action) => {
+      state.IVAValue = action.payload
+    },
+    setDiscountValue: (state, action) => {
+      state.discountvalue = action.payload
     },
     setStatus: (state, action) => {
       state.status = action.payload
@@ -160,6 +168,10 @@ export const quoteSlice = createSlice({
       const { discount } = action.payload
       state.selectedEquipment.discount = Number(discount)
     },
+    changeDiscountvalueSelectedEquipment: (state, action) => {
+      const { discountvalue } = action.payload
+      state.selectedEquipment.discountvalue = Number(discountvalue)
+    },
     setIVA: (state, action) => {
       state.IVA = action.payload
     },
@@ -187,6 +199,7 @@ export const {
   changePriceSelectedEquipment,
   changeDiscount,
   changeDiscountSelectedEquipment,
+  changeDiscountvalueSelectedEquipment,
   changeStatus,
   changeStatusSelectedEquipment,
   setIVA,
@@ -203,6 +216,8 @@ export const {
   setMeasuringRange,
   setCalibrationRethod,
   changeExtras,
+  setIVAValue,
+  setDiscountValue,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -214,6 +229,7 @@ export const handleStatus = (id: number, status: string) => (dispatch: any) => {
 
 export const handleChangeExtras = (extras: number) => (dispatch: any) => {
   dispatch(changeExtras(extras))
+  dispatch(calculateSubtotal())
   dispatch(calculateTotalQuote())
 }
 
@@ -254,18 +270,29 @@ export const calculateTotal = () => (dispatch: any, getState: any) => {
 export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
   const { subtotal, discount, IVA, extras } = getState().quote
 
-  const totalQuote = subtotal - (subtotal * discount) / 100
+  let totalQuote = subtotal + extras
+
+  const totalDiscount = totalQuote * (discount / 100)
+
+  totalQuote -= totalDiscount
+
   const totalIVA = totalQuote * (IVA / 100)
-  dispatch(setTotalQuote((totalQuote + totalIVA + Number(extras)).toFixed(2)))
+
+  dispatch(setIVAValue(totalIVA))
+  dispatch(setDiscountValue(totalDiscount))
+  dispatch(setTotalQuote((totalQuote + totalIVA).toFixed(2)))
 }
 
 export const calculateSubtotal = () => (dispatch: any, getState: any) => {
-  const { equipment } = getState().quote
+  const { equipment, extras } = getState().quote
+  console.log(extras)
   let subtotal = 0
 
   equipment.forEach((item: any) => {
     if (item.status !== 'rejected') subtotal += item.total
   })
+
+  subtotal = subtotal + Number(extras)
 
   dispatch(setSubtotal(subtotal.toFixed(2)))
 }
