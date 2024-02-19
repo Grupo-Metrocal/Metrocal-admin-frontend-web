@@ -75,7 +75,7 @@ export default function Page({ params }: IRoot) {
                 value={`${data?.general_discount} %`}
               />
               <TextInfo
-                title="Traslado de equipo"
+                title="Traslado técnico"
                 value={formatPrice(data?.extras)}
               />
               <TextInfo
