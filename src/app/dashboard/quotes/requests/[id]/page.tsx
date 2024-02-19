@@ -28,6 +28,7 @@ import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
 import { CButton } from '@/components/CButton'
 import { useRouter } from 'next/navigation'
+import { formatPrice } from '@/utils/formatPrice'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -39,6 +40,7 @@ export interface IEquipmentQuoteRequest {
   calibration_method: string
   additional_remarks: string
   discount: number
+  discountvalue: number
   status: string
   comment: string
   price: number
@@ -182,8 +184,17 @@ export default function Page({ params }: IRoot) {
 }
 
 const Footer = () => {
-  const { id, total, IVA, discount, subtotal, equipment, extras } =
-    useAppSelector((state) => state.quote)
+  const {
+    id,
+    total,
+    IVA,
+    IVAValue,
+    discount,
+    discountvalue,
+    subtotal,
+    equipment,
+    extras,
+  } = useAppSelector((state) => state.quote)
 
   const dispatch = useAppDispatch()
 
@@ -235,6 +246,8 @@ const Footer = () => {
           onChange={(e) => dispatch(handleIVA(e))}
           value={IVA.toString()}
           label="IVA"
+          label_span={formatPrice(IVAValue)}
+          label_span_style={{ color: 'orange' }}
           icon={percentIcon}
           min={0}
           type="number"
@@ -244,7 +257,7 @@ const Footer = () => {
             dispatch(handleChangeExtras(e.value))
           }}
           value={extras.toString()}
-          label="Traslado de equipo"
+          label="Traslado técnico"
           icon={dollarIcon}
           min={0}
           type="number"
@@ -253,6 +266,8 @@ const Footer = () => {
           onChange={(e) => dispatch(handleDiscountQuote(e))}
           value={discount?.toString()}
           label="Descuento"
+          label_span={formatPrice(discountvalue)}
+          label_span_style={{ color: 'orange' }}
           icon={percentIcon}
           min={0}
           type="number"
