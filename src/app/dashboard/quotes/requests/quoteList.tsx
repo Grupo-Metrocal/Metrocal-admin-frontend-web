@@ -56,6 +56,7 @@ export const QuoteList = ({
           <RendererQuoteList
             quotes={quotesPending}
             onClick={handleNavigation}
+            onClickContent={handleNavigation}
           />
         ) : (
           <Spinner />
@@ -67,6 +68,7 @@ export const QuoteList = ({
           <RendererQuoteList
             quotes={quotesWaiting}
             onClick={handleRememberQuote}
+            onClickContent={handleNavigation}
           />
         ) : (
           <Spinner />
@@ -74,7 +76,14 @@ export const QuoteList = ({
       </div>
       <div className="quotes-container__section quotes-container__section--done">
         <h3 data-status="done">Aprobadas</h3>
-        {loading ? <RendererQuoteList quotes={quotesDone} /> : <Spinner />}
+        {loading ? (
+          <RendererQuoteList
+            onClickContent={handleNavigation}
+            quotes={quotesDone}
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
   )
@@ -83,15 +92,26 @@ export const QuoteList = ({
 interface IRendererQuoteList {
   quotes: IRoot[]
   onClick?: (id: number) => void
+  onClickContent?: (id: number) => void
 }
-const RendererQuoteList = ({ quotes, onClick }: IRendererQuoteList) => {
+const RendererQuoteList = ({
+  quotes,
+  onClick,
+  onClickContent,
+}: IRendererQuoteList) => {
   return (
     <div className="quotes-container__list">
       {quotes.length <= 0 ? (
         <div className="quotes-container__empty">No hay cotizaciones</div>
       ) : (
         quotes.map((quote) => (
-          <QuoteRequestItem key={quote.id} quote={quote} onClick={onClick} />
+          <QuoteRequestItem
+            key={quote.id}
+            quote={quote}
+            onClick={onClick}
+            onClickContent={onClickContent}
+            className="cursor-pointer"
+          />
         ))
       )}
     </div>
