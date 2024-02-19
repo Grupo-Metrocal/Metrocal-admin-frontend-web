@@ -271,7 +271,7 @@ export default function Page({ params }: Props) {
             </h4>
 
             <h4>
-              <span>Traslado de equipo</span>
+              <span>Traslado técnico</span>
               <span>{formatPrice(quote?.extras || 0)}</span>
             </h4>
 
