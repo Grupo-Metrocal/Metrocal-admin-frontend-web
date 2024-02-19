@@ -57,6 +57,7 @@ export interface IClient {
   email: string
   requested_by: string
   created_at: string
+  company_phone: string
 }
 
 export interface IQuote {
