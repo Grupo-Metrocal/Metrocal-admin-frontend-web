@@ -1,3 +1,4 @@
+import React from 'react'
 import './index.scss'
 import Image from 'next/image'
 interface CInputProps {
@@ -7,6 +8,8 @@ interface CInputProps {
   className?: string
   type?: string
   label?: string
+  label_span?: string
+  label_span_style?: React.CSSProperties
   required?: boolean
   name?: string
   id?: string
@@ -29,12 +32,24 @@ export const CInput = ({
   dissabled,
   min,
   max,
+  label_span,
+  label_span_style,
 }: CInputProps) => {
   return (
     <div className={`c-input ${className}`}>
       {label && (
         <label className={`${required ? 'required' : ''}`} htmlFor={id}>
-          {label}
+          {label}{' '}
+          {label_span && (
+            <span
+              style={{
+                fontWeight: 'bold',
+                ...label_span_style,
+              }}
+            >
+              - {label_span}
+            </span>
+          )}
         </label>
       )}
 
