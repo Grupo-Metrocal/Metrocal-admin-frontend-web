@@ -1,7 +1,7 @@
 'use client'
 import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
-import type { IActivity, ITeammember } from '@/types/activities'
+import type { IActivity } from '@/types/activities'
 import { useState, useEffect } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
@@ -12,6 +12,8 @@ import { toast } from 'sonner'
 import { IQuote } from './interface/quote'
 import { CarouselComp } from '@/components/Carousel'
 import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
+import { QuoteRequestItem } from '@/components/QuoteRequestItem'
+import { useRouter } from 'next/navigation'
 
 const getData = async () => {
   const response = await fetchData({
@@ -41,6 +43,32 @@ export default function Page() {
   const [quotes, setQuotes] = useState<IQuote[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
+  const router = useRouter()
+
+  const handleNavigation = (id: number) =>
+    router.push(`/dashboard/quotes/view/${id}`)
+
+  const handleGenerateActivity = async (id: number) => {
+    toast.loading('Generando actividad...')
+
+    const response = await fetchData({
+      url: `activities/generate/${id}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Actividad generada correctamente')
+    } else {
+      toast.error(response.details)
+    }
+  }
+
   useEffect(() => {
     getData().then((response) => {
       if (response.success) {
@@ -66,32 +94,39 @@ export default function Page() {
   return (
     <LayoutPage title="Actividades">
       <Content title="Asignación de actividades">
+        <h2 className="mb-4 text-[#333]">
+          Cotizaciones aprobadas recientemente:{' '}
+          {quotes && quotes.length > 0 ? quotes.length : 0}
+        </h2>
+
         <div className="activities-quotes-carousel">
-          <CarouselComp>
-            <CarouselItemComp>
-              {quotes && quotes.length > 0 ? (
-                quotes.map((quote: IQuote) => (
-                  <div key={quote.id} className="quote-item">
-                    <h3>Cotización: {quote.no}</h3>
-                    <p>Cliente: {quote.client.company_name}</p>
-                    <p>
-                      Fecha: {new Date(quote.created_at).toLocaleDateString()}
-                    </p>
-                    <p>Precio: {quote.price}</p>
-                  </div>
-                ))
-              ) : (
-                <div className="quote-item">
-                  <p>No hay cotizaciones</p>
+          <CarouselComp className="carousel">
+            {quotes && quotes.length > 0 ? (
+              quotes.map((quote: IQuote) => (
+                <CarouselItemComp key={quote.id} className="carousel-item">
+                  <QuoteRequestItem
+                    quote={quote as any}
+                    name_button="Generar actividad"
+                    onClick={() => handleGenerateActivity(quote.id)}
+                    onClickContent={() => handleNavigation(quote.id)}
+                  />
+                </CarouselItemComp>
+              ))
+            ) : (
+              <CarouselItemComp className="carousel-item">
+                <div className="flex justify-center items-center">
+                  No hay cotizaciones aprobadas
                 </div>
-              )}
-            </CarouselItemComp>
+              </CarouselItemComp>
+            )}
           </CarouselComp>
         </div>
 
         <div className="activities-page">
           <header className="activities-header">
-            <h2>Actividades disponibles: {activities.length}</h2>
+            <h2 className="mt-4  text-[#333]">
+              Actividades disponibles: {activities.length}
+            </h2>
           </header>
           <div className="activities_content">
             {loading ? (
