@@ -1,11 +1,15 @@
-.activities-page {
-  .activities-header {
-    h2 {
-      color: #999;
-      margin-left: 1em;
+.activities-quotes-carousel {
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  width: 100%;
+
+  .carousel {
+    .carousel-item {
+      max-width: 400px;
     }
   }
-
+}
+.activities-page {
   .activities_content {
     margin-top: 2em;
   }
