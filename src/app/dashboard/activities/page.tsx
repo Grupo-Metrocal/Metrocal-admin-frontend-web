@@ -64,6 +64,8 @@ export default function Page() {
 
     if (response.success) {
       toast.success('Actividad generada correctamente')
+      setActivities((prev) => [...prev, response.data])
+      setQuotes((prev) => prev.filter((quote) => quote.id !== id))
     } else {
       toast.error(response.details)
     }
@@ -113,9 +115,9 @@ export default function Page() {
                 </CarouselItemComp>
               ))
             ) : (
-              <CarouselItemComp className="carousel-item">
+              <CarouselItemComp className="carousel-item h-[180px] bg-white rounded-md my-4 flex justify-center items-center">
                 <div className="flex justify-center items-center">
-                  No hay cotizaciones aprobadas
+                  No hay cotizaciones aprobadas recientemente
                 </div>
               </CarouselItemComp>
             )}
