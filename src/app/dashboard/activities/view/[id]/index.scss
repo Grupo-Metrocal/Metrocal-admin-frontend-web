@@ -9,6 +9,13 @@
   &__main-info {
     width: 60%;
 
+    .carousel {
+      background-color: #f7f7f7;
+      margin-top: 1em;
+      padding-bottom: 1em;
+      width: fit-content;
+    }
+
     .carousel-item {
       border-radius: 5px;
       max-width: 300px;
