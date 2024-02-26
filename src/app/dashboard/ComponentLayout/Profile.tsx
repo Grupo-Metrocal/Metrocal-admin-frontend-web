@@ -10,66 +10,96 @@ import metrocalLogo from 'public/metrocal.svg'
 import { useRef, useState } from 'react'
 
 export const Profile = () => {
-  const { values, handleInputChange } = useForm({
-    username: getCookie('username') as string,
-  })
+  const [username, setUsername] = useState<string>(
+    getCookie('username') as string,
+  )
 
-  const [image, setImage] = useState<File | string>(
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0])
+    }
+  }
+
+  const [imageUrl, setImageUrl] = useState<string>(
     getCookie('profile_img') as string,
   )
 
   const inputRefImg = useRef<HTMLInputElement>(null)
 
-  const handleUpdateProfile = async () => {
-    toast.loading('Actualizando perfil...')
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
 
-    const response = await fetchData({
-      url: `users/profile/${getCookie('token')}`,
-      method: 'PUT',
-      body: {
-        username: values.username,
-        image,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
-    })
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
-    toast.dismiss()
+    try {
+      const myHeaders = new Headers()
+      myHeaders.append('Authorization', `Bearer ${getCookie('token')}`)
 
-    if (response.success) {
+      const formdata = new FormData()
+      if (selectedFile) {
+        formdata.append('image', selectedFile, selectedFile.name)
+      } else if (imageUrl !== 'null') {
+        formdata.append('imageUrl', imageUrl)
+      }
+
+      formdata.append('username', username)
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: formdata,
+      }
+
+      const response = await fetch(
+        `${BASE_URL}users/profile-image-update/${getCookie('token')}`,
+        requestOptions,
+      )
+
+      toast.dismiss()
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${await response.text()}`)
+      }
+
+      const responseUser = await fetch(
+        `${BASE_URL}users/data-user/${getCookie('token')}`, {
+          method: 'GET',
+          headers: myHeaders,
+        },
+      )
+
+      if (!responseUser.ok) {
+        throw new Error(`Error ${response.status}: ${await response.text()}`)
+      }
+
+      const data = await responseUser.json();
+
+      setImageUrl(data.imageURL)
+      setCookie('profile_img', data.imageURL)
+      setCookie('username', data.username)
+
       toast.success('Perfil actualizado', {
         description: 'Se actualizo correctamente el perfil',
       })
-      setCookie('username', values.username)
-    } else {
+    } catch (error: any) {
       toast.error('Error al actualizar el perfil', {
-        description: response.message | response.details,
+        description: error.message,
       })
-    }
-  }
-
-  const handleUploadImage = (e: any) => {
-    const file = e.target.files[0]
-
-    if (file) {
-      setImage(file)
     }
   }
 
   return (
-    <div className="profile-edit">
+    <form className="profile-edit" onSubmit={handleSubmit}>
       <div className="update-profile flex justify-center my-4 flex-col items-center">
         <Image
           src={
-            image
-              ? typeof image === 'string'
-                ? image === 'null'
-                  ? metrocalLogo
-                  : image
-                : URL.createObjectURL(image)
-              : metrocalLogo
+            selectedFile
+              ? URL.createObjectURL(selectedFile)
+              : imageUrl === 'null'
+              ? metrocalLogo
+              : imageUrl
           }
           alt="Profile"
           width={100}
@@ -88,28 +118,26 @@ export const Profile = () => {
           hidden
           ref={inputRefImg}
           accept=".jpg, .jpeg, .png"
-          onChange={handleUploadImage}
+          onChange={handleFileChange}
         />
         <span>{getCookie('profile_role')}</span>
       </div>
 
       <CInput
         label="Nombre de usuario"
-        value={values.username}
+        value={username}
         type="text"
         required
         name="username"
-        onChange={(e) => handleInputChange(e)}
+        onChange={(target) => {
+          console.log('value:' + target.value)
+          setUsername(target.value)
+        }}
       />
 
-      <CButton
-        widht="full"
-        className="mt-4"
-        uppercase={true}
-        onClick={handleUpdateProfile}
-      >
+      <CButton widht="full" className="mt-4" uppercase={true} type="submit">
         Guardar
       </CButton>
-    </div>
+    </form>
   )
 }
