@@ -23,7 +23,12 @@ import {
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 
-export const ActivityItem = ({ activity }: { activity: IActivity }) => {
+interface IProps {
+  activity: IActivity
+  onDelete: (id: number) => void
+}
+
+export const ActivityItem = ({ activity, onDelete }: IProps) => {
   const [responsable, setResponsable] = useState<ITeammember>({
     id: -1,
     username: '',
@@ -246,12 +251,7 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
         </div>
 
         <div className="actions">
-          <ActionActivityItem
-            activity={activity}
-            onDelete={(id) => {
-              console.log('Delete activity', id)
-            }}
-          />
+          <ActionActivityItem activity={activity} onDelete={onDelete} />
         </div>
       </div>
 
