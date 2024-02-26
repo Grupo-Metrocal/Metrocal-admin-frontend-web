@@ -71,6 +71,27 @@ export default function Page() {
     }
   }
 
+  const handleDeleteActivity = async (id: number) => {
+    toast.loading('Eliminando actividad...')
+    const response = await fetchData({
+      url: `activities/delete/${id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Actividad eliminada correctamente')
+      setActivities((prev) => prev.filter((activity) => activity.id !== id))
+    } else {
+      toast.error(response.details)
+    }
+  }
+
   useEffect(() => {
     getData().then((response) => {
       if (response.success) {
@@ -138,7 +159,11 @@ export default function Page() {
               </div>
             ) : activities.length > 0 ? (
               activities.map((activity: IActivity) => (
-                <ActivityItem key={activity.id} activity={activity} />
+                <ActivityItem
+                  key={activity.id}
+                  activity={activity}
+                  onDelete={handleDeleteActivity}
+                />
               ))
             ) : (
               <div className="flex justify-center items-center">
