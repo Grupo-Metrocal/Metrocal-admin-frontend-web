@@ -115,35 +115,33 @@ export default function Page() {
   }, [])
 
   return (
-    <LayoutPage title="Actividades">
-      <Content title="Asignación de actividades">
+    <LayoutPage title="Actividades" className="activities_content_layout">
+      <Content title="Asignación de actividades" className="w-auto">
         <h2 className="mb-4 text-[#333]">
           Cotizaciones aprobadas recientemente:{' '}
           {quotes && quotes.length > 0 ? quotes.length : 0}
         </h2>
 
-        <div className="activities-quotes-carousel">
-          <CarouselComp className="carousel">
-            {quotes && quotes.length > 0 ? (
-              quotes.map((quote: IQuote) => (
-                <CarouselItemComp key={quote.id} className="carousel-item">
-                  <QuoteRequestItem
-                    quote={quote as any}
-                    name_button="Generar actividad"
-                    onClick={() => handleGenerateActivity(quote.id)}
-                    onClickContent={() => handleNavigation(quote.id)}
-                  />
-                </CarouselItemComp>
-              ))
-            ) : (
-              <CarouselItemComp className="carousel-item h-[180px] bg-white rounded-md my-4 flex justify-center items-center">
-                <div className="flex justify-center items-center">
-                  No hay cotizaciones aprobadas recientemente
-                </div>
+        <CarouselComp className="carousel">
+          {quotes && quotes.length > 0 ? (
+            quotes.map((quote: IQuote) => (
+              <CarouselItemComp key={quote.id} className="carousel-item">
+                <QuoteRequestItem
+                  quote={quote as any}
+                  name_button="Generar actividad"
+                  onClick={() => handleGenerateActivity(quote.id)}
+                  onClickContent={() => handleNavigation(quote.id)}
+                />
               </CarouselItemComp>
-            )}
-          </CarouselComp>
-        </div>
+            ))
+          ) : (
+            <CarouselItemComp className="carousel-item h-[180px] bg-white rounded-md my-4 flex justify-center items-center">
+              <div className="flex justify-center items-center">
+                No hay cotizaciones aprobadas recientemente
+              </div>
+            </CarouselItemComp>
+          )}
+        </CarouselComp>
 
         <div className="activities-page">
           <header className="activities-header">
