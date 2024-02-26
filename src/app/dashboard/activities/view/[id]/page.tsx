@@ -130,7 +130,7 @@ export default function Page({ params }: IRoot) {
         <span className="font-medium">
           Seleccione un servicio para mas Información
         </span>
-        <CarouselComp className="mt-4">
+        <CarouselComp className="carousel">
           {data?.quote_request.equipment_quote_request.map((equipment) => {
             return (
               <CarouselItemComp
