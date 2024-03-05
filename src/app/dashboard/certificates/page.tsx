@@ -11,7 +11,11 @@ import { formatPrice } from '@/utils/formatPrice'
 export default function Page() {
   return (
     <LayoutPage title="Certificados">
-      <Content title="Vista general" colorTitle="purple">
+      <Content
+        title="Vista general"
+        colorTitle="purple"
+        style={{ paddingBottom: '2.2em' }}
+      >
         <div className="certificate-overview">
           <div className="certificate-stats">
             {StatisticsCard({
@@ -39,6 +43,10 @@ export default function Page() {
             })}
           </div>
         </div>
+      </Content>
+
+      <Content title="Certificados" colorTitle="yellow" className="mt-4">
+        <div></div>
       </Content>
     </LayoutPage>
   )
