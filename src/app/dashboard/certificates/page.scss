@@ -1,0 +1,7 @@
+.certificate-overview {
+  .certificate-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2em;
+  }
+}
