@@ -46,6 +46,13 @@ export type DataTableProps<T> = {
   data: T[]
   columns: ColumnDef<T>[]
   search_by: string
+  searchValue: string
+  handlePreviousPage: () => void
+  handleNextPage: () => void
+  currentPage: number
+  totalPages: number
+  isLoading: boolean
+  setPagination: any
   search_placeholder?: string
   filter_columns?: Record<string, string>
   filters?: filter[]
@@ -54,6 +61,13 @@ export function DataTableDemo<T>({
   data,
   columns,
   search_by,
+  searchValue,
+  setPagination,
+  handlePreviousPage,
+  handleNextPage,
+  currentPage,
+  totalPages,
+  isLoading,
   search_placeholder,
   filter_columns,
   filters,
@@ -102,16 +116,8 @@ export function DataTableDemo<T>({
       <div className="flex items-center py-4">
         <Input
           placeholder={search_placeholder ?? 'Buscar'}
-          value={
-            (table
-              .getColumn(search_by as string)
-              ?.getFilterValue() as string) ?? ''
-          }
-          onChange={(event) =>
-            table
-              .getColumn(search_by as string)
-              ?.setFilterValue(event.target.value)
-          }
+          value={searchValue}
+          onChange={setPagination}
           className="max-w-sm"
         />
         <div className="flex items-center space-x-2 ml-auto">
@@ -177,6 +183,11 @@ export function DataTableDemo<T>({
         </div>
       </div>
       <div className="rounded-md border">
+        {isLoading && (
+          <div className="w-full h-4 bg-gray-200 rounded overflow-hidden">
+            <div className="h-full bg-blue-500 animate-pulse"></div>
+          </div>
+        )}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -236,16 +247,16 @@ export function DataTableDemo<T>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
           >
             Anterior
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
           >
             Siguiente
           </Button>
