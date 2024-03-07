@@ -5,13 +5,19 @@ import Image from 'next/image'
 
 export const ItemPendingCertify = ({
   activity,
+  selectedActivity,
 }: {
   activity: IPendingActivities
+  selectedActivity: IPendingActivities
 }) => {
   return (
     <div
       key={activity.id}
-      className="pending-certificate__table__content__item"
+      className={`pending-certificate__table__content__item ${
+        selectedActivity?.id === activity.id
+          ? 'pending-certificate__table__content__item-selected'
+          : ''
+      }`}
     >
       <div className="responsable">
         <Image
