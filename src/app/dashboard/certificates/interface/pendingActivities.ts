@@ -15,10 +15,11 @@ interface Teammember {
 interface QuoteRequest {
   id: number
   no: string
+  price: number
   client: Client
   equipment_quote_request: Equipmentquoterequest[]
 }
-interface Equipmentquoterequest {
+export interface Equipmentquoterequest {
   id: number
   name: string
   count: number
