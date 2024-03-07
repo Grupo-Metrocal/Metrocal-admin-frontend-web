@@ -8,6 +8,19 @@ import { momentDate } from '@/utils/moment'
 import { formatPrice } from '@/utils/formatPrice'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { fetchData } from '@/utils/fetch'
+import { getCookie } from 'cookies-next'
+import { toast } from 'sonner'
+import { IP_01 } from '../../interface/p-01'
+
+const getMethods = async (id: number) => {
+  return await fetchData({
+    url: `methods/get-stack/${id}`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
+}
 
 export const SelectedPendingCertify = ({
   selectedActivity,
@@ -19,9 +32,31 @@ export const SelectedPendingCertify = ({
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
     {} as Equipmentquoterequest,
   )
+  const [methodsStackSelected, setMethodsStackSelected] = useState<any>()
+  const [loadingMethods, setLoadingMethods] = useState<boolean>(false)
 
-  const handleSelectedService = (service: Equipmentquoterequest) => {
+  const [calibrationSelected, setCalibrationSelected] = useState<IP_01>(
+    {} as IP_01,
+  )
+  const [loadingCalibration, setLoadingCalibration] = useState<boolean>(false)
+
+  const handleSelectedService = async (service: Equipmentquoterequest) => {
     setSelectedService(service)
+
+    setLoadingMethods(true)
+    const methods = await getMethods(service.method_id)
+
+    setLoadingMethods(false)
+    if (methods.success) {
+      setMethodsStackSelected({
+        methods: methods.data,
+        service_id: service.id,
+      })
+    }
+  }
+
+  const handleSelectedCalibration = async (calibration: IP_01) => {
+    setCalibrationSelected(calibration)
   }
 
   useEffect(() => {}, [selectedActivity])
@@ -92,8 +127,37 @@ export const SelectedPendingCertify = ({
       </div>
 
       <div className="method">
-        <h3>Métodos de calibración</h3>
-        <div className="method__content"></div>
+        <h3>Equipos del servicio calibrados</h3>
+        <div className="method__content">
+          {loadingMethods ? (
+            <Spinner />
+          ) : (
+            methodsStackSelected?.methods?.map((method: IP_01) => (
+              <div
+                key={method.id}
+                className={`method__content__item ${
+                  methodsStackSelected && calibrationSelected.id === method.id
+                    ? 'method__content__item-selected'
+                    : ''
+                }`}
+                onClick={() => handleSelectedCalibration(method)}
+              >
+                <span>
+                  <strong>Equipo:</strong>{' '}
+                  <span>{method.equipment_information.device}</span>
+                </span>
+                <span>
+                  <strong>No. Serie:</strong>{' '}
+                  <span>{method.equipment_information.serial_number}</span>
+                </span>
+                <span>
+                  <strong>Modelo:</strong>{' '}
+                  <span>{method.equipment_information.model}</span>
+                </span>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   )
