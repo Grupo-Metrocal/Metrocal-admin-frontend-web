@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/Spinner'
 import { ItemPendingCertify } from './components/itemPendingCertify'
+import { SelectedPendingCertify } from './components/selectedPendingCertify'
 
 const getData = async () => {
   return await fetchData({
@@ -29,14 +30,15 @@ export default function Page() {
   const [pendingActivities, setPendingActivities] = useState<
     IPendingActivities[]
   >([])
-
   const [loading, setLoading] = useState(true)
+  const [selectedActivity, setSelectedActivity] = useState<IPendingActivities>()
 
   useEffect(() => {
     getData()
       .then((data) => {
         if (data.success) {
           setPendingActivities(data.data)
+          setSelectedActivity(data.data[0])
         } else {
           toast.error('Error al cargar los datos')
         }
@@ -104,7 +106,11 @@ export default function Page() {
                 </div>
               ) : pendingActivities.length > 0 ? (
                 pendingActivities.map((activity) => (
-                  <ItemPendingCertify key={activity.id} activity={activity} />
+                  <ItemPendingCertify
+                    key={activity.id}
+                    activity={activity}
+                    selectedActivity={selectedActivity as IPendingActivities}
+                  />
                 ))
               ) : (
                 <p className="text-center mt-4">
@@ -113,7 +119,12 @@ export default function Page() {
               )}
             </div>
           </div>
-          <div className="pending-certificate__details"></div>
+          <div className="pending-certificate__details">
+            <SelectedPendingCertify
+              selectedActivity={selectedActivity as IPendingActivities}
+              loading={loading}
+            />
+          </div>
         </div>
       </Content>
     </LayoutPage>
