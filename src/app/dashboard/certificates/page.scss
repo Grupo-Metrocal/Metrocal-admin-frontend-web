@@ -1,0 +1,50 @@
+.certificate-overview {
+  .certificate-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1em;
+  }
+}
+
+.pending-certificate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2em;
+
+  &__table {
+    width: 30%;
+    min-width: 350px;
+    height: 500px;
+    overflow: auto;
+    background-color: #f7f7f7;
+    padding: 1em;
+    border-radius: 10px;
+
+    header {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      padding-bottom: 1em;
+      font-weight: bold;
+      color: #333;
+
+      span {
+        text-align: center;
+        &:nth-child(2) {
+          grid-column: span 2;
+          text-align: start;
+        }
+      }
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+  }
+
+  &__details {
+    width: 70%;
+  }
+}

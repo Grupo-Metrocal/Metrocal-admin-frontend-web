@@ -22,10 +22,16 @@
     margin-bottom: 1em;
     margin-top: 1em;
 
+    div {
+      text-align: center;
+    }
+
     .responsable {
       display: flex;
       align-items: center;
       .user {
+        text-align: start;
+
         margin-left: 0.5em;
         display: flex;
         flex-direction: column;
@@ -33,6 +39,7 @@
     }
 
     .client {
+      text-align: start;
       span {
         display: flex;
         justify-content: space-between;
@@ -41,6 +48,8 @@
     }
 
     .progress {
+      text-align: start;
+
       &-bar {
         background-color: #d9d9d9;
         height: 0.5em;

@@ -11,7 +11,7 @@ export function CarouselItemComp({
   onClick,
 }: ICarouselItem) {
   return (
-    <CarouselItem className={className} onClick={onClick}>
+    <CarouselItem className={`mt-4 ${className}`} onClick={onClick}>
       <div className="p-1">{children}</div>
     </CarouselItem>
   )

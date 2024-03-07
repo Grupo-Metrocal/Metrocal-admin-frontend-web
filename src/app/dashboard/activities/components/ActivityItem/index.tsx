@@ -11,8 +11,24 @@ import { AddMember } from '../AddMember'
 import { toast } from 'sonner'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { MoreHorizontal } from 'lucide-react'
 
-export const ActivityItem = ({ activity }: { activity: IActivity }) => {
+interface IProps {
+  activity: IActivity
+  onDelete: (id: number) => void
+}
+
+export const ActivityItem = ({ activity, onDelete }: IProps) => {
   const [responsable, setResponsable] = useState<ITeammember>({
     id: -1,
     username: '',
@@ -233,6 +249,10 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
             {activity.quote_request?.client.phone}
           </span>
         </div>
+
+        <div className="actions">
+          <ActionActivityItem activity={activity} onDelete={onDelete} />
+        </div>
       </div>
 
       <div className="activity-item__actions">
@@ -313,15 +333,68 @@ export const ActivityItem = ({ activity }: { activity: IActivity }) => {
           )}
         </div>
 
-        <div className="activity-item__actions__links">
+        <div></div>
+      </div>
+    </div>
+  )
+}
+
+type PropsActionItemActivity = {
+  activity: IActivity
+  onDelete: (id: number) => void
+}
+
+export const ActionActivityItem = ({
+  onDelete,
+  activity,
+}: PropsActionItemActivity) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
+        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
           <Link href={`/dashboard/activities/view/${activity.id}`}>
             Detalles de la actividad
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
           <Link href={`/dashboard/quotes/view/${activity.quote_request?.id}`}>
             Ver cotización
           </Link>
-        </div>
-      </div>
-    </div>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+        >
+          <AlertDialogModal
+            nameButton="Eliminar actividad"
+            onConfirm={() => {
+              onDelete(activity.id)
+            }}
+            title="¿Estas seguro de querer eliminar esta actividad?"
+            description="Esta acción no se puede deshacer"
+            buttonStyle={{
+              color: 'tomato',
+              fontWeight: 'bold',
+            }}
+            useButton={false}
+          />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

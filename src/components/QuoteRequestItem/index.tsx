@@ -8,6 +8,7 @@ interface IProps {
   onClick?: (id: number) => void
   onClickContent?: (id: number) => void
   className?: string
+  name_button?: string
 }
 
 export const QuoteRequestItem = ({
@@ -15,6 +16,7 @@ export const QuoteRequestItem = ({
   onClick,
   className,
   onClickContent,
+  name_button,
 }: IProps) => {
   const QUOTE_STATUS: { [key: string]: string } = {
     pending: 'Por revisar',
@@ -48,7 +50,9 @@ export const QuoteRequestItem = ({
           className="quote-container__item__button"
           style={{ boxShadow: 'none' }}
         >
-          {quote.status === 'pending'
+          {name_button
+            ? name_button
+            : quote.status === 'pending'
             ? 'Revisar'
             : quote.status === 'waiting'
             ? 'Enviar recordatorio'

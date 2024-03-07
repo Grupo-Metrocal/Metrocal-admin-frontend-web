@@ -20,6 +20,7 @@ import {
   deleteItemQuoteRequestRegisters,
   setQuoteRequest,
 } from '@/redux/features/quote/quoteRequestSlice'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 export type IQuoteRequestRegistered = {
   id: number
@@ -220,8 +221,9 @@ export const RegisterQuoteList = () => {
   // ])
 
   const deleteItemRegister = async (id: number) => {
-    if (await deleteQuoteRequest(id))
-      return dispatch(deleteItemQuoteRequestRegisters(id))
+    const response = await deleteQuoteRequest(id)
+
+    if (response.success) return dispatch(deleteItemQuoteRequestRegisters(id))
 
     return false
   }
@@ -435,11 +437,21 @@ const columns = ({
                   color: 'tomato',
                   fontWeight: 'bold',
                 }}
-                onClick={async () => {
-                  onDelete(payment.id)
+                onClick={(e) => {
+                  e.preventDefault()
                 }}
               >
-                Eliminar cotización
+                <AlertDialogModal
+                  nameButton="Eliminar cotización"
+                  title="¿Estás seguro de eliminar esta cotización?"
+                  onConfirm={() => onDelete(payment.id)}
+                  description="Al eliminar esta cotización se eliminaran todos los datos relacionados a ella, como sus actividades, sus permisos, etc."
+                  buttonStyle={{
+                    color: 'tomato',
+                    fontWeight: 'bold',
+                  }}
+                  useButton={false}
+                />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

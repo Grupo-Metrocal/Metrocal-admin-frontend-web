@@ -48,7 +48,7 @@ export const QuoteRequest = () => {
   const handleSendQuoteRequest = async () => {
     toast.loading('Enviando invitación...')
     const response = await fetchData({
-      url: `users/invitation-user/${selectedEmail}`,
+      url: `users/invitation-user/${selectedEmail.split(',')[0]}`,
       headers: {
         Authorization: `Bearer ${getCookie('token')}`,
       },
