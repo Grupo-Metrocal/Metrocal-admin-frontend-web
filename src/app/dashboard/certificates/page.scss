@@ -2,7 +2,7 @@
   .certificate-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2em;
+    gap: 1em;
   }
 }
 
@@ -42,5 +42,9 @@
       flex-direction: column;
       gap: 1em;
     }
+  }
+
+  &__details {
+    width: 70%;
   }
 }
