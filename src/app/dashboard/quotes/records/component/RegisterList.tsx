@@ -1,6 +1,6 @@
 'use client'
 import { fetchData } from '@/utils/fetch'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTableDemo, filter } from '@/components/Table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ColumnDef } from '@tanstack/react-table'
@@ -32,6 +32,14 @@ export type IQuoteRequestRegistered = {
   client_phone: string
 }
 
+export type IPagination = {
+  limit: number
+  offset: number
+  status: string[]
+  bussinesName: string
+  maxPages: number
+}
+
 export const RegisterQuoteList = () => {
   const data = useAppSelector((state) => state.quoteRequest.data)
   const [nextExpiredFilter, setNextExpiredFilter] = useState(false)
@@ -39,6 +47,16 @@ export const RegisterQuoteList = () => {
   const [rejectedFilter, setRejectedFilter] = useState(false)
   const [canceledFilter, setCanceledFilter] = useState(false)
   const [expiredFilter, setExpiredFilter] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [refresh, setRefresh] = useState(true)
+
+  const [pagination, setPagination] = useState<IPagination>({
+    limit: 10,
+    offset: 1,
+    status: [],
+    bussinesName: '',
+    maxPages: 0,
+  })
 
   const dispatch = useAppDispatch()
 
@@ -75,84 +93,132 @@ export const RegisterQuoteList = () => {
     },
   ]
 
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await fetchData({
-        url: 'quotes/registered',
-      })
+  // const getCheckedFilters = (filters: filter[]) => {
+  //   return filters.filter((filter) => filter.checked).map((filter) => filter.id)
+  // }
 
-      if (response) {
-        dispatch(setQuoteRequest(response))
+  const getCheckedFilters = (filters: filter[]): string[] => {
+    const checkedFilters = filters.filter((filter) => filter.checked)
+    if (checkedFilters.length === 0) {
+      return filters.map((filter) => filter.id)
+    } else {
+      return checkedFilters.map((filter) => filter.id)
+    }
+  }
+
+  const handlePreviousPage = () => {
+    if (pagination.offset > 1) {
+      setPagination({ ...pagination, offset: pagination.offset - 1 })
+      setRefresh((prev) => !prev)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (pagination.offset < pagination.maxPages) {
+      setPagination({ ...pagination, offset: pagination.offset + 1 })
+      setRefresh((prev) => !prev)
+    }
+  }
+
+  useEffect(() => {
+    const fetchFromServer = async () => {
+      setIsLoading(true)
+      try {
+        const URL = `quotes/registered/all?limit=${pagination.limit}&offset=${pagination.offset}&status=${pagination.status}&bussinesName=${pagination.bussinesName}`
+        const response = await fetchData({
+          url: URL,
+        })
+
+        if (response) {
+          setPagination({ ...pagination, maxPages: response.total_pages })
+          dispatch(setQuoteRequest(response.data))
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
-    fetch()
-  }, [dispatch])
+    fetchFromServer()
+  }, [refresh])
 
-  const filteredData = useMemo(() => {
-    return data.filter((item) => {
-      const date = new Date(item.quote_request_created_at)
-      const now = new Date()
-      const diff = Math.abs(now.getTime() - date.getTime())
-      const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
-
-      // Filtro para "Próximos a expirar"
-      if (nextExpiredFilter) {
-        if (days <= 15 && item.quote_request_status !== 'done') {
-          return true
-        }
-      }
-
-      // Filtro para "Aprobados"
-      if (approvedFilter) {
-        if (item.quote_request_status === 'done') {
-          return true
-        }
-      }
-
-      // Filtro para "Rechazados"
-      if (rejectedFilter) {
-        if (item.quote_request_status === 'rejected') {
-          return true
-        }
-      }
-
-      // Filtro para "Cancelados"
-      if (canceledFilter) {
-        if (item.quote_request_status === 'canceled') {
-          return true
-        }
-      }
-
-      // Filtro para "Expirados"
-      if (expiredFilter) {
-        if (days > 15 && item.quote_request_status !== 'done') {
-          return true
-        }
-      }
-
-      // Si no cumple con ningún filtro, se incluye cuando ninguno está marcado
-      if (
-        !nextExpiredFilter &&
-        !approvedFilter &&
-        !rejectedFilter &&
-        !canceledFilter &&
-        !expiredFilter
-      ) {
-        return true
-      }
-
-      // Si no cumple con ningún filtro, se excluye
-      return false
-    })
+  useEffect(() => {
+    const status = getCheckedFilters(filters)
+    setPagination({ ...pagination, status })
+    setRefresh((prev) => !prev)
   }, [
-    data,
     nextExpiredFilter,
     approvedFilter,
     rejectedFilter,
     canceledFilter,
     expiredFilter,
   ])
+
+  // const filteredData = useMemo(() => {
+  //   return data.filter((item) => {
+  //     const date = new Date(item.quote_request_created_at)
+  //     const now = new Date()
+  //     const diff = Math.abs(now.getTime() - date.getTime())
+  //     const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
+
+  //     // Filtro para "Próximos a expirar"
+  //     if (nextExpiredFilter) {
+  //       if (days <= 15 && item.quote_request_status !== 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Aprobados"
+  //     if (approvedFilter) {
+  //       if (item.quote_request_status === 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Rechazados"
+  //     if (rejectedFilter) {
+  //       if (item.quote_request_status === 'rejected') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Cancelados"
+  //     if (canceledFilter) {
+  //       if (item.quote_request_status === 'canceled') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Expirados"
+  //     if (expiredFilter) {
+  //       if (days > 15 && item.quote_request_status !== 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Si no cumple con ningún filtro, se incluye cuando ninguno está marcado
+  //     if (
+  //       !nextExpiredFilter &&
+  //       !approvedFilter &&
+  //       !rejectedFilter &&
+  //       !canceledFilter &&
+  //       !expiredFilter
+  //     ) {
+  //       return true
+  //     }
+
+  //     // Si no cumple con ningún filtro, se excluye
+  //     return false
+  //   })
+  // }, [
+  //   data,
+  //   nextExpiredFilter,
+  //   approvedFilter,
+  //   rejectedFilter,
+  //   canceledFilter,
+  //   expiredFilter,
+  // ])
 
   const deleteItemRegister = async (id: number) => {
     const response = await deleteQuoteRequest(id)
@@ -167,8 +233,18 @@ export const RegisterQuoteList = () => {
       {
         <DataTableDemo<IQuoteRequestRegistered>
           columns={columns({ onDelete: deleteItemRegister })}
-          data={filteredData}
+          data={data ? data : []}
           search_by="client_company_name"
+          searchValue={pagination.bussinesName}
+          setPagination={(event: { target: { value: any } }) => {
+            setPagination({ ...pagination, bussinesName: event?.target?.value })
+            setRefresh((prev) => !prev)
+          }}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          currentPage={pagination.offset}
+          totalPages={pagination.maxPages}
+          isLoading={isLoading}
           search_placeholder="Buscar por empresa"
           filter_columns={{
             client_company_name: 'Empresa',
@@ -286,23 +362,31 @@ const columns = ({
           <div
             style={{
               backgroundColor:
-                status === 'done'
+                status === 'approved'
                   ? '#10B981'
                   : status === 'rejected'
                   ? 'tomato'
-                  : 'gray',
+                  : status === 'expired'
+                  ? '#808080'
+                  : status === 'next_expired'
+                  ? '#FFD700'
+                  : '#333333',
 
               borderRadius: '5px',
-              color: status === 'canceled' ? '#333' : 'white',
+              color: 'white',
               padding: '0.2rem 0.5rem',
               display: 'inline-block',
               float: 'right',
             }}
           >
-            {status === 'done'
+            {status === 'approved'
               ? 'Aprobado'
               : status === 'rejected'
               ? 'Rechazado'
+              : status === 'expired'
+              ? 'Expirado'
+              : status === 'next_expired'
+              ? 'Próximo a expirar'
               : 'Cancelado'}
           </div>
         )
