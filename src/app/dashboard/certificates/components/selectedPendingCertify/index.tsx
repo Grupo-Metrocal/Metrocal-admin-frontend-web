@@ -12,6 +12,8 @@ import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { IP_01 } from '../../interface/p-01'
+import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
+import { CarouselComp } from '@/components/Carousel'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -132,30 +134,32 @@ export const SelectedPendingCertify = ({
           {loadingMethods ? (
             <Spinner />
           ) : (
-            methodsStackSelected?.methods?.map((method: IP_01) => (
-              <div
-                key={method.id}
-                className={`method__content__item ${
-                  methodsStackSelected && calibrationSelected.id === method.id
-                    ? 'method__content__item-selected'
-                    : ''
-                }`}
-                onClick={() => handleSelectedCalibration(method)}
-              >
-                <span>
-                  <strong>Equipo:</strong>{' '}
-                  <span>{method.equipment_information.device}</span>
-                </span>
-                <span>
-                  <strong>No. Serie:</strong>{' '}
-                  <span>{method.equipment_information.serial_number}</span>
-                </span>
-                <span>
-                  <strong>Modelo:</strong>{' '}
-                  <span>{method.equipment_information.model}</span>
-                </span>
-              </div>
-            ))
+            <CarouselComp>
+              {methodsStackSelected?.methods?.map((method: IP_01) => (
+                <CarouselItemComp
+                  key={method.id}
+                  className={`method__content__item ${
+                    methodsStackSelected && calibrationSelected.id === method.id
+                      ? 'method__content__item-selected'
+                      : ''
+                  }`}
+                  onClick={() => handleSelectedCalibration(method)}
+                >
+                  <span>
+                    <strong>Equipo:</strong>{' '}
+                    <span>{method.equipment_information.device}</span>
+                  </span>
+                  <span>
+                    <strong>No. Serie:</strong>{' '}
+                    <span>{method.equipment_information.serial_number}</span>
+                  </span>
+                  <span>
+                    <strong>Modelo:</strong>{' '}
+                    <span>{method.equipment_information.model}</span>
+                  </span>
+                </CarouselItemComp>
+              ))}
+            </CarouselComp>
           )}
         </div>
       </div>
