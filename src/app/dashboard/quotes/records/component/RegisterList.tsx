@@ -130,6 +130,7 @@ export const RegisterQuoteList = () => {
 
         if (response) {
           setPagination({ ...pagination, maxPages: response.total_pages })
+          console.log('response.data' + JSON.stringify(response.data))
           dispatch(setQuoteRequest(response.data))
         }
       } catch (error) {
@@ -226,6 +227,20 @@ export const RegisterQuoteList = () => {
     return false
   }
 
+  const [pinCode, setPinCode] = useState('')
+
+  useEffect(() => {
+    const getData = setTimeout(() => {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        bussinesName: pinCode,
+      }))
+      setRefresh((prev) => !prev)
+    }, 750)
+
+    return () => clearTimeout(getData)
+  }, [pinCode, setPagination, setRefresh])
+
   return (
     <div>
       {
@@ -235,8 +250,7 @@ export const RegisterQuoteList = () => {
           search_by="client_company_name"
           searchValue={pagination.bussinesName}
           setPagination={(event: { target: { value: any } }) => {
-            setPagination({ ...pagination, bussinesName: event?.target?.value })
-            setRefresh((prev) => !prev)
+            setPinCode(event?.target?.value)
           }}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
@@ -360,7 +374,7 @@ const columns = ({
           <div
             style={{
               backgroundColor:
-                status === 'approved'
+                status === 'done'
                   ? '#10B981'
                   : status === 'rejected'
                   ? 'tomato'
@@ -377,7 +391,7 @@ const columns = ({
               float: 'right',
             }}
           >
-            {status === 'approved'
+            {status === 'done'
               ? 'Aprobado'
               : status === 'rejected'
               ? 'Rechazado'
