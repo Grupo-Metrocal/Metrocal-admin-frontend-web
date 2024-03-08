@@ -137,7 +137,16 @@ export default function RootLayout({
                       Component={<Profile />}
                     >
                       <div className="flex gap-2 justify-center items-center">
-                        <Image src={metrocalLogo} alt="Profile" />
+                        <Image
+                          src={
+                            getCookie('profile_img') === 'null'
+                              ? metrocalLogo
+                              : getCookie('profile_img')
+                          }
+                          width={40}
+                          height={40}
+                          alt="Profile"
+                        />
                         <span className="name-user font-bold">
                           {getCookie('username')?.split(' ')[0]}
                         </span>

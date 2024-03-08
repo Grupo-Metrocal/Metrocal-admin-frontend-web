@@ -29,6 +29,8 @@ export const RenderPrices = () => {
       status: 'done',
     }
 
+    toast.loading('Aprobando equipo...')
+
     const response = await fetchData({
       method: 'POST',
       url: `quotes/request/equipment/update`,
@@ -37,6 +39,8 @@ export const RenderPrices = () => {
       },
       body: equipment,
     })
+
+    toast.dismiss()
 
     if (response.status === 200) {
       toast.success('Equipo aprobado')
@@ -58,6 +62,7 @@ export const RenderPrices = () => {
       status: 'rejected',
     }
 
+    toast.loading('Rechazando equipo...')
     const response = await fetchData({
       method: 'POST',
       url: `quotes/request/equipment/update`,
@@ -66,6 +71,8 @@ export const RenderPrices = () => {
       },
       body: equipment,
     })
+
+    toast.dismiss()
 
     if (response.status === 200) {
       toast.success('Equipo no aprobado')

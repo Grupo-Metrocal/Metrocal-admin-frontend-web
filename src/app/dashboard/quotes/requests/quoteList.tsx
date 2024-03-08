@@ -22,8 +22,12 @@ export const QuoteList = ({
 }: TQuotesProps) => {
   const router = useRouter()
 
-  const handleNavigation = (id: number) =>
+  const handleNavigationUpd = (id: number) =>
     router.push(`/dashboard/quotes/requests/${id}`)
+
+  const handleNavigationView = (id: number) => {
+    router.push(`/dashboard/quotes/view/${id}`)
+  }
 
   const handleRememberQuote = async (id: number) => {
     toast.loading('Enviando recordatorio...')
@@ -55,8 +59,8 @@ export const QuoteList = ({
         {loading ? (
           <RendererQuoteList
             quotes={quotesPending}
-            onClick={handleNavigation}
-            onClickContent={handleNavigation}
+            onClick={handleNavigationUpd}
+            onClickContent={handleNavigationUpd}
           />
         ) : (
           <Spinner />
@@ -68,7 +72,7 @@ export const QuoteList = ({
           <RendererQuoteList
             quotes={quotesWaiting}
             onClick={handleRememberQuote}
-            onClickContent={handleNavigation}
+            onClickContent={handleNavigationView}
           />
         ) : (
           <Spinner />
@@ -78,7 +82,7 @@ export const QuoteList = ({
         <h3 data-status="done">Aprobadas</h3>
         {loading ? (
           <RendererQuoteList
-            onClickContent={handleNavigation}
+            onClickContent={handleNavigationView}
             quotes={quotesDone}
           />
         ) : (

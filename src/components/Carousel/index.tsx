@@ -2,7 +2,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
@@ -20,7 +19,9 @@ export function CarouselComp({ children, className }: ICarouselComp) {
       }}
       className={`mx-12 ${className || className}`}
     >
-      <CarouselContent>{children}</CarouselContent>
+      <CarouselContent className="flex flex-nowrap gap-4">
+        {children}
+      </CarouselContent>
       <CarouselPrevious className="shadow-lg" />
       <CarouselNext className="shadow-lg" />
     </Carousel>

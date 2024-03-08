@@ -52,6 +52,8 @@ export const Profile = () => {
         body: formdata,
       }
 
+      toast.loading('Actualizando perfil...')
+
       const response = await fetch(
         `${BASE_URL}users/profile-image-update/${getCookie('token')}`,
         requestOptions,
@@ -64,7 +66,8 @@ export const Profile = () => {
       }
 
       const responseUser = await fetch(
-        `${BASE_URL}users/data-user/${getCookie('token')}`, {
+        `${BASE_URL}users/data-user/${getCookie('token')}`,
+        {
           method: 'GET',
           headers: myHeaders,
         },
@@ -74,11 +77,14 @@ export const Profile = () => {
         throw new Error(`Error ${response.status}: ${await response.text()}`)
       }
 
-      const data = await responseUser.json();
+      const data = await responseUser.json()
 
-      setImageUrl(data.imageURL)
-      setCookie('profile_img', data.imageURL)
-      setCookie('username', data.username)
+      toast.dismiss()
+
+      console.log(data)
+
+      setCookie('username', data.username as string)
+      setCookie('profile_img', data.imageURL as string)
 
       toast.success('Perfil actualizado', {
         description: 'Se actualizo correctamente el perfil',

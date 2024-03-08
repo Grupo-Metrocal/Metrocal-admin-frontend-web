@@ -11,6 +11,9 @@ export const Linking = ({ href, children }: LinkingProps) => {
 }
 
 export const deleteQuoteRequest = async (id: number) => {
+  toast.loading('Eliminando cotización', {
+    description: 'Esto podria tardar unos segundos...',
+  })
   const response = await fetchData({
     url: `quotes/${id}`,
     method: 'DELETE',
@@ -19,13 +22,15 @@ export const deleteQuoteRequest = async (id: number) => {
     },
   })
 
-  if (response) {
+  toast.dismiss()
+
+  if (response.success) {
     toast.success('Cotización eliminada')
-    return true
   } else {
-    toast.error('Error al eliminar cotización')
-    return false
+    toast.error(response.details)
   }
+
+  return response
 }
 
 export const deleteUser = async (id: number, token: string) => {

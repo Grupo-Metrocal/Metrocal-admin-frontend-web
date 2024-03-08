@@ -118,6 +118,8 @@ export default function Home() {
       return
     }
 
+    toast.loading('Enviando solicitud...')
+
     const requestBody = {
       client_id: companySelected,
       equipment_quote_request: equipmentValue.map((item) => {
@@ -138,6 +140,8 @@ export default function Home() {
       },
     })
       .then((res) => {
+        toast.dismiss()
+
         if (res.status === 200) {
           toast.success('Solicitud enviada con éxito', {
             description:
@@ -153,6 +157,7 @@ export default function Home() {
         })
       })
       .catch((err) => {
+        toast.dismiss()
         toast.error('Ocurrió un error al enviar la solicitud', {
           description: 'Por favor, intente nuevamente',
         })
