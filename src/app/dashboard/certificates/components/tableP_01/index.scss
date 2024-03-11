@@ -65,4 +65,26 @@
       }
     }
   }
+
+  &__observations {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    div {
+      width: 48%;
+      margin-bottom: 20px;
+      p {
+        font-size: 14px;
+        font-weight: 700;
+        color: #2f2a2a;
+        margin-bottom: 5px;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+      }
+    }
+  }
 }
