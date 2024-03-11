@@ -309,7 +309,7 @@ export default function Home() {
       </main>
 
       <FooterComponent requested_by={contactInfValue.requested_by} />
-      <Toaster />
+      <Toaster closeButton />
     </>
   )
 }
