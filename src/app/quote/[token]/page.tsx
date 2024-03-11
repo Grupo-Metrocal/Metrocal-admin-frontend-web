@@ -363,7 +363,7 @@ export default function Page({ params }: Props) {
         approved_date={quote?.updated_at}
       />
 
-      <Toaster />
+      <Toaster closeButton />
     </main>
   )
 }
