@@ -6,9 +6,11 @@ import Image from 'next/image'
 export const ItemPendingCertify = ({
   activity,
   selectedActivity,
+  onClick,
 }: {
   activity: IPendingActivities
   selectedActivity: IPendingActivities
+  onClick: (activity: IPendingActivities) => void
 }) => {
   return (
     <div
@@ -18,6 +20,7 @@ export const ItemPendingCertify = ({
           ? 'pending-certificate__table__content__item-selected'
           : ''
       }`}
+      onClick={() => onClick(activity)}
     >
       <div className="responsable">
         <Image
