@@ -28,6 +28,7 @@ export interface ICertificate_P_01 {
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
+  descriptionPattern: descriptionPattern
 }
 
 export interface EquipmentInformation {
@@ -69,4 +70,9 @@ export interface EnvironmentalConditions {
   atmospheric_pressure: string
   temperature: string
   humidity: string
+}
+
+export interface descriptionPattern {
+  pattern: string
+  observation: string
 }
