@@ -160,7 +160,7 @@ export default function RootLayout({
           </main>
 
           {/* richColor for colored toast*/}
-          <Toaster expand={true} richColors={true} />
+          <Toaster closeButton expand={true} richColors={true} />
         </body>
       </html>
     </ReduxProvider>
