@@ -113,7 +113,7 @@ export default function Signin(): JSX.Element {
         </div>
       </section>
 
-      <Toaster />
+      <Toaster closeButton />
     </div>
   )
 }
