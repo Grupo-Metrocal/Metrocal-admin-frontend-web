@@ -21,3 +21,52 @@ export interface EquipmentInformation {
   resolution: number
   scale: number
 }
+
+// **************************
+
+export interface ICertificate_P_01 {
+  equipment_information: EquipmentInformation
+  calibration_results: CalibrationResults
+  environmental_conditions: EnvironmentalConditions
+}
+
+export interface EquipmentInformation {
+  service_code: string
+  certificate_issue_date: string
+  calibration_date: string
+  object_calibrated: string
+  manufacturer: string
+  no_series: string
+  model: string
+  measurement_range: string
+  resolution: number
+  code: string
+  applicant: string
+  address: string
+  calibration_location: any
+}
+
+export interface CalibrationResults {
+  result: Result
+  result_unid_system: ResultUnidSystem
+}
+
+export interface Result {
+  reference_pressure: string[]
+  equipment_indication: string[]
+  correction: string[]
+  uncertainty: string[]
+}
+
+export interface ResultUnidSystem {
+  reference_pressure: string[]
+  equipment_indication: string[]
+  correction: string[]
+  uncertainty: string[]
+}
+
+export interface EnvironmentalConditions {
+  atmospheric_pressure: string
+  temperature: string
+  humidity: string
+}
