@@ -15,6 +15,7 @@ import { toast } from 'sonner'
 import { Spinner } from '@/components/Spinner'
 import { ItemPendingCertify } from './components/itemPendingCertify'
 import { SelectedPendingCertify } from './components/selectedPendingCertify'
+import { TableP_01 } from './components/tableP_01'
 
 const getData = async () => {
   return await fetchData({
@@ -32,6 +33,12 @@ export default function Page() {
   >([])
   const [loading, setLoading] = useState(true)
   const [selectedActivity, setSelectedActivity] = useState<IPendingActivities>()
+
+  const [loadingCalibration, setLoadingCalibration] = useState<boolean>(false)
+
+  const [certificate, setCertificate] = useState<any>({})
+
+  console.log('certificate', certificate)
 
   useEffect(() => {
     getData()
@@ -109,6 +116,7 @@ export default function Page() {
                   <ItemPendingCertify
                     key={activity.id}
                     activity={activity}
+                    onClick={() => setSelectedActivity(activity)}
                     selectedActivity={selectedActivity as IPendingActivities}
                   />
                 ))
@@ -123,9 +131,32 @@ export default function Page() {
             <SelectedPendingCertify
               selectedActivity={selectedActivity as IPendingActivities}
               loading={loading}
+              setLoadingCalibration={setLoadingCalibration}
+              setCertificate={setCertificate}
             />
           </div>
         </div>
+      </Content>
+
+      <Content
+        title="Generador de certificados"
+        colorTitle="green"
+        className="mt-4 w-full min-h-[200px]"
+      >
+        {loadingCalibration ? (
+          <div className="flex mt-4 justify-center">
+            <Spinner />
+          </div>
+        ) : certificate.equipment_information ? (
+          <div className="flex justify-center items-center h-full">
+            <TableP_01 certificate={certificate} />
+          </div>
+        ) : (
+          <p className="text-center mt-4">
+            No hay certificado para mostrar, porfavor seleccine un equipo y
+            genere los resultados del certificado
+          </p>
+        )}
       </Content>
     </LayoutPage>
   )
