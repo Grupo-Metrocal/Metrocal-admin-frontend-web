@@ -170,6 +170,20 @@ export const TableP_01 = ({
             </tbody>
           </table>
         </section>
+
+        <section className="table-p-01__observations">
+          <h2>Observaciones</h2>
+
+          <div>
+            <p>Patron utilizado</p>
+            <span>{certificate.descriptionPattern?.pattern}</span>
+          </div>
+
+          <div>
+            <p>Observaciones adicionales</p>
+            <span>{certificate.descriptionPattern?.observation}</span>
+          </div>
+        </section>
       </section>
     </div>
   )
