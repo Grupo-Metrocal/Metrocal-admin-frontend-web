@@ -14,6 +14,8 @@ import { toast } from 'sonner'
 import { IP_01 } from '../../interface/p-01'
 import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { CarouselComp } from '@/components/Carousel'
+import { CButton } from '@/components/CButton'
+import metrocalLogo from 'public/metrocal.svg'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -24,13 +26,37 @@ const getMethods = async (id: number) => {
   })
 }
 
+const getCertificate = async ({
+  methodType,
+  activityID,
+  methodID,
+}: {
+  methodType: string
+  activityID: number
+  methodID: number
+}) => {
+  return await fetchData({
+    url: `methods/${methodType}/certificates/activity/${activityID}/method/${methodID}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
+}
+
+interface IProps {
+  loading: boolean
+  selectedActivity: IPendingActivities
+  setLoadingCalibration: (loading: boolean) => void
+  setCertificate: (certificate: any) => void
+}
 export const SelectedPendingCertify = ({
   selectedActivity,
   loading,
-}: {
-  selectedActivity: IPendingActivities
-  loading: boolean
-}) => {
+  setLoadingCalibration,
+  setCertificate,
+}: IProps) => {
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
     {} as Equipmentquoterequest,
   )
@@ -40,7 +66,6 @@ export const SelectedPendingCertify = ({
   const [calibrationSelected, setCalibrationSelected] = useState<IP_01>(
     {} as IP_01,
   )
-  const [loadingCalibration, setLoadingCalibration] = useState<boolean>(false)
 
   const handleSelectedService = async (service: Equipmentquoterequest) => {
     setSelectedService(service)
@@ -57,11 +82,42 @@ export const SelectedPendingCertify = ({
     }
   }
 
-  const handleSelectedCalibration = async (calibration: IP_01) => {
+  const handleSelectedCalibration = (calibration: IP_01) => {
     setCalibrationSelected(calibration)
   }
 
-  useEffect(() => {}, [selectedActivity])
+  const handleGenerateCertificate = async () => {
+    if (!calibrationSelected.id) {
+      toast('Porfavor selecciona un equipo para generar el certificado')
+      return
+    }
+
+    setLoadingCalibration(true)
+
+    toast.loading('Cargando certificado...', {
+      description: 'Esto puede tardar unos segundos',
+    })
+
+    const certificate = await getCertificate({
+      methodType: selectedService.calibration_method
+        .split(' ')[0]
+        .toLocaleLowerCase(),
+      activityID: selectedActivity.id,
+      methodID: calibrationSelected.id,
+    })
+
+    toast.dismiss()
+    setLoadingCalibration(false)
+
+    if (certificate.success) {
+      setCertificate(certificate.data)
+      toast.success('Certificado cargado con éxito')
+    } else {
+      toast.error('Error al cargar el certificado', {
+        description: certificate.details,
+      })
+    }
+  }
 
   return loading ? (
     <div className="pending-certificate__selected flex justify-center ">
@@ -70,12 +126,13 @@ export const SelectedPendingCertify = ({
   ) : (
     <div className="pending-certificate__selected">
       <div className="client">
-        <h2>{selectedActivity.quoteRequest.client.company_name}</h2>
+        <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+
         <div className="client__details">
-          <span>Finalizado: {momentDate(selectedActivity.updated_at)}</span>
+          <span>Finalizado: {momentDate(selectedActivity?.updated_at)}</span>
 
           <span>
-            {selectedActivity.quoteRequest.equipment_quote_request.reduce(
+            {selectedActivity?.quoteRequest.equipment_quote_request.reduce(
               (acc, item) => acc + item.count,
               0,
             )}{' '}
@@ -83,7 +140,7 @@ export const SelectedPendingCertify = ({
           </span>
 
           <span>
-            Precio total: {formatPrice(selectedActivity.quoteRequest.price)}
+            Precio total: {formatPrice(selectedActivity?.quoteRequest.price)}
           </span>
         </div>
       </div>
@@ -91,10 +148,10 @@ export const SelectedPendingCertify = ({
       <div className="team_members">
         <h3>Equipo de trabajo</h3>
         <div className="team_members__content">
-          {selectedActivity.team_members.map((member) => (
+          {selectedActivity?.team_members.map((member) => (
             <div key={member.id} className="team_members__content__item">
               <Image
-                src={member.imageURL}
+                src={member.imageURL || metrocalLogo}
                 alt={member.username}
                 width={40}
                 height={40}
@@ -109,7 +166,7 @@ export const SelectedPendingCertify = ({
         <h3>Servicios realizados</h3>
 
         <div className="services__content">
-          {selectedActivity.quoteRequest.equipment_quote_request.map(
+          {selectedActivity?.quoteRequest.equipment_quote_request.map(
             (item) =>
               item.type_service === 'Calibracion' && (
                 <div
@@ -129,7 +186,19 @@ export const SelectedPendingCertify = ({
       </div>
 
       <div className="method">
-        <h3>Equipos del servicio calibrados</h3>
+        <div className="flex justify-between align-middle items-center">
+          <h3>
+            Equipos del servicio calibrados
+            <br />
+            <small className="text-[#999]">
+              Selecciona un equipo para generar los detalles del certificado
+            </small>
+          </h3>
+
+          <CButton className="mt-4" onClick={handleGenerateCertificate}>
+            Generar resultados del certificado
+          </CButton>
+        </div>
         <div className="method__content">
           {loadingMethods ? (
             <Spinner />
