@@ -146,7 +146,7 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
   const setRemoveMemberToServer = async (id: number) => {
     const response = await fetchData({
       url: 'activities/remove-member',
-      method: 'DELETE',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,

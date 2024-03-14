@@ -47,7 +47,7 @@ export default function Page({ params }: IRoot) {
 
       const response = await fetchData({
         url: 'activities/remove-member',
-        method: 'DELETE',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getCookie('token')}`,
