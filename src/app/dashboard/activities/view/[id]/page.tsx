@@ -6,12 +6,17 @@ import { LayoutPage } from '@/components/LayoutPage'
 import { Content } from '@/components/Content'
 import { formatPrice } from '@/utils/formatPrice'
 import { Data, TeamMember } from './interface'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import DonutChartComp from '@/components/DonutChart'
 import { ItemUser } from './component/ItemUser'
 import { toast } from 'sonner'
 import { CarouselComp } from '@/components/Carousel'
 import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
+import { Spinner } from '@/components/Spinner'
+import { IP_01 } from './interface/p_01'
+import { CInput } from '@/components/CInput'
+import { useForm } from '@/hooks/useForm'
+import { Modal } from '@/components/Modal'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -23,6 +28,15 @@ const getData = async (id: string) => {
   })
 
   return response
+}
+
+const getMethods = async (id: number) => {
+  return await fetchData({
+    url: `methods/get-stack/${id}`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
 }
 
 export interface IRoot {
@@ -37,7 +51,30 @@ export default function Page({ params }: IRoot) {
   const [teamMember, setTeamMember] = useState<TeamMember[]>([])
   const [responsable, setResponsable] = useState<number>(0)
   const [selectedService, setSelectedService] = useState<number | null>(null)
-  const [stackServices, setStackServices] = useState<any[]>([])
+  const [stackServices, setStackServices] = useState<IP_01[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
+  const { values: search, handleInputChange } = useForm({
+    search: '',
+  })
+
+  const filteredServices = useMemo(() => {
+    if (!search.search) {
+      return stackServices
+    } else {
+      return stackServices.filter((service) => {
+        if (
+          service.equipment_information &&
+          service.equipment_information.model
+        ) {
+          return service.equipment_information.model
+            .toLowerCase()
+            .includes(search.search.toLowerCase())
+        } else {
+          return false
+        }
+      })
+    }
+  }, [search.search, stackServices])
 
   const onDeleteUserFromActivity = async (id: number) => {
     if (id === responsable) {
@@ -104,6 +141,23 @@ export default function Page({ params }: IRoot) {
     }
   }
 
+  const handleSelectedService = async (method_id: number, id: number) => {
+    setSelectedService(id)
+    setLoading(true)
+
+    const response = await getMethods(method_id)
+
+    if (response.success) {
+      setStackServices(response.data)
+    } else {
+      toast.error('Error al obtener los métodos', {
+        description: response.details,
+      })
+    }
+
+    setLoading(false)
+  }
+
   useEffect(() => {
     getData(id).then((response) => {
       setData(response.data)
@@ -138,7 +192,9 @@ export default function Page({ params }: IRoot) {
                 className={`carousel-item ${
                   selectedService === equipment.id ? 'selected' : ''
                 }`}
-                onClick={() => setSelectedService(equipment.id)}
+                onClick={() =>
+                  handleSelectedService(equipment.method_id, equipment.id)
+                }
               >
                 <p className="font-bold">{equipment.name}</p>
                 <p className="text-sm">Cantidad: {equipment.count}</p>
@@ -148,8 +204,26 @@ export default function Page({ params }: IRoot) {
         </CarouselComp>
 
         <div className="activity-viewer__main-info__details">
+          <p className="font-semibold text-[#333] text-lg mt-4 mb-2 border-b-2 border-[#999] w-full pb-2">
+            Equipos asociados
+          </p>
+
+          <div className="flex items-center gap-2 w-full justify-end my-6">
+            <span>Filtrar model de equipo</span>
+            <CInput
+              placeholder="Buscar modelo"
+              value={search.search}
+              name="search"
+              onChange={handleInputChange}
+              type="text"
+              input_style={{
+                width: '300px',
+                backgroundColor: '#f5f5f5',
+                fontSize: '1em',
+              }}
+            />
+          </div>
           {!stackServices.length ? (
-            // center the text
             <div className="h-[400px] w-full grid place-items-center">
               <p className="text-center flex items-center gap-2 justify-center flex-col">
                 <span className=" font-bold bg-[#333] rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">
@@ -159,7 +233,48 @@ export default function Page({ params }: IRoot) {
               </p>
             </div>
           ) : (
-            <div className="activity-viewer__main-info__details__selected"></div>
+            <div className="activity-viewer__main-info__details__selected">
+              {loading ? (
+                <div className="grid place-items-center h-full w-full">
+                  <Spinner />
+                </div>
+              ) : (
+                filteredServices.map((service) => (
+                  <Modal
+                    key={service.id}
+                    title="Detalles del equipo"
+                    Component={() => <div></div>}
+                    size="3xl"
+                    // calc width
+                    className="w-[48%] text-start "
+                  >
+                    <div
+                      key={service.id}
+                      className={`activity-viewer__main-info__details__selected__item ${
+                        selectedService === service.id ? 'selected' : ''
+                      }`}
+                    >
+                      <p>
+                        <span>Equipo:</span>{' '}
+                        {service.equipment_information?.device}
+                      </p>
+                      <p>
+                        <span>Fabricante:</span>{' '}
+                        {service.equipment_information?.maker}
+                      </p>
+                      <p>
+                        <span>Numero de serie:</span>{' '}
+                        {service.equipment_information?.serial_number}
+                      </p>
+                      <p>
+                        <span>Modelo:</span>{' '}
+                        {service.equipment_information?.model}
+                      </p>
+                    </div>
+                  </Modal>
+                ))
+              )}
+            </div>
           )}
         </div>
       </Content>
