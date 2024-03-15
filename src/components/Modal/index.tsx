@@ -18,7 +18,7 @@ const SIZE_DIALOG = {
 }
 
 interface ModalProps {
-  nameButton: string
+  nameButton?: string
   title?: string
   description?: string
   Component?: React.FC
@@ -27,6 +27,7 @@ interface ModalProps {
   className?: string
   icon?: any
   marginIcon?: string
+  children?: React.ReactNode
 }
 
 export const Modal = ({
@@ -39,6 +40,7 @@ export const Modal = ({
   className,
   icon,
   marginIcon,
+  children,
 }: ModalProps) => {
   return (
     <Dialog>
@@ -55,7 +57,7 @@ export const Modal = ({
             height={16}
           />
         )}
-        {nameButton}
+        {children || nameButton}
       </DialogTrigger>
       <DialogContent
         style={{
