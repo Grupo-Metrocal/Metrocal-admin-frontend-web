@@ -17,6 +17,7 @@ interface CInputProps {
   dissabled?: boolean
   min?: number
   max?: number
+  input_style?: React.CSSProperties
 }
 export const CInput = ({
   value,
@@ -34,6 +35,7 @@ export const CInput = ({
   max,
   label_span,
   label_span_style,
+  input_style,
 }: CInputProps) => {
   return (
     <div className={`c-input ${className}`}>
@@ -67,6 +69,7 @@ export const CInput = ({
           disabled={dissabled}
           min={min}
           max={max}
+          style={input_style}
         />
       </div>
     </div>
