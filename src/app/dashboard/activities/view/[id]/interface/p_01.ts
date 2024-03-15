@@ -1,0 +1,94 @@
+export interface IP_01 {
+  id: number
+  calibration_location: any
+  status: string
+  created_at: string
+  updated_at: string
+  equipment_information: EquipmentInformation
+  environmental_conditions: EnvironmentalConditions
+  calibration_results: CalibrationResults
+  description_pattern: DescriptionPattern
+}
+
+export interface EquipmentInformation {
+  id: number
+  device: string
+  maker: string
+  serial_number: string
+  measurement_range: string
+  accuracy_class: string
+  unit: string
+  model: string
+  code: string
+  height_difference: number
+  resolution: number
+  scale: number
+}
+
+export interface EnvironmentalConditions {
+  id: number
+  cycles: Cycle[]
+}
+
+export interface Cycle {
+  ta: Ta
+  hPa: HPa
+  cycle_number: number
+}
+
+export interface Ta {
+  hrp: Hrp
+  tac: Tac
+  equipement: string
+}
+
+export interface Hrp {
+  final: number
+  initial: number
+}
+
+export interface Tac {
+  final: number
+  initial: number
+}
+
+export interface HPa {
+  pa: Pa
+  equipement: string
+}
+
+export interface Pa {
+  final: number
+  initial: number
+}
+
+export interface CalibrationResults {
+  id: number
+  results: Result[]
+}
+
+export interface Result {
+  cicle_number: number
+  calibration_factor: CalibrationFactor[]
+}
+
+export interface CalibrationFactor {
+  upward: Upward
+  downward: Downward
+}
+
+export interface Upward {
+  pattern: number
+  equipment: number
+}
+
+export interface Downward {
+  pattern: number
+  equipment: number
+}
+
+export interface DescriptionPattern {
+  id: number
+  pattern: string
+  observation: string
+}
