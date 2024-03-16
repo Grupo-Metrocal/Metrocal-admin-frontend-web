@@ -11,7 +11,7 @@ export const CalibrationResults = ({
 }) => {
   return (
     <div className="calibration-results">
-      {calibration_results.results.map((result) => {
+      {calibration_results?.results.map((result) => {
         return (
           <div
             key={result.cicle_number}
@@ -19,7 +19,9 @@ export const CalibrationResults = ({
           >
             <div className="header">
               <div className="grid grid-cols gap-4 ">
-                <span className="text-center">Ciclo {result.cicle_number}</span>
+                <span className="text-center font-semibold">
+                  Ciclo {result.cicle_number}
+                </span>
               </div>
               <div className="grid grid-cols-2 gap-4 border p-2">
                 <span>Ascendente</span>
