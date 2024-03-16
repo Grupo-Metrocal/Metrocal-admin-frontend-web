@@ -14,11 +14,7 @@ export const TabsNavigations = ({ items }: Props) => {
       {/* alinear al inicio */}
       <TabsList className="flex gap-2 mb-6 justify-start">
         {items?.map((item, index) => (
-          <TabsTrigger
-            value={item.value}
-            key={index}
-            // className="bg-slate-400 text-white px-4 py-2 rounded-lg"
-          >
+          <TabsTrigger value={item.value} key={index}>
             {item.label}
           </TabsTrigger>
         ))}
