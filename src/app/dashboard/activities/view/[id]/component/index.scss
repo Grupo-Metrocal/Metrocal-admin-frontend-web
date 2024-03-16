@@ -31,3 +31,21 @@
     }
   }
 }
+
+.calibration-results {
+  min-width: calc(80vw - 3em);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+}
