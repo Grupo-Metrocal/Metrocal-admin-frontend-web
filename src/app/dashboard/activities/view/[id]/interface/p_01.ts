@@ -4,13 +4,13 @@ export interface IP_01 {
   status: string
   created_at: string
   updated_at: string
-  equipment_information: EquipmentInformation
-  environmental_conditions: EnvironmentalConditions
-  calibration_results: CalibrationResults
-  description_pattern: DescriptionPattern
+  equipment_information: IEquipmentInformation
+  environmental_conditions: IEnvironmentalConditions
+  calibration_results: ICalibrationResults
+  description_pattern: IDescriptionPattern
 }
 
-export interface EquipmentInformation {
+export interface IEquipmentInformation {
   id: number
   device: string
   maker: string
@@ -25,7 +25,7 @@ export interface EquipmentInformation {
   scale: number
 }
 
-export interface EnvironmentalConditions {
+export interface IEnvironmentalConditions {
   id: number
   cycles: Cycle[]
 }
@@ -62,7 +62,7 @@ export interface Pa {
   initial: number
 }
 
-export interface CalibrationResults {
+export interface ICalibrationResults {
   id: number
   results: Result[]
 }
@@ -87,7 +87,7 @@ export interface Downward {
   equipment: number
 }
 
-export interface DescriptionPattern {
+export interface IDescriptionPattern {
   id: number
   pattern: string
   observation: string
