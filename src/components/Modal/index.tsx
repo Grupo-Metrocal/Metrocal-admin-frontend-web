@@ -28,6 +28,7 @@ interface ModalProps {
   icon?: any
   marginIcon?: string
   children?: React.ReactNode
+  style: React.CSSProperties
 }
 
 export const Modal = ({
@@ -41,6 +42,7 @@ export const Modal = ({
   icon,
   marginIcon,
   children,
+  style,
 }: ModalProps) => {
   return (
     <Dialog>
@@ -62,6 +64,7 @@ export const Modal = ({
       <DialogContent
         style={{
           backgroundColor: '#fff',
+          ...style,
         }}
         className={`${SIZE_DIALOG[size]}`}
       >
