@@ -17,6 +17,7 @@ import { IP_01 } from './interface/p_01'
 import { CInput } from '@/components/CInput'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
+import { P_01 } from './component/p_01'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -243,10 +244,9 @@ export default function Page({ params }: IRoot) {
                   <Modal
                     key={service.id}
                     title="Detalles del equipo"
-                    Component={() => <div></div>}
-                    size="3xl"
-                    // calc width
+                    Component={() => <P_01 {...service} />}
                     className="w-[48%] text-start "
+                    style={{ minWidth: '80vw' }}
                   >
                     <div
                       key={service.id}
