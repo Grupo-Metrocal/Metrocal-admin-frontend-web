@@ -3,13 +3,13 @@ import { IP_01 } from '../../interface/p_01'
 import { EquipmentInformation } from './equipment-information'
 import { CalibrationResults } from './calibration-result'
 import { EnvironmentalConditions } from './environmental-conditions'
+import { DescriptionPattern } from './description-pattern'
 
 export const P_01 = ({
   equipment_information,
   calibration_results,
   environmental_conditions,
   description_pattern,
-  calibration_location,
 }: IP_01) => {
   return (
     <TabsNavigations
@@ -37,6 +37,13 @@ export const P_01 = ({
           label: 'Resultados de calibración',
           Component: () => (
             <CalibrationResults calibration_results={calibration_results} />
+          ),
+        },
+        {
+          value: 'description_pattern',
+          label: 'Descripción de patrones',
+          Component: () => (
+            <DescriptionPattern description_pattern={description_pattern} />
           ),
         },
       ]}
