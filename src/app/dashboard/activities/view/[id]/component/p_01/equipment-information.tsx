@@ -7,32 +7,32 @@ export const EquipmentInformation = ({
 }) => {
   return (
     <div className="grid grid-cols-2 gap-4">
-      <Item title="Dispositivo" value={equipment_information.device} />
-      <Item title="Marca" value={equipment_information.maker} />
+      <Item title="Dispositivo" value={equipment_information?.device} />
+      <Item title="Marca" value={equipment_information?.maker} />
       <Item
         title="Número de serie"
-        value={equipment_information.serial_number}
+        value={equipment_information?.serial_number}
       />
       <Item
         title="Rango de medición"
-        value={equipment_information.measurement_range}
+        value={equipment_information?.measurement_range}
       />
       <Item
         title="Clase de precisión"
-        value={equipment_information.accuracy_class}
+        value={equipment_information?.accuracy_class}
       />
-      <Item title="Unidad" value={equipment_information.unit} />
-      <Item title="Modelo" value={equipment_information.model} />
-      <Item title="Código" value={equipment_information.code} />
+      <Item title="Unidad" value={equipment_information?.unit} />
+      <Item title="Modelo" value={equipment_information?.model} />
+      <Item title="Código" value={equipment_information?.code} />
       <Item
         title="Diferencia de altura"
-        value={equipment_information.height_difference.toString()}
+        value={equipment_information?.height_difference.toString()}
       />
       <Item
         title="Resolución"
-        value={equipment_information.resolution.toString()}
+        value={equipment_information?.resolution.toString()}
       />
-      <Item title="Escala" value={equipment_information.scale.toString()} />
+      <Item title="Escala" value={equipment_information?.scale.toString()} />
     </div>
   )
 }
