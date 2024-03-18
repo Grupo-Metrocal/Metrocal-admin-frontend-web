@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next'
 import { LayoutPage } from '@/components/LayoutPage'
 import { Content } from '@/components/Content'
 import { formatPrice } from '@/utils/formatPrice'
-import { Data, TeamMember } from './interface'
+import { Data, TeamMember, EquipmentQuoteRequest } from './interface'
 import { useEffect, useState, useMemo } from 'react'
 import DonutChartComp from '@/components/DonutChart'
 import { ItemUser } from './component/ItemUser'
@@ -13,7 +13,6 @@ import { toast } from 'sonner'
 import { CarouselComp } from '@/components/Carousel'
 import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { Spinner } from '@/components/Spinner'
-import { IP_01 } from './interface/p_01'
 import { CInput } from '@/components/CInput'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
@@ -46,13 +45,18 @@ export interface IRoot {
   }
 }
 
+const RENDERER_METHOD = {
+  'NI-MCIT-P-01': P_01,
+}
+
 export default function Page({ params }: IRoot) {
   const { id } = params
   const [data, setData] = useState<Data>()
   const [teamMember, setTeamMember] = useState<TeamMember[]>([])
   const [responsable, setResponsable] = useState<number>(0)
-  const [selectedService, setSelectedService] = useState<number | null>(null)
-  const [stackServices, setStackServices] = useState<IP_01[]>([])
+  const [selectedService, setSelectedService] =
+    useState<EquipmentQuoteRequest | null>(null)
+  const [stackServices, setStackServices] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const { values: search, handleInputChange } = useForm({
     search: '',
@@ -142,11 +146,11 @@ export default function Page({ params }: IRoot) {
     }
   }
 
-  const handleSelectedService = async (method_id: number, id: number) => {
-    setSelectedService(id)
+  const handleSelectedService = async (service: any) => {
+    setSelectedService(service)
     setLoading(true)
 
-    const response = await getMethods(method_id)
+    const response = await getMethods(service.method_id)
 
     if (response.success) {
       setStackServices(response.data)
@@ -191,11 +195,9 @@ export default function Page({ params }: IRoot) {
               <CarouselItemComp
                 key={equipment.id}
                 className={`carousel-item ${
-                  selectedService === equipment.id ? 'selected' : ''
+                  selectedService?.id === equipment.id ? 'selected' : ''
                 }`}
-                onClick={() =>
-                  handleSelectedService(equipment.method_id, equipment.id)
-                }
+                onClick={() => handleSelectedService(equipment)}
               >
                 <p className="font-bold">{equipment.name}</p>
                 <p className="text-sm">Cantidad: {equipment.count}</p>
@@ -244,7 +246,18 @@ export default function Page({ params }: IRoot) {
                   <Modal
                     key={service.id}
                     title="Detalles del equipo"
-                    Component={() => <P_01 {...service} />}
+                    Component={() => {
+                      const selectedMethod =
+                        selectedService?.calibration_method?.split(' ')[0] || ''
+
+                      const Renderer =
+                        RENDERER_METHOD[
+                          selectedMethod as keyof typeof RENDERER_METHOD
+                        ]
+
+                      // Verificamos si Renderer es una función antes de llamarla
+                      return Renderer ? <Renderer {...service} /> : null
+                    }}
                     className="w-[48%] text-start "
                     style={{ minWidth: '80vw' }}
                   >
