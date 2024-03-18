@@ -2,7 +2,7 @@
 import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import type { IActivity } from '@/types/activities'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { Spinner } from '@/components/Spinner'
@@ -14,6 +14,8 @@ import { CarouselComp } from '@/components/Carousel'
 import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { QuoteRequestItem } from '@/components/QuoteRequestItem'
 import { useRouter } from 'next/navigation'
+import { useForm } from '@/hooks/useForm'
+import { CInput } from '@/components/CInput'
 
 const getData = async () => {
   const response = await fetchData({
@@ -42,6 +44,45 @@ export default function Page() {
   const [activities, setActivities] = useState<IActivity[]>([])
   const [quotes, setQuotes] = useState<IQuote[]>([])
   const [loading, setLoading] = useState<boolean>(true)
+
+  const filterOptions = ['Todos', 'Completados', 'Pendientes']
+
+  const [filterSelected, setFilterSelected] = useState<string>('Todos')
+  const { values: search, handleInputChange } = useForm({
+    search: '',
+  })
+
+  const filterdActivities = useMemo(() => {
+    if (filterSelected === 'Todos') {
+      return activities.filter((activity) =>
+        activity.quote_request.client.company_name
+          .toLowerCase()
+          .includes(search.search.toLowerCase()),
+      )
+    }
+
+    if (filterSelected === 'Completados') {
+      return activities.filter(
+        (activity) =>
+          activity.progress === 100 &&
+          activity.quote_request.client.company_name
+            .toLowerCase()
+            .includes(search.search.toLowerCase()),
+      )
+    }
+
+    if (filterSelected === 'Pendientes') {
+      return activities.filter(
+        (activity) =>
+          activity.status === 'pending' &&
+          activity.quote_request.client.company_name
+            .toLowerCase()
+            .includes(search.search.toLowerCase()),
+      )
+    }
+
+    return activities
+  }, [activities, filterSelected, search])
 
   const router = useRouter()
 
@@ -148,6 +189,34 @@ export default function Page() {
             <h2 className="mt-4  text-[#333]">
               Actividades disponibles: {activities.length}
             </h2>
+
+            <div className="filters mt-8 flex justify-between items-center">
+              <CInput
+                placeholder="Nombre de la empresa"
+                value={search.search}
+                name="search"
+                label="Buscar por nombre de empresa"
+                onChange={handleInputChange}
+                type="text"
+                input_style={{
+                  width: '300px',
+                  backgroundColor: '#f5f5f5',
+                  fontSize: '1em',
+                }}
+              />
+
+              <select
+                value={filterSelected}
+                onChange={(e) => setFilterSelected(e.target.value)}
+                className="form-select p-2 rounded border border-gray-500"
+              >
+                {filterOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
           </header>
           <div className="activities_content">
             {loading ? (
@@ -155,8 +224,8 @@ export default function Page() {
                 {' '}
                 <Spinner />
               </div>
-            ) : activities.length > 0 ? (
-              activities.map((activity: IActivity) => (
+            ) : filterdActivities?.length > 0 ? (
+              filterdActivities?.map((activity: IActivity) => (
                 <ActivityItem
                   key={activity.id}
                   activity={activity}
