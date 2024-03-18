@@ -6,7 +6,7 @@ export const EnvironmentalConditions = ({
   environmental_conditions: IEnvironmentalConditions
 }) => {
   return (
-    <div className="environmental-conditions grid grid-row-1 p-4 ">
+    <div className="environmental-conditions grid grid-row-1 p-4 gap-2">
       {environmental_conditions?.cycles?.map((cycle) => {
         return <RoWCycle key={cycle.cycle_number} cycle={cycle} />
       })}
@@ -32,13 +32,9 @@ export const EnvironmentalConditions = ({
 const RoWCycle = ({ cycle }: { cycle: Cycle }) => {
   return (
     <div className="">
-      <div>
-        <span>Ciclo {cycle.cycle_number}</span>
-      </div>
-
       <div className="grid grid-cols-4 border text-center ">
         <div className="flex flex-col">
-          <span>_</span>
+          <span className="font-semibold">Ciclo {cycle.cycle_number}</span>
           <span>Iniciales</span>
           <span>Finales</span>
         </div>
