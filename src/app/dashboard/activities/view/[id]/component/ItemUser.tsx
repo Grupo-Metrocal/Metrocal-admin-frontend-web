@@ -13,10 +13,6 @@ import {
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
-import { toast } from 'sonner'
-import { fetchData } from '@/utils/fetch'
-import { getCookie } from 'cookies-next'
-import { useEffect, useState } from 'react'
 
 interface IProps {
   user: TeamMember
