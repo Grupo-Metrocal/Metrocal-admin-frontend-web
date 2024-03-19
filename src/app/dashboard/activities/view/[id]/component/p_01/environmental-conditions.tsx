@@ -1,30 +1,46 @@
+import { ReportMethodActivity } from '@/components/ReportMethodActivity'
 import { IEnvironmentalConditions, Cycle } from '../../interface/p_01'
+
+interface EnvironmentalConditionsProps {
+  environmental_conditions: IEnvironmentalConditions
+  id: number
+  method_name: string
+}
 
 export const EnvironmentalConditions = ({
   environmental_conditions,
-}: {
-  environmental_conditions: IEnvironmentalConditions
-}) => {
+  id,
+  method_name,
+}: EnvironmentalConditionsProps) => {
   return (
-    <div className="environmental-conditions grid grid-row-1 p-4 gap-2">
-      {environmental_conditions?.cycles?.map((cycle) => {
-        return <RoWCycle key={cycle.cycle_number} cycle={cycle} />
-      })}
+    <div className="flex flex-col space-y-4">
+      <div className="environmental-conditions grid grid-row-1 p-4 gap-2">
+        {environmental_conditions?.cycles?.map((cycle) => {
+          return <RoWCycle key={cycle.cycle_number} cycle={cycle} />
+        })}
 
-      <div>
-        <div></div>
-        <div className="grid grid-cols-4 border text-center p-2 font-semibold">
-          <div>
-            <span>Equipos utilizados</span>
-          </div>
-          <div className="flex flex-col col-span-2 border">
-            <span>{environmental_conditions?.cycles[0]?.ta.equipement} </span>
-          </div>
-          <div className="flex flex-col border">
-            <span>{environmental_conditions?.cycles[0]?.hPa.equipement} </span>
+        <div>
+          <div></div>
+          <div className="grid grid-cols-4 border text-center p-2 font-semibold">
+            <div>
+              <span>Equipos utilizados</span>
+            </div>
+            <div className="flex flex-col col-span-2 border">
+              <span>{environmental_conditions?.cycles[0]?.ta.equipement} </span>
+            </div>
+            <div className="flex flex-col border">
+              <span>
+                {environmental_conditions?.cycles[0]?.hPa.equipement}{' '}
+              </span>
+            </div>
           </div>
         </div>
       </div>
+      <ReportMethodActivity
+        method_name={method_name}
+        zone={'Condiciones ambientales'}
+        method_id={id}
+      />
     </div>
   )
 }
