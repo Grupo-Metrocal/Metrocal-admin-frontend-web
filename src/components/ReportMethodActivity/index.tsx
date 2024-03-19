@@ -67,6 +67,8 @@ export const Report = ({ method_name, method_id, zone }: Props) => {
       return
     }
 
+    toast.loading('Enviando reporte...')
+
     const response = await fetchData({
       url: `methods/emmit-report/${method_id}`,
       method: 'POST',
@@ -80,6 +82,7 @@ export const Report = ({ method_name, method_id, zone }: Props) => {
     })
 
     reset()
+    toast.dismiss()
 
     if (response.success) {
       toast.success('Has emitido un reporte en la zona ' + zone)

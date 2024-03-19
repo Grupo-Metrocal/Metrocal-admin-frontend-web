@@ -25,7 +25,7 @@ export const DescriptionPattern = ({
           </div>
           <div>
             <span className="font-semibold">Patrón:</span>{' '}
-            {description_pattern.pattern}
+            {description_pattern?.pattern}
           </div>
         </div>
       </div>
