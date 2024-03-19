@@ -2,6 +2,8 @@ export interface IP_01 {
   id: number
   calibration_location: any
   status: string
+  report_status: boolean
+  report_messages: string[]
   created_at: string
   updated_at: string
   equipment_information: IEquipmentInformation
