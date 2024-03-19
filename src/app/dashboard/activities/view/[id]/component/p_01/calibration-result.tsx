@@ -8,11 +8,15 @@ interface Props {
   calibration_results: ICalibrationResults
   id: number
   method_name: string
+  report_status: boolean
+  report_messages: string[]
 }
 export const CalibrationResults = ({
   calibration_results,
   method_name,
   id,
+  report_messages,
+  report_status,
 }: Props) => {
   return (
     <div>
@@ -59,6 +63,8 @@ export const CalibrationResults = ({
         method_name={method_name}
         zone={'Resultados de calibración'}
         method_id={id}
+        report_messages={report_messages}
+        report_status={report_status}
       />
     </div>
   )

@@ -260,6 +260,8 @@ export default function Page({ params }: IRoot) {
                           {...service}
                           id={service.id}
                           method_name={selectedMethod}
+                          report_status={service.report_status}
+                          report_messages={service.report_messages}
                         />
                       ) : (
                         <p>No hay un renderer para este método</p>
