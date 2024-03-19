@@ -255,8 +255,15 @@ export default function Page({ params }: IRoot) {
                           selectedMethod as keyof typeof RENDERER_METHOD
                         ]
 
-                      // Verificamos si Renderer es una función antes de llamarla
-                      return Renderer ? <Renderer {...service} /> : null
+                      return Renderer ? (
+                        <Renderer
+                          {...service}
+                          id={service.id}
+                          method_name={selectedMethod}
+                        />
+                      ) : (
+                        <p>No hay un renderer para este método</p>
+                      )
                     }}
                     className="w-[48%] text-start "
                     style={{ minWidth: '80vw' }}
