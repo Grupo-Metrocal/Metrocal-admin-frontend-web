@@ -17,6 +17,8 @@ interface Props {
   description_pattern: IDescriptionPattern
   id: number
   method_name: string
+  report_status: boolean
+  report_messages: string[]
 }
 
 export const P_01 = ({
@@ -26,6 +28,8 @@ export const P_01 = ({
   description_pattern,
   id,
   method_name,
+  report_status,
+  report_messages,
 }: Props) => {
   return (
     <TabsNavigations
@@ -38,6 +42,8 @@ export const P_01 = ({
               equipment_information={equipment_information}
               id={id}
               method_name={method_name}
+              report_status={report_status}
+              report_messages={report_messages}
             />
           ),
         },
@@ -49,6 +55,8 @@ export const P_01 = ({
               environmental_conditions={environmental_conditions}
               id={id}
               method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
             />
           ),
         },
@@ -60,6 +68,8 @@ export const P_01 = ({
               calibration_results={calibration_results}
               id={id}
               method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
             />
           ),
         },
@@ -71,6 +81,8 @@ export const P_01 = ({
               description_pattern={description_pattern}
               id={id}
               method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
             />
           ),
         },
