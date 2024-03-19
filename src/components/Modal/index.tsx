@@ -28,7 +28,7 @@ interface ModalProps {
   icon?: any
   marginIcon?: string
   children?: React.ReactNode
-  style: React.CSSProperties
+  style?: React.CSSProperties
 }
 
 export const Modal = ({
