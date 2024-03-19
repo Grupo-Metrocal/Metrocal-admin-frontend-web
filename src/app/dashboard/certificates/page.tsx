@@ -38,8 +38,6 @@ export default function Page() {
 
   const [certificate, setCertificate] = useState<any>({})
 
-  console.log('certificate', certificate)
-
   useEffect(() => {
     getData()
       .then((data) => {

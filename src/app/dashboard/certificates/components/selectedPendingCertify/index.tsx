@@ -216,15 +216,15 @@ export const SelectedPendingCertify = ({
                 >
                   <span>
                     <strong>Equipo:</strong>{' '}
-                    <span>{method.equipment_information.device}</span>
+                    <span>{method.equipment_information?.device}</span>
                   </span>
                   <span>
                     <strong>No. Serie:</strong>{' '}
-                    <span>{method.equipment_information.serial_number}</span>
+                    <span>{method.equipment_information?.serial_number}</span>
                   </span>
                   <span>
                     <strong>Modelo:</strong>{' '}
-                    <span>{method.equipment_information.model}</span>
+                    <span>{method.equipment_information?.model}</span>
                   </span>
                 </CarouselItemComp>
               ))}
