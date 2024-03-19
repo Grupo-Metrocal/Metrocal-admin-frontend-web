@@ -1,16 +1,32 @@
 import { TabsNavigations } from '@/components/Tabs'
-import { IP_01 } from '../../interface/p_01'
+import {
+  IEquipmentInformation,
+  IEnvironmentalConditions,
+  IDescriptionPattern,
+  ICalibrationResults,
+} from '../../interface/p_01'
 import { EquipmentInformation } from './equipment-information'
 import { CalibrationResults } from './calibration-result'
 import { EnvironmentalConditions } from './environmental-conditions'
 import { DescriptionPattern } from './description-pattern'
+
+interface Props {
+  equipment_information: IEquipmentInformation
+  calibration_results: ICalibrationResults
+  environmental_conditions: IEnvironmentalConditions
+  description_pattern: IDescriptionPattern
+  id: number
+  method_name: string
+}
 
 export const P_01 = ({
   equipment_information,
   calibration_results,
   environmental_conditions,
   description_pattern,
-}: IP_01) => {
+  id,
+  method_name,
+}: Props) => {
   return (
     <TabsNavigations
       items={[
@@ -20,6 +36,8 @@ export const P_01 = ({
           Component: () => (
             <EquipmentInformation
               equipment_information={equipment_information}
+              id={id}
+              method_name={method_name}
             />
           ),
         },
@@ -29,6 +47,8 @@ export const P_01 = ({
           Component: () => (
             <EnvironmentalConditions
               environmental_conditions={environmental_conditions}
+              id={id}
+              method_name={method_name}
             />
           ),
         },
@@ -36,14 +56,22 @@ export const P_01 = ({
           value: 'calibration_results',
           label: 'Resultados de calibración',
           Component: () => (
-            <CalibrationResults calibration_results={calibration_results} />
+            <CalibrationResults
+              calibration_results={calibration_results}
+              id={id}
+              method_name={method_name}
+            />
           ),
         },
         {
           value: 'description_pattern',
           label: 'Descripción de patrones',
           Component: () => (
-            <DescriptionPattern description_pattern={description_pattern} />
+            <DescriptionPattern
+              description_pattern={description_pattern}
+              id={id}
+              method_name={method_name}
+            />
           ),
         },
       ]}
