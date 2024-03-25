@@ -2,6 +2,7 @@ import { Content } from '@/components/Content'
 import { fetchData } from '@/utils/fetch'
 import { formatDate } from '@/utils/formatDate'
 import { getCookie } from '@/utils/auth'
+import { formatPrice } from '@/utils/formatPrice'
 
 const getData = async (lastActivities: number) => {
   return await fetchData({
@@ -40,7 +41,7 @@ export const RecentActivities = async () => {
               <div key={item.id} className="item">
                 <span>{formatDate(item.created_at)}</span>
                 <span>{item.company_name}</span>
-                <span className="price">{item.price} $</span>
+                <span className="price">{formatPrice(item.price)}</span>
                 <span>{item.approved_by}</span>
               </div>
             ))
