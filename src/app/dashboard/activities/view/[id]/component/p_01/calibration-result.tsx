@@ -20,7 +20,7 @@ export const CalibrationResults = ({
 }: Props) => {
   return (
     <div>
-      <div className="calibration-results">
+      <div className="calibration-results h-[500px] overflow-auto">
         {calibration_results?.results.map((result) => {
           return (
             <div key={result.cicle_number} className="flex flex-col gap-4 p-4">
