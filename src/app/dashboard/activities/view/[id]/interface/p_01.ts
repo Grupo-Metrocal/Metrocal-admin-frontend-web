@@ -4,6 +4,8 @@ export interface IP_01 {
   status: string
   report_status: boolean
   report_messages: string[]
+  ceritificate_code: string
+  ceritificate_id: string
   created_at: string
   updated_at: string
   equipment_information: IEquipmentInformation
@@ -20,6 +22,8 @@ export interface IEquipmentInformation {
   measurement_range: string
   accuracy_class: string
   unit: string
+  range_min: number
+  range_max: number
   model: string
   code: string
   height_difference: number
@@ -93,4 +97,5 @@ export interface IDescriptionPattern {
   id: number
   pattern: string
   observation: string
+  creditable: boolean
 }
