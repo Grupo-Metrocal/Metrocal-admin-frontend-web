@@ -16,7 +16,19 @@ import { Spinner } from '@/components/Spinner'
 import { CInput } from '@/components/CInput'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { MoreHorizontal } from 'lucide-react'
 import { P_01 } from './component/p_01'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import Link from 'next/link'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -273,21 +285,34 @@ export default function Page({ params }: IRoot) {
                         selectedService === service.id ? 'selected' : ''
                       }`}
                     >
-                      <p>
-                        <span>Equipo:</span>{' '}
-                        {service.equipment_information?.device}
-                      </p>
-                      <p>
-                        <span>Fabricante:</span>{' '}
-                        {service.equipment_information?.maker}
-                      </p>
-                      <p>
-                        <span>Numero de serie:</span>{' '}
-                        {service.equipment_information?.serial_number}
-                      </p>
-                      <p>
-                        <span>Certificado:</span> {service?.certificate_code}
-                      </p>
+                      <div className="flex flex-col gap-2">
+                        <p>
+                          <span>Equipo:</span>{' '}
+                          {service.equipment_information?.device}
+                        </p>
+                        <p>
+                          <span>Fabricante:</span>{' '}
+                          {service.equipment_information?.maker}
+                        </p>
+                        <p>
+                          <span>Numero de serie:</span>{' '}
+                          {service.equipment_information?.serial_number}
+                        </p>
+                        <p>
+                          <span>Certificado:</span> {service?.certificate_code}
+                        </p>
+                      </div>
+                      <div>
+                        <ActionsItems
+                          equipment={service}
+                          key={service.id}
+                          calibration_method={
+                            selectedService?.calibration_method?.split(
+                              ' ',
+                            )[0] || ''
+                          }
+                        />
+                      </div>{' '}
                     </div>
                   </Modal>
                 ))
@@ -384,5 +409,59 @@ export default function Page({ params }: IRoot) {
         </Content>
       </div>
     </LayoutPage>
+  )
+}
+
+interface IPropsActions {
+  equipment: any
+  calibration_method: string
+}
+export const ActionsItems = ({
+  equipment,
+  calibration_method,
+}: IPropsActions) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
+        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link
+            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}`}
+          >
+            Modificar Resultados
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+        >
+          <AlertDialogModal
+            nameButton="Eliminar equipo"
+            onConfirm={() => {}}
+            title="¿Estas seguro de querer eliminar este equipo?"
+            description="Al eliminar este equipo no podras recuperar la información"
+            buttonStyle={{
+              color: 'tomato',
+              fontWeight: 'bold',
+            }}
+            useButton={false}
+          />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
