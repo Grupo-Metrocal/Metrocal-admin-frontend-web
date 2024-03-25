@@ -1,6 +1,6 @@
 import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
-import { P_01 } from './component/p_01'
+import { P_01 } from '../methods/p_01'
 import { fetchData } from '@/utils/fetch'
 
 const getEquipment = async (id: string, calibration_method: string) => {
