@@ -26,12 +26,17 @@ export const EquipmentInformation = ({
           value={equipment_information?.serial_number}
         />
         <Item
-          title="Rango de medición"
-          value={equipment_information?.measurement_range}
+          title="Rango maximo de medición"
+          value={equipment_information?.range_max?.toString()}
         />
+
         <Item
           title="Clase de precisión"
           value={equipment_information?.accuracy_class}
+        />
+        <Item
+          title="Rango mínimo de medición"
+          value={equipment_information?.range_min?.toString()}
         />
         <Item title="Unidad" value={equipment_information?.unit} />
         <Item title="Modelo" value={equipment_information?.model} />
