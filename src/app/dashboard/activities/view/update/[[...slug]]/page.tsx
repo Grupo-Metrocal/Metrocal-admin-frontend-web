@@ -12,7 +12,6 @@ const getEquipment = async (id: string, calibration_method: string) => {
         'Content-Type': 'application/json',
       },
     })
-    console.log({ response })
     return response
   } catch (error) {
     console.error(error)
@@ -37,7 +36,6 @@ export default async function Page({ params }: IRoot) {
     RENDERER_METHOD[calibration_method as keyof typeof RENDERER_METHOD]
 
   const equipment = await getEquipment(id, calibration_method)
-  console.log({ equipment })
 
   return (
     <LayoutPage
