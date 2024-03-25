@@ -67,11 +67,8 @@ export default function Page({ params }: IRoot) {
       return stackServices
     } else {
       return stackServices.filter((service) => {
-        if (
-          service.equipment_information &&
-          service.equipment_information.model
-        ) {
-          return service.equipment_information.model
+        if (service && service.certificate_code) {
+          return service.certificate_code
             .toLowerCase()
             .includes(search.search.toLowerCase())
         } else {
@@ -212,9 +209,9 @@ export default function Page({ params }: IRoot) {
           </p>
 
           <div className="flex items-center gap-2 w-full justify-end my-6">
-            <span>Filtrar model de equipo</span>
+            <span>Filtrar equipo</span>
             <CInput
-              placeholder="Buscar modelo"
+              placeholder="escribe el certificado del equipo"
               value={search.search}
               name="search"
               onChange={handleInputChange}
@@ -289,8 +286,7 @@ export default function Page({ params }: IRoot) {
                         {service.equipment_information?.serial_number}
                       </p>
                       <p>
-                        <span>Modelo:</span>{' '}
-                        {service.equipment_information?.model}
+                        <span>Certificado:</span> {service?.certificate_code}
                       </p>
                     </div>
                   </Modal>
