@@ -29,7 +29,7 @@ export const RecentActivities = async () => {
             <span>Fecha</span>
             <span>Empresa</span>
             <span>Precio</span>
-            <span>Aprobado por</span>
+            <span>Revisado por</span>
           </div>
         </header>
 
