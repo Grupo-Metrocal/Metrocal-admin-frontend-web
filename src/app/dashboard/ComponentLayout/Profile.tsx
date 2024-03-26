@@ -81,8 +81,6 @@ export const Profile = () => {
 
       toast.dismiss()
 
-      console.log(data)
-
       setCookie('username', data.username as string)
       setCookie('profile_img', data.imageURL as string)
 
@@ -136,7 +134,6 @@ export const Profile = () => {
         required
         name="username"
         onChange={(target) => {
-          console.log('value:' + target.value)
           setUsername(target.value)
         }}
       />

@@ -12,7 +12,6 @@ const getEquipment = async (id: string, calibration_method: string) => {
         'Content-Type': 'application/json',
       },
     })
-    console.log(response)
 
     return response
   } catch (error) {

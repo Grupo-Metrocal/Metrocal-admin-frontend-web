@@ -131,7 +131,6 @@ export const RegisterQuoteList = () => {
 
         if (response) {
           setPagination({ ...pagination, maxPages: response.total_pages })
-          console.log('response.data' + JSON.stringify(response.data))
           dispatch(setQuoteRequest(response.data))
         }
       } catch (error) {

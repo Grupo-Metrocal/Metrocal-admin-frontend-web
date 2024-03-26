@@ -285,7 +285,6 @@ export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
 
 export const calculateSubtotal = () => (dispatch: any, getState: any) => {
   const { equipment, extras } = getState().quote
-  console.log(extras)
   let subtotal = 0
 
   equipment.forEach((item: any) => {
