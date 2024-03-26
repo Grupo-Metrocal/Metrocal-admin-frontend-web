@@ -79,7 +79,7 @@ export default function Page({ params }: IRoot) {
                 value={formatPrice(data?.extras)}
               />
               <TextInfo
-                title="Aprobado por"
+                title="Revisado por"
                 value={data?.approved_by?.username || 'Aun no ha sido aprobada'}
               />
 
@@ -92,9 +92,11 @@ export default function Page({ params }: IRoot) {
                 style={{
                   color:
                     data?.status === 'done'
-                      ? 'green'
+                      ? '#00b894'
                       : data?.status === 'pending'
-                      ? 'gray'
+                      ? '#d5303e'
+                      : data?.status === 'waiting'
+                      ? '#ff8000'
                       : 'tomato',
                 }}
                 value={
@@ -102,6 +104,8 @@ export default function Page({ params }: IRoot) {
                     ? 'Aprobado'
                     : data?.status === 'pending'
                     ? 'Pendiente'
+                    : data?.status === 'waiting'
+                    ? 'En espera'
                     : 'Rechazado'
                 }
               />
@@ -161,6 +165,7 @@ export default function Page({ params }: IRoot) {
                   title="Dirección"
                   value={data?.client?.address || ''}
                 />
+
                 <TextInfo
                   title="Teléfono"
                   value={
@@ -205,7 +210,7 @@ type TextInfoProps = {
 const TextInfo = ({ title, value, style }: TextInfoProps) => (
   <div className="text-info" style={style}>
     <h3>{title}</h3>
-    <p>{value}</p>
+    <p title={value}>{value}</p>
   </div>
 )
 
