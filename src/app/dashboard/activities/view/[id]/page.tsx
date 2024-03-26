@@ -311,6 +311,7 @@ export default function Page({ params }: IRoot) {
                               ' ',
                             )[0] || ''
                           }
+                          activityID={data?.id || 0}
                         />
                       </div>{' '}
                     </div>
@@ -415,9 +416,11 @@ export default function Page({ params }: IRoot) {
 interface IPropsActions {
   equipment: any
   calibration_method: string
+  activityID: number
 }
 export const ActionsItems = ({
   equipment,
+  activityID,
   calibration_method,
 }: IPropsActions) => {
   return (
@@ -438,7 +441,7 @@ export const ActionsItems = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link
-            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}`}
+            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}`}
           >
             Modificar Resultados
           </Link>
