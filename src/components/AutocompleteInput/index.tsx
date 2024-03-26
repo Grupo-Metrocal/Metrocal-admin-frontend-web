@@ -19,6 +19,8 @@ interface IAutocompleteInputProps {
   value?: string
   setItemSelected?: (id: number) => void
   keyList?: string
+  styles?: React.CSSProperties
+  inputType?: string
 }
 export const AutocompleteInput = ({
   onChange,
@@ -33,6 +35,8 @@ export const AutocompleteInput = ({
   value,
   setItemSelected,
   keyList,
+  styles,
+  inputType,
 }: IAutocompleteInputProps) => {
   const datalistRef = useRef<HTMLDataListElement>(null)
   const [listState, setListState] = useState<IList[]>(list)
@@ -42,7 +46,7 @@ export const AutocompleteInput = ({
   }, [list, keyList]) // Agregamos keyList a las dependencias
 
   return (
-    <div className={`autocomplete-input ${className}`}>
+    <div className={`autocomplete-input ${className}`} style={styles}>
       <label htmlFor={`autocomplete-input-${keyList}`}>
         {label && (
           <span className={requiredLabel ? 'required' : ''}>{label}</span>
@@ -53,6 +57,7 @@ export const AutocompleteInput = ({
           required={required}
           name={name}
           value={value}
+          type={inputType || 'text'}
           id={id}
           autoComplete="off"
           onChange={(e) => {
