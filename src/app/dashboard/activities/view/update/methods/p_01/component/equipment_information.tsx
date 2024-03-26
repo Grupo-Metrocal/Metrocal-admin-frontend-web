@@ -1,8 +1,8 @@
 import { useForm } from '@/hooks/useForm'
 import { IEquipmentInformation } from '../../../../[id]/interface/p_01'
 import { CInput } from '@/components/CInput'
-import { CButton } from '@/components/CButton'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { AutocompleteInput } from '@/components/AutocompleteInput'
 export const EquipmentInformation = ({
   equipment,
   handleSaveInformation,
@@ -16,11 +16,23 @@ export const EquipmentInformation = ({
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <CInput
+        <AutocompleteInput
+          requiredLabel
+          value={values.device}
           label="Dispositivo"
           name="device"
-          value={values.device}
           onChange={handleInputChange}
+          required
+          placeholder="Escriba o seleccione su dispositivo"
+          list={[
+            { id: 1, name: 'Manómetro digital' },
+            { id: 2, name: 'Manómetro manual' },
+            { id: 3, name: 'Vacuómetro digital' },
+            { id: 4, name: 'Vacuómetro manual' },
+            { id: 5, name: 'Manovacuómetro manual' },
+            { id: 6, name: 'Manovacuómetro digital' },
+          ]}
+          keyList="device"
         />
         <CInput
           label="Fabricante"
@@ -40,17 +52,39 @@ export const EquipmentInformation = ({
           value={values.accuracy_class}
           onChange={handleInputChange}
         />
-        <CInput
+        <AutocompleteInput
+          requiredLabel
+          value={values.unit}
           label="Unidad"
           name="unit"
-          value={values.unit}
           onChange={handleInputChange}
+          required
+          placeholder="Escriba o seleccione su unidad"
+          list={[
+            { id: 1, name: 'bar' },
+            { id: 2, name: 'psi' },
+            { id: 3, name: 'Pa' },
+            { id: 4, name: 'kPa' },
+            { id: 5, name: 'hpa' },
+            { id: 6, name: 'MPa' },
+            { id: 7, name: 'kgf/cm²' },
+            { id: 8, name: 'inHg (0°C)' },
+            { id: 9, name: 'mmHg (0°C)' },
+            { id: 10, name: 'cmHg (0°C)' },
+            { id: 11, name: 'mmH₂O (4°C)' },
+            { id: 12, name: 'cmH₂O (4°C)' },
+            { id: 13, name: 'inH₂O (4°C)' },
+            { id: 14, name: 'atm' },
+            { id: 15, name: 'mH₂O (4°C)' },
+          ]}
+          keyList="unit"
         />
         <CInput
           label="Rango mínimo"
           name="range_min"
           value={values.range_min}
           onChange={handleInputChange}
+          type="number"
         />
 
         <CInput
@@ -64,6 +98,7 @@ export const EquipmentInformation = ({
           name="range_max"
           value={values.range_max}
           onChange={handleInputChange}
+          type="number"
         />
         <CInput
           label="Código"
@@ -76,18 +111,32 @@ export const EquipmentInformation = ({
           name="height_difference"
           value={values.height_difference}
           onChange={handleInputChange}
+          type="number"
         />
         <CInput
           label="Resolución"
           name="resolution"
           value={values.resolution}
           onChange={handleInputChange}
+          type="number"
         />
-        <CInput
+        <AutocompleteInput
+          requiredLabel
+          value={values.scale}
           label="Escala"
           name="scale"
-          value={values.scale}
           onChange={handleInputChange}
+          required
+          placeholder="Número de escala válido (1-5)"
+          list={[
+            { id: 1, name: '1' },
+            { id: 2, name: '2' },
+            { id: 3, name: '3' },
+            { id: 4, name: '4' },
+            { id: 5, name: '5' },
+          ]}
+          keyList="scale"
+          inputType="number"
         />
       </div>
       <div>
