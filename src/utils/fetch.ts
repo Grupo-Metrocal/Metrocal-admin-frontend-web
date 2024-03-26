@@ -19,6 +19,7 @@ export const fetchData = async ({
       method,
       body: JSON.stringify(body),
       headers,
+      cache: 'no-cache',
     })
     const data = await response[responseType]()
     return data
