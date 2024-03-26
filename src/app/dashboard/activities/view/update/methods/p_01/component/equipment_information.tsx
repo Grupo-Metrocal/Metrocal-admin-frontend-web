@@ -7,7 +7,11 @@ export const EquipmentInformation = ({
   equipment,
   handleSaveInformation,
 }: {
-  handleSaveInformation: (values: IEquipmentInformation, url: string) => void
+  handleSaveInformation: (
+    values: IEquipmentInformation,
+    url: string,
+    useActivityID?: boolean,
+  ) => void
   equipment: IEquipmentInformation
 }) => {
   const { values, handleInputChange } = useForm({ ...equipment })
