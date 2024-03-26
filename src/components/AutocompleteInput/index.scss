@@ -5,10 +5,11 @@
   flex-direction: column;
   margin: 0.5em 0;
   position: relative;
+  font-size: 0.9em;
 
   span {
     color: #222;
-    font-weight: 500;
+    font-weight: 600;
     position: relative;
   }
 
@@ -35,6 +36,11 @@
     &:disabled {
       background-color: #eee;
       cursor: not-allowed;
+    }
+
+    &:valid {
+      background-color: #fcfcff;
+      border: 1px solid#eee;
     }
   }
 
