@@ -51,15 +51,18 @@ export const DescriptionPattern = ({
           onChange={handleCheckedChange}
         />
 
-        <div>
-          <label htmlFor="creditable" className="block text-sm">
+        <div className="my-4">
+          <label
+            htmlFor="creditable"
+            className="text-sm flex items-center cursor-pointer"
+          >
             <input
               type="checkbox"
               name="creditable"
               id="creditable"
               checked={values.creditable}
               onChange={handleCheckedChange}
-              className="mr-2"
+              className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
             />
             ¿Equipo acreditado?
           </label>
@@ -67,10 +70,13 @@ export const DescriptionPattern = ({
       </div>
       <div>
         <AlertDialogModal
-          title="Guardar información"
-          description="¿Estás seguro de guardar la información?"
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
           onConfirm={() => handleSaveInformation(values, url, true)}
-          nameButton="Guardar información"
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
         />
       </div>
     </div>
