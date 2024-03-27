@@ -7,6 +7,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
 import { DescriptionPattern } from './component/description_pattern'
+import { EnvironmentalConditions } from './component/environmental_conditions'
 
 export const P_01 = ({
   equipment,
@@ -67,6 +68,16 @@ export const P_01 = ({
             Component: () => (
               <DescriptionPattern
                 description_pattern={equipment.description_pattern}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'environmental_conditions',
+            label: 'Condiciones ambientales',
+            Component: () => (
+              <EnvironmentalConditions
+                environmentalConditions={equipment.environmental_conditions}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
