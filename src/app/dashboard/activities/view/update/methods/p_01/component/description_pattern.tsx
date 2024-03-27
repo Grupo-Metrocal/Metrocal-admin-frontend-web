@@ -51,7 +51,7 @@ export const DescriptionPattern = ({
           onChange={handleCheckedChange}
         />
 
-        <div className="my-4">
+        <div className="my-4 w-fit">
           <label
             htmlFor="creditable"
             className="text-sm flex items-center cursor-pointer"
