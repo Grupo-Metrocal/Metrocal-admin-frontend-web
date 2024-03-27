@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
 import { DescriptionPattern } from './component/description_pattern'
 import { EnvironmentalConditions } from './component/environmental_conditions'
+import { CalibrationsResults } from './component/calibrations_results'
 
 export const P_01 = ({
   equipment,
@@ -78,6 +79,16 @@ export const P_01 = ({
             Component: () => (
               <EnvironmentalConditions
                 environmentalConditions={equipment.environmental_conditions}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'calibration_results',
+            label: 'Resultados de calibración',
+            Component: () => (
+              <CalibrationsResults
+                calibrationResults={equipment.calibration_results}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
