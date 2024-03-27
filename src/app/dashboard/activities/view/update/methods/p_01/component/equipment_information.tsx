@@ -145,10 +145,13 @@ export const EquipmentInformation = ({
       </div>
       <div>
         <AlertDialogModal
-          title="Guardar información"
-          description="¿Estás seguro de guardar la información?"
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
           onConfirm={() => handleSaveInformation(values, url)}
-          nameButton="Guardar información"
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
         />
       </div>
     </div>
