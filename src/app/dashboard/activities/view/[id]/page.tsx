@@ -174,9 +174,16 @@ export default function Page({ params }: IRoot) {
 
   useEffect(() => {
     getData(id).then((response) => {
-      setData(response.data)
-      setTeamMember(response.data.team_members)
-      setResponsable(response.data.responsable)
+      if (response.success) {
+        setData(response.data)
+        setTeamMember(response.data.team_members)
+        setResponsable(response.data.responsable)
+
+        const service = response.data.quote_request.equipment_quote_request[0]
+        handleSelectedService(service)
+      } else {
+        toast.error('Error al obtener la información')
+      }
     })
   }, [id])
 
