@@ -425,7 +425,7 @@ interface IPropsActions {
   calibration_method: string
   activityID: number
 }
-export const ActionsItems = ({
+const ActionsItems = ({
   equipment,
   activityID,
   calibration_method,
