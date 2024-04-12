@@ -1,13 +1,17 @@
+const path = require('path')
+const rootPath = path.dirname(path.dirname(__filename))
+
 module.exports = {
   apps: [
     {
       name: 'metrocal-web',
-      script: 'npm',
+      cwd: rootPath,
+      script: 'node_modules/next/dist/bin/next',
       args: 'start',
-      instances: 1,
-      autorestart: true,
+      instances: 0,
+      exec_mode: 'cluster',
       watch: false,
-      max_memory_restart: '1G',
+      merge_logs: true,
       env: {
         NODE_ENV: 'production',
       },
