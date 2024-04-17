@@ -232,7 +232,7 @@ export const SelectedPendingCertify = ({
                   </span>
                   <span>
                     <strong>Certificado:</strong>{' '}
-                    <span>{method.equipment_information?.model}</span>
+                    <span>{method.certificate_code || 'Sin certificado'}</span>
                   </span>
                 </CarouselItemComp>
               ))}
