@@ -119,6 +119,14 @@ export const SelectedPendingCertify = ({
     }
   }
 
+  useEffect(() => {
+    if (selectedActivity) {
+      handleSelectedService(
+        selectedActivity.quoteRequest.equipment_quote_request[0],
+      )
+    }
+  }, [selectedActivity])
+
   return loading ? (
     <div className="pending-certificate__selected flex justify-center ">
       <Spinner />
@@ -223,7 +231,7 @@ export const SelectedPendingCertify = ({
                     <span>{method.equipment_information?.serial_number}</span>
                   </span>
                   <span>
-                    <strong>Modelo:</strong>{' '}
+                    <strong>Certificado:</strong>{' '}
                     <span>{method.equipment_information?.model}</span>
                   </span>
                 </CarouselItemComp>
