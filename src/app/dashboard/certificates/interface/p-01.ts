@@ -5,6 +5,7 @@ export interface IP_01 {
   created_at: string
   updated_at: string
   equipment_information: EquipmentInformation
+  certificate_code?: string
 }
 
 export interface EquipmentInformation {
