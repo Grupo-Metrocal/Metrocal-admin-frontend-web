@@ -16,6 +16,7 @@ import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { CarouselComp } from '@/components/Carousel'
 import { CButton } from '@/components/CButton'
 import metrocalLogo from 'public/metrocal.svg'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -119,6 +120,31 @@ export const SelectedPendingCertify = ({
     }
   }
 
+  const handleGeneratePDFCertificates = async () => {
+    toast.loading('Generando certificados...', {
+      description: 'Esto puede tardar unos segundos, porfavor espera',
+    })
+
+    const resopnse = await fetchData({
+      url: `activities/${selectedActivity.id}/certificates/generate-pdf`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    if (resopnse.success) {
+      toast.success('Se han generado y enviado los certificados', {
+        description:
+          'cliente: ' + selectedActivity.quoteRequest.client.company_name,
+      })
+    } else {
+      toast.error('Error al generar los certificados', {
+        description: resopnse.details,
+      })
+    }
+  }
+
   useEffect(() => {
     if (selectedActivity) {
       handleSelectedService(
@@ -134,7 +160,21 @@ export const SelectedPendingCertify = ({
   ) : (
     <div className="pending-certificate__selected">
       <div className="client">
-        <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+        <div className="flex justify-between items-center">
+          <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+
+          <AlertDialogModal
+            onConfirm={() => {}}
+            title="Antes de generar un certificado verifica que los datos sean correctos"
+            nameButton="Enviar y Generar certificados"
+            useButton
+            buttonStyle={{
+              // background para generar un certificado
+              background: '#1E4C8D',
+              padding: '13px 20px',
+            }}
+          />
+        </div>
 
         <div className="client__details">
           <span>Finalizado: {momentDate(selectedActivity?.updated_at)}</span>
