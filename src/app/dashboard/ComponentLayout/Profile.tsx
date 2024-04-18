@@ -9,6 +9,20 @@ import { toast } from 'sonner'
 import metrocalLogo from 'public/metrocal.svg'
 import { useRef, useState } from 'react'
 
+const deleteImage = async (imageUrl: string) => {
+  const filename = imageUrl.split('/').pop()
+
+  const deletedImg = await fetchData({
+    url: `images/delete/${filename}`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return deletedImg
+}
+
 export const Profile = () => {
   const [username, setUsername] = useState<string>(
     getCookie('username') as string,
@@ -34,59 +48,57 @@ export const Profile = () => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
     try {
-      const myHeaders = new Headers()
-      myHeaders.append('Authorization', `Bearer ${getCookie('token')}`)
-
-      const formdata = new FormData()
       if (selectedFile) {
-        formdata.append('image', selectedFile, selectedFile.name)
-      } else if (imageUrl !== 'null') {
-        formdata.append('imageUrl', imageUrl)
+        toast.loading('Actualizando foto de perfil...')
+
+        const formDataImg = new FormData()
+        formDataImg.append('file', selectedFile as Blob)
+
+        const deleted = await deleteImage(getCookie('profile_img') as string)
+
+        const response = await fetch(`${BASE_URL}images/upload`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${getCookie('token')}`,
+          },
+          body: formDataImg,
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+          setImageUrl(data.data.imageURL)
+          setCookie('profile_img', data.data.imageURL)
+        }
       }
 
-      formdata.append('username', username)
-
-      const requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: formdata,
-      }
-
+      toast.dismiss()
       toast.loading('Actualizando perfil...')
 
-      const response = await fetch(
-        `${BASE_URL}users/profile-image-update/${getCookie('token')}`,
-        requestOptions,
-      )
+      console.log('imageUrl', imageUrl)
 
-      toast.dismiss()
-
-      if (!response.ok) {
-        throw new Error(`Error ${response.status}: ${await response.text()}`)
-      }
-
-      const responseUser = await fetch(
-        `${BASE_URL}users/data-user/${getCookie('token')}`,
-        {
-          method: 'GET',
-          headers: myHeaders,
+      const response = await fetchData({
+        url: `users/profile/update/${getCookie('token')}`,
+        method: 'POST',
+        body: {
+          username,
+          imageURL: imageUrl,
         },
-      )
-
-      if (!responseUser.ok) {
-        throw new Error(`Error ${response.status}: ${await response.text()}`)
-      }
-
-      const data = await responseUser.json()
-
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
+      })
       toast.dismiss()
 
-      setCookie('username', data.username as string)
-      setCookie('profile_img', data.imageURL as string)
-
-      toast.success('Perfil actualizado', {
-        description: 'Se actualizo correctamente el perfil',
-      })
+      if (response.success) {
+        setCookie('username', username)
+        toast.success('Perfil actualizado correctamente')
+      } else {
+        toast.error('Error al actualizar el perfil', {
+          description: response.message,
+        })
+      }
     } catch (error: any) {
       toast.error('Error al actualizar el perfil', {
         description: error.message,
