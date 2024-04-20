@@ -1,7 +1,6 @@
 'use client'
 import { CButton } from '@/components/CButton'
 import { CInput } from '@/components/CInput'
-import { useForm } from '@/hooks/useForm'
 import { fetchData } from '@/utils/fetch'
 import { getCookie, setCookie } from 'cookies-next'
 import Image from 'next/image'
@@ -27,6 +26,9 @@ export const Profile = () => {
   const [username, setUsername] = useState<string>(
     getCookie('username') as string,
   )
+  const [imageUrl, setImageUrl] = useState<string>(
+    getCookie('profile_img') as string,
+  )
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
@@ -36,10 +38,6 @@ export const Profile = () => {
     }
   }
 
-  const [imageUrl, setImageUrl] = useState<string>(
-    getCookie('profile_img') as string,
-  )
-
   const inputRefImg = useRef<HTMLInputElement>(null)
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -48,13 +46,14 @@ export const Profile = () => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
     try {
+      let image = ''
       if (selectedFile) {
         toast.loading('Actualizando foto de perfil...')
 
         const formDataImg = new FormData()
         formDataImg.append('file', selectedFile as Blob)
 
-        const deleted = await deleteImage(getCookie('profile_img') as string)
+        await deleteImage(getCookie('profile_img') as string)
 
         const response = await fetch(`${BASE_URL}images/upload`, {
           method: 'POST',
@@ -68,21 +67,24 @@ export const Profile = () => {
 
         if (data.success) {
           setImageUrl(data.data.imageURL)
-          setCookie('profile_img', data.data.imageURL)
+          image = data.data.imageURL
+        } else {
+          toast.error('Error al subir la imagen', {
+            description: data.message,
+          })
+          return
         }
       }
 
       toast.dismiss()
       toast.loading('Actualizando perfil...')
 
-      console.log('imageUrl', imageUrl)
-
       const response = await fetchData({
         url: `users/profile/update/${getCookie('token')}`,
         method: 'POST',
         body: {
           username,
-          imageURL: imageUrl,
+          imageURL: image === 'null' ? null : image,
         },
         headers: {
           'Content-Type': 'application/json',
@@ -93,6 +95,8 @@ export const Profile = () => {
 
       if (response.success) {
         setCookie('username', username)
+        image && setCookie('profile_img', image)
+
         toast.success('Perfil actualizado correctamente')
       } else {
         toast.error('Error al actualizar el perfil', {
