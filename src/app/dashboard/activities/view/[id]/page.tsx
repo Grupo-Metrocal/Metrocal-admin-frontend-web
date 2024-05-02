@@ -29,6 +29,7 @@ import { MoreHorizontal } from 'lucide-react'
 import { P_01 } from './component/p_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
+import { ReviewActivity } from './component/ReviewActivity'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -195,7 +196,12 @@ export default function Page({ params }: IRoot) {
   }, [teamMember, responsable])
 
   return (
-    <LayoutPage title={`Actividad`} rollBack={true} className="activity-viewer">
+    <LayoutPage
+      title={`Actividad`}
+      rollBack={true}
+      className="activity-viewer"
+      Footer={() => <ReviewActivity activityID={Number(id)} />}
+    >
       <Content
         title="Información principal"
         colorTitle="blue"
