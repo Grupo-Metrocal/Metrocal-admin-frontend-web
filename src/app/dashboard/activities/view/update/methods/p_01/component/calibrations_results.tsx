@@ -55,7 +55,7 @@ export const CalibrationsResults = ({
 
   return (
     <div className="flex flex-col space-y-4">
-      {data.results.map((result) => (
+      {data?.results.map((result) => (
         <div
           key={result.cicle_number}
           className="flex flex-col space-y-4 border p-4"
