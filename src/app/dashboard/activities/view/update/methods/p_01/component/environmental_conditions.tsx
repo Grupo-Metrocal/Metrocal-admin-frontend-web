@@ -37,7 +37,7 @@ export const EnvironmentalConditions = ({
     }
 
     setData((prev) => {
-      const cycles = prev.cycles.map((cycle) => {
+      const cycles = prev.cycles?.map((cycle) => {
         if (cycle.cycle_number === cycleNumber) {
           if (field === 'ta.hrp.initial') {
             cycle.ta.hrp.initial = value as number
@@ -80,7 +80,7 @@ export const EnvironmentalConditions = ({
           </tr>
         </thead>
         <tbody>
-          {data.cycles.map((cycle) => (
+          {data?.cycles?.map((cycle) => (
             <tr key={cycle.cycle_number} className="text-center">
               <td className="border px-4 py-2">{cycle.cycle_number}</td>
               <td className="border px-4 py-2">
