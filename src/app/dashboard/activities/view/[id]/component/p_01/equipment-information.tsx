@@ -43,13 +43,13 @@ export const EquipmentInformation = ({
         <Item title="Código" value={equipment_information?.code} />
         <Item
           title="Diferencia de altura"
-          value={equipment_information?.height_difference.toString()}
+          value={equipment_information?.height_difference?.toString()}
         />
         <Item
           title="Resolución"
-          value={equipment_information?.resolution.toString()}
+          value={equipment_information?.resolution?.toString()}
         />
-        <Item title="Escala" value={equipment_information?.scale.toString()} />
+        <Item title="Escala" value={equipment_information?.scale?.toString()} />
       </div>
 
       <ReportMethodActivity
