@@ -51,11 +51,13 @@ interface IProps {
   selectedActivity: IPendingActivities
   setLoadingCalibration: (loading: boolean) => void
   setCertificate: (certificate: any) => void
+  loadingCalibration: boolean
 }
 export const SelectedPendingCertify = ({
   selectedActivity,
   loading,
   setLoadingCalibration,
+  loadingCalibration: loadingCalibration,
   setCertificate,
 }: IProps) => {
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
@@ -111,7 +113,11 @@ export const SelectedPendingCertify = ({
     setLoadingCalibration(false)
 
     if (certificate.success) {
-      setCertificate(certificate.data)
+      setCertificate({
+        ...certificate.data,
+        renderer_method: selectedService.calibration_method.split(' ')[0],
+        renderer_method_id: calibrationSelected.id,
+      })
       toast.success('Certificado cargado con éxito')
     } else {
       toast.error('Error al cargar el certificado', {
@@ -162,18 +168,6 @@ export const SelectedPendingCertify = ({
       <div className="client">
         <div className="flex justify-between items-center">
           <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
-
-          <AlertDialogModal
-            onConfirm={() => {}}
-            title="Antes de generar un certificado verifica que los datos sean correctos"
-            nameButton="Enviar y Generar certificados"
-            useButton
-            buttonStyle={{
-              // background para generar un certificado
-              background: '#1E4C8D',
-              padding: '13px 20px',
-            }}
-          />
         </div>
 
         <div className="client__details">
@@ -194,19 +188,23 @@ export const SelectedPendingCertify = ({
       </div>
 
       <div className="team_members">
-        <h3>Equipo de trabajo</h3>
+        <h3>Técnicos</h3>
         <div className="team_members__content">
-          {selectedActivity?.team_members.map((member) => (
-            <div key={member.id} className="team_members__content__item">
-              <Image
-                src={member.imageURL || metrocalLogo}
-                alt={member.username}
-                width={40}
-                height={40}
-              />
-              <p>{member.username}</p>
-            </div>
-          ))}
+          {selectedActivity?.team_members.length > 0 ? (
+            selectedActivity?.team_members.map((member) => (
+              <div key={member.id} className="team_members__content__item">
+                <Image
+                  src={member.imageURL || metrocalLogo}
+                  alt={member.username}
+                  width={40}
+                  height={40}
+                />
+                <p>{member.username}</p>
+              </div>
+            ))
+          ) : (
+            <p> {'>'} No hay técnicos asignados</p>
+          )}
         </div>
       </div>
 
@@ -227,6 +225,7 @@ export const SelectedPendingCertify = ({
                   onClick={() => handleSelectedService(item)}
                 >
                   <p>{item.name}</p>
+                  <span>Método: {item.calibration_method.split(' ')[0]}</span>
                 </div>
               ),
           )}
@@ -243,7 +242,11 @@ export const SelectedPendingCertify = ({
             </small>
           </h3>
 
-          <CButton className="mt-4" onClick={handleGenerateCertificate}>
+          <CButton
+            className="mt-4"
+            onClick={handleGenerateCertificate}
+            disabled={loadingCalibration}
+          >
             Generar resultados del certificado
           </CButton>
         </div>
