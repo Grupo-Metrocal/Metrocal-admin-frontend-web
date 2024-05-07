@@ -56,6 +56,9 @@
     }
 
     &__content {
+      border: 1px solid #999;
+      border-radius: 10px;
+      padding: 1em;
       display: flex;
       gap: 1em;
       margin-top: 1.5em;
@@ -64,7 +67,14 @@
         cursor: pointer;
         padding: 0.5em 1em;
         border-radius: 5px;
-        background-color: #f5f5f5;
+        background-color: #e2e2e2;
+        display: flex;
+        flex-direction: column;
+
+        span {
+          font-size: 0.9em;
+          font-weight: 600;
+        }
 
         &-selected {
           color: #fff;
