@@ -16,6 +16,7 @@ import { Spinner } from '@/components/Spinner'
 import { ItemPendingCertify } from './components/itemPendingCertify'
 import { SelectedPendingCertify } from './components/selectedPendingCertify'
 import { TableP_01 } from './components/tableP_01'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 const getData = async () => {
   return await fetchData({
@@ -25,6 +26,26 @@ const getData = async () => {
       Autorization: `Bearer ${getCookie('token')}`,
     },
   })
+}
+
+const approveCertificate = async (method_name: string, method_id: number) => {
+  return await fetchData({
+    url: 'methods/review-method',
+    method: 'POST',
+    body: {
+      method_name: method_name.replaceAll('-', '_'),
+      method_id,
+      token: getCookie('token'),
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
+}
+
+const RENDERER_METHOD = {
+  'NI-MCIT-P-01': TableP_01,
 }
 
 export default function Page() {
@@ -37,6 +58,23 @@ export default function Page() {
   const [loadingCalibration, setLoadingCalibration] = useState<boolean>(false)
 
   const [certificate, setCertificate] = useState<any>({})
+
+  const reviewCertificate = async () => {
+    toast.loading('Aprobando certificado')
+
+    const response = await approveCertificate(
+      certificate.renderer_method,
+      certificate.renderer_method_id,
+    )
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Certificado aprobado')
+    } else {
+      toast.error('Error al aprobar el certificado')
+    }
+  }
 
   useEffect(() => {
     getData()
@@ -56,8 +94,23 @@ export default function Page() {
       })
   }, [])
 
+  const Renderer =
+    RENDERER_METHOD[certificate.renderer_method as keyof typeof RENDERER_METHOD]
+
   return (
-    <LayoutPage title="Certificados">
+    <LayoutPage
+      title="Certificados"
+      Footer={() => (
+        <div className="flex justify-end">
+          <AlertDialogModal
+            onConfirm={() => {}}
+            title="Antes de enviar todos los certificados, debe verificar que los datos sean correctos"
+            nameButton="ENVIAR CERTIFICADOS"
+            useButton
+          />
+        </div>
+      )}
+    >
       <Content
         title="Vista general"
         colorTitle="purple"
@@ -131,6 +184,7 @@ export default function Page() {
               loading={loading}
               setLoadingCalibration={setLoadingCalibration}
               setCertificate={setCertificate}
+              loadingCalibration={loadingCalibration}
             />
           </div>
         </div>
@@ -146,8 +200,26 @@ export default function Page() {
             <Spinner />
           </div>
         ) : certificate.equipment_information ? (
-          <div className="flex justify-center items-center h-full">
-            <TableP_01 certificate={certificate} />
+          <div className="flex justify-center items-center h-full flex-col gap-8">
+            {Renderer ? (
+              <>
+                <Renderer certificate={certificate} />
+                <div className="w-full mb-8">
+                  {
+                    <AlertDialogModal
+                      onConfirm={() => reviewCertificate()}
+                      title="Antes de aprobar el certificado, verifique que los datos sean correctos"
+                      nameButton="Aprobar certificado"
+                      useButton
+                    />
+                  }
+                </div>
+              </>
+            ) : (
+              <p className="text-center mt-4">
+                Renderizador no encontrado para el método de calibración
+              </p>
+            )}
           </div>
         ) : (
           <p className="text-center mt-4">
