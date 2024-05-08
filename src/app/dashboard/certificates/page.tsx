@@ -105,6 +105,7 @@ export default function Page() {
           <AlertDialogModal
             onConfirm={() => {}}
             title="Antes de enviar todos los certificados, debe verificar que los datos sean correctos"
+            description="Una vez enviados los certificados se limpiaran los registros generados"
             nameButton="ENVIAR CERTIFICADOS"
             useButton
           />
@@ -199,27 +200,28 @@ export default function Page() {
           <div className="flex mt-4 justify-center">
             <Spinner />
           </div>
-        ) : certificate.equipment_information ? (
+        ) : certificate?.renderer_method ? (
           <div className="flex justify-center items-center h-full flex-col gap-8">
             {Renderer ? (
               <>
                 <Renderer certificate={certificate} />
-                <div className="w-full mb-8">
-                  {
-                    <AlertDialogModal
-                      onConfirm={() => reviewCertificate()}
-                      title="Antes de aprobar el certificado, verifique que los datos sean correctos"
-                      nameButton="Aprobar certificado"
-                      useButton
-                    />
-                  }
-                </div>
               </>
             ) : (
               <p className="text-center mt-4">
                 Renderizador no encontrado para el método de calibración
               </p>
             )}
+
+            <div className="w-full mb-8">
+              {
+                <AlertDialogModal
+                  onConfirm={() => reviewCertificate()}
+                  title="Antes de aprobar el certificado, verifique que los datos sean correctos"
+                  nameButton="Aprobar certificado"
+                  useButton
+                />
+              }
+            </div>
           </div>
         ) : (
           <p className="text-center mt-4">
