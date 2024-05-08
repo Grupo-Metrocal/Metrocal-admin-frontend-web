@@ -278,7 +278,7 @@ export const SelectedPendingCertify = ({
                     <span>{method.certificate_code || 'Sin certificado'}</span>
                   </span>
 
-                  {method.review_state && (
+                  {method?.review_state && (
                     <span className="text-green-500">
                       <strong>APROBADO ✅</strong>
                     </span>
