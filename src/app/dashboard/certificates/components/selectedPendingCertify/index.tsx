@@ -266,17 +266,23 @@ export const SelectedPendingCertify = ({
                   onClick={() => handleSelectedCalibration(method)}
                 >
                   <span>
-                    <strong>Equipo:</strong>{' '}
+                    <span className="font-bold">Equipo:</span>{' '}
                     <span>{method.equipment_information?.device}</span>
                   </span>
                   <span>
-                    <strong>No. Serie:</strong>{' '}
+                    <span className="font-bold">No. Serie:</span>{' '}
                     <span>{method.equipment_information?.serial_number}</span>
                   </span>
                   <span>
-                    <strong>Certificado:</strong>{' '}
+                    <span className="font-bold">Certificado:</span>{' '}
                     <span>{method.certificate_code || 'Sin certificado'}</span>
                   </span>
+
+                  {method.review_state && (
+                    <span className="text-green-500">
+                      <strong>APROBADO ✅</strong>
+                    </span>
+                  )}
                 </CarouselItemComp>
               ))}
             </CarouselComp>
