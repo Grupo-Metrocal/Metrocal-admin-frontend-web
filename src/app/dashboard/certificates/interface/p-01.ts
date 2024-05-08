@@ -6,6 +6,9 @@ export interface IP_01 {
   updated_at: string
   equipment_information: EquipmentInformation
   certificate_code?: string
+  certificate_url?: string
+  review_state?: boolean
+  review_user_id?: number
 }
 
 export interface EquipmentInformation {
