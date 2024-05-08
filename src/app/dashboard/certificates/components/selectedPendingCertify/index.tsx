@@ -123,6 +123,7 @@ export const SelectedPendingCertify = ({
       toast.error('Error al cargar el certificado', {
         description: certificate.details,
       })
+      setCertificate({})
     }
   }
 
