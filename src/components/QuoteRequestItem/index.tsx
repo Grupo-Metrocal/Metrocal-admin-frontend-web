@@ -9,6 +9,7 @@ interface IProps {
   onClickContent?: (id: number) => void
   className?: string
   name_button?: string
+  useButton?: boolean
 }
 
 export const QuoteRequestItem = ({
@@ -17,6 +18,7 @@ export const QuoteRequestItem = ({
   className,
   onClickContent,
   name_button,
+  useButton = true,
 }: IProps) => {
   const QUOTE_STATUS: { [key: string]: string } = {
     pending: 'Por revisar',
@@ -42,24 +44,26 @@ export const QuoteRequestItem = ({
         {/* <span>{quote.status !== 'pending' && quote.updated_at}</span> */}
         <span>Servicios: {quote.equipment_quote_request.length}</span>
 
-        <CButton
-          onClick={(e) => {
-            e.stopPropagation()
-            onClick && onClick(quote.id)
-          }}
-          className="quote-container__item__button"
-          style={{ boxShadow: 'none' }}
-        >
-          {name_button
-            ? name_button
-            : quote.status === 'pending'
-            ? 'Revisar'
-            : quote.status === 'waiting'
-            ? 'Enviar recordatorio'
-            : quote.status === 'done'
-            ? 'Asignar'
-            : ''}
-        </CButton>
+        {useButton && (
+          <CButton
+            onClick={(e) => {
+              e.stopPropagation()
+              onClick && onClick(quote.id)
+            }}
+            className="quote-container__item__button"
+            style={{ boxShadow: 'none' }}
+          >
+            {name_button
+              ? name_button
+              : quote.status === 'pending'
+              ? 'Revisar'
+              : quote.status === 'waiting'
+              ? 'Enviar recordatorio'
+              : quote.status === 'done'
+              ? 'Asignar'
+              : ''}
+          </CButton>
+        )}
       </div>
     </div>
   )
