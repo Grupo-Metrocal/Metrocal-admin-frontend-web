@@ -242,14 +242,6 @@ export const SelectedPendingCertify = ({
               Selecciona un equipo para generar los detalles del certificado
             </small>
           </h3>
-
-          <CButton
-            className="mt-4"
-            onClick={handleGenerateCertificate}
-            disabled={loadingCalibration}
-          >
-            Generar resultados del certificado
-          </CButton>
         </div>
         <div className="method__content">
           {loadingMethods ? (
@@ -289,6 +281,14 @@ export const SelectedPendingCertify = ({
             </CarouselComp>
           )}
         </div>
+
+        <CButton
+          className="mt-8"
+          onClick={handleGenerateCertificate}
+          disabled={loadingCalibration}
+        >
+          Generar certificado
+        </CButton>
       </div>
     </div>
   )
