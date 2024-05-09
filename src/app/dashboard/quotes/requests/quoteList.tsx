@@ -84,6 +84,7 @@ export const QuoteList = ({
           <RendererQuoteList
             onClickContent={handleNavigationView}
             quotes={quotesDone}
+            useButton={false}
           />
         ) : (
           <Spinner />
@@ -97,11 +98,13 @@ interface IRendererQuoteList {
   quotes: IRoot[]
   onClick?: (id: number) => void
   onClickContent?: (id: number) => void
+  useButton?: boolean
 }
 const RendererQuoteList = ({
   quotes,
   onClick,
   onClickContent,
+  useButton,
 }: IRendererQuoteList) => {
   return (
     <div className="quotes-container__list">
@@ -115,6 +118,7 @@ const RendererQuoteList = ({
             onClick={onClick}
             onClickContent={onClickContent}
             className="cursor-pointer"
+            useButton={useButton}
           />
         ))
       )}
