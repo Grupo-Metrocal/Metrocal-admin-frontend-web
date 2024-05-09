@@ -56,7 +56,8 @@ export default function Page() {
   const [selectedActivity, setSelectedActivity] = useState<IPendingActivities>()
 
   const [loadingCalibration, setLoadingCalibration] = useState<boolean>(false)
-
+  const [loadingEmmitCertificate, setLoadingEmmitCertificate] =
+    useState<boolean>(false)
   const [certificate, setCertificate] = useState<any>({})
 
   const reviewCertificate = async () => {
@@ -73,6 +74,36 @@ export default function Page() {
       toast.success('Certificado aprobado')
     } else {
       toast.error('Error al aprobar el certificado')
+    }
+  }
+
+  const emmitCertificateToClient = async (activityID: number) => {
+    if (activityID === 0) {
+      return toast.error('No se ha seleccionado ninguna actividad')
+    }
+    setLoadingEmmitCertificate(true)
+    toast.loading('Estamos enviando los certificados a los clientes', {
+      description: 'tiempo estimado de 2 a 7 minutos',
+    })
+
+    const response = await fetchData({
+      url: `methods/send-certifications-to-client/${activityID}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+    setLoadingEmmitCertificate(false)
+
+    if (response.success) {
+      toast.success('Hemos enviado todos los certificados generados al cliente')
+    } else {
+      toast.error('Error al enviar los certificados al cliente', {
+        description:
+          'si el error persiste contacte al administrador del sistema',
+      })
     }
   }
 
@@ -101,9 +132,12 @@ export default function Page() {
     <LayoutPage
       title="Certificados"
       Footer={() => (
-        <div className="flex justify-end">
+        <div className="flex justify-end w-full gap-4">
+          <div className="">{loadingEmmitCertificate && <Spinner />}</div>
           <AlertDialogModal
-            onConfirm={() => {}}
+            onConfirm={() =>
+              emmitCertificateToClient((selectedActivity?.id as number) || 0)
+            }
             title="Antes de enviar todos los certificados, debe verificar que los datos sean correctos"
             description="Una vez enviados los certificados se limpiaran los registros generados"
             nameButton="ENVIAR CERTIFICADOS"
