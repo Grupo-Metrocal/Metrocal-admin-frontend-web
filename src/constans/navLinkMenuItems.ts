@@ -37,6 +37,16 @@ export const NAVLINK_MENU_LIST = [
     segment: 'certificates',
     category: 'organización',
     icon: certificatesIcon,
+    collection: [
+      {
+        name: 'Emitir certificados',
+        href: '/dashboard/certificates',
+      },
+      {
+        name: 'Registros',
+        href: '/dashboard/certificates/records',
+      },
+    ],
   },
   {
     name: 'Usuarios',
@@ -51,6 +61,16 @@ export const NAVLINK_MENU_LIST = [
     segment: 'activities',
     category: 'organización',
     icon: activitiesIcon,
+    collection: [
+      {
+        name: 'Pendientes',
+        href: '/dashboard/activities',
+      },
+      {
+        name: 'Registros',
+        href: '/dashboard/activities/records',
+      },
+    ],
   },
   {
     name: 'Reportes',
