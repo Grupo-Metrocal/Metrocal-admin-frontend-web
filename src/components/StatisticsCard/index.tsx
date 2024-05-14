@@ -53,7 +53,11 @@ export const StatisticsCard = ({
               height={13}
             />
           )}
-          {statsValue && <span>{`${statsValue}% este mes`}</span>}
+          {statsValue && (
+            <span>{`${
+              Number.isInteger(statsValue) ? statsValue : statsValue.toFixed(2)
+            }% este mes`}</span>
+          )}
         </div>
       </div>
       <div className="content">
