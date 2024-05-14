@@ -1,3 +1,19 @@
+export interface IRoot {
+  statistics: IStatistics
+  activities: IPendingActivities[]
+}
+
+export interface IStatistics {
+  certificates: {
+    currentMonth: number
+    comparePreviousMonth: number
+  }
+  income: {
+    currentMonth: number
+    comparePreviousMonth: number
+  }
+  pendingCertification: number
+}
 export interface IPendingActivities {
   id: number
   created_at: string
