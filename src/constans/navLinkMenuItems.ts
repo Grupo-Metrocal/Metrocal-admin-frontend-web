@@ -32,6 +32,27 @@ export const NAVLINK_MENU_LIST = [
     ],
   },
   {
+    name: 'Actividades',
+    href: '/dashboard/activities',
+    segment: 'activities',
+    category: 'organización',
+    icon: activitiesIcon,
+  },
+  {
+    name: 'Reportes',
+    href: '/dashboard/reports',
+    segment: 'reports',
+    category: 'descripción general',
+    icon: reportsIcon,
+  },
+  {
+    name: 'Configuración',
+    href: '/dashboard/settings',
+    segment: 'settings',
+    category: 'descripción general',
+    icon: settingsIcon,
+  },
+  {
     name: 'certificados',
     href: '/dashboard/certificates',
     segment: 'certificates',
@@ -54,36 +75,5 @@ export const NAVLINK_MENU_LIST = [
     segment: 'users',
     category: 'organización',
     icon: usersIcon,
-  },
-  {
-    name: 'Actividades',
-    href: '/dashboard/activities',
-    segment: 'activities',
-    category: 'organización',
-    icon: activitiesIcon,
-    collection: [
-      {
-        name: 'Pendientes',
-        href: '/dashboard/activities',
-      },
-      {
-        name: 'Registros',
-        href: '/dashboard/activities/records',
-      },
-    ],
-  },
-  {
-    name: 'Reportes',
-    href: '/dashboard/reports',
-    segment: 'reports',
-    category: 'descripción general',
-    icon: reportsIcon,
-  },
-  {
-    name: 'Configuración',
-    href: '/dashboard/settings',
-    segment: 'settings',
-    category: 'descripción general',
-    icon: settingsIcon,
   },
 ]
