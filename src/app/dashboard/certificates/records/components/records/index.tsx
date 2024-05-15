@@ -22,6 +22,7 @@ export type ICertifiedRecordsTable = {
   emited_by: string
   client_email: string
   pending_certificates: number
+  quote_request_id: number
 }
 
 export const CertifiedRecords = ({
