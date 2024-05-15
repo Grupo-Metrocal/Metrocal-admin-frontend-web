@@ -138,15 +138,10 @@ export const ColumnsCertifiedRecords = ({
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Linking href={`/dashboard/activities/view/${payment.id}`}>
-                  Detalles de la actividad
-                </Linking>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 <Linking
                   href={`/dashboard/certificates/records/view/${payment.id}`}
                 >
-                  Ver certificaciones
+                  Detalles de certificados
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
