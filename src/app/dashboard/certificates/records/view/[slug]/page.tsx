@@ -29,6 +29,7 @@ import { MoreHorizontal } from 'lucide-react'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { IClient } from '@/app/contactInformation'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -61,6 +62,7 @@ export default function Page({ params }: IRoot) {
   const { slug: id } = params
   const [data, setData] = useState<Data>()
   const [teamMember, setTeamMember] = useState<TeamMember[]>([])
+  const [client, setClient] = useState<IClient>({} as IClient)
   const [responsable, setResponsable] = useState<number>(0)
   const [selectedService, setSelectedService] =
     useState<EquipmentQuoteRequest | null>(null)
@@ -111,6 +113,7 @@ export default function Page({ params }: IRoot) {
         setData(response.data)
         setTeamMember(response.data.team_members)
         setResponsable(response.data.responsable)
+        setClient(response.data.quote_request.client)
 
         const service = response.data.quote_request.equipment_quote_request[0]
         handleSelectedService(service)
@@ -133,13 +136,40 @@ export default function Page({ params }: IRoot) {
       rollBack={true}
       className="certificates-viewer"
     >
+      <Content title="Informacion del cliente">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-2">
+            <p>
+              <span className="font-bold">Cliente:</span> {client?.company_name}
+            </p>
+            <p>
+              <span className="font-bold">Dirección:</span> {client?.address}
+            </p>
+            <p>
+              <span className="font-bold">RUC:</span> {client?.no_ruc}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <p>
+              <span className="font-bold">Solicitante:</span>{' '}
+              {client?.requested_by}
+            </p>
+            <p>
+              <span className="font-bold">Telefono:</span> {client?.phone}
+            </p>
+            <p>
+              <span className="font-bold">Correo:</span> {client?.email}
+            </p>
+          </div>
+        </div>
+      </Content>
       <Content
         title="Información principal"
-        colorTitle="blue"
+        colorTitle="green"
         className="certificates-viewer__main-info"
         titleStyle={{ fontSize: '1.2em' }}
       >
-        <span className="font-medium">
+        <span className="font-medium text-[#999]">
           Seleccione el equipo para mostrar los certificados de calibración
         </span>
         <CarouselComp className="carousel">
