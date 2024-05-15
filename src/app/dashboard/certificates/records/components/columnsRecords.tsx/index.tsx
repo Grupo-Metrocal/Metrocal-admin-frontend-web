@@ -130,20 +130,27 @@ export const ColumnsCertifiedRecords = ({
               }}
             >
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-
               <DropdownMenuItem>
-                <Linking href={`/dashboard/quotes/view/${payment.id}`}>
+                <Linking
+                  href={`/dashboard/quotes/view/${payment.quote_request_id}`}
+                >
                   Ver cotización
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
-                  Actualizar cotización
+                <Linking href={`/dashboard/activities/view/${payment.id}`}>
+                  Detalles de la actividad
                 </Linking>
               </DropdownMenuItem>
-              <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Linking
+                  href={`/dashboard/certificates/records/view/${payment.id}`}
+                >
+                  Ver certificaciones
+                </Linking>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 style={{
                   color: 'tomato',
                   fontWeight: 'bold',
@@ -153,17 +160,17 @@ export const ColumnsCertifiedRecords = ({
                 }}
               >
                 <AlertDialogModal
-                  nameButton="Eliminar cotización"
-                  title="¿Estás seguro de eliminar esta cotización?"
+                  nameButton="Eliminar registro"
+                  title="¿Estás seguro de eliminar esta registro?"
                   onConfirm={() => onDelete(payment.id)}
-                  description="Al eliminar esta cotización se eliminaran todos los datos relacionados a ella, como sus actividades, sus permisos, etc."
+                  description="Al eliminar estos registros se eliminaran todos los datos relacionados a ella, como sus actividades, calibraciones realizadas, certificados asociados, etc."
                   buttonStyle={{
                     color: 'tomato',
                     fontWeight: 'bold',
                   }}
                   useButton={false}
                 />
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         )
