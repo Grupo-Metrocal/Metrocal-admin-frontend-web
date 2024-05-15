@@ -28,6 +28,7 @@ import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -68,6 +69,8 @@ export default function Page({ params }: IRoot) {
   const { values: search, handleInputChange } = useForm({
     search: '',
   })
+
+  const router = useRouter()
 
   const filteredServices = useMemo(() => {
     if (!search.search) {
@@ -202,6 +205,13 @@ export default function Page({ params }: IRoot) {
                     className={`certificates-viewer__main-info__details__selected__item ${
                       selectedService === service.id ? 'selected' : ''
                     }`}
+                    onClick={() =>
+                      router.push(
+                        `/dashboard/activities/view/update/${service.id}/${
+                          selectedService?.calibration_method?.split(' ')[0]
+                        }/${data?.id}`,
+                      )
+                    }
                   >
                     <div className="flex flex-col gap-2">
                       <p>
@@ -220,6 +230,17 @@ export default function Page({ params }: IRoot) {
                         <span>Certificado:</span> {service?.certificate_code}
                       </p>
                     </div>
+                    <div>
+                      <ActionsItems
+                        equipment={service}
+                        key={service.id}
+                        calibration_method={
+                          selectedService?.calibration_method?.split(' ')[0] ||
+                          ''
+                        }
+                        activityID={data?.id || 0}
+                      />
+                    </div>{' '}
                   </div>
                 ))
               )}
@@ -257,17 +278,28 @@ const ActionsItems = ({
       >
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link
-            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}`}
-          >
-            Modificar Resultados
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={(e) => {
             e.preventDefault()
+            e.stopPropagation()
+          }}
+        >
+          Emitir certificado
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}
+        >
+          Descargar certificado
+        </DropdownMenuItem>
+
+        {/* <DropdownMenuSeparator /> */}
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
           }}
         >
           <AlertDialogModal
