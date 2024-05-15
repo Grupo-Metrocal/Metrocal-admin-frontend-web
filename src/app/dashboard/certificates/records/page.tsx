@@ -44,6 +44,7 @@ export default function RecordsPage() {
         }
       })
       .finally(() => {
+        toast.dismiss()
         setLoading(false)
       })
   }, [currentPage])
