@@ -19,9 +19,9 @@ export const CalibrationsResults = ({
   const cycles = data?.results
 
   const consolidatedData = []
-  const maxLength = Math.max(
-    ...cycles.map((cycle) => cycle.calibration_factor.length),
-  )
+  const maxLength =
+    calibrationResults &&
+    Math?.max(...cycles?.map((cycle) => cycle.calibration_factor.length))
 
   for (let i = 0; i < maxLength; i++) {
     const row = { pattern: null, cycle1: {}, cycle2: {} }
