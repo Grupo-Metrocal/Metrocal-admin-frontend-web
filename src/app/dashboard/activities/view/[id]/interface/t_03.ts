@@ -12,7 +12,7 @@ export interface IT_03 {
   created_at: string
   updated_at: string
   equipment_information: IEquipmentInformation
-  environmental_conditions: EnvironmentalConditions
+  environmental_conditions: IEnvironmentalConditions
   description_pattern: DescriptionPattern
   calibration_results: CalibrationResults
 }
@@ -32,7 +32,7 @@ export interface IEquipmentInformation {
   sensor: string
 }
 
-export interface EnvironmentalConditions {
+export interface IEnvironmentalConditions {
   id: number
   temperature: number
   humidity: number
