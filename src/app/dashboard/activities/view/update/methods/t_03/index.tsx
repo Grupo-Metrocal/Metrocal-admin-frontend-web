@@ -6,6 +6,7 @@ import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
+import { EnvironmentalConditions } from './component/environmental_conditions'
 
 export const T_03 = ({
   equipment,
@@ -56,6 +57,16 @@ export const T_03 = ({
             Component: () => (
               <EquipmentInformation
                 equipment={equipment.equipment_information}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'environmental_conditions',
+            label: 'Condiciones ambientales',
+            Component: () => (
+              <EnvironmentalConditions
+                environmentalConditions={equipment.environmental_conditions}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
