@@ -45,8 +45,9 @@ export const EnvironmentalConditions = ({
           required
           placeholder="Escriba o seleccione su patron"
           list={[
-            { id: 1, name: 'NI-MCPVE-01' },
-            { id: 2, name: 'NI-MCPVE-16' },
+            { id: 1, name: 'NI-MCPPT-01' },
+            { id: 2, name: 'NI-MCPPT-02' },
+            { id: 3, name: 'NI-MCPPT-05' },
           ]}
           keyList="pattern"
           inputType="string"
