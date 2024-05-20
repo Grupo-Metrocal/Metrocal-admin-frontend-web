@@ -107,6 +107,34 @@ export const CalibrationsResults = ({
     }))
   }
 
+  const handleConvertAllDataToNumber = () => {
+    const newData = data.results.map((result) => {
+      const newCalibrationFactor = result.calibration_factor.map((factor) => {
+        return {
+          ...factor,
+          pattern: Number(factor.pattern),
+          upward: {
+            equipment: Number(factor.upward.equipment),
+          },
+          downward: {
+            equipment: Number(factor.downward.equipment),
+          },
+        }
+      })
+      return {
+        ...result,
+        calibration_factor: newCalibrationFactor,
+      }
+    })
+
+    console.log({ newData })
+
+    return {
+      ...data,
+      results: newData,
+    }
+  }
+
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex flex-col space-y-4 border p-4">
@@ -172,7 +200,7 @@ export const CalibrationsResults = ({
                       type="text"
                       value={row.pattern}
                       onChange={(e) => handlePatternEdit(e.target.value, 1, i)}
-                      className="w-full"
+                      className="w-full text-center"
                     />
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
@@ -189,7 +217,7 @@ export const CalibrationsResults = ({
                           i,
                         )
                       }
-                      className="w-full"
+                      className="w-full text-center"
                     />
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
@@ -206,7 +234,7 @@ export const CalibrationsResults = ({
                           i,
                         )
                       }
-                      className="w-full"
+                      className="w-full text-center"
                     />
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
@@ -223,10 +251,10 @@ export const CalibrationsResults = ({
                           i,
                         )
                       }
-                      className="w-full"
+                      className="w-full text-center"
                     />
                   </td>
-                  <td className="border border-gray-400 p-2 text-center">
+                  <td className="border border-gray-400 p-2">
                     <input
                       type="text"
                       value={row.cycle2.downward.equipment}
@@ -240,7 +268,7 @@ export const CalibrationsResults = ({
                           i,
                         )
                       }
-                      className="w-full"
+                      className="w-full text-center"
                     />
                   </td>
                 </tr>
@@ -254,7 +282,9 @@ export const CalibrationsResults = ({
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(data, url)}
+          onConfirm={() => {
+            handleSaveInformation(handleConvertAllDataToNumber(), url)
+          }}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
