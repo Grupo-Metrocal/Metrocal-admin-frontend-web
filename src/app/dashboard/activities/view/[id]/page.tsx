@@ -27,6 +27,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 import { P_01 } from './component/p_01'
+import { T_03 } from './component/t_03'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
 import { ReviewActivity } from './component/ReviewActivity'
@@ -60,6 +61,7 @@ export interface IRoot {
 
 const RENDERER_METHOD = {
   'NI-MCIT-P-01': P_01,
+  'NI-MCIT-T-03': T_03,
 }
 
 export default function Page({ params }: IRoot) {
