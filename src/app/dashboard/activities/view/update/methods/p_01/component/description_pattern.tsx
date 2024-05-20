@@ -48,7 +48,7 @@ export const DescriptionPattern = ({
           label="Observaciones"
           name="observation"
           value={values.observation}
-          onChange={handleCheckedChange}
+          onChange={handleInputChange}
         />
 
         <div className="my-4 w-fit">
