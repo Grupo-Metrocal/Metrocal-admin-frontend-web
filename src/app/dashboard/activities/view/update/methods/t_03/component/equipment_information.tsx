@@ -18,8 +18,6 @@ export const EquipmentInformation = ({
   const { values, handleInputChange } = useForm({ ...equipment })
   const url = `methods/ni-mcit-t-03/equipment-information/`
 
-  console.log('values', values)
-
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
