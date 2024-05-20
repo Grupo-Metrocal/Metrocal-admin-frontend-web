@@ -7,6 +7,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
+import { CalibrationsResults } from './component/calibrations_results'
 
 export const T_03 = ({
   equipment,
@@ -67,6 +68,16 @@ export const T_03 = ({
             Component: () => (
               <EnvironmentalConditions
                 environmentalConditions={equipment.environmental_conditions}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'calibrations_results',
+            label: 'Resultados de calibraciones',
+            Component: () => (
+              <CalibrationsResults
+                calibrationResults={equipment.calibration_results}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
