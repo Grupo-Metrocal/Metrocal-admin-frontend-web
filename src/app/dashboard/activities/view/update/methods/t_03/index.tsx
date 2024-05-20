@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
 import { CalibrationsResults } from './component/calibrations_results'
+import { DescriptionPattern } from './component/description_pattern'
 
 export const T_03 = ({
   equipment,
@@ -78,6 +79,16 @@ export const T_03 = ({
             Component: () => (
               <CalibrationsResults
                 calibrationResults={equipment.calibration_results}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'description_pattern',
+            label: 'Descripción de patrones',
+            Component: () => (
+              <DescriptionPattern
+                description_pattern={equipment.description_pattern}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
