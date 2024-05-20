@@ -13,8 +13,8 @@ export interface IT_03 {
   updated_at: string
   equipment_information: IEquipmentInformation
   environmental_conditions: IEnvironmentalConditions
-  description_pattern: DescriptionPattern
-  calibration_results: CalibrationResults
+  description_pattern: IDescriptionPattern
+  calibration_results: ICalibrationResults
 }
 
 export interface IEquipmentInformation {
@@ -39,14 +39,14 @@ export interface IEnvironmentalConditions {
   pattern: string
 }
 
-export interface DescriptionPattern {
+export interface IDescriptionPattern {
   id: number
   pattern: string
   observation: string
   creditable: boolean
 }
 
-export interface CalibrationResults {
+export interface ICalibrationResults {
   id: number
   results: Result[]
 }
@@ -58,7 +58,7 @@ export interface Result {
 
 export interface CalibrationFactor {
   upward: Upward
-  pattern: number
+  pattern: number | any
   downward: Downward
 }
 
