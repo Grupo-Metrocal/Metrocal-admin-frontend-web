@@ -239,7 +239,7 @@ export default function Page() {
       </Content>
 
       <Content
-        title="Generador de certificados"
+        title="Información del certificado de calibración"
         colorTitle="green"
         className="mt-4 w-full min-h-[200px]"
       >
