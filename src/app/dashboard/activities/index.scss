@@ -11,6 +11,14 @@
   }
 }
 .activities-page {
+  .filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    flex-wrap: wrap;
+    gap: 2em;
+  }
   .activities_content {
     margin-top: 2em;
   }
