@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .pending-certificate__selected {
   min-height: 500px;
   width: 100%;
@@ -120,6 +122,75 @@
           border: 1px solid #09f;
 
           box-shadow: 0 0 5px 0 #09f;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .pending-certificate__selected {
+    gap: 1em;
+
+    .client {
+      h2 {
+        font-size: 1.1rem;
+      }
+
+      &__details {
+        gap: 1em;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .team_members {
+      h3 {
+        font-size: 1.1em;
+      }
+
+      &__content {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.5em;
+
+        &__item {
+          img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+
+    .services {
+      h3 {
+        font-size: 1.1em;
+      }
+
+      &__content {
+        gap: 0.5em;
+        display: flex;
+        flex-direction: column;
+
+        &__item {
+          width: 100%;
+
+          padding: 0.5em 0.8em;
+        }
+      }
+    }
+
+    .method {
+      h3 {
+        font-size: 1.1em;
+      }
+
+      &__content {
+        height: 100px;
+
+        &__item {
+          padding: 0.5em 0.8em;
+          font-size: 0.8em;
         }
       }
     }
