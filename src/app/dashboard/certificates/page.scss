@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .certificate-overview {
   .certificate-stats {
     display: grid;
@@ -45,5 +47,21 @@
 
   &__details {
     width: 70%;
+  }
+}
+
+@include mobile {
+  .pending-certificate {
+    flex-direction: column;
+
+    &__table {
+      width: 100%;
+      min-width: 0;
+      max-height: 300px;
+    }
+
+    &__details {
+      width: 100%;
+    }
   }
 }
