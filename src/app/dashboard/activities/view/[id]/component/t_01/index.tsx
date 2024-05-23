@@ -6,7 +6,7 @@ import {
   ICalibrationResults,
 } from '../../interface/t_01'
 import { EquipmentInformation } from './equipment-information'
-// import { CalibrationResults } from './calibration-result'
+import { CalibrationResults } from './calibration-result'
 import { EnvironmentalConditions } from './environmental-conditions'
 import { DescriptionPattern } from './description-pattern'
 
@@ -60,19 +60,19 @@ export const T_01 = ({
             />
           ),
         },
-        // {
-        //   value: 'calibration_results',
-        //   label: 'Resultados de calibración',
-        //   Component: () => (
-        //     <CalibrationResults
-        //       calibration_results={calibration_results}
-        //       id={id}
-        //       method_name={method_name}
-        //       report_messages={report_messages}
-        //       report_status={report_status}
-        //     />
-        //   ),
-        // },
+        {
+          value: 'calibration_results',
+          label: 'Resultados de calibración',
+          Component: () => (
+            <CalibrationResults
+              calibration_results={calibration_results}
+              id={id}
+              method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
+            />
+          ),
+        },
         {
           value: 'description_pattern',
           label: 'Descripción de patrones',
