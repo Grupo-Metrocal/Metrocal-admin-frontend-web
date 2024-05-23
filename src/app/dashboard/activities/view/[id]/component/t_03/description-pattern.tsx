@@ -27,6 +27,14 @@ export const DescriptionPattern = ({
             <span className="font-semibold">Patrón:</span>{' '}
             {description_pattern?.pattern}
           </div>
+          <div className="pt-4">
+            <span className="font-semibold">
+              Este certificado{' '}
+              {description_pattern?.creditable
+                ? 'es Acreditado ✅'
+                : 'no es acreditado'}
+            </span>
+          </div>
         </div>
       </div>
       <ReportMethodActivity
