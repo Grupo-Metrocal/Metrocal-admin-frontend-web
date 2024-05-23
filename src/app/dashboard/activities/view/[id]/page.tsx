@@ -31,6 +31,7 @@ import { T_03 } from './component/t_03'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
 import { ReviewActivity } from './component/ReviewActivity'
+import { T_01 } from './component/t_01'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -62,6 +63,7 @@ export interface IRoot {
 const RENDERER_METHOD = {
   'NI-MCIT-P-01': P_01,
   'NI-MCIT-T-03': T_03,
+  'NI-MCIT-T-01': T_01,
 }
 
 export default function Page({ params }: IRoot) {
