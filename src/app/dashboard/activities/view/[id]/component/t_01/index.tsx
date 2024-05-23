@@ -7,7 +7,7 @@ import {
 } from '../../interface/t_01'
 import { EquipmentInformation } from './equipment-information'
 // import { CalibrationResults } from './calibration-result'
-// import { EnvironmentalConditions } from './environmental-conditions'
+import { EnvironmentalConditions } from './environmental-conditions'
 import { DescriptionPattern } from './description-pattern'
 
 interface Props {
@@ -47,19 +47,19 @@ export const T_01 = ({
             />
           ),
         },
-        // {
-        //   value: 'environmental_conditions',
-        //   label: 'Condiciones ambientales',
-        //   Component: () => (
-        //     <EnvironmentalConditions
-        //       environmental_conditions={environmental_conditions}
-        //       id={id}
-        //       method_name={method_name}
-        //       report_messages={report_messages}
-        //       report_status={report_status}
-        //     />
-        //   ),
-        // },
+        {
+          value: 'environmental_conditions',
+          label: 'Condiciones ambientales',
+          Component: () => (
+            <EnvironmentalConditions
+              environmental_conditions={environmental_conditions}
+              id={id}
+              method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
+            />
+          ),
+        },
         // {
         //   value: 'calibration_results',
         //   label: 'Resultados de calibración',
