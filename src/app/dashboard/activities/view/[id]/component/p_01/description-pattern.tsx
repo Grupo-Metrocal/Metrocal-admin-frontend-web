@@ -28,6 +28,14 @@ export const DescriptionPattern = ({
             {description_pattern?.pattern}
           </div>
         </div>
+        <div className="pt-4">
+          <span className="font-semibold">
+            Este certificado{' '}
+            {description_pattern?.creditable
+              ? 'es Acreditado ✅'
+              : 'no es acreditado'}
+          </span>
+        </div>
       </div>
       <ReportMethodActivity
         method_name={method_name}
