@@ -1,4 +1,3 @@
-import { useForm } from '@/hooks/useForm'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/t_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
