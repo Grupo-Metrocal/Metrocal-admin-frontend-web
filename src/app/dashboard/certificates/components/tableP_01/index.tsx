@@ -180,8 +180,15 @@ export const TableP_01 = ({
           </div>
 
           <div>
+            <p>
+              Este certificado{' '}
+              {certificate.creditable ? 'es acreditado ✅' : 'no es acreditado'}
+            </p>
+          </div>
+
+          <div>
             <p>Observaciones adicionales</p>
-            <span>{certificate.descriptionPattern?.observation}</span>
+            <span>{certificate.observations}</span>
           </div>
         </section>
       </section>
