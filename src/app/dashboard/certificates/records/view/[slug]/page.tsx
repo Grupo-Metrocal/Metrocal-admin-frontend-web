@@ -140,25 +140,30 @@ export default function Page({ params }: IRoot) {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
             <p>
-              <span className="font-bold">Cliente:</span> {client?.company_name}
+              <span className="font-bold text-[#828282]">Cliente:</span>{' '}
+              {client?.company_name}
             </p>
             <p>
-              <span className="font-bold">Dirección:</span> {client?.address}
+              <span className="font-bold text-[#828282]">Dirección:</span>{' '}
+              {client?.address}
             </p>
             <p>
-              <span className="font-bold">RUC:</span> {client?.no_ruc}
+              <span className="font-bold text-[#828282]">RUC:</span>{' '}
+              {client?.no_ruc}
             </p>
           </div>
           <div className="flex flex-col gap-2">
             <p>
-              <span className="font-bold">Solicitante:</span>{' '}
+              <span className="font-bold text-[#828282]">Solicitante:</span>{' '}
               {client?.requested_by}
             </p>
             <p>
-              <span className="font-bold">Telefono:</span> {client?.phone}
+              <span className="font-bold text-[#828282]">Telefono:</span>{' '}
+              {client?.phone}
             </p>
             <p>
-              <span className="font-bold">Correo:</span> {client?.email}
+              <span className="font-bold text-[#828282]">Correo:</span>{' '}
+              {client?.email}
             </p>
           </div>
         </div>
