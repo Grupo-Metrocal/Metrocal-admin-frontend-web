@@ -71,6 +71,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 1em;
+        min-height: 200px;
 
         &__item {
           width: 100%;
@@ -83,6 +84,7 @@
           cursor: pointer;
           box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
           max-width: 350px;
+          height: fit-content;
 
           p {
             color: #333;
