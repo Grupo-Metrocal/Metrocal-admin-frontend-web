@@ -29,13 +29,21 @@ export interface EquipmentInformation {
 // **************************
 
 export interface ICertificate_P_01 {
+  pattern: string
+  email: string
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  descriptionPattern: descriptionPattern
+  descriptionPattern: DescriptionPattern
+  used_patterns: UsedPatterns
+  creditable: boolean
+  ta_eq_enviromental_conditions: string
+  hPa_eq_enviromental_conditions: string
+  observations: string
 }
 
 export interface EquipmentInformation {
+  certification_code: string
   service_code: string
   certificate_issue_date: string
   calibration_date: string
@@ -48,7 +56,7 @@ export interface EquipmentInformation {
   code: string
   applicant: string
   address: string
-  calibration_location: any
+  calibration_location: string
 }
 
 export interface CalibrationResults {
@@ -76,7 +84,25 @@ export interface EnvironmentalConditions {
   humidity: string
 }
 
-export interface descriptionPattern {
+export interface DescriptionPattern {
+  id: number
   pattern: string
-  observation: string
+  observation: any
+  creditable: boolean
+}
+
+export interface UsedPatterns {
+  pressurePattern: PressurePattern
+}
+
+export interface PressurePattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  pattern_range: string
+  next_calibration: string
+  created_at: string
 }
