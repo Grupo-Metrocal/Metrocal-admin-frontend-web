@@ -5,6 +5,7 @@ import quotesIcon from '../assets/icons/quotes.svg'
 import reportsIcon from '../assets/icons/reports.svg'
 import settingsIcon from '../assets/icons/settings.svg'
 import usersIcon from '../assets/icons/users.svg'
+import clientsIcon from '../assets/icons/clients.svg'
 
 export const NAVLINK_MENU_LIST = [
   {
@@ -37,6 +38,13 @@ export const NAVLINK_MENU_LIST = [
     segment: 'activities',
     category: 'organización',
     icon: activitiesIcon,
+  },
+  {
+    name: 'Clientes',
+    href: '/dashboard/clients',
+    segment: 'clients',
+    category: 'organización',
+    icon: clientsIcon,
   },
   {
     name: 'Reportes',
