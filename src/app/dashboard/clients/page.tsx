@@ -26,6 +26,28 @@ export default function RecordsPage() {
     total_data: 0,
   })
 
+  const handleDeleteClient = async (id: number) => {
+    toast.loading('Eliminando cliente...')
+
+    const response = await fetchData({
+      url: `clients/${id}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Cliente eliminado correctamente')
+      setRecords((prev: any) => prev.filter((record: any) => record.id !== id))
+    } else {
+      toast.error('No se pudo eliminar el cliente')
+    }
+  }
+
   useEffect(() => {
     toast.loading('Cargando registros...')
 
@@ -64,6 +86,7 @@ export default function RecordsPage() {
               pagination={pagination}
               setCurrentPage={setCurrentPage}
               loading={loading}
+              handleDeleteClient={handleDeleteClient}
             />
           }
         </div>
