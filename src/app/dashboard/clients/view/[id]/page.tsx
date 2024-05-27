@@ -4,6 +4,10 @@ import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import './index.scss'
+import { IClient } from '@/app/contactInformation'
+import { Spinner } from '@/components/Spinner'
+import { ClientRenderer } from './components/clients'
 
 interface IProps {
   params: {
@@ -13,7 +17,7 @@ interface IProps {
 
 const getInformationClient = async (id: string) => {
   return await fetchData({
-    url: `clients/information/${id}`,
+    url: `clients/${id}`,
     method: 'GET',
     headers: {
       Authorization: `Bearer ${getCookie('token')}`,
@@ -22,7 +26,8 @@ const getInformationClient = async (id: string) => {
 }
 export default function Page({ params }: IProps) {
   const { id } = params
-  const [client, setClient] = useState<any>({})
+  const [client, setClient] = useState<IClient>({} as IClient)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     toast.loading('Cargando información del cliente')
@@ -40,12 +45,22 @@ export default function Page({ params }: IProps) {
       })
       .finally(() => {
         toast.dismiss()
+        setLoading(false)
       })
   }, [id])
 
   return (
     <LayoutPage title="Detalles del cliente">
-      <div></div>
+      {loading ? (
+        <div className="w-full flex justify-center h-[300px] items-center">
+          <Spinner />
+        </div>
+      ) : (
+        <div className="client-info-container">
+          <ClientRenderer client={client} />
+          <div className="information"></div>
+        </div>
+      )}
     </LayoutPage>
   )
 }
