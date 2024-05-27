@@ -107,6 +107,7 @@ export default function Page({ params }: IProps) {
       .finally(() => {
         toast.dismiss()
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   return (
