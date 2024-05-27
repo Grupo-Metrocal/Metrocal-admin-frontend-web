@@ -44,7 +44,7 @@ export const NAVLINK_MENU_LIST = [
     href: '/dashboard/clients',
     segment: 'clients',
     category: 'organización',
-    icon: clientsIcon,
+    icon: usersIcon,
   },
   {
     name: 'Reportes',
@@ -82,6 +82,6 @@ export const NAVLINK_MENU_LIST = [
     href: '/dashboard/users',
     segment: 'users',
     category: 'organización',
-    icon: usersIcon,
+    icon: clientsIcon,
   },
 ]
