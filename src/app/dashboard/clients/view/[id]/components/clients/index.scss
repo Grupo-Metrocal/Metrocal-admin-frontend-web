@@ -1,0 +1,24 @@
+.renderer-client {
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  max-width: 350px;
+
+  .client-info__item {
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    padding: 0.7em;
+    border-radius: 10px;
+
+    &__label {
+      color: #828282;
+      font-size: 0.8em;
+    }
+  }
+}
