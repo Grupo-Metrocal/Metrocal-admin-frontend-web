@@ -135,7 +135,7 @@ export const ColumnsCertifiedRecords = ({
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              {/* <DropdownMenuItem
+              <DropdownMenuItem
                 style={{
                   color: 'tomato',
                   fontWeight: 'bold',
@@ -145,7 +145,7 @@ export const ColumnsCertifiedRecords = ({
                 }}
               >
                 <AlertDialogModal
-                  nameButton="Eliminar registro"
+                  nameButton="Eliminar cliente"
                   title="¿Estás seguro de eliminar esta registro?"
                   onConfirm={() => onDelete(payment.id)}
                   description="Al eliminar estos registros se eliminaran todos los datos relacionados a ella, como sus actividades, calibraciones realizadas, certificados asociados, etc."
@@ -155,7 +155,7 @@ export const ColumnsCertifiedRecords = ({
                   }}
                   useButton={false}
                 />
-              </DropdownMenuItem> */}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )
