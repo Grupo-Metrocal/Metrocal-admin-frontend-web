@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 interface IProps {
-  param: {
+  params: {
     id: string
   }
 }
@@ -20,8 +20,8 @@ const getInformationClient = async (id: string) => {
     },
   })
 }
-export default function Page({ param }: IProps) {
-  const { id } = param
+export default function Page({ params }: IProps) {
+  const { id } = params
   const [client, setClient] = useState<any>({})
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function Page({ param }: IProps) {
         toast.dismiss()
       })
   }, [id])
+
   return (
     <LayoutPage title="Detalles del cliente">
       <div></div>
