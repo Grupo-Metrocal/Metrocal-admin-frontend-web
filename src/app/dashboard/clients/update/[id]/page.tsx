@@ -40,7 +40,7 @@ export default function Page({ params }: IProps) {
     toast.loading('Actualizando...')
 
     const response = await fetchData({
-      url: 'clients',
+      url: `clients/update/${id}`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
