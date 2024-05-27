@@ -6,6 +6,9 @@ import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { ClientRecords } from './components/records'
+import { Modal } from '@/components/Modal'
+import ClientRegister from '@/app/clientRegister'
+import { CButton } from '@/components/CButton'
 const getRecords = async (page: number) => {
   return await fetchData({
     url: `clients/${page}/10`,
@@ -78,7 +81,17 @@ export default function RecordsPage() {
           <Spinner />
         </div>
       ) : (
-        <div>
+        <div className="bg-white">
+          <div className="p-4">
+            <Modal
+              title="Complete el formulario para registrar un nuevo cliente"
+              Component={ClientRegister}
+              size="xl"
+            >
+              <CButton>Crear nuevo cliente</CButton>
+            </Modal>
+          </div>
+
           {
             <ClientRecords
               records={records}
