@@ -39,7 +39,7 @@ export const DetailClientQuote = ({
           title="Total de facturados"
           contentValue={formatPrice(quoteInformation?.totalInvoice)}
           className="total-invoice"
-          backgroundHeaderIcon="#c9b1fd"
+          backgroundHeaderIcon="#e7f9f5"
           headerIcon={cashIcon}
         />
         <StatisticsCard
