@@ -1,13 +1,5 @@
 @use '@/sass/index' as *;
 
-.certificate-overview {
-  .certificate-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1em;
-  }
-}
-
 .pending-certificate {
   display: flex;
   justify-content: space-between;
