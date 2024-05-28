@@ -65,7 +65,6 @@ export default function Page() {
   const [loadingEmmitCertificate, setLoadingEmmitCertificate] =
     useState<boolean>(false)
   const [certificate, setCertificate] = useState<any>({})
-  const [statistics, setStatistics] = useState<IStatistics>({} as IStatistics)
 
   const reviewCertificate = async () => {
     toast.loading('Aprobando certificado')
@@ -118,7 +117,6 @@ export default function Page() {
     getData()
       .then((data) => {
         if (data.success) {
-          setStatistics(data.data.statistics)
           setPendingActivities(data.data.activities)
           setSelectedActivity(data.data.activities[0])
         } else {
@@ -154,47 +152,6 @@ export default function Page() {
         </div>
       )}
     >
-      <Content
-        title="Vista general"
-        colorTitle="purple"
-        style={{ paddingBottom: '2.2em' }}
-      >
-        <div className="certificate-overview">
-          <div className="certificate-stats">
-            {StatisticsCard({
-              title: 'Certificados',
-              headerIcon: certificateIcon,
-              statsValue: statistics.certificates?.comparePreviousMonth,
-              typeIconStats:
-                statistics.certificates?.comparePreviousMonth >= 0
-                  ? 'increase'
-                  : 'decrease',
-              contentValue:
-                statistics.certificates?.currentMonth.toLocaleString(),
-            })}
-
-            {StatisticsCard({
-              title: 'Ingresos',
-              headerIcon: statsIcon,
-              statsValue: statistics.income?.comparePreviousMonth || 0,
-              typeIconStats:
-                statistics.income?.comparePreviousMonth >= 0
-                  ? 'increase'
-                  : 'decrease',
-              contentValue: formatPrice(statistics.income?.currentMonth),
-              backgroundHeaderIcon: '#c9b1fd',
-            })}
-            {StatisticsCard({
-              title: 'Certificados pendientes',
-              contentValue: statistics?.pendingCertification?.toLocaleString(),
-              className: 'activities',
-              headerIcon: activitiesPendingIcon,
-              backgroundHeaderIcon: '#f5e7f9',
-            })}
-          </div>
-        </div>
-      </Content>
-
       <Content
         title="Certificados pendientes"
         colorTitle="yellow"
