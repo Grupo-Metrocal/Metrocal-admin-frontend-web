@@ -77,7 +77,7 @@ export default function Page({ params }: IProps) {
   }, [id])
 
   useEffect(() => {
-    getQuoteClient(id, currentPage, 2)
+    getQuoteClient(id, currentPage, 5)
       .then((response) => {
         if (!response.success) {
           return toast.error(
