@@ -36,7 +36,7 @@ export const DetailClientQuote = ({
     <div className="detail-client-quote">
       <section className="detail-client-quote__information">
         <StatisticsCard
-          title="Total de facturados"
+          title="Cotizaciones totales en el mes"
           contentValue={formatPrice(quoteInformation?.totalInvoice)}
           className="total-invoice"
           backgroundHeaderIcon="#e7f9f5"
