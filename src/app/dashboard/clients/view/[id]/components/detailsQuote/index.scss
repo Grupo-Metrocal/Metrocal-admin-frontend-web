@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .detail-client-quote {
   display: flex;
   flex-direction: column;
@@ -13,5 +15,14 @@
     justify-content: space-between;
     flex-direction: row;
     padding: 1em;
+  }
+}
+
+@include mobile {
+  .detail-client-quote {
+    .detail-client-quote__information {
+      flex-direction: column;
+      gap: 1em;
+    }
   }
 }
