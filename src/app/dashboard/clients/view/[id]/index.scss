@@ -1,2 +1,10 @@
 .client-info-container {
+  display: flex;
+  gap: 2em;
+  justify-content: space-between;
+
+  .renderer-client {
+    width: 450px;
+    height: fit-content;
+  }
 }
