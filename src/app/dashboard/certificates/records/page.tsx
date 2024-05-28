@@ -6,6 +6,8 @@ import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { CertifiedRecords } from './components/records'
+import { StatisticsActivity } from './components/statistics'
+
 const getRecords = async (page: number) => {
   return await fetchData({
     url: `activities/certified-activities/${page}/10`,
@@ -16,6 +18,7 @@ const getRecords = async (page: number) => {
     },
   })
 }
+
 export default function RecordsPage() {
   const [records, setRecords] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -56,17 +59,20 @@ export default function RecordsPage() {
           <Spinner />
         </div>
       ) : (
-        <div>
-          {
-            <CertifiedRecords
-              records={records}
-              currentPage={currentPage}
-              pagination={pagination}
-              setPagination={setPagination}
-              loading={loading}
-            />
-          }
-        </div>
+        <>
+          <StatisticsActivity />
+          <div>
+            {
+              <CertifiedRecords
+                records={records}
+                currentPage={currentPage}
+                pagination={pagination}
+                setPagination={setPagination}
+                loading={loading}
+              />
+            }
+          </div>
+        </>
       )}
     </LayoutPage>
   )
