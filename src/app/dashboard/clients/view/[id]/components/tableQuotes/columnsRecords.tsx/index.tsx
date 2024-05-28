@@ -51,6 +51,7 @@ export const ColumnsCertifiedRecords = ({
           <Button
             variant={'ghost'}
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="text-left"
           >
             No. Cotización
             <ArrowUpDown className="ml-2 h-4 w-4" />
