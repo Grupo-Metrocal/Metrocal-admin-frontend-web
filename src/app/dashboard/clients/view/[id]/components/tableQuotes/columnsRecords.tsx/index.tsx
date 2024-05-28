@@ -63,25 +63,49 @@ export const ColumnsCertifiedRecords = ({
       },
     },
     {
-      accessorKey: 'tax',
-      header: () => <div className="text-center">IVA</div>,
-      cell: ({ row }) => (
-        <div className="text-center">{row.getValue('tax')}%</div>
-      ),
-    },
-    {
-      accessorKey: 'extras',
-      header: () => <div className="text-center">Traslado técnico</div>,
-      cell: ({ row }) => (
-        <div className="text-center">{formatPrice(row.getValue('extras'))}</div>
-      ),
-    },
-    {
       accessorKey: 'total_price',
       header: () => <div className="text-center">Total</div>,
       cell: ({ row }) => (
         <div className="text-center">
           {formatPrice(row.getValue('total_price'))}
+        </div>
+      ),
+    },
+
+    {
+      accessorKey: 'approved_by',
+      header: () => <div className="text-center">Aprobado por</div>,
+      cell: ({ row }) => (
+        <div className="text-center">
+          {row.getValue('approved_by')
+            ? row.getValue('approved_by')
+            : 'Sin aprobar'}
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'status',
+      header: () => <div className="text-center">Estado</div>,
+      cell: ({ row }) => (
+        <div
+          className="text-center"
+          style={{
+            backgroundColor:
+              row.getValue('status') === 'pending'
+                ? 'orange'
+                : row.getValue('status') === 'done'
+                ? 'green'
+                : 'blue',
+            color: 'white',
+            padding: '0.25rem 0.5rem',
+            borderRadius: '0.25rem',
+          }}
+        >
+          {row.getValue('status') === 'pending'
+            ? 'Pendiente'
+            : row.getValue('status') === 'done'
+            ? 'Aprobado'
+            : 'Pendiente de aprobación'}
         </div>
       ),
     },
