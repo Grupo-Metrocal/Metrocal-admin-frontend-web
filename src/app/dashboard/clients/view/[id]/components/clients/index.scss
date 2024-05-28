@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .renderer-client {
   background-color: #fff;
   padding: 1em;
@@ -20,5 +22,11 @@
       color: #828282;
       font-size: 0.8em;
     }
+  }
+}
+
+@include mobile {
+  .renderer-client {
+    max-width: 100%;
   }
 }
