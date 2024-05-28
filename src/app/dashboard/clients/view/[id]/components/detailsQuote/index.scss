@@ -1,0 +1,16 @@
+.detail-client-quote {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 1em;
+  gap: 2em;
+  width: 100%;
+  border-radius: 10px;
+
+  &__information {
+    display: flex;
+    gap: 2em;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
