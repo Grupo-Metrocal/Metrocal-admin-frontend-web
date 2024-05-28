@@ -17,9 +17,9 @@ interface IProps {
 export type IClientsQuoteRecordsTable = {
   id: number
   total_price: string
-  tax: string
+  approved_by: string
   no: string
-  extras: string
+  status: string
   created_at: string
   activity_id: number
 }
