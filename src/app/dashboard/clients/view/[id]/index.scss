@@ -1,3 +1,5 @@
+@use '@/sass/index' as *;
+
 .client-info-container {
   display: flex;
   gap: 2em;
@@ -6,5 +8,16 @@
   .renderer-client {
     width: 450px;
     height: fit-content;
+  }
+}
+
+@include mobile {
+  .client-info-container {
+    flex-direction: column;
+    gap: 1em;
+
+    .renderer-client {
+      width: 100%;
+    }
   }
 }
