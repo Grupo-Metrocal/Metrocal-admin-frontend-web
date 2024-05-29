@@ -44,7 +44,7 @@ export const StatisticsActivity = () => {
 
   return (
     <Content
-      title="Vista general"
+      title="Vista general de certificados"
       colorTitle="purple"
       style={{ paddingBottom: '2.2em' }}
     >
