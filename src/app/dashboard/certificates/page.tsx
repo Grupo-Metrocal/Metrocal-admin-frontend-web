@@ -1,18 +1,9 @@
 'use client'
 import './page.scss'
 import { LayoutPage } from '@/components/LayoutPage'
-import certificateIcon from '@/assets/icons/certificate_icon.svg'
-import statsIcon from '@/assets/icons/stats.svg'
-import activitiesPendingIcon from '@/assets/icons/certificate_pending_icon.svg'
-import { StatisticsCard } from '../../../components/StatisticsCard'
 import { getCookie } from 'cookies-next'
-import {
-  IRoot,
-  IPendingActivities,
-  IStatistics,
-} from './interface/pendingActivities'
+import { IPendingActivities } from './interface/pendingActivities'
 import { Content } from '@/components/Content'
-import { formatPrice } from '@/utils/formatPrice'
 import { fetchData } from '@/utils/fetch'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
