@@ -90,14 +90,13 @@ export const ColumnsCertifiedRecords = ({
         <div
           className="text-center"
           style={{
-            backgroundColor:
-              row.getValue('status') === 'pending'
-                ? 'orange'
+            color:
+              row.getValue('status') === 'pending de revisión'
+                ? '#f7c948'
                 : row.getValue('status') === 'done'
-                ? 'green'
-                : 'blue',
-            color: 'white',
-            padding: '0.25rem 0.5rem',
+                ? '#34d399'
+                : '#f7c948',
+            fontWeight: 'bold',
             borderRadius: '0.25rem',
           }}
         >
