@@ -66,7 +66,7 @@ export const EnvironmentalConditions = ({
               </td>
               <td className="border px-4 py-2">
                 <input
-                  className="w-[80px] text-center"
+                  className="text-center"
                   type="text"
                   value={point.temperature.initial}
                   onChange={(e) =>
@@ -80,7 +80,7 @@ export const EnvironmentalConditions = ({
               </td>
               <td className="border px-4 py-2">
                 <input
-                  className="w-[80px] text-center"
+                  className=" text-center"
                   type="text"
                   value={point.temperature.final}
                   onChange={(e) =>
@@ -94,7 +94,7 @@ export const EnvironmentalConditions = ({
               </td>
               <td className="border px-4 py-2">
                 <input
-                  className="w-[80px] text-center"
+                  className=" text-center"
                   type="text"
                   value={point.humidity.initial}
                   onChange={(e) =>
@@ -108,7 +108,7 @@ export const EnvironmentalConditions = ({
               </td>
               <td className="border px-4 py-2">
                 <input
-                  className="w-[80px] text-center"
+                  className=" text-center"
                   type="text"
                   value={point.humidity.final}
                   onChange={(e) =>
