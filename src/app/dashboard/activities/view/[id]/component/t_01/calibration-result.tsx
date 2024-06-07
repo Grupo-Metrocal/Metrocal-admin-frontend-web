@@ -55,10 +55,10 @@ export const CalibrationResults = ({
                     return (
                       <>
                         <td className="border border-gray-400 p-2 text-center">
-                          <span>{key.patron}</span>
+                          <span>{key?.patron}</span>
                         </td>
                         <td className="border border-gray-400 p-2 text-center">
-                          <span>{key.thermometer}</span>
+                          <span>{key?.thermometer}</span>
                         </td>
                       </>
                     )
