@@ -27,7 +27,7 @@ export const CalibrationResults = ({
 
   for (let i = 0; i < maxLength; i++) {
     const row = { pattern: null, cycle1: {}, cycle2: {} }
-    cycles.forEach((cycle) => {
+    cycles?.forEach((cycle) => {
       const factor = cycle.calibration_factor[i]
       if (factor) {
         if (cycle.cicle_number === 1) {
@@ -84,7 +84,7 @@ export const CalibrationResults = ({
           <tbody>
             <tr>
               <td className="border border-gray-400 p-2 text-center">Patrón</td>
-              {data?.results.map(() => {
+              {data?.results?.map(() => {
                 return (
                   <>
                     <td className="border border-gray-400 p-2 text-center">
@@ -98,23 +98,23 @@ export const CalibrationResults = ({
               })}
             </tr>
 
-            {consolidatedData.map((row: any, i: number) => {
+            {consolidatedData?.map((row: any, i: number) => {
               return (
                 <tr key={i}>
                   <td className="border border-gray-400 p-2 text-center">
-                    <span>{row.pattern}</span>
+                    <span>{row?.pattern}</span>
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
-                    <span>{row.cycle1.upward.equipment}</span>
+                    <span>{row?.cycle1.upward.equipment}</span>
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
-                    <span>{row.cycle1.downward.equipment}</span>
+                    <span>{row?.cycle1.downward.equipment}</span>
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
-                    <span>{row.cycle2.upward.equipment}</span>
+                    <span>{row?.cycle2.upward.equipment}</span>
                   </td>
                   <td className="border border-gray-400 p-2 text-center">
-                    <span>{row.cycle2.downward.equipment}</span>
+                    <span>{row?.cycle2.downward.equipment}</span>
                   </td>
                 </tr>
               )
