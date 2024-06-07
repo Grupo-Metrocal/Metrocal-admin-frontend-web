@@ -6,7 +6,7 @@ import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
-// import { EnvironmentalConditions } from './component/environmental_conditions'
+import { EnvironmentalConditions } from './component/environmental_conditions'
 // import { CalibrationsResults } from './component/calibrations_results'
 import { DescriptionPattern } from './component/description_pattern'
 
@@ -63,16 +63,16 @@ export const T_05 = ({
               />
             ),
           },
-          // {
-          //   value: 'environmental_conditions',
-          //   label: 'Condiciones ambientales',
-          //   Component: () => (
-          //     <EnvironmentalConditions
-          //       environmentalConditions={equipment.environmental_conditions}
-          //       handleSaveInformation={handleSaveInformation}
-          //     />
-          //   ),
-          // },
+          {
+            value: 'environmental_conditions',
+            label: 'Condiciones ambientales',
+            Component: () => (
+              <EnvironmentalConditions
+                environmentalConditions={equipment.environmental_conditions}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
           // {
           //   value: 'calibrations_results',
           //   label: 'Resultados de calibraciones',
