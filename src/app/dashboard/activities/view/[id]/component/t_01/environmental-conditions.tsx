@@ -35,32 +35,48 @@ export const EnvironmentalConditions = ({
         <tbody>
           <tr className="text-center">
             <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.ta.hrp.initial}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.ta.hrp.final}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.ta.tac.initial}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.ta.tac.final}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.ta.equipment}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.hpa.pa.initial}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.hpa.pa.final}</span>
-            </td>
-            <td className="border px-4 py-2">
-              <span>{environmental_conditions.environment.hpa.equipment}</span>
+              <span>
+                {environmental_conditions?.environment?.ta?.hrp?.initial}
+              </span>
             </td>
             <td className="border px-4 py-2">
               <span>
-                {environmental_conditions.environment.hpa.stabilization_time}
+                {environmental_conditions?.environment?.ta?.hrp?.final}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.ta?.tac?.initial}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.ta?.tac?.final}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.ta?.equipment}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.hpa?.pa?.initial}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.hpa?.pa?.final}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.hpa?.equipment}
+              </span>
+            </td>
+            <td className="border px-4 py-2">
+              <span>
+                {environmental_conditions?.environment?.hpa?.stabilization_time}
               </span>
             </td>
           </tr>
