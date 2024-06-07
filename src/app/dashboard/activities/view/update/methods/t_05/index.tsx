@@ -7,7 +7,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
-// import { CalibrationsResults } from './component/calibrations_results'
+import { CalibrationsResults } from './component/calibrations_results'
 import { DescriptionPattern } from './component/description_pattern'
 
 export const T_05 = ({
@@ -73,16 +73,16 @@ export const T_05 = ({
               />
             ),
           },
-          // {
-          //   value: 'calibrations_results',
-          //   label: 'Resultados de calibraciones',
-          //   Component: () => (
-          //     <CalibrationsResults
-          //       calibrationResults={equipment.calibration_results}
-          //       handleSaveInformation={handleSaveInformation}
-          //     />
-          //   ),
-          // },
+          {
+            value: 'calibrations_results',
+            label: 'Resultados de calibraciones',
+            Component: () => (
+              <CalibrationsResults
+                calibrationResults={equipment.calibration_results}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
           {
             value: 'description_pattern',
             label: 'Descripción de patrones',
