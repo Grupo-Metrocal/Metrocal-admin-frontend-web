@@ -51,14 +51,14 @@ export const CalibrationResults = ({
             {calibration_results?.results?.map((result, rowIndex) => {
               return (
                 <tr key={rowIndex}>
-                  {result.indication_linear.map((key) => {
+                  {result?.indication_linear?.map((key) => {
                     return (
                       <>
                         <td className="border border-gray-400 p-2 text-center">
-                          <span>{key.patron}</span>
+                          <span>{key?.patron}</span>
                         </td>
                         <td className="border border-gray-400 p-2 text-center">
-                          <span>{key.thermometer}</span>
+                          <span>{key?.thermometer}</span>
                         </td>
                       </>
                     )
