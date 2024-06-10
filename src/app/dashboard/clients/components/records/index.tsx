@@ -12,6 +12,8 @@ interface IProps {
   setCurrentPage: any
   handleDeleteClient: (id: number) => void
   loading: boolean
+  handleSearchChange: (target: any) => void
+  searchValue: string
 }
 
 export type IClientsRecordsTable = {
@@ -31,6 +33,8 @@ export const ClientRecords = ({
   setCurrentPage,
   loading,
   handleDeleteClient,
+  searchValue,
+  handleSearchChange,
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -49,7 +53,8 @@ export const ClientRecords = ({
       {
         <DataTableDemo<IClientsRecordsTable>
           columns={ColumnsCertifiedRecords({ onDelete: handleDeleteClient })}
-          searchValue={''}
+          searchValue={searchValue}
+          handleSearch={handleSearchChange}
           data={records ?? []}
           search_by="client_company_name"
           setPagination={(event: { target: { value: any } }) => {
@@ -60,7 +65,7 @@ export const ClientRecords = ({
           currentPage={currentPage}
           totalPages={pagination.total_pages}
           isLoading={loading}
-          search_placeholder="Buscar nombre de client"
+          search_placeholder="Nombre de la empresa"
           filter_columns={{
             company_name: 'Empresa',
             email: 'Correo del cliente',
