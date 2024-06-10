@@ -27,9 +27,14 @@ const getInformationClient = async (id: string) => {
   })
 }
 
-const getQuoteClient = async (id: string, page: number, limit: number) => {
+const getQuoteClient = async (
+  id: string,
+  page: number,
+  limit: number,
+  filterNo: string = 'NI',
+) => {
   return await fetchData({
-    url: `quotes/request/client/${id}/all/${page}/${limit}`,
+    url: `quotes/request/client/${id}/all/${page}/${limit}/${filterNo}`,
     method: 'GET',
     headers: {
       Authorization: `Bearer ${getCookie('token')}`,
@@ -54,6 +59,38 @@ export default function Page({ params }: IProps) {
     total_pages: 0,
     total_data: 0,
   })
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      getQuoteClient(id, currentPage, 10, values.search || 'NI')
+        .then((response) => {
+          if (!response.success) {
+            return toast.error(
+              'No se pudieron cargar las cotizaciones del cliente',
+            )
+          }
+
+          setQuotes(response.data.paginationDataQuotes)
+          setQuoteInformation({
+            totalInvoice: response.data.totalInvoice,
+            quoteRejected: response.data.quoteRejected,
+          })
+          setPagination({
+            current_page: response.current_page,
+            total_pages: response.total_pages,
+            total_data: response.total_data,
+          })
+        })
+        .catch((error) => {
+          toast.error(error.message)
+        })
+        .finally(() => {
+          setLoadingQuotes(false)
+        })
+    }, 700)
+
+    return () => clearTimeout(timeOut)
+  }, [values, currentPage, id])
 
   useEffect(() => {
     toast.loading('Cargando información del cliente')
