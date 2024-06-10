@@ -111,6 +111,7 @@ export default function Page({ params }: IProps) {
         toast.error(error.message)
       })
       .finally(() => {
+        toast.dismiss()
         setLoadingClient(false)
       })
 
