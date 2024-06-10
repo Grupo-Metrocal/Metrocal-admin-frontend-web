@@ -1,3 +1,5 @@
+'use-client'
+
 import DBLineIcon from '@/assets/icons/doble-line.svg'
 import Image from 'next/image'
 
