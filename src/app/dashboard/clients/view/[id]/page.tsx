@@ -10,6 +10,7 @@ import { Spinner } from '@/components/Spinner'
 import { ClientRenderer } from './components/clients'
 import { DetailClientQuote } from './components/detailsQuote'
 import { IQuote } from '@/app/dashboard/activities/interface/quote'
+import { useForm } from '@/hooks/useForm'
 
 interface IProps {
   params: {
@@ -52,6 +53,9 @@ export default function Page({ params }: IProps) {
   })
   const [loadingClient, setLoadingClient] = useState<boolean>(true)
   const [loadingQuotes, setLoadingQuotes] = useState<boolean>(true)
+  const { values, handleInputChange } = useForm({
+    search: '',
+  })
 
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [pagination, setPagination] = useState<any>({
@@ -152,7 +156,9 @@ export default function Page({ params }: IProps) {
           <ClientRenderer client={client} />
           <DetailClientQuote
             quoteInformation={quoteInformation}
+            searchValue={values.search}
             quotes={quotes}
+            handleSearchQuotes={handleInputChange}
             currentPage={currentPage}
             pagination={pagination}
             setCurrentPage={setCurrentPage}

@@ -7,6 +7,7 @@ import certificateIcon from '@/assets/icons/certificate_icon.svg'
 import { formatPrice } from '@/utils/formatPrice'
 import { ClientQuoteRecords } from '../tableQuotes/records'
 import { Spinner } from '@/components/Spinner'
+import { deleteQuoteRequest } from '@/utils/functions'
 
 interface IProps {
   quotes: IQuote[]
@@ -22,6 +23,8 @@ interface IProps {
   }
   setCurrentPage: any
   loading: boolean
+  handleSearchQuotes: (value: string) => void
+  searchValue: string
 }
 
 export const DetailClientQuote = ({
@@ -31,6 +34,8 @@ export const DetailClientQuote = ({
   pagination,
   setCurrentPage,
   loading,
+  handleSearchQuotes,
+  searchValue,
 }: IProps) => {
   return (
     <div className="detail-client-quote">
@@ -57,7 +62,9 @@ export const DetailClientQuote = ({
           </div>
         ) : (
           <ClientQuoteRecords
-            handleDeleteClient={() => {}}
+            handleDeleteQuote={deleteQuoteRequest}
+            handleSearchQuotes={handleSearchQuotes}
+            searchValue={searchValue}
             records={quotes}
             currentPage={currentPage}
             pagination={pagination}
