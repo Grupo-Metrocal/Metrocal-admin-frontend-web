@@ -10,7 +10,7 @@ interface IProps {
     total_data: number
   }
   setCurrentPage: any
-  handleDeleteClient: (id: number) => void
+  handleDeleteQuote: (id: number) => void
   loading: boolean
 }
 
@@ -30,7 +30,7 @@ export const ClientQuoteRecords = ({
   pagination,
   setCurrentPage,
   loading,
-  handleDeleteClient,
+  handleDeleteQuote,
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -48,7 +48,7 @@ export const ClientQuoteRecords = ({
     <div className="bg-white p-4 rounded-lg">
       {
         <DataTableDemo<IClientsQuoteRecordsTable>
-          columns={ColumnsCertifiedRecords({ onDelete: handleDeleteClient })}
+          columns={ColumnsCertifiedRecords({ onDelete: handleDeleteQuote })}
           searchValue={''}
           data={records ?? []}
           search_by="client_company_name"
