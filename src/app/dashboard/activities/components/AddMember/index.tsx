@@ -1,5 +1,3 @@
-'use-client'
-
 import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CButton } from '@/components/CButton'
 import type { ITeammember } from '@/types/activities'
