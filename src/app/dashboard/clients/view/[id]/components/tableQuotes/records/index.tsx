@@ -1,5 +1,6 @@
 import { DataTableDemo } from '@/components/Table'
 import { ColumnsCertifiedRecords } from '../columnsRecords.tsx'
+import { useState } from 'react'
 
 interface IProps {
   records: any[]
@@ -12,6 +13,8 @@ interface IProps {
   setCurrentPage: any
   handleDeleteQuote: (id: number) => void
   loading: boolean
+  handleSearchQuotes: (value: string) => void
+  searchValue: string
 }
 
 export type IClientsQuoteRecordsTable = {
@@ -31,6 +34,8 @@ export const ClientQuoteRecords = ({
   setCurrentPage,
   loading,
   handleDeleteQuote,
+  handleSearchQuotes,
+  searchValue,
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -49,9 +54,10 @@ export const ClientQuoteRecords = ({
       {
         <DataTableDemo<IClientsQuoteRecordsTable>
           columns={ColumnsCertifiedRecords({ onDelete: handleDeleteQuote })}
-          searchValue={''}
+          searchValue={searchValue}
+          handleSearch={handleSearchQuotes}
           data={records ?? []}
-          search_by="client_company_name"
+          search_by="no"
           setPagination={(event: { target: { value: any } }) => {
             setCurrentPage(event.target.value)
           }}
@@ -60,7 +66,7 @@ export const ClientQuoteRecords = ({
           currentPage={currentPage}
           totalPages={pagination.total_pages}
           isLoading={loading}
-          search_placeholder="Buscar nombre de client"
+          search_placeholder="No. Cotización"
           filter_columns={{
             total_price: 'Total',
             tax: 'IVA',

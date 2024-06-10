@@ -23,6 +23,8 @@ interface IProps {
   }
   setCurrentPage: any
   loading: boolean
+  handleSearchQuotes: (value: string) => void
+  searchValue: string
 }
 
 export const DetailClientQuote = ({
@@ -32,6 +34,8 @@ export const DetailClientQuote = ({
   pagination,
   setCurrentPage,
   loading,
+  handleSearchQuotes,
+  searchValue,
 }: IProps) => {
   return (
     <div className="detail-client-quote">
@@ -59,6 +63,8 @@ export const DetailClientQuote = ({
         ) : (
           <ClientQuoteRecords
             handleDeleteQuote={deleteQuoteRequest}
+            handleSearchQuotes={handleSearchQuotes}
+            searchValue={searchValue}
             records={quotes}
             currentPage={currentPage}
             pagination={pagination}
