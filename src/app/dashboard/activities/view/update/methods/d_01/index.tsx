@@ -1,10 +1,18 @@
+'use client'
 import { toast } from 'sonner'
 import { ID_01 } from '../../../[id]/interface/d_01'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
-import { Content } from '@radix-ui/react-dialog'
+import { Content } from '@/components/Content'
 import { TabsNavigations } from '@/components/Tabs'
 import { EquipmentInformation } from './component/equipment_information'
+import { InteriorParallelismMeasurement } from './component/interior_parallelism_measurement'
+import { ExteriorMeasurementAccuracy } from './component/exterior_measurement_accuracy'
+import { InstrumentZeroCheck } from './component/instrument_zero_check'
+import { PreInstallationComment } from './component/pre_installation_comment'
+import { ExteriorParallelismMeasurement } from './component/exterior_parallelism_measurement'
+import { EnvironmentalConditions } from './component/environmental_conditions'
+import { DescriptionPattern } from './component/description_pattern'
 
 export const D_01 = ({
   equipment,
@@ -60,6 +68,16 @@ export const D_01 = ({
             ),
           },
           {
+            value: 'enviromental_condition',
+            label: 'Condiciones ambientales',
+            Component: () => (
+              <EnvironmentalConditions
+                environmentalConditions={equipment.environmental_conditions}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
             value: 'description_pattern',
             label: 'Descripción de patrones',
             Component: () => (
@@ -98,7 +116,7 @@ export const D_01 = ({
             label: 'Verificación de cero del instrumento',
             Component: () => (
               <InstrumentZeroCheck
-                instrumentZeroCheck={equipment.instrument_zero_check}
+                instrumentalZeroCheck={equipment.instrument_zero_check}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
@@ -108,17 +126,17 @@ export const D_01 = ({
             label: 'Comentario pre-instalación',
             Component: () => (
               <PreInstallationComment
-                preInstallationComment={equipment.pre_installation_comment}
+                preInstalacionComentario={equipment.pre_installation_comment}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
           },
           {
-            value: exterior_parallelism_measurement,
+            value: 'exterior_parallelism_measurement',
             label: 'Medición de paralelismo exterior',
             Component: () => (
               <ExteriorParallelismMeasurement
-                exteriorParallelismMeasurement={
+              exteriorParallelismMeasurement={
                   equipment.exterior_parallelism_measurement
                 }
                 handleSaveInformation={handleSaveInformation}

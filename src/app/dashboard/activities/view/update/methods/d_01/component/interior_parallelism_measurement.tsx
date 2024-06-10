@@ -1,98 +1,125 @@
+'use client'
 import React, { useState } from 'react'
-import { IExterior_measurement_accuracy } from '../../../../[id]/interface/d_01'
+import { IInterior_parallelism_measurement } from '../../../../[id]/interface/d_01'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
-export const ExteriorMeasurementAccuracy = ({
-  exteriorMeasurementAccuracy,
+export const InteriorParallelismMeasurement = ({
+  interiorParallelismMeasurement,
   handleSaveInformation,
 }: {
   handleSaveInformation: (
-    values: IExterior_measurement_accuracy,
+    values: IInterior_parallelism_measurement,
     url: string,
     useActivityID?: boolean,
   ) => void
-  exteriorMeasurementAccuracy: IExterior_measurement_accuracy
+  interiorParallelismMeasurement: IInterior_parallelism_measurement
 }) => {
   const url = `methods/ni-mcit-d-01/interior-parallelism-measurement/`
-  const [data, setData] = useState(exteriorMeasurementAccuracy.measurementsd01)
+  const [data, setData] = useState({ ...interiorParallelismMeasurement })
 
-  const handleInputChange = (e, index, type, key) => {
-    const newData = [...data]
-    newData[index].verification_lengths[type][key] = parseFloat(e.target.value)
-    setData(newData)
+  const handleNominalPatronChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newData = [...data.measurementsd01]
+    newData[index].nominal_patron = e.target.value
+    setData({ ...data, measurementsd01: newData })
   }
 
-  const handleSave = () => {
-    handleSaveInformation({ measurementsd01: data }, url)
+  interface IMeditions {
+    x1: number
+    x2: number
+    x3: number
+    x4: number
+    x5: number
+  }
+
+  interface IPlaces {
+    Exteriors: IMeditions
+    Interiors: IMeditions
+  }
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    key: keyof IMeditions,
+    place: keyof IPlaces,
+  ) => {
+    const newData = [...data.measurementsd01]
+    newData[index].verification_lengths[place][key] = parseFloat(e.target.value)
+    setData({ ...data, measurementsd01: newData })
   }
 
   return (
     <div className="flex flex-col space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th>Nominal Patron</th>
-              <th>Type</th>
-              <th>x1</th>
-              <th>x2</th>
-              <th>x3</th>
-              <th>x4</th>
-              <th>x5</th>
+      <table className="w-full table-auto">
+        <thead>
+          <tr>
+            <th className="border px-4 py-2">Nominal Patron</th>
+            <th className="border px-4 py-2">Exterior x1</th>
+            <th className="border px-4 py-2">Exterior x2</th>
+            <th className="border px-4 py-2">Exterior x3</th>
+            <th className="border px-4 py-2">Exterior x4</th>
+            <th className="border px-4 py-2">Exterior x5</th>
+            <th className="border px-4 py-2">Interior x1</th>
+            <th className="border px-4 py-2">Interior x2</th>
+            <th className="border px-4 py-2">Interior x3</th>
+            <th className="border px-4 py-2">Interior x4</th>
+            <th className="border px-4 py-2">Interior x5</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.measurementsd01.map((measurement, index) => (
+            <tr className="text-center" key={index}>
+              <td className="border px-4 py-2">
+                <input
+                  className="w-full p-1 border text-center rounded"
+                  type="text"
+                  value={measurement.nominal_patron}
+                  onChange={(e) => handleNominalPatronChange(e, index)}
+                />
+              </td>
+              {['x1', 'x2', 'x3', 'x4', 'x5'].map((key) => (
+                <td className="border px-4 py-2" key={key}>
+                  <input
+                    className="w-full p-1 border text-center rounded"
+                    type="number"
+                    step="0.001"
+                    value={measurement.verification_lengths.Exteriors[key as keyof IMeditions]}
+                    onChange={(e) =>
+                      handleInputChange(e, index, key as keyof IMeditions, 'Exteriors')
+                    }
+                  />
+                </td>
+              ))}
+              {['x1', 'x2', 'x3', 'x4', 'x5'].map((key) => (
+                <td className="border px-4 py-2" key={key}>
+                  <input
+                    className="w-full p-1 border text-center rounded"
+                    type="number"
+                    step="0.001"
+                    value={measurement.verification_lengths.Interiors[key as keyof IMeditions]}
+                    onChange={(e) =>
+                      handleInputChange(e, index, key as keyof IMeditions, 'Interiors')
+                    }
+                  />
+                </td>
+              ))}
             </tr>
-          </thead>
-          <tbody>
-            {data.map((measurement, index) => (
-              <React.Fragment key={index}>
-                <tr>
-                  <td rowSpan="2">{measurement.nominal_patron}</td>
-                  <td>Exteriors</td>
-                  {Object.keys(measurement.verification_lengths.Exteriors).map(
-                    (key) => (
-                      <td key={key}>
-                        <input
-                          type="number"
-                          step="0.001"
-                          value={
-                            measurement.verification_lengths.Exteriors[key]
-                          }
-                          onChange={(e) =>
-                            handleInputChange(e, index, 'Exteriors', key)
-                          }
-                        />
-                      </td>
-                    ),
-                  )}
-                </tr>
-                <tr>
-                  <td>Interiors</td>
-                  {Object.keys(measurement.verification_lengths.Interiors).map(
-                    (key) => (
-                      <td key={key}>
-                        <input
-                          type="number"
-                          step="0.001"
-                          value={
-                            measurement.verification_lengths.Interiors[key]
-                          }
-                          onChange={(e) =>
-                            handleInputChange(e, index, 'Interiors', key)
-                          }
-                        />
-                      </td>
-                    ),
-                  )}
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url, false)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
       </div>
-      <button
-        onClick={handleSave}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Save
-      </button>
     </div>
   )
 }

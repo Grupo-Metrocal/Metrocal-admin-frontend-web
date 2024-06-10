@@ -3,11 +3,20 @@ export interface ID_01 {
   status: string
   created_at: string
   updated_at: string
-  equipment_information: IEquipmentInformation
   certificate_code?: string
   certificate_url?: string
   review_state?: boolean
   review_user_id?: number
+  equipment_information: IEquipmentInformation
+  environmental_conditions: IEnvironmentalConditions
+  description_pattern: IDescriptionPattern
+  exterior_measurement_accuracy: IExterior_measurement_accuracy
+  exterior_parallelism_measurement: IExteriorParallelismMeasurement
+  interior_parallelism_measurement: IInterior_parallelism_measurement
+  instrument_zero_check: IInstrumentzerocheck
+  pre_installation_comment: IPreinstallationcomment
+  certificate_data: ICertificateData
+
 }
 
 export interface IEquipmentInformation {
@@ -23,47 +32,51 @@ export interface IEquipmentInformation {
 }
 
 export interface IEnvironmentalConditions {
-  id: number
-  cycles: Cycles
-  equipment_used: string
-  time: string
-  stabilization_site: string
+  id: number;
+  cycles: ICycles;
+  equipment_used: string;
+  time: ITime;
+  stabilization_site: string;
 }
 
-export interface Cycles {
-  map(arg0: (cycles: any) => void): unknown
-  ta: Ta
-  hr: Hr
+export interface ICycles {
+  hr: IHr;
+  ta: ITa;
 }
 
-export interface Ta {
-  final: number
-  initial: number
+export interface ITa {
+  end: number;
+  initial: number;
 }
 
-export interface Hr {
-  final: number
-  initial: number
+export interface IHr {
+  end: number;
+  initial: number;
 }
+
+export interface ITime {
+  hours: number;
+  minute: number;
+}
+
 
 export interface IDescriptionPattern {
   id: number
-  description_pattern: string[]
+  descriptionPatterns: string[]
 }
 
+///IExterior_measurement_accuracy
 export interface IExterior_measurement_accuracy {
   id: number
-  measure: string[]
+  measure: IMeasures[]
 }
 
-export interface interior_parallelism_measurement {
-  id: number
-  measure: string[]
+interface IMeasures {
+  nominal_patron_value: string[]
+  verification_lengths: IMeditions
 }
 
-export interface IInstrument_zero_check {
-  id: number
-  nominal_value: string[]
+interface IMeditions {
   x1: number
   x2: number
   x3: number
@@ -71,11 +84,77 @@ export interface IInstrument_zero_check {
   x5: number
 }
 
-export interface IPre_installation_comment {
+
+//IExteriorParallelismMeasurement
+export interface IExteriorParallelismMeasurement {
   id: number
-  comment: string
+  measurements: IMeasurement[]
 }
 
+interface IMeasurement {
+  point_number: string[]
+  verification_lengths: IPlace
+}
+
+interface IPlace {
+  Exterior: IMedition
+  Interior: IMedition
+}
+
+interface IMedition {
+  x1: number
+  x2: number
+  x3: number
+  x4: number
+  x5: number
+}
+
+
+//IInterior_parallelism_measurement
+export interface IInterior_parallelism_measurement {
+  id: number
+  measurementsd01: IMeasurements[]
+}
+
+interface IMeasurements {
+  nominal_patron: string
+  verification_lengths: IPlaces
+}
+
+interface IPlaces {
+  Exteriors: IMeditions
+  Interiors: IMeditions
+}
+
+interface IMeditions {
+  x1: number
+  x2: number
+  x3: number
+  x4: number
+  x5: number
+}
+
+
+
+//IInstrument_zero_check
+export interface IInstrumentzerocheck {
+  id: number
+  nominal_value: number
+  x1: number
+  x2: number
+  x3: number
+  x4: number
+  x5: number
+}
+
+//IPre_installation_comment
+export interface IPreinstallationcomment {
+  id: number
+  comment: string
+  accredited : boolean
+}
+
+//ICertificateData
 export interface ICertificateData {
   certificado_result: string[]
 }

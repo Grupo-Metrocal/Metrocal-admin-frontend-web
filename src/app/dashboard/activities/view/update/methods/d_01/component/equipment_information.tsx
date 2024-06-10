@@ -1,3 +1,4 @@
+"use client";
 import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { IEquipmentInformation } from '../../../../[id]/interface/d_01'
 import { useForm } from '@/hooks/useForm'
@@ -41,18 +42,12 @@ export const EquipmentInformation = ({
         <CInput
           label="Fabricante"
           name="maker"
-          value={values.divice}
+          value={values.maker}
           onChange={handleInputChange}
         />
         <CInput
           label="Número de serie"
           name="serial_number"
-          value={values.maker}
-          onChange={handleInputChange}
-        />
-        <CInput
-          label="Clase de exactitud"
-          name="accuracy_class"
           value={values.serial_number}
           onChange={handleInputChange}
         />
@@ -89,7 +84,7 @@ export const EquipmentInformation = ({
         <CInput
           label="Logitud"
           name="length"
-          value={values.code}
+          value={values.length}
           onChange={handleInputChange}
         />
       </div>

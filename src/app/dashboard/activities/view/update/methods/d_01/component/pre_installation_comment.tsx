@@ -1,21 +1,21 @@
+'use client'
 import React, { useState } from 'react'
+import { IPreinstallationcomment } from '../../../../[id]/interface/d_01'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
 
-export const AccreditationForm = ({
-  initialData,
+export const PreInstallationComment = ({
+  preInstalacionComentario,
   handleSaveInformation,
 }: {
-  initialData: {
-    comment: string
-    accredited: boolean
-  }
   handleSaveInformation: (
-    values: any,
+    values: IPreinstallationcomment,
     url: string,
     useActivityID?: boolean,
   ) => void
+  preInstalacionComentario: IPreinstallationcomment
 }) => {
   const url = `methods/ni-mcit-d-01/pre-installation-comment/`
-  const [data, setData] = useState(initialData)
+  const [data, setData] = useState(preInstalacionComentario)
 
   const handleInputChange = (e: any) => {
     const { name, value, type, checked } = e.target
@@ -52,12 +52,17 @@ export const AccreditationForm = ({
           />
         </label>
       </div>
-      <button
-        onClick={handleSave}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
-      >
-        Save
-      </button>
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url, false)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
+      </div>
     </div>
   )
 }
