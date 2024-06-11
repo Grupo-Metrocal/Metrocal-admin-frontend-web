@@ -11,6 +11,8 @@ interface IProps {
   }
   setPagination: any
   loading: boolean
+  searchValue: string
+  handleInputChange: (target: any) => void
 }
 
 export type ICertifiedRecordsTable = {
@@ -31,6 +33,8 @@ export const CertifiedRecords = ({
   pagination,
   setPagination,
   loading,
+  searchValue,
+  handleInputChange,
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -55,7 +59,8 @@ export const CertifiedRecords = ({
       {
         <DataTableDemo<ICertifiedRecordsTable>
           columns={ColumnsCertifiedRecords({ onDelete: () => {} })}
-          searchValue={''}
+          searchValue={searchValue}
+          handleSearch={handleInputChange}
           data={records ?? []}
           search_by="client_company_name"
           setPagination={(event: { target: { value: any } }) => {
