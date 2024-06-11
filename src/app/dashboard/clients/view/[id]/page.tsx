@@ -10,6 +10,7 @@ import { Spinner } from '@/components/Spinner'
 import { ClientRenderer } from './components/clients'
 import { DetailClientQuote } from './components/detailsQuote'
 import { IQuote } from '@/app/dashboard/activities/interface/quote'
+import { useForm } from '@/hooks/useForm'
 
 interface IProps {
   params: {
@@ -27,9 +28,14 @@ const getInformationClient = async (id: string) => {
   })
 }
 
-const getQuoteClient = async (id: string, page: number, limit: number) => {
+const getQuoteClient = async (
+  id: string,
+  page: number,
+  limit: number,
+  filterNo: string = 'NI',
+) => {
   return await fetchData({
-    url: `quotes/request/client/${id}/all/${page}/${limit}`,
+    url: `quotes/request/client/${id}/all/${page}/${limit}/${filterNo}`,
     method: 'GET',
     headers: {
       Authorization: `Bearer ${getCookie('token')}`,
@@ -47,6 +53,9 @@ export default function Page({ params }: IProps) {
   })
   const [loadingClient, setLoadingClient] = useState<boolean>(true)
   const [loadingQuotes, setLoadingQuotes] = useState<boolean>(true)
+  const { values, handleInputChange } = useForm({
+    search: '',
+  })
 
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [pagination, setPagination] = useState<any>({
@@ -54,6 +63,38 @@ export default function Page({ params }: IProps) {
     total_pages: 0,
     total_data: 0,
   })
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      getQuoteClient(id, currentPage, 10, values.search || 'NI')
+        .then((response) => {
+          if (!response.success) {
+            return toast.error(
+              'No se pudieron cargar las cotizaciones del cliente',
+            )
+          }
+
+          setQuotes(response.data.paginationDataQuotes)
+          setQuoteInformation({
+            totalInvoice: response.data.totalInvoice,
+            quoteRejected: response.data.quoteRejected,
+          })
+          setPagination({
+            current_page: response.current_page,
+            total_pages: response.total_pages,
+            total_data: response.total_data,
+          })
+        })
+        .catch((error) => {
+          toast.error(error.message)
+        })
+        .finally(() => {
+          setLoadingQuotes(false)
+        })
+    }, 700)
+
+    return () => clearTimeout(timeOut)
+  }, [values, currentPage, id])
 
   useEffect(() => {
     toast.loading('Cargando información del cliente')
@@ -70,6 +111,7 @@ export default function Page({ params }: IProps) {
         toast.error(error.message)
       })
       .finally(() => {
+        toast.dismiss()
         setLoadingClient(false)
       })
 
@@ -115,7 +157,9 @@ export default function Page({ params }: IProps) {
           <ClientRenderer client={client} />
           <DetailClientQuote
             quoteInformation={quoteInformation}
+            searchValue={values.search}
             quotes={quotes}
+            handleSearchQuotes={handleInputChange}
             currentPage={currentPage}
             pagination={pagination}
             setCurrentPage={setCurrentPage}

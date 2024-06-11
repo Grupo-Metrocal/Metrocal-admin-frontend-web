@@ -32,8 +32,10 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
 import { ReviewActivity } from './component/ReviewActivity'
 import { T_01 } from './component/t_01'
+
 import { D_01 } from './component/d_01'
 import { D_02 } from './component/d_02'
+import { T_05 } from './component/t_05'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -67,7 +69,8 @@ const RENDERER_METHOD = {
   'NI-MCIT-T-03': T_03,
   'NI-MCIT-T-01': T_01,
   'NI-MCIT-D-01': D_01,
-  'NI-MCIT-D-02': D_02
+  'NI-MCIT-D-02': D_02,
+  'NI-MCIT-T-05': T_05,
 }
 
 export default function Page({ params }: IRoot) {

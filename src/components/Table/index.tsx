@@ -50,6 +50,7 @@ export type DataTableProps<T> = {
   handlePreviousPage: () => void
   handleNextPage: () => void
   currentPage: number
+  handleSearch: (target: any) => void
   totalPages: number
   isLoading: boolean
   setPagination: any
@@ -62,7 +63,7 @@ export function DataTableDemo<T>({
   columns,
   search_by,
   searchValue,
-  setPagination,
+  handleSearch,
   handlePreviousPage,
   handleNextPage,
   currentPage,
@@ -117,8 +118,9 @@ export function DataTableDemo<T>({
         <Input
           placeholder={search_placeholder ?? 'Buscar'}
           value={searchValue}
-          onChange={setPagination}
+          onChange={(e) => handleSearch(e.target)}
           className="max-w-sm"
+          name="search"
         />
         <div className="flex items-center space-x-2 ml-auto">
           {filters && (

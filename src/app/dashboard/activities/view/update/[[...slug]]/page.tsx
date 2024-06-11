@@ -4,6 +4,7 @@ import { P_01 } from '../methods/p_01'
 import { T_03 } from '../methods/t_03'
 import { T_01 } from '../methods/t_01'
 import { D_01 } from '../methods/d_01'
+import { T_05 } from '../methods/t_05'
 import { fetchData } from '@/utils/fetch'
 import { D_02 } from '../methods/d_02'
 
@@ -34,8 +35,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-T-01': T_01,
   'NI-MCIT-D-01': D_01,
   'NI-MCIT-D-02': D_02,
-
-
+  'NI-MCIT-T-05': T_05,
 }
 export default async function Page({ params }: IRoot) {
   const { slug } = params
