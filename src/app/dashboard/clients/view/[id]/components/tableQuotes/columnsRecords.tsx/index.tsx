@@ -15,7 +15,6 @@ import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { IClientsQuoteRecordsTable } from '../records'
 import { formatDate } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
-import Link from 'next/link'
 
 type IColumns = {
   onDelete: (id: number) => void
@@ -141,19 +140,17 @@ export const ColumnsCertifiedRecords = ({
             >
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Link href={`/dashboard/quotes/view/${payment.id}`}>
-                  Ver cotización
-                </Link>
+                <Linking href={`/dashboard/clients/view/${payment.id}`}>
+                  Detalles del cliente
+                </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Linking
-                  href={`/dashboard/activities/view/${payment.activity_id}`}
-                >
-                  Detalles de actividad
+                <Linking href={`/dashboard/clients/update/${payment.id}`}>
+                  Modificar informacion
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 style={{
                   color: 'tomato',
                   fontWeight: 'bold',
@@ -163,7 +160,7 @@ export const ColumnsCertifiedRecords = ({
                 }}
               >
                 <AlertDialogModal
-                  nameButton="Eliminar cotización"
+                  nameButton="Eliminar cliente"
                   title="¿Estás seguro de eliminar esta registro?"
                   onConfirm={() => onDelete(payment.id)}
                   description="Al eliminar estos registros se eliminaran todos los datos relacionados a ella, como sus actividades, calibraciones realizadas, certificados asociados, etc."
@@ -173,7 +170,7 @@ export const ColumnsCertifiedRecords = ({
                   }}
                   useButton={false}
                 />
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         )
