@@ -380,7 +380,7 @@ const columns = ({
                   Actualizar cotización
                 </Linking>
               </DropdownMenuItem>
-              {/* <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem> */}
+              <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 style={{

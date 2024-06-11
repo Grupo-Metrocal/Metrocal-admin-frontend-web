@@ -19,7 +19,6 @@ export const DescriptionPattern = ({
   const url = `methods/ni-mcit-t-01/description-pattern/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target)
     let { name, checked } = e.target
 
     handleInputChange({ name, value: checked })
