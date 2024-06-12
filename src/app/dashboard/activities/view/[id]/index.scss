@@ -12,8 +12,15 @@
     .carousel {
       background-color: #f7f7f7;
       margin-top: 1em;
-      padding-bottom: 1em;
+      padding: 1em;
       // width: fit-content;
+    }
+
+    .child {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 120px;
     }
 
     .carousel-item {
@@ -22,6 +29,20 @@
       position: relative;
       cursor: pointer;
       padding: 1em;
+      margin: 0 1em;
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+
+        p {
+          font-weight: 500;
+          span {
+            font-weight: 600;
+          }
+        }
+      }
 
       &:hover {
         background-color: rgb(0, 153, 255, 0.1);

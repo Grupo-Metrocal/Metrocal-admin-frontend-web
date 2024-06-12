@@ -227,8 +227,18 @@ export default function Page({ params }: IRoot) {
                 }`}
                 onClick={() => handleSelectedService(equipment)}
               >
-                <p className="font-bold">{equipment.name}</p>
-                <p className="text-sm">Cantidad: {equipment.count}</p>
+                <div>
+                  <strong className="font-bold">{equipment.name}</strong>
+                </div>
+                <div className="info">
+                  <p className="text-sm">
+                    Cantidad: <span>{equipment.count}</span>
+                  </p>
+                  <p className="text-sm">
+                    Metodo:{' '}
+                    <span>{equipment.calibration_method.split(' ')[0]}</span>
+                  </p>
+                </div>
               </CarouselItemComp>
             )
           })}

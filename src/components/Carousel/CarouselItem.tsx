@@ -12,7 +12,7 @@ export function CarouselItemComp({
 }: ICarouselItem) {
   return (
     <CarouselItem className={`mt-4 ${className}`} onClick={onClick}>
-      <div className="p-1">{children}</div>
+      <div className="p-1 child">{children}</div>
     </CarouselItem>
   )
 }
