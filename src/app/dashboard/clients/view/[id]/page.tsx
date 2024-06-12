@@ -66,7 +66,7 @@ export default function Page({ params }: IProps) {
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      getQuoteClient(id, currentPage, 10, values.search || 'NI')
+      getQuoteClient(id, currentPage, 5, values.search || 'NI')
         .then((response) => {
           if (!response.success) {
             return toast.error(
