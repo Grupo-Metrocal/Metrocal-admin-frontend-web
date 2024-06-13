@@ -1,5 +1,5 @@
 import { ReportMethodActivity } from '@/components/ReportMethodActivity'
-import { IEnvironmentalConditions } from '../../interface/d_02'
+import { IEnvironmentalConditions } from '../../interface/b_01'
 
 interface EnvironmentalConditionsProps {
   environmental_conditions: IEnvironmentalConditions
@@ -40,11 +40,11 @@ export const EnvironmentalConditions = ({
           value={`${environmental_conditions.cycles.ta.end}`}
         />
         <Item
-          title="Humedad (hr) Iniciales"
+          title="Humedad (hPa) Iniciales"
           value={`${environmental_conditions.cycles.hr.initial}`}
         />
         <Item
-          title="Humedad (hr) Finales"
+          title="Humedad (hPa) Finales"
           value={`${environmental_conditions.cycles.hr.end}`}
         />
       </div>

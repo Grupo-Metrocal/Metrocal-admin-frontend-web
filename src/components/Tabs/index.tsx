@@ -10,7 +10,7 @@ interface Props {
 
 export const TabsNavigations = ({ items }: Props) => {
   return (
-    <Tabs defaultValue={items[0]?.value} className="w-full">
+    <Tabs defaultValue={items[0]?.value} className="max-w-[70vw] max-h-96 overflow-auto">
       {/* alinear al inicio */}
       <TabsList className="flex gap-2 mb-6 justify-start">
         {items?.map((item, index) => (

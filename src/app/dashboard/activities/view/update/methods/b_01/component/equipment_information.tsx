@@ -1,8 +1,8 @@
 import { AutocompleteInput } from '@/components/AutocompleteInput'
-import { IEquipmentInformation } from '../../../../[id]/interface/d_02'
 import { useForm } from '@/hooks/useForm'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { IEquipmentInformation } from '../../../../[id]/interface/b_01'
 
 export const EquipmentInformation = ({
   equipment,
@@ -15,8 +15,24 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({ ...equipment })
-  const url = `methods/ni-mcit-d-02/equipment-information/`
+  const { values, handleInputChange } = useForm({
+    ...equipment,
+    
+  })
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = event.target;
+    const newValue = type === 'checkbox' ? checked : value;
+
+    handleInputChange({
+      target: {
+        name,
+        value: newValue,
+      },
+    })
+  }
+
+  console.log(values)
+  const url = `methods/ni-mcit-b-01/equipment-information/`
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -66,7 +82,7 @@ export const EquipmentInformation = ({
           name="resolution"
           value={values.resolution}
           onChange={handleInputChange}
-          type="number"
+          type="text"
         />
         <CInput
           label="Modelo"
@@ -86,6 +102,17 @@ export const EquipmentInformation = ({
           value={values.length}
           onChange={handleInputChange}
         />
+        <label htmlFor="acredited">
+          Acreditado
+          <input
+            id="acredited"
+            checked={values.acredited}
+            type="checkbox"
+            name="acredited"
+            onChange={handleCheckboxChange}
+            className="ml-2"
+          />
+        </label>
       </div>
       <div>
         <AlertDialogModal

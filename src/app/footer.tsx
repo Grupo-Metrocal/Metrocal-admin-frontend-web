@@ -1,6 +1,8 @@
+'use-client'
+
 import './page.scss'
 const NOTE_ITEMS = [
-  'En este campo se detallan los datos que son requeridos por el cliente para el certificado de calibración.',
+  'En este campo se detallan los datos que son requeridos gor el cliente para el certificado de calibración.',
   'En este campo se definen los puntos específicos de calibración requeridos por el cliente.',
   'En este se especifica el método de calibración requerido por el cliente.',
   'En este campo se define el tipo de servicio requerido por el cliente.',

@@ -1,20 +1,26 @@
 import { TabsNavigations } from '@/components/Tabs'
 import {
   IEquipmentInformation,
-/*   IEnvironmentalConditions,
-  IDescriptionPattern, */
-  /* ICalibrationResults, */
+  IEnvironmentalConditions,
+  IDescriptionPattern,
+  IPreinstallationcomment,
+  IInstrumentzerocheck,
+  IAccuracyTest,
 } from '../../interface/d_02'
 import { EquipmentInformation } from './equipment-information'
-/* import { CalibrationResults } from './calibration-result'
 import { EnvironmentalConditions } from './environmental-conditions'
-import { DescriptionPattern } from './description-pattern' */
+import { DescriptionPattern } from './description-pattern'
+import { PreinstallationComment } from './pre-installation-comment'
+import { InstrumentalZeroCheck } from './instrument-zero-check'
+import { AccuracyTest } from './accuracy-test'
 
 interface Props {
   equipment_information: IEquipmentInformation
-  /* calibration_results: ICalibrationResults */
-/*   environmental_conditions: IEnvironmentalConditions
-  description_pattern: IDescriptionPattern */
+  environmental_conditions: IEnvironmentalConditions
+  description_pattern: IDescriptionPattern
+  pre_installation_comment: IPreinstallationcomment
+  instrument_zero_check: IInstrumentzerocheck
+  accuracy_test: IAccuracyTest
   id: number
   method_name: string
   report_status: boolean
@@ -23,9 +29,11 @@ interface Props {
 
 export const D_02 = ({
   equipment_information,
-  /* calibration_results, */
- /*  environmental_conditions,
-  description_pattern, */
+  environmental_conditions,
+  description_pattern,
+  pre_installation_comment,
+  instrument_zero_check,
+  accuracy_test,
   id,
   method_name,
   report_status,
@@ -47,7 +55,7 @@ export const D_02 = ({
             />
           ),
         },
-       /*  {
+        {
           value: 'environmental_conditions',
           label: 'Condiciones ambientales',
           Component: () => (
@@ -59,21 +67,8 @@ export const D_02 = ({
               report_status={report_status}
             />
           ),
-        }, */
-        /* {
-          value: 'calibration_results',
-          label: 'Resultados de calibración',
-          Component: () => (
-            <CalibrationResults
-              calibration_results={calibration_results}
-              id={id}
-              method_name={method_name}
-              report_messages={report_messages}
-              report_status={report_status}
-            />
-          ),
-        }, */
-        /* {
+        },
+        {
           value: 'description_pattern',
           label: 'Descripción de patrones',
           Component: () => (
@@ -85,7 +80,43 @@ export const D_02 = ({
               report_status={report_status}
             />
           ),
-        }, */
+        },      {
+          value: 'pre_installation_comment',
+          label: 'Comentario pre-instalación',
+          Component: () => (
+            <PreinstallationComment
+            pre_installation_comment={pre_installation_comment}
+              id={id}
+              method_name={method_name}
+              report_status={report_status}
+              report_messages={report_messages}
+            />
+          ),
+        }, {
+          value: 'instrument_zero_check',
+          label: 'Verificación de cero del instrumento',
+          Component: () => (
+            <InstrumentalZeroCheck
+            instrument_zero_check={instrument_zero_check}
+              id={id}
+              method_name={method_name}
+              report_status={report_status}
+              report_messages={report_messages}
+            />
+          ),
+        },{
+          value: 'accuracy_test',
+          label: 'Prueba de precisión',
+          Component: () => (
+            <AccuracyTest
+            accuracy_test={accuracy_test}
+              id={id}
+              method_name={method_name}
+              report_status={report_status}
+              report_messages={report_messages}
+            />
+          ),
+        },
       ]}
     />
   )

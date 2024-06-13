@@ -2,10 +2,11 @@
 
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
+import { AreaChart } from '@tremor/react'
 import { Content } from '@/components/Content'
 import './index.scss'
 import { useEffect, useState } from 'react'
-import { BarChart } from '@/components/Charts/BarChart'
+import { formatPrice } from '@/utils/formatPrice'
 
 const getFluctuationStatistics = async () => {
   try {
@@ -53,19 +54,15 @@ export function QuoteFluctuationStatistic() {
     <Content title="Fluctuación de cotizaciones" colorTitle="purple">
       <div className="quote-fluctuation-statistic">
         {statistics.length > 0 ? (
-          <div className="h-96 w-full">
-            <BarChart
-              data={statistics.map((item) => item.totalRevenue) as number[]}
-              labels={statistics.map((item) => item.month)}
-              title="Ingresos totales"
-              backgroundColors={[
-                'rgba(255, 99, 132)',
-                'rgba(255, 159, 64)',
-                'rgba(255, 205, 86)',
-                'rgba(75, 192, 192)',
-              ]}
-            />
-          </div>
+          <AreaChart
+            data={statistics}
+            index="month"
+            categories={['totalRevenue']}
+            colors={['indigo', 'rose', 'green', 'blue', 'yellow']}
+            valueFormatter={formatPrice}
+            yAxisWidth={60}
+            onValueChange={(v) => console.log(v)}
+          />
         ) : (
           <p>No hay datos disponibles.</p>
         )}

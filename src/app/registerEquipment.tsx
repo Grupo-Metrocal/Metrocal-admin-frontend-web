@@ -1,3 +1,5 @@
+'use-client'
+
 import RemoveIcon from '@/assets/icons/remove.svg'
 import Image from 'next/image'
 import { CButton } from '@/components/CButton'

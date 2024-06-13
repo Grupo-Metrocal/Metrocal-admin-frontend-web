@@ -1,5 +1,5 @@
 import { ReportMethodActivity } from '@/components/ReportMethodActivity'
-import { IPreinstallationcomment } from '../../interface/d_01'
+import { IPreinstallationcomment } from '../../interface/d_02'
 
 interface IPreinstallationcommentProps {
   pre_installation_comment: IPreinstallationcomment

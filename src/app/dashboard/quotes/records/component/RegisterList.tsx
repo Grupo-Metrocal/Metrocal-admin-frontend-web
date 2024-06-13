@@ -21,7 +21,6 @@ import {
   setQuoteRequest,
 } from '@/redux/features/quote/quoteRequestSlice'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { useForm } from '@/hooks/useForm'
 
 export type IQuoteRequestRegistered = {
   id: number
@@ -156,6 +155,71 @@ export const RegisterQuoteList = () => {
     expiredFilter,
   ])
 
+  // const filteredData = useMemo(() => {
+  //   return data.filter((item) => {
+  //     const date = new Date(item.quote_request_created_at)
+  //     const now = new Date()
+  //     const diff = Math.abs(now.getTime() - date.getTime())
+  //     const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
+
+  //     // Filtro para "Próximos a expirar"
+  //     if (nextExpiredFilter) {
+  //       if (days <= 15 && item.quote_request_status !== 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Aprobados"
+  //     if (approvedFilter) {
+  //       if (item.quote_request_status === 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Rechazados"
+  //     if (rejectedFilter) {
+  //       if (item.quote_request_status === 'rejected') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Cancelados"
+  //     if (canceledFilter) {
+  //       if (item.quote_request_status === 'canceled') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Filtro para "Expirados"
+  //     if (expiredFilter) {
+  //       if (days > 15 && item.quote_request_status !== 'done') {
+  //         return true
+  //       }
+  //     }
+
+  //     // Si no cumple con ningún filtro, se incluye cuando ninguno está marcado
+  //     if (
+  //       !nextExpiredFilter &&
+  //       !approvedFilter &&
+  //       !rejectedFilter &&
+  //       !canceledFilter &&
+  //       !expiredFilter
+  //     ) {
+  //       return true
+  //     }
+
+  //     // Si no cumple con ningún filtro, se excluye
+  //     return false
+  //   })
+  // }, [
+  //   data,
+  //   nextExpiredFilter,
+  //   approvedFilter,
+  //   rejectedFilter,
+  //   canceledFilter,
+  //   expiredFilter,
+  // ])
+
   const deleteItemRegister = async (id: number) => {
     const response = await deleteQuoteRequest(id)
 
@@ -164,21 +228,19 @@ export const RegisterQuoteList = () => {
     return false
   }
 
-  const { values, handleInputChange } = useForm({
-    search: '',
-  })
+  const [pinCode, setPinCode] = useState('')
 
   useEffect(() => {
     const getData = setTimeout(() => {
       setPagination((prevPagination) => ({
         ...prevPagination,
-        bussinesName: values.search,
+        bussinesName: pinCode,
       }))
       setRefresh((prev) => !prev)
     }, 750)
 
     return () => clearTimeout(getData)
-  }, [values, setPagination, setRefresh])
+  }, [pinCode, setPagination, setRefresh])
 
   return (
     <div>
@@ -187,15 +249,16 @@ export const RegisterQuoteList = () => {
           columns={columns({ onDelete: deleteItemRegister })}
           data={data ? data : []}
           search_by="client_company_name"
-          searchValue={values.search}
-          handleSearch={handleInputChange}
-          setPagination={setPagination}
+          searchValue={pagination.bussinesName}
+          setPagination={(event: { target: { value: any } }) => {
+            setPinCode(event?.target?.value)
+          }}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
           currentPage={pagination.offset}
           totalPages={pagination.maxPages}
           isLoading={isLoading}
-          search_placeholder="Nombre de la empresa"
+          search_placeholder="Buscar por empresa"
           filter_columns={{
             client_company_name: 'Empresa',
             client_phone: 'Teléfono',

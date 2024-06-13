@@ -1,4 +1,4 @@
-import { IDescriptionPattern } from "../../interface/d_02";
+import { IDescriptionPattern } from "../../interface/d_01";
 import { ReportMethodActivity } from "@/components/ReportMethodActivity";
 
 interface DescriptionPatternProps {
@@ -19,7 +19,7 @@ export const DescriptionPattern = ({
     return (
         <div className="flex flex-col space-y-4">
             <div className="grid grid-cols-1 gap-4">
-                {description_pattern.descriptionPattern.map((pattern, index) => (
+                {description_pattern.descriptionPatterns.map((pattern, index) => (
                     <Item key={index} title={`Pattern ${index + 1}`} value={pattern} />
                 ))}
             </div>

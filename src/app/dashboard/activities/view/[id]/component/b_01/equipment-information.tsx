@@ -1,5 +1,5 @@
-import { IEquipmentInformation } from '../../interface/d_01'
 import { ReportMethodActivity } from '@/components/ReportMethodActivity'
+import type { IEquipmentInformation } from '../../interface/b_01'
 
 interface EquipmentInformationProps {
   equipment_information: IEquipmentInformation
@@ -29,10 +29,19 @@ export const EquipmentInformation = ({
           title="Rango de medición"
           value={equipment_information?.measurement_range}
         />
-        <Item title="Resolución" value={equipment_information?.resolution} />
-        <Item title="Modelo" value={equipment_information?.model} />
-        <Item title="Código" value={equipment_information?.code} />
-        <Item title="Longitud" value={equipment_information?.length} />
+        <Item
+          title="Resolución"
+          value={equipment_information?.resolution}
+        />
+        <Item
+          title="Modelo"
+          value={equipment_information?.model}
+        />
+        <Item
+          title="Código"
+          value={equipment_information?.code}
+        />
+        <Item title="Longitud" value={equipment_information?.length.toString()} />
       </div>
 
       <ReportMethodActivity
@@ -45,6 +54,7 @@ export const EquipmentInformation = ({
     </div>
   )
 }
+
 interface Props {
   title: string
   value: string

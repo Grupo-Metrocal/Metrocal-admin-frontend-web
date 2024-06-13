@@ -58,7 +58,7 @@ export interface Time {
 
 export interface IDescriptionPattern {
   id: number
-  description_pattern: string[]
+  descriptionPattern: string[]
 }
 
 export interface IPreinstallationcomment {

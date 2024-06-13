@@ -1,4 +1,4 @@
-import { IInstrumentzerocheck } from '../../interface/d_01'
+import { IInstrumentzerocheck } from '../../interface/d_02'
 
 interface InstrumentZeroCheckProps {
   instrument_zero_check: IInstrumentzerocheck
@@ -45,6 +45,11 @@ export const InstrumentalZeroCheck = ({
             <Item title="X3" value={String(instrument_zero_check.x3)} />
             <Item title="X4" value={String(instrument_zero_check.x4)} />
             <Item title="X5" value={String(instrument_zero_check.x5)} />
+            <Item title="X6" value={String(instrument_zero_check.x6)} />
+            <Item title="X7" value={String(instrument_zero_check.x7)} />
+            <Item title="X8" value={String(instrument_zero_check.x8)} />
+            <Item title="X9" value={String(instrument_zero_check.x9)} />
+            <Item title="X10" value={String(instrument_zero_check.x10)} />
           </div>
         </div>
       </div>

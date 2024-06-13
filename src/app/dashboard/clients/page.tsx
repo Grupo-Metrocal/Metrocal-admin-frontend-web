@@ -9,10 +9,9 @@ import { ClientRecords } from './components/records'
 import { Modal } from '@/components/Modal'
 import ClientRegister from '@/app/clientRegister'
 import { CButton } from '@/components/CButton'
-import { useForm } from '@/hooks/useForm'
-const getRecords = async (page: number, company_name?: string) => {
+const getRecords = async (page: number) => {
   return await fetchData({
-    url: `clients/${page}/10/${company_name}`,
+    url: `clients/${page}/10`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -28,10 +27,6 @@ export default function RecordsPage() {
     current_page: 0,
     total_pages: 0,
     total_data: 0,
-  })
-
-  const { values, handleInputChange } = useForm({
-    search: '',
   })
 
   const handleDeleteClient = async (id: number) => {
@@ -55,31 +50,6 @@ export default function RecordsPage() {
       toast.error('No se pudo eliminar el cliente')
     }
   }
-
-  useEffect(() => {
-    const timeOut = setTimeout(() => {
-      getRecords(currentPage, values.search)
-        .then((data) => {
-          if (data.success) {
-            setRecords(data.data)
-            setPagination({
-              current_page: data.current_page,
-              total_pages: data.total_pages,
-              total_data: data.total_data,
-            })
-          } else {
-            setRecords([])
-            toast.error('No se pudieron cargar los registros')
-          }
-        })
-        .finally(() => {
-          toast.dismiss()
-          setLoading(false)
-        })
-    }, 700)
-
-    return () => clearTimeout(timeOut)
-  }, [values, currentPage])
 
   useEffect(() => {
     toast.loading('Cargando registros...')
@@ -126,8 +96,6 @@ export default function RecordsPage() {
             <ClientRecords
               records={records}
               currentPage={currentPage}
-              searchValue={values.search}
-              handleSearchChange={handleInputChange}
               pagination={pagination}
               setCurrentPage={setCurrentPage}
               loading={loading}
