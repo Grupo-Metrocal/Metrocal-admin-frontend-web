@@ -132,7 +132,7 @@ export const EquipmentInformation = ({
             Contenedor volumétrico
           </label>
           <select
-            name="volumetric_conta iner"
+            name="volumetric_container"
             id="volumetric_container"
             defaultValue={values.volumetric_container}
             value={values.volumetric_container}
