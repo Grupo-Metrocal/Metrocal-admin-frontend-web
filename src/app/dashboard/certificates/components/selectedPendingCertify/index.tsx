@@ -17,6 +17,8 @@ import { CarouselComp } from '@/components/Carousel'
 import { CButton } from '@/components/CButton'
 import metrocalLogo from 'public/metrocal.svg'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { Linking } from '@/utils/functions'
+import Link from 'next/link'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -167,8 +169,11 @@ export const SelectedPendingCertify = ({
   ) : (
     <div className="pending-certificate__selected">
       <div className="client">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col items-start justify-between">
           <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+          <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f]'>
+            Modificar actividad
+          </Link>
         </div>
 
         <div className="client__details">
@@ -190,7 +195,7 @@ export const SelectedPendingCertify = ({
 
       <div className="team_members">
         <h3>Técnicos</h3>
-        <div className="team_members__content">
+        <div className="team_members__content w-full">
           {selectedActivity?.team_members.length > 0 ? (
             selectedActivity?.team_members.map((member) => (
               <div key={member.id} className="team_members__content__item">
@@ -204,7 +209,7 @@ export const SelectedPendingCertify = ({
               </div>
             ))
           ) : (
-            <p> {'>'} No hay técnicos asignados</p>
+            <p className='text-[#999]'>No hay técnicos asignados</p>
           )}
         </div>
       </div>
@@ -218,11 +223,10 @@ export const SelectedPendingCertify = ({
               item.type_service === 'Calibracion' && (
                 <div
                   key={item.id}
-                  className={`services__content__item ${
-                    selectedService.id === item.id
-                      ? 'services__content__item-selected'
-                      : ''
-                  }`}
+                  className={`services__content__item ${selectedService.id === item.id
+                    ? 'services__content__item-selected'
+                    : ''
+                    }`}
                   onClick={() => handleSelectedService(item)}
                 >
                   <p>{item.name}</p>
@@ -251,11 +255,10 @@ export const SelectedPendingCertify = ({
               {methodsStackSelected?.methods?.map((method: IP_01) => (
                 <CarouselItemComp
                   key={method.id}
-                  className={`method__content__item ${
-                    methodsStackSelected && calibrationSelected.id === method.id
-                      ? 'method__content__item-selected'
-                      : ''
-                  }`}
+                  className={`method__content__item ${methodsStackSelected && calibrationSelected.id === method.id
+                    ? 'method__content__item-selected'
+                    : ''
+                    }`}
                   onClick={() => handleSelectedCalibration(method)}
                 >
                   <span>
@@ -282,13 +285,19 @@ export const SelectedPendingCertify = ({
           )}
         </div>
 
-        <CButton
-          className="mt-8"
-          onClick={handleGenerateCertificate}
-          disabled={loadingCalibration}
-        >
-          Generar certificado
-        </CButton>
+        <div className="mt-8 flex gap-6 items-center">
+          <CButton
+            onClick={handleGenerateCertificate}
+            disabled={loadingCalibration}
+          >
+            Generar certificado
+          </CButton>
+
+          <Link href={`/dashboard/activities/view/update/${calibrationSelected.id}/${selectedService?.calibration_method?.split(' ')[0]}/${selectedActivity?.id}`}
+            className='text-[#09f]'>
+            Modificar resultados
+          </Link>
+        </div>
       </div>
     </div>
   )
