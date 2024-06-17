@@ -15,7 +15,7 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({ ...equipment })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...equipment })
   const url = `methods/ni-mcit-t-05/equipment-information/`
 
   return (
@@ -44,21 +44,23 @@ export const EquipmentInformation = ({
           value={values.serial_number}
           onChange={handleInputChange}
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.unit}
-          label="Unidad"
-          name="unit"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su unidad"
-          list={[
-            { id: 1, name: '°C' },
-            { id: 2, name: '°F' },
-            { id: 3, name: 'K' },
-          ]}
-          keyList="unit"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+          <select
+            name="unit"
+            id="unit"
+            defaultValue={values.unit}
+            value={values.unit}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="°C">°C</option>
+            <option value="°F">°F</option>
+            <option value="K">K</option>
+          </select>
+        </div>
         <CInput
           label="Temperatura mínima"
           name="temperature_min"
@@ -93,23 +95,24 @@ export const EquipmentInformation = ({
           onChange={handleInputChange}
           type="number"
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.type_thermometer}
-          label="Tipo de termometro"
-          name="type_thermometer"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su sensor"
-          list={[
-            { id: 1, name: 'mercurio' },
-            { id: 2, name: 'Alcohol, etanol' },
-            { id: 3, name: 'Tolueno' },
-            { id: 4, name: 'Pentano' },
-          ]}
-          keyList="type_thermometer"
-          inputType="string"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Tipo de termometro
+          </label>
+          <select
+            name="type_thermometer"
+            id="unit"
+            defaultValue={values.type_thermometer}
+            value={values.type_thermometer}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="mercurio">Mercurio</option>
+            <option value="Alcohol, etanol">Alcohol, etanol</option>
+            <option value="Tolueno">Tolueno</option>
+            <option value="Pentano">Pentano</option>
+          </select>
+        </div>
         <CInput
           label="Numero de puntos"
           name="no_points"
