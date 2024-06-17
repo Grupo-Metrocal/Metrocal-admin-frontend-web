@@ -15,7 +15,7 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({ ...equipment })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...equipment })
   const url = `methods/ni-mcit-t-03/equipment-information/`
 
   return (
@@ -44,21 +44,24 @@ export const EquipmentInformation = ({
           value={values.serial_number}
           onChange={handleInputChange}
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.unit}
-          label="Unidad"
-          name="unit"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su unidad"
-          list={[
-            { id: 1, name: '°C' },
-            { id: 2, name: '°F' },
-            { id: 3, name: 'K' },
-          ]}
-          keyList="unit"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+          <select
+            name="unit"
+            id="unit"
+            defaultValue={values.unit}
+            value={values.unit}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="°C">°C</option>
+            <option value="°F">°F</option>
+            <option value="K">K</option>
+          </select>
+        </div>
+
         <CInput
           label="Temperatura mínima"
           name="temperature_min"
@@ -93,21 +96,23 @@ export const EquipmentInformation = ({
           onChange={handleInputChange}
           type="number"
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.sensor}
-          label="Sensor"
-          name="sensor"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su sensor"
-          list={[
-            { id: 1, name: 'RTD' },
-            { id: 2, name: 'TCK' },
-          ]}
-          keyList="sensor"
-          inputType="string"
-        />
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="sensor" className="text-xs font-semibold ">
+            Sensor
+          </label>
+          <select
+            name="sensor"
+            id="sensor"
+            defaultValue={values.sensor}
+            value={values.sensor}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="RTD">RTD</option>
+            <option value="TCK">TCK</option>
+          </select>
+        </div>
       </div>
       <div>
         <AlertDialogModal
