@@ -14,7 +14,7 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({ ...equipment })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...equipment })
   const url = `methods/ni-mcit-p-01/equipment-information/`
 
   return (
@@ -56,33 +56,35 @@ export const EquipmentInformation = ({
           value={values.accuracy_class}
           onChange={handleInputChange}
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.unit}
-          label="Unidad"
-          name="unit"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su unidad"
-          list={[
-            { id: 1, name: 'bar' },
-            { id: 2, name: 'psi' },
-            { id: 3, name: 'Pa' },
-            { id: 4, name: 'kPa' },
-            { id: 5, name: 'hpa' },
-            { id: 6, name: 'MPa' },
-            { id: 7, name: 'kgf/cm²' },
-            { id: 8, name: 'inHg (0°C)' },
-            { id: 9, name: 'mmHg (0°C)' },
-            { id: 10, name: 'cmHg (0°C)' },
-            { id: 11, name: 'mmH₂O (4°C)' },
-            { id: 12, name: 'cmH₂O (4°C)' },
-            { id: 13, name: 'inH₂O (4°C)' },
-            { id: 14, name: 'atm' },
-            { id: 15, name: 'mH₂O (4°C)' },
-          ]}
-          keyList="unit"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+          <select
+            name="unit"
+            id="unit"
+            defaultValue={values.unit}
+            value={values.unit}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="bar">bar</option>
+            <option value="psi">psi</option>
+            <option value="Pa">Pa</option>
+            <option value="kPa">kPa</option>
+            <option value="hpa">hpa</option>
+            <option value="MPa">MPa</option>
+            <option value="kgf/cm²">kgf/cm²</option>
+            <option value="inHg (0°C)">inHg (0°C)</option>
+            <option value="mmHg (0°C)">mmHg (0°C)</option>
+            <option value="cmHg (0°C)">cmHg (0°C)</option>
+            <option value="mmH₂O (4°C)">mmH₂O (4°C)</option>
+            <option value="cmH₂O (4°C)">cmH₂O (4°C)</option>
+            <option value="inH₂O (4°C)">inH₂O (4°C)</option>
+            <option value="atm">atm</option>
+            <option value="mH₂O (4°C)">mH₂O (4°C)</option>
+          </select>
+        </div>
         <CInput
           label="Rango mínimo"
           name="range_min"
@@ -124,24 +126,26 @@ export const EquipmentInformation = ({
           onChange={handleInputChange}
           type="number"
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.scale}
-          label="Escala"
-          name="scale"
-          onChange={handleInputChange}
-          required
-          placeholder="Número de escala válido (1-5)"
-          list={[
-            { id: 1, name: '1' },
-            { id: 2, name: '2' },
-            { id: 3, name: '3' },
-            { id: 4, name: '4' },
-            { id: 5, name: '5' },
-          ]}
-          keyList="scale"
-          inputType="number"
-        />
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="scale" className="text-xs font-semibold ">
+            Escala
+          </label>
+          <select
+            name="scale"
+            id="scale"
+            defaultValue={values.scale}
+            value={values.scale}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
       </div>
       <div>
         <AlertDialogModal
