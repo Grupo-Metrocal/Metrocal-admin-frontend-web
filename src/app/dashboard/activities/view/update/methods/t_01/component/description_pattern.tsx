@@ -15,7 +15,7 @@ export const DescriptionPattern = ({
   ) => void
   description_pattern: IDescriptionPattern
 }) => {
-  const { values, handleInputChange } = useForm({ ...description_pattern })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-t-01/description-pattern/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,20 +28,30 @@ export const DescriptionPattern = ({
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <AutocompleteInput
-          requiredLabel
-          value={values.pattern}
-          label="Patrón utilizado"
-          name="pattern"
-          onChange={handleInputChange}
-          required
-          placeholder="seleccione su patrón utilizado"
-          list={[
-            { id: 1, name: 'NI-MCPVE-16' },
-            { id: 2, name: 'NI-MCPVE-01' },
-          ]}
-          keyList="pattern"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Patrón utilizado
+          </label>
+          <select
+            name="pattern"
+            id="pattern"
+            defaultValue={values.pattern}
+            value={values.pattern}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="NI-MCPT-01">NI-MCPT-01</option>
+            <option value="NI-MCPT-02">NI-MCPT-02</option>
+            <option value="NI-MCPT-37">NI-MCPT-37</option>
+            <option value="NI-MCPT-05">NI-MCPT-05</option>
+            <option value="NI-MCPT-06">NI-MCPT-06</option>
+            <option value="NI-MCPT-41">NI-MCPT-41</option>
+            <option value="NI-MCPT-36">NI-MCPT-36</option>
+            <option value="NI-MCPT-40-1">NI-MCPT-40-1</option>
+            <option value="NI-MCPT-40-2">NI-MCPT-40-2</option>
+          </select>
+        </div>
+
         <CInput
           label="Observaciones"
           name="observation"
