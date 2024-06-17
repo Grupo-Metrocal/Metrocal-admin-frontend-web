@@ -69,7 +69,7 @@ export const CalibrationsResults = ({
             {data?.results?.map((result, rowIndex) => {
               return (
                 <tr key={rowIndex}>
-                  {result.indication_linear.map((key, cellIndex) => {
+                  {result?.indication_linear?.map((key, cellIndex) => {
                     return (
                       <>
                         <td className="border border-gray-400 p-2">
