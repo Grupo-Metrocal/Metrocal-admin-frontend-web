@@ -73,9 +73,9 @@ export const TableT_03 = ({
         <table>
           <thead>
             <tr>
-              <th>Volumen Nominal</th>
-              <th>Volumen Convencional</th>
-              <th>Desviación</th>
+              <th>Indicación del Patrón</th>
+              <th>Indicación del Instrumento</th>
+              <th>Corrección</th>
               <th>Incertidumbre expandida K = 2</th>
             </tr>
           </thead>
