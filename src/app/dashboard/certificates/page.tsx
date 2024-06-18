@@ -12,6 +12,7 @@ import { ItemPendingCertify } from './components/itemPendingCertify'
 import { SelectedPendingCertify } from './components/selectedPendingCertify'
 import { TableP_01 } from './components/tableP_01'
 import { TableT_01 } from './components/tableT_01'
+import { TableT_03 } from './components/tableT_03'
 import { TableV_01 } from './components/tableV_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 
@@ -45,6 +46,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-P-01': TableP_01,
   'NI-MCIT-T-01': TableT_01,
   'NI-MCIT-V-01': TableV_01,
+  'NI-MCIT-T-03': TableT_03,
 }
 
 export default function Page() {
