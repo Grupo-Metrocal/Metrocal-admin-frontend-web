@@ -181,15 +181,41 @@ export default function Page({ params }: IRoot) {
     setLoading(false)
   }
 
-  const handleDeleteEquipment = async (idEquipment: number) => {
-    if (!selectedService?.method_id && !data?.id && !idEquipment) {
+  const handleDeleteEquipment = async (methodID: number, methodsStackID: number) => {
+    if (!selectedService?.method_id && !data?.id && !methodID) {
       return toast('Se necesita un metodo y una actividad para eliminar el equipo')
     }
 
     toast.loading('Eliminando equipo')
     const response = await fetchData({
       url: 'methods/remove-method-to-stack',
+      method: 'POST',
+      body: {
+        methodsStackID,
+        quoteRequestID: data?.quote_request?.id,
+        methodID,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      }
     })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Equipo eliminado', {
+        description: 'El equipo ha sido eliminado de la actividad',
+      })
+
+      setStackServices((prev) => prev.filter((service) => service.id !== methodID))
+    } else {
+      toast.error('Error al eliminar', {
+        description: response.details || response.message,
+      })
+
+    }
+
   }
 
   useEffect(() => {
@@ -198,6 +224,8 @@ export default function Page({ params }: IRoot) {
         setData(response.data)
         setTeamMember(response.data.team_members)
         setResponsable(response.data.responsable)
+
+        console.log(response.data)
 
         const service = response.data.quote_request.equipment_quote_request[0]
         handleSelectedService(service)
@@ -352,6 +380,7 @@ export default function Page({ params }: IRoot) {
                             )[0] || ''
                           }
                           activityID={data?.id || 0}
+                          stackId={selectedService?.method_id || 0}
                           onDelete={handleDeleteEquipment}
                         />
                       </div>{' '}
@@ -457,13 +486,15 @@ interface IPropsActions {
   equipment: any
   calibration_method: string
   activityID: number
-  onDelete: (id: number) => void
+  onDelete: (id: number, stackId: number) => void
+  stackId: number
 }
 const ActionsItems = ({
   equipment,
   activityID,
   calibration_method,
   onDelete,
+  stackId,
 }: IPropsActions) => {
   return (
     <DropdownMenu>
@@ -496,7 +527,7 @@ const ActionsItems = ({
         >
           <AlertDialogModal
             nameButton="Eliminar equipo"
-            onConfirm={() => onDelete(equipment.id)}
+            onConfirm={() => onDelete(equipment.id, stackId)}
             title="¿Estas seguro de querer eliminar este equipo?"
             description="Al eliminar este equipo no podras recuperar la información"
             buttonStyle={{
