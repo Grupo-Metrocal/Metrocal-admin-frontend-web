@@ -356,11 +356,11 @@ export default function Page({ params }: IRoot) {
                       <div className="flex flex-col gap-2">
                         <p>
                           <span>Equipo:</span>{' '}
-                          {service.equipment_information?.device}
+                          {service.equipment_information?.device || service.equipment_information?.calibration_object}
                         </p>
                         <p>
-                          <span>Fabricante:</span>{' '}
-                          {service.equipment_information?.maker}
+                          <span>Codigo:</span>{' '}
+                          {service.equipment_information?.code}
                         </p>
                         <p>
                           <span>Numero de serie:</span>{' '}
