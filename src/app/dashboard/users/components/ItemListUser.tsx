@@ -15,6 +15,7 @@ import Image from 'next/image'
 import { Modal } from '@/components/Modal'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { AssingRole } from './AssingRole'
+import { ChangePassword } from './changePassword'
 
 type PropsUser = {
   user: IUser
@@ -134,13 +135,24 @@ export const ActionItemUser = ({
             title={`Editar permisos de ${user.username}`}
             description="Aqui puedes editar los permisos de este usuario, recuerda que los permisos de administrador no se pueden editar."
             Component={() => (
-              <AssingRole roles={roles} onAssign={() => {}} user={user} />
+              <AssingRole roles={roles} onAssign={() => { }} user={user} />
             )}
             size="xl"
           />
         </DropdownMenuItem>
-        <DropdownMenuItem>Asignar actividad</DropdownMenuItem>
-        <DropdownMenuItem>Reestablecer contraseña</DropdownMenuItem>
+        {/* <DropdownMenuItem>Asignar actividad</DropdownMenuItem> */}
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+        >
+          <Modal
+            nameButton="Reestablecer contraseña"
+            title={`Reestablecer contraseña de ${user.username}`}
+            description='Recuerda guardar la nueva contraseña y compartirlo con el usuario de manera segura.'
+            Component={() => <ChangePassword id={user.id} />}
+          />
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={(e) => {
