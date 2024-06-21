@@ -1,4 +1,5 @@
-import { ICalibrationResults } from '../../../../[id]/interface/m_01'
+import { Result } from '@/app/dashboard/certificates/interface/p-01'
+import { ICalibrationResults, Calibrations } from '../../../../[id]/interface/m_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { CInput } from '@/components/CInput'
 import React, { useState } from 'react'
@@ -17,279 +18,235 @@ export const CalibrationsResults = ({
   const url = `methods/ni-mcit-m-01/calibration-results/`
   const [data, setData] = useState(calibrationResults)
 
-  const handleEdit = (
-    field: string,
-    value: number | string,
-    cycleNumber: number,
-    calibrationIndex: number,
-  ) => {
-    const numericValue = Number(value)
-    if (isNaN(numericValue)) {
-      return
-    }
+  const handleEdit = (index: number, field: any, value: any, subField?: number | any) => {
 
-    setData((prev) => {
-      const results = prev.results?.map((result) => {
-        if (result.point_number === cycleNumber) {
-          const calibrations = result.calibrations.map((calibration, index) => {
-            if (index === calibrationIndex) {
-              if (field === 'pattern_dough.full') {
-                return {
-                  ...calibration,
-                  pattern_dough: {
-                    ...calibration.pattern_dough,
-                    full: numericValue,
-                  },
-                }
-              } else if (field === 'pattern_dough.empty') {
-                return {
-                  ...calibration,
-                  pattern_dough: {
-                    ...calibration.pattern_dough,
-                    empty: numericValue,
-                  },
-                }
-              } else if (field === 'water_temperature') {
-                return {
-                  ...calibration,
-                  water_temperature: numericValue,
-                }
-              }
-            }
-            return calibration
-          })
-          return { ...result, calibrations }
+    setData(prevData => {
+      const newResults: any[] = [...prevData.results];
+
+      if (field === 'l1' || field === 'l2' || field === 'l3' || field === 'l4') {
+        if (typeof subField === 'number') {
+          newResults[index].calibrations[field][subField] = value;
         }
-        return result
-      })
-      return { ...prev, results }
-    })
-  }
+      }
+
+      if (typeof subField === 'number') {
+        if (Array.isArray(newResults[index][field])) {
+          (newResults[index][field] as any)[subField] = value;
+
+        }
+      } else if (subField) {
+        if (typeof newResults[index][field] === 'object') {
+          (newResults[index][field] as any)[subField] = value;
+        }
+      } else {
+        (newResults[index][field] as any) = value;
+      }
+
+      return { ...prevData, results: newResults };
+    });
+  };
 
   return (
     <div className='flex flex-col space-y-4'>
       <div className='flex flex-col space-y-4 gap-4'>
-        {data?.results?.map((result, index) => {
-          return (
-            <div
-              key={index}
-              className='flex flex-col space-y-4 gap-4 p-4'
-            >
-              <div className='border bg-gray-400 p-2 text-center'>
-                Punto {result?.point_number}
-              </div>
-
-              <div className='flex flex-col gap-4'>
-                <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
-                  <div className='flex flex-col gap-4'>
-                    <span>Patrones utilizados</span>
-
-                    <div className='flex flex-col gap-2'>
-                      {result?.patterns?.map((pattern, index) => (
-                        <div className="flex flex-col gap-[1em]" key={index}>
-                          <select
-                            name="unit"
-                            id="unit"
-                            defaultValue={pattern}
-                            value={pattern}
-                            className="border border-gray-300 rounded-md p-2 h-fit"
-                          >
-                            {
-                              PATTERNSM01.map((pattern, index) => (
-                                <option key={index} value={pattern}>{pattern}</option>
-                              ))
-                            }
-                          </select>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className='flex flex-col gap-4'>
-                    <span>Masa</span>
-
-                    <div>
-                      <div className="flex flex-col gap-[1em]" key={index}>
-                        <select
-                          name="unit"
-                          id="unit"
-                          defaultValue={result.mass}
-                          value={result.mass}
-                          className="border border-gray-300 rounded-md p-2 h-fit"
-                        >
-                          {
-                            PATTERNSM01.map((pattern, index) => (
-                              <option key={index} value={pattern}>{pattern}</option>
-                            ))
-                          }
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className='flex flex-col gap-4'>
-                    <span>Masa nominal del calibrando</span>
-
-                    <CInput
-                      name='nominal_mass'
-                      value={result.nominal_mass.toString()}
-                      onChange={(e) => handleEdit('nominal_mass', e.target.value, result.point_number, index)}
-                      type='number'
-                      input_style={{
-                        marginTop: '-.6em',
-                      }}
-                    />
-                  </div>
-
-                  <div className='flex flex-col gap-4'>
-                    <span>Serie / Código</span>
-
-                    <CInput
-                      name='code'
-                      value={result.code}
-                      onChange={(e) => handleEdit('code', e.target.value, result.point_number, index)}
-                      input_style={{
-                        marginTop: '-.6em',
-                      }}
-                    />
-                  </div>
-
-                  <div className='flex flex-col gap-4'>
-                    <span>Clase de exactitud</span>
-
-                    <div className="flex flex-col gap-[1em]" key={index}>
-                      <select
-                        name="accuracy_class"
-                        id="accuracy_class"
-                        defaultValue={result.accuracy_class}
-                        value={result.accuracy_class}
-                        className="border border-gray-300 rounded-md p-2 h-fit"
-                      >
-                        <option value="E1">E1</option>
-                        <option value="E2">E2</option>
-                        <option value="F1">F1</option>
-                        <option value="F2">F2</option>
-                        <option value="M1">M1</option>
-                        <option value="M2">M2</option>
-                        <option value="M3">M3</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className='flex flex-col gap-4 mt-6'>
-                  <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-
-                    <div className="flex flex-col gap-[1em]" key={index}>
-                      <span>Material del calibrando</span>
-
-                      <select
-                        name="calibrated_material"
-                        id="calibrated_material"
-                        defaultValue={result.calibrated_material}
-                        value={result.calibrated_material}
-                        // onChange={handleSelectChange}
-                        className="border border-gray-300 rounded-md p-2 h-fit"
-                      >
-                        <option value="Platino">Platino</option>
-                        <option value="Aleación de Níquel">Aleación de Níquel</option>
-                        <option value="Bronce">Bronce</option>
-                        <option value="Acero Inoxidable">Acero Inoxidable</option>
-                        <option value="Acero Carbón">Acero Carbón</option>
-                        <option value="Hierro">Hierro</option>
-                        <option value="Hierro fund. (blanco)">Hierro fund. (blanco)</option>
-                        <option value="Hierro fundido (gris)">Hierro fundido (gris)</option>
-                        <option value="Aluminio">Aluminio</option>
-                        <option value="Plomo">Plomo</option>
-                      </select>
-                    </div>
-
-                    <div className='flex flex-col gap-4'>
-                      <span>Balanza</span>
-
-                      <div className="flex flex-col gap-[1em]" key={index}>
-                        <select
-                          name="accuracy_class"
-                          id="balance"
-                          defaultValue={result.balance}
-                          value={result.balance}
-                          // onChange={handleSelectChange}
-                          className="border border-gray-300 rounded-md p-2 h-fit"
-                        >
-                          <option value="N/A">N/A</option>
-                          <option value="Precisa Gravimetrics ES Swiss Made ">Precisa Gravimetrics ES Swiss Made </option>
-                          <option value="Cobos Precision, S. L.">Cobos Precision, S. L.</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className='flex flex-col gap-4'>
-                      <span>Termometro</span>
-
-                      <div className="flex flex-col gap-[1em]" key={index}>
-                        <select
-                          name="accuracy_class"
-                          id="accuracy_class"
-                          defaultValue={result.accuracy_class}
-                          value={result.accuracy_class}
-                          // onChange={handleSelectChange}
-                          className="border border-gray-300 rounded-md p-2 h-fit"
-                        >
-                          <option value="Fluke 971">Fluke 971</option>
-                          <option value="Testo 608-H1">Testo 608-H1</option>
-                          <option value="Extech">Extech</option>
-                          <option value="Fluke 971">Fluke 971</option>
-                          <option value="Extech">Extech</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <table
-                className='min-w-full border-collapse border border-gray-400'
-              >
-                <thead>
-                  <tr>
-                    <th className='border border-gray-400 p-2 bg-gray-200'>
-                      L1 (mcp)
-                    </th>
-                    <th className='border border-gray-400 p-2 bg-gray-200'>
-                      L2 (mcx)
-                    </th>
-                    <th className='border border-gray-400 p-2 bg-gray-200'>
-                      L3 (mcx+ms)
-                    </th>
-                    <th className='border border-gray-400 p-2 bg-gray-200'>
-                      L4 (mcp+ms)
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {result?.calibrations?.l1?.map((_, rowIndex) => (
-                    <tr key={rowIndex}>
-                      <td className='border border-gray-400 p-2 text-center'>
-                        {result.calibrations.l1[rowIndex].toFixed(4)}
-                      </td>
-                      <td className='border border-gray-400 p-2 text-center'>
-                        {result.calibrations.l2[rowIndex].toFixed(4)}
-                      </td>
-                      <td className='border border-gray-400 p-2 text-center'>
-                        {result.calibrations.l3[rowIndex].toFixed(4)}
-                      </td>
-                      <td className='border border-gray-400 p-2 text-center'>
-                        {result.calibrations.l4[rowIndex].toFixed(4)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {data?.results?.map((result, index) => (
+          <div key={index} className='flex flex-col space-y-4 gap-4 p-4'>
+            <div className='border bg-gray-400 p-2 text-center'>
+              Punto {result?.point_number}
             </div>
-          )
-        })}
+
+            <div className='flex flex-col gap-4'>
+              <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+                <div className='flex flex-col gap-4'>
+                  <span>Patrones utilizados</span>
+
+                  <div className='flex flex-col gap-2'>
+                    {result?.patterns?.map((pattern, patternIndex) => (
+                      <div className="flex flex-col gap-[1em]" key={patternIndex}>
+                        <select
+                          name={`pattern-${patternIndex}`}
+                          value={pattern}
+                          className="border border-gray-300 rounded-md p-2 h-fit"
+                          onChange={(e) =>
+                            handleEdit(index, 'patterns', e.target.value, patternIndex)
+                          }
+                        >
+                          {PATTERNSM01.map((patternOption, optionIndex) => (
+                            <option key={optionIndex} value={patternOption}>{patternOption}</option>
+                          ))}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className='flex flex-col gap-4'>
+                  <span>Masa</span>
+                  <select
+                    name="mass"
+                    value={result.mass}
+                    className="border border-gray-300 rounded-md p-2 h-fit"
+                    onChange={(e) => {
+                      handleEdit(index, 'mass', e.target.value, null)
+
+                    }}
+                  >
+                    {PATTERNSM01.map((patternOption, optionIndex) => (
+                      <option key={optionIndex} value={patternOption}>{patternOption}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className='flex flex-col gap-4'>
+                  <span>Clase de exactitud</span>
+                  <select
+                    name="accuracy_class"
+                    value={result.accuracy_class}
+                    className="border border-gray-300 rounded-md p-2 h-fit"
+                    onChange={(e) => handleEdit(index, 'accuracy_class', e.target.value, null)}
+                  >
+                    <option value="E1">E1</option>
+                    <option value="E2">E2</option>
+                    <option value="F1">F1</option>
+                    <option value="F2">F2</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="M3">M3</option>
+                  </select>
+                </div>
+
+                <div className='flex flex-col gap-4'>
+                  <span>Serie / Código</span>
+                  <CInput
+                    name='code'
+                    value={result.code}
+                    onChange={(e) => handleEdit(index, 'code', e.value, null)}
+                    input_style={{
+                      marginTop: '-.6em',
+                    }}
+                    type='text'
+                  />
+                </div>
+
+                <div className='flex flex-col gap-4'>
+                  <span>Masa nominal del calibrando</span>
+                  <CInput
+                    name='nominal_mass'
+                    value={result.nominal_mass.toString()}
+                    onChange={(e) => handleEdit(index, 'nominal_mass', parseFloat(e.value), null)}
+                    type='number'
+                    input_style={{
+                      marginTop: '-.6em',
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-4 mt-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+                  <div className="flex flex-col gap-[1em]" key={index}>
+                    <span>Material del calibrando</span>
+                    <select
+                      name="calibrated_material"
+                      value={result.calibrated_material}
+                      className="border border-gray-300 rounded-md p-2 h-fit"
+                      onChange={(e) => handleEdit(index, 'calibrated_material', e.target.value, null)}
+                    >
+                      <option value="Platino">Platino</option>
+                      <option value="Aleación de Níquel">Aleación de Níquel</option>
+                      <option value="Bronce">Bronce</option>
+                      <option value="Acero Inoxidable">Acero Inoxidable</option>
+                      <option value="Acero Carbón">Acero Carbón</option>
+                      <option value="Hierro">Hierro</option>
+                      <option value="Hierro fund. (blanco)">Hierro fund. (blanco)</option>
+                      <option value="Hierro fundido (gris)">Hierro fundido (gris)</option>
+                      <option value="Aluminio">Aluminio</option>
+                      <option value="Plomo">Plomo</option>
+                    </select>
+                  </div>
+
+                  <div className='flex flex-col gap-4'>
+                    <span>Balanza</span>
+                    <select
+                      name="balance"
+                      value={result.balance}
+                      className="border border-gray-300 rounded-md p-2 h-fit"
+                      onChange={(e) => handleEdit(index, 'balance', e.target.value, null)}
+                    >
+                      <option value="N/A">N/A</option>
+                      <option value="Precisa Gravimetrics ES Swiss Made">Precisa Gravimetrics ES Swiss Made</option>
+                      <option value="Cobos Precision, S. L.">Cobos Precision, S. L.</option>
+                    </select>
+                  </div>
+
+                  <div className='flex flex-col gap-4'>
+                    <span>Termómetro</span>
+                    <select
+                      name="thermometer"
+                      value={result.thermometer}
+                      className="border border-gray-300 rounded-md p-2 h-fit"
+                      onChange={(e) => handleEdit(index, 'thermometer', e.target.value, null)}
+                    >
+                      <option value="Fluke 971">Fluke 971</option>
+                      <option value="Testo 608-H1">Testo 608-H1</option>
+                      <option value="Extech">Extech</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table className='min-w-full border-collapse border border-gray-400'>
+              <thead>
+                <tr>
+                  <th className='border border-gray-400 p-2 bg-gray-200'>L1 (mcp)</th>
+                  <th className='border border-gray-400 p-2 bg-gray-200'>L2 (mcx)</th>
+                  <th className='border border-gray-400 p-2 bg-gray-200'>L3 (mcx+ms)</th>
+                  <th className='border border-gray-400 p-2 bg-gray-200'>L4 (mcp+ms)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {result?.calibrations?.l1?.map((_, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td className='border border-gray-400 p-2 text-center'>
+                      <input
+                        type="number"
+                        className="w-full text-center"
+                        value={result.calibrations.l1[rowIndex]}
+                        onChange={(e) => handleEdit(index, 'l1', parseFloat(e.target.value), rowIndex)}
+                      />
+                    </td>
+                    <td className='border border-gray-400 p-2 text-center'>
+                      <input
+                        type="number"
+                        className="w-full text-center"
+                        value={result.calibrations.l2[rowIndex]}
+                        onChange={(e) => handleEdit(index, 'l2', parseFloat(e.target.value), rowIndex)}
+
+                      />
+                    </td>
+                    <td className='border border-gray-400 p-2 text-center'>
+                      <input
+                        type="number"
+                        className="w-full text-center"
+                        value={result.calibrations.l3[rowIndex]}
+                        onChange={(e) => handleEdit(index, 'l3', parseFloat(e.target.value), rowIndex)}
+                      />
+                    </td>
+                    <td className='border border-gray-400 p-2 text-center'>
+                      <input
+                        type="number"
+                        className="w-full text-center"
+                        value={result.calibrations.l4[rowIndex]}
+                        onChange={(e) => handleEdit(index, 'l4', parseFloat(e.target.value), rowIndex)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
 
       <div>
