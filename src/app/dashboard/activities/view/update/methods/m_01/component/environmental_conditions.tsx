@@ -142,7 +142,7 @@ export const EnvironmentalConditions = ({
                       value={point.presion.initial}
                       onChange={(e) =>
                         handleEdit(
-                          'presion_pa.initial',
+                          'presion.initial',
                           e.target.value,
                           point.point_number,
                         )
@@ -156,7 +156,7 @@ export const EnvironmentalConditions = ({
                       value={point.presion.final}
                       onChange={(e) =>
                         handleEdit(
-                          'presion_pa.final',
+                          'presion.final',
                           e.target.value,
                           point.point_number,
                         )
