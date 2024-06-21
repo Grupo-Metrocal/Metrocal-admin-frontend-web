@@ -15,7 +15,7 @@ export const DescriptionPattern = ({
   description_pattern: IDescriptionPattern
 }) => {
   const { values, handleInputChange } = useForm({ ...description_pattern })
-  const url = `methods/ni-mcit-v-01/description-pattern/`
+  const url = `methods/ni-mcit-m-01/description-pattern/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { name, checked } = e.target
