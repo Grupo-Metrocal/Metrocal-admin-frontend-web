@@ -83,18 +83,20 @@ export const TableV_01 = ({
             {certificate.calibration_results.nominal_volume.map(
               (item: any, index: any) => (
                 <tr key={index}>
-                  <td>{item}</td>
+                  <td>{renderValue(item)}</td>
                   <td>
                     {
-                      certificate.calibration_results.conventional_volume[index]
+                      renderValue(certificate?.calibration_results?.conventional_volume?.[index])
                     }
                   </td>
                   <td>
-                    {certificate.calibration_results.desviation[index]}
+                    {
+                      renderValue(certificate?.calibration_results?.desviation?.[index])
+                    }
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.uncertainty[index]
+                      renderValue(certificate?.calibration_results?.uncertainty?.[index])
                     }
                   </td>
                 </tr>
@@ -153,4 +155,11 @@ export const TableV_01 = ({
       </section>
     </div>
   )
+}
+
+function renderValue(value: any) {
+  if (typeof value === 'object' && value !== null && '_error' in value) {
+    return value._error || 'Error';
+  }
+  return value != null ? value.toString() : 'N/A';
 }
