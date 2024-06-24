@@ -65,8 +65,8 @@ export default function ClientRegister({ reload }: IProps) {
       !requested_by ||
       // !no ||
       !phone ||
-      !email
-      // !no_ruc
+      !email ||
+      !no_ruc
     ) {
       return false
     }
@@ -159,7 +159,8 @@ export default function ClientRegister({ reload }: IProps) {
           onChange={handleInputChange}
           id="no_ruc"
           type="text"
-          placeholder="No. RUC (opcional)"
+          required
+          placeholder="No. RUC"
         />
       </section>
       <CButton
