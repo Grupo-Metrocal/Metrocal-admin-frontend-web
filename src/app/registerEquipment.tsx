@@ -64,7 +64,7 @@ export default function RegisterEquipment({
                 key: index,
                 id: item.id,
                 deleteEquipment: handleRemoveEquipment,
-                onChange: () => {},
+                onChange: () => { },
                 updateEquipmentValue,
                 state: item,
                 authorizedServices: authorizedServices,
@@ -126,9 +126,9 @@ const renderTableTr = ({
     (service: TAuthorizedServices) => {
       return state?.type_service === service.service && service.equipment
         ? {
-            id: service.id,
-            name: service.equipment,
-          }
+          id: service.id,
+          name: service.equipment,
+        }
         : { id: 0, name: '' }
     },
   )
@@ -136,9 +136,9 @@ const renderTableTr = ({
   const rangeList = authorizedServices.map((service: TAuthorizedServices) => {
     return state?.name === service.equipment && service.measuring_range !== ''
       ? {
-          id: service.id,
-          name: service.measuring_range,
-        }
+        id: service.id,
+        name: service.measuring_range,
+      }
       : { id: 0, name: '' }
   })
 
@@ -231,10 +231,10 @@ const renderTableTr = ({
       </div>
 
       <div className="table__body__tr__td">
-        <input
-          type="text"
+        <textarea
           placeholder="Escriba aquí"
           name="additional_remarks"
+          className='w-full h-20 border'
           onChange={(e) => updateEquipmentValue(id, e.target)}
           value={state?.additional_remarks}
         />
