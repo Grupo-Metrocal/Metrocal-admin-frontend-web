@@ -230,7 +230,7 @@ export const SelectedPendingCertify = ({
                   onClick={() => handleSelectedService(item)}
                 >
                   <p>{item.name}</p>
-                  <span>Método: {item.calibration_method.split(' ')[0]}</span>
+                  <span>{item.calibration_method}</span>
                 </div>
               ),
           )}
