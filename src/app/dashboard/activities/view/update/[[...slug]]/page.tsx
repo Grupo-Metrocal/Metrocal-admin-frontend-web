@@ -7,6 +7,9 @@ import { T_05 } from '../methods/t_05'
 import { V_01 } from '../methods/v_01'
 import { M_01 } from '../methods/m_01'
 import { fetchData } from '@/utils/fetch'
+import { D_01 } from '../methods/d_01'
+import { D_02 } from '../methods/d_02'
+import { B_01 } from '../methods/b_01'
 
 const getEquipment = async (id: string, calibration_method: string) => {
   try {
@@ -37,6 +40,9 @@ const RENDERER_METHOD = {
   'NI-MCIT-T-05': T_05,
   'NI-MCIT-V-01': V_01,
   'NI-MCIT-M-01': M_01,
+  'NI-MCIT-D-01': D_01,
+  'NI-MCIT-D-02': D_02,
+  'NI-MCIT-B-01': B_01,
 }
 export default async function Page({ params }: IRoot) {
   const { slug } = params
