@@ -111,9 +111,9 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
 
       <div className="equipment-info-selected__body">
         <div>
-          <span className='font-semibold'>Puntos de calibración y/un observación adicional:</span>
+          <span className='font-semibold'>Puntos de calibración y/u observación adicional:</span>
 
-          <p className='mt-3'>{selectedEquipment?.additional_remarks as string}</p>
+          <p className='mt-3'>{selectedEquipment?.additional_remarks || 'N/A'}</p>
 
         </div>
         <div>
