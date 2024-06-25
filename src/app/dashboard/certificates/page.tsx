@@ -16,6 +16,9 @@ import { TableT_03 } from './components/tableT_03'
 import { TableT_05 } from './components/tableT_05'
 import { TableV_01 } from './components/tableV_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { TableD_01 } from './components/tableD_01'
+import { TableD_02 } from './components/tableD_02'
+import { TableB_01 } from './components/tableB_01'
 
 const getData = async () => {
   return await fetchData({
@@ -49,6 +52,10 @@ const RENDERER_METHOD = {
   'NI-MCIT-V-01': TableV_01,
   'NI-MCIT-T-03': TableT_03,
   'NI-MCIT-T-05': TableT_05,
+  'NI-MCIT-D-01': TableD_01,
+  'NI-MCIT-D-02': TableD_02,
+  'NI-MCIT-B-01': TableB_01,
+  
 }
 
 export default function Page() {
