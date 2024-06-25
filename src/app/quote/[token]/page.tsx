@@ -71,7 +71,7 @@ export default function Page({ params }: Props) {
       const blob = new Blob([response], { type: 'application/pdf' })
       const link = document.createElement('a')
       link.href = window.URL.createObjectURL(blob)
-      link.download = 'Cotizacion.pdf'
+      link.download = `${quote?.no}.pdf`
       link.click()
       toast.success('PDF generado correctamente')
     } else {
@@ -141,8 +141,8 @@ export default function Page({ params }: Props) {
             {quote?.status === 'waiting'
               ? 'aprobada y lista para su aceptación.'
               : quote?.status === 'done'
-              ? 'Aprobada y aceptada.'
-              : 'No aprobada.'}
+                ? 'Aprobada y aceptada.'
+                : 'No aprobada.'}
           </span>
         </h4>
       </div>
@@ -280,11 +280,11 @@ export default function Page({ params }: Props) {
               <span>
                 {formatPrice(
                   quote?.equipment_quote_request &&
-                    quote?.equipment_quote_request
-                      ?.map((equipment: IEquipmentQuoteRequest) =>
-                        equipment.status === 'done' ? equipment.total : 0,
-                      )
-                      .reduce((a, b) => a + b, 0),
+                  quote?.equipment_quote_request
+                    ?.map((equipment: IEquipmentQuoteRequest) =>
+                      equipment.status === 'done' ? equipment.total : 0,
+                    )
+                    .reduce((a, b) => a + b, 0),
                 )}
               </span>
             </h4>
@@ -334,7 +334,7 @@ export default function Page({ params }: Props) {
             <AlertDialogModal
               nameButton="Guardar como PDF"
               title="Guardar como PDF"
-              description="¿Estas seguro de guardar esta cotización como PDF?, se descargara automaticamente"
+              description="La descarga del PDF se iniciará automáticamente."
               onConfirm={handleGeneratePDF}
               buttonStyle={{
                 boxShadow: 'none',
