@@ -16,6 +16,8 @@ import { useForm } from '@/hooks/useForm'
 import { CButton } from '@/components/CButton'
 import { TermsAndConditions } from '@/components/TermsAndConditions'
 import { formatPrice } from '@/utils/formatPrice'
+import commentIcon from '@/assets/icons/comment.svg'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 interface Props {
   params: {
@@ -123,7 +125,7 @@ export default function Page({ params }: Props) {
           <h4>
             <span>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</span>
             <span>RUC : {quote?.client?.no_ruc}</span>
-            <span>SOLICITUD DE SERVICIOS</span>
+            <span>COTIZACIÓN DE SERVICIOS</span>
           </h4>
         </div>
         <div className="main-code">
@@ -208,7 +210,31 @@ export default function Page({ params }: Props) {
                   <span data-label="Tipo de servicio">
                     {equipment.type_service}
                   </span>
-                  <span data-label="Equipo">{equipment.name}</span>
+                  <span data-label="Equipo" className='relative'>
+                    {equipment.name}
+
+                    {
+                      equipment.comment && (
+                        <Popover>
+                          <PopoverTrigger className='absolute right-0 top-[-15px]'>
+                            <Image
+                              src={commentIcon}
+                              alt="comment"
+                              width={20}
+                              height={20}
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent className='bg-white'>
+                            <div className='flex flex-col gap-4'>
+                              <strong>Comentario del equipo:</strong>
+
+                              {equipment.comment}
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      )
+                    }
+                  </span>
                   <span data-label="Cantidad">{equipment.count}</span>
                   <span data-label="Método de calibración">
                     {equipment.calibration_method || 'N/A'}
