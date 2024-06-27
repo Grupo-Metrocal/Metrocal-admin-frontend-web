@@ -4,6 +4,8 @@ interface IFetchData {
   body?: {}
   headers?: HeadersInit
   responseType?: 'json' | 'text' | 'blob' | 'formData' | 'arrayBuffer'
+  params?: {}
+  
 }
 export const fetchData = async ({
   url,
@@ -11,8 +13,14 @@ export const fetchData = async ({
   body,
   headers,
   responseType = 'json',
+  params,
 }: IFetchData) => {
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+
+  if (params) {
+    const query = new URLSearchParams(params).toString()
+    url = `${url}?${query}`
+  }
 
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
