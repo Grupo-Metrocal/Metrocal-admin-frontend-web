@@ -38,6 +38,10 @@ export const T_05 = ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
       },
+
+      params: {
+        increase: true,
+      }
     })
 
     toast.dismiss()
