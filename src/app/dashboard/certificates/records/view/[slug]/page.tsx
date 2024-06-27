@@ -52,6 +52,30 @@ const getMethods = async (id: number) => {
   })
 }
 
+const emmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
+  toast.loading('Preparando certificado...', {
+    description: 'Esto puede tardar unos segundos, por favor espere'
+  })
+  const url = `methods/${method_name.toLowerCase()}/generate-certificate/send/pdf/${activity_id}/${method_id}`
+
+  const response = await fetchData({
+    url,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    }
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Certificado emitido correctamente')
+  } else {
+    toast.error('Error al emitir el certificado', {
+      description: response.details,
+    })
+  }
+}
+
 export interface IRoot {
   params: {
     slug: string
@@ -182,9 +206,8 @@ export default function Page({ params }: IRoot) {
             return (
               <CarouselItemComp
                 key={equipment.id}
-                className={`carousel-item ${
-                  selectedService?.id === equipment.id ? 'selected' : ''
-                }`}
+                className={`carousel-item ${selectedService?.id === equipment.id ? 'selected' : ''
+                  }`}
                 onClick={() => handleSelectedService(equipment)}
               >
                 <p className="font-bold">{equipment.name}</p>
@@ -237,13 +260,11 @@ export default function Page({ params }: IRoot) {
                 filteredServices.map((service) => (
                   <div
                     key={service.id}
-                    className={`certificates-viewer__main-info__details__selected__item ${
-                      selectedService === service.id ? 'selected' : ''
-                    }`}
+                    className={`certificates-viewer__main-info__details__selected__item ${selectedService === service.id ? 'selected' : ''
+                      }`}
                     onClick={() =>
                       router.push(
-                        `/dashboard/activities/view/update/${service.id}/${
-                          selectedService?.calibration_method?.split(' ')[0]
+                        `/dashboard/activities/view/update/${service.id}/${selectedService?.calibration_method?.split(' ')[0]
                         }/${data?.id}`,
                       )
                     }
@@ -319,7 +340,13 @@ const ActionsItems = ({
             e.stopPropagation()
           }}
         >
-          Emitir certificado
+          <AlertDialogModal
+            onConfirm={() => emmitCertificate(calibration_method, activityID, equipment.id)}
+            nameButton='Emitir certificado'
+            useButton={false}
+            title='¿Estas seguro de querer emitir este certificado?'
+            description='Al emitir este certificado el cliente recibira un correo con el certificado adjunto con las modificaciones realizadas'
+          />
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={(e) => {
@@ -339,7 +366,7 @@ const ActionsItems = ({
         >
           <AlertDialogModal
             nameButton="Eliminar equipo"
-            onConfirm={() => {}}
+            onConfirm={() => { }}
             title="¿Estas seguro de querer eliminar este equipo?"
             description="Al eliminar este equipo no podras recuperar la información"
             buttonStyle={{
