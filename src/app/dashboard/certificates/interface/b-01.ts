@@ -30,19 +30,21 @@ export interface ICertificate_B_01 {
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  description_pattern: DescriptionPattern
+  description_pattern: string
   used_patterns: UsedPatterns
   creditable: boolean
   observations: string
+  withLb: boolean
 }
 
 export interface EquipmentInformation {
-  certificate_code: string
+  certification_code: string
+  service_code: string
   calibration_date: string
-  issue_date: string
-  calibration_object: string
-  brand: string
-  series: string
+  certificate_issue_date: string
+  object_calibrated: string
+  maker: string
+  serial_number: string
   model: string
   measurement_range: string
   resolution: string
@@ -54,7 +56,7 @@ export interface EquipmentInformation {
 
 export interface CalibrationResults {
     result_tests: ResultTest[]
-    result_tests_lb: ResultTest[]
+    result_tests_lb?: ResultTest[]
 }
 
 export interface ResultTest {
@@ -68,8 +70,11 @@ export interface ResultTest {
 
 export interface EnvironmentalConditions {
     temperature: string
+    temperature2: string
     humidity: string
+    humidity2: string
     pressure:string
+    pressure2: string
     stabilization: string
     time: string
   }

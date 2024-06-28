@@ -38,6 +38,7 @@ import { V_01 } from './component/v_01'
 import { M_01 } from './component/m_01'
 import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
+import { Generic_method } from './component/generic_method'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -76,6 +77,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-01': D_01,
   'NI-MCIT-D-02': D_02,
   'NI-MCIT-B-01': B_01,
+  'generic-method': Generic_method,
 }
 
 export default function Page({ params }: IRoot) {
@@ -194,9 +196,14 @@ export default function Page({ params }: IRoot) {
     setLoading(false)
   }
 
-  const handleDeleteEquipment = async (methodID: number, methodsStackID: number) => {
+  const handleDeleteEquipment = async (
+    methodID: number,
+    methodsStackID: number,
+  ) => {
     if (!selectedService?.method_id && !data?.id && !methodID) {
-      return toast('Se necesita un metodo y una actividad para eliminar el equipo')
+      return toast(
+        'Se necesita un metodo y una actividad para eliminar el equipo',
+      )
     }
 
     toast.loading('Eliminando equipo')
@@ -211,7 +218,7 @@ export default function Page({ params }: IRoot) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
-      }
+      },
     })
 
     toast.dismiss()
@@ -221,14 +228,14 @@ export default function Page({ params }: IRoot) {
         description: 'El equipo ha sido eliminado de la actividad',
       })
 
-      setStackServices((prev) => prev.filter((service) => service.id !== methodID))
+      setStackServices((prev) =>
+        prev.filter((service) => service.id !== methodID),
+      )
     } else {
       toast.error('Error al eliminar', {
         description: response.details || response.message,
       })
-
     }
-
   }
 
   useEffect(() => {
@@ -276,8 +283,9 @@ export default function Page({ params }: IRoot) {
             return (
               <CarouselItemComp
                 key={equipment.id}
-                className={`carousel-item ${selectedService?.id === equipment.id ? 'selected' : ''
-                  }`}
+                className={`carousel-item ${
+                  selectedService?.id === equipment.id ? 'selected' : ''
+                }`}
                 onClick={() => handleSelectedService(equipment)}
               >
                 <div>
@@ -343,7 +351,7 @@ export default function Page({ params }: IRoot) {
 
                       const Renderer =
                         RENDERER_METHOD[
-                        selectedMethod as keyof typeof RENDERER_METHOD
+                          selectedMethod as keyof typeof RENDERER_METHOD
                         ]
 
                       return Renderer ? (
@@ -363,13 +371,15 @@ export default function Page({ params }: IRoot) {
                   >
                     <div
                       key={service.id}
-                      className={`activity-viewer__main-info__details__selected__item ${selectedService === service.id ? 'selected' : ''
-                        }`}
+                      className={`activity-viewer__main-info__details__selected__item ${
+                        selectedService === service.id ? 'selected' : ''
+                      }`}
                     >
                       <div className="flex flex-col gap-2">
                         <p>
                           <span>Equipo:</span>{' '}
-                          {service.equipment_information?.device || service.equipment_information?.calibration_object}
+                          {service.equipment_information?.device ||
+                            service.equipment_information?.calibration_object}
                         </p>
                         <p>
                           <span>Codigo:</span>{' '}
@@ -438,12 +448,13 @@ export default function Page({ params }: IRoot) {
                     <p className="flex flex-col">
                       <span>Estado</span>
                       <span
-                        className={`${renderer?.status === 'done'
-                          ? 'text-green-500'
-                          : renderer?.status === 'rejected'
+                        className={`${
+                          renderer?.status === 'done'
+                            ? 'text-green-500'
+                            : renderer?.status === 'rejected'
                             ? 'text-red-500'
                             : 'text-yellow-500'
-                          }`}
+                        }`}
                       >
                         {
                           {
@@ -462,12 +473,12 @@ export default function Page({ params }: IRoot) {
               !data
                 ? []
                 : data?.quote_request?.equipment_quote_request.map(
-                  (equipment) => ({
-                    name: equipment.name,
-                    value: equipment.total,
-                    id: equipment.id,
-                  }),
-                )
+                    (equipment) => ({
+                      name: equipment.name,
+                      value: equipment.total,
+                      id: equipment.id,
+                    }),
+                  )
             }
           />
         </Content>

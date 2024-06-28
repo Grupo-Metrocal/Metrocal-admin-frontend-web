@@ -10,6 +10,7 @@ import { fetchData } from '@/utils/fetch'
 import { D_01 } from '../methods/d_01'
 import { D_02 } from '../methods/d_02'
 import { B_01 } from '../methods/b_01'
+import { Generic_method } from '../methods/generic_method'
 
 const getEquipment = async (id: string, calibration_method: string) => {
   try {
@@ -43,6 +44,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-01': D_01,
   'NI-MCIT-D-02': D_02,
   'NI-MCIT-B-01': B_01,
+  'generic-method': Generic_method,
 }
 export default async function Page({ params }: IRoot) {
   const { slug } = params
@@ -60,7 +62,6 @@ export default async function Page({ params }: IRoot) {
       title={`Modificación de resultados en equipo ${calibration_method}`}
       rollBack
     >
-
       {Renderer ? (
         equipment.data ? (
           <Renderer equipment={equipment.data} activity_id={activity_id} />
