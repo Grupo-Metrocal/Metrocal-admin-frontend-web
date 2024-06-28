@@ -14,7 +14,7 @@ export const EnvironmentalConditions = ({
   ) => void
   environmentalConditions: IEnvironmentalConditions
 }) => {
-  const url = `methods/generic-method/enviromental-condition/`
+  const url = `methods/generic-method/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
 
   return (
@@ -37,7 +37,7 @@ export const EnvironmentalConditions = ({
         <CInput
           label="Equipo utilizado"
           name="equipment_used"
-          value={data.equipment_used}
+          value={data.equipment_used ?? ''}
           onChange={(e) => setData({ ...data, equipment_used: e.target.value })}
         />
       </div>

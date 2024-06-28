@@ -23,7 +23,7 @@ export const ComputerData = ({
         <CInput
           label="Unidad de medida"
           name="unit_of_measurement"
-          value={data.unit_of_measurement}
+          value={data.unit_of_measurement || ''}
           onChange={(e) =>
             setData({ ...data, unit_of_measurement: e.target.value })
           }
@@ -31,7 +31,7 @@ export const ComputerData = ({
         <CInput
           label="Unidad de escala"
           name="scale_unit"
-          value={data.scale_unit}
+          value={data.scale_unit || ''}
           onChange={(e) => setData({ ...data, scale_unit: e.target.value })}
         />
       </div>

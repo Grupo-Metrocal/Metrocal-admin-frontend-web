@@ -13,7 +13,7 @@ export const ResultMedition = ({
   ) => void
   result_medition: IResultMedition
 }) => {
-  const url = `methods/generic-method/result-medition/`
+  const url = `methods/generic-method/results-medition/`
   const [data, setData] = useState(result_medition)
 
   return (
@@ -60,12 +60,12 @@ export const ResultMedition = ({
           </tr>
         </thead>
         <tbody>
-          {data.medition.map((medition, index) => (
+          {data?.medition?.map((medition, index) => (
             <tr key={index}>
               <td>
                 <input
-                  type="text"
-                  value={medition.patron1}
+                  type="number"
+                  value={medition.patron1 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].patron1 = Number(e.target.value)
@@ -75,8 +75,8 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
-                  type="text"
-                  value={medition.equiopo1}
+                  type="number"
+                  value={medition.equiopo1 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].equiopo1 = Number(e.target.value)
@@ -87,8 +87,8 @@ export const ResultMedition = ({
 
               <td>
                 <input
-                  type="text"
-                  value={medition.patron2}
+                  type="number"
+                  value={medition.patron2 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].patron2 = Number(e.target.value)
@@ -98,8 +98,8 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
-                  type="text"
-                  value={medition.equiopo2}
+                  type="number"
+                  value={medition.equiopo2 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].equiopo2 = Number(e.target.value)
@@ -109,8 +109,8 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
-                  type="text"
-                  value={medition.patron3}
+                  type="number"
+                  value={medition.patron3 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].patron3 = Number(e.target.value)
@@ -118,10 +118,10 @@ export const ResultMedition = ({
                   }}
                 />
               </td>
-              <td>  
+              <td>
                 <input
-                  type="text"
-                  value={medition.equiopo3}
+                  type="number"
+                  value={medition.equiopo3 ?? 0}
                   onChange={(e) => {
                     const newMedition = [...data.medition]
                     newMedition[index].equiopo3 = Number(e.target.value)

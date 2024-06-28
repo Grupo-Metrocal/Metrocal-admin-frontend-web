@@ -24,12 +24,12 @@ export const EquipmentInformation = ({
         <CInput
           label="Fecha"
           name="date"
-          value={values.date}
+          value={values.date || ''}
           onChange={handleInputChange}
         />
         <AutocompleteInput
           requiredLabel
-          value={values.device}
+          value={values.device || ''}
           label="Dispositivo"
           name="device"
           onChange={handleInputChange}
@@ -48,24 +48,24 @@ export const EquipmentInformation = ({
         <CInput
           label="Fabricante"
           name="maker"
-          value={values.maker}
+          value={values.maker || ''}
           onChange={handleInputChange}
         />
         <CInput
           label="Número de serie"
           name="serial_number"
-          value={values.serial_number}
+          value={values.serial_number || ''}
           onChange={handleInputChange}
         />
         <CInput
           label="Modelo"
           name="model"
-          value={values.model}
+          value={values.model || ''}
           onChange={handleInputChange}
         />
         <AutocompleteInput
           requiredLabel
-          value={values.measurement_range}
+          value={values.measurement_range || ''}
           label="Rango de medida"
           name="measurement_range"
           onChange={handleInputChange}
@@ -77,26 +77,26 @@ export const EquipmentInformation = ({
         <CInput
           label="Intervalo de escala"
           name="scale_interval"
-          value={values.scale_interval}
+          value={values.scale_interval || ''}
           onChange={handleInputChange}
           type="text"
         />
         <CInput
           label="Código"
           name="code"
-          value={values.code}
+          value={values.code || ''}
           onChange={handleInputChange}
         />
         <CInput
           label="Logitud"
           name="length"
-          value={values.length}
+          value={values.length || ''}
           onChange={handleInputChange}
         />
         <CInput
           label="Sitio de estabilización"
           name="estabilization_site"
-          value={values.estabilization_site}
+          value={values.estabilization_site || ''} 
           onChange={handleInputChange}
         />
       </div>
