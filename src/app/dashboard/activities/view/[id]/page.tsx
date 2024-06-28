@@ -173,6 +173,11 @@ export default function Page({ params }: IRoot) {
   }
 
   const handleSelectedService = async (service: any) => {
+
+    if (!service.method_id) {
+      return toast.error('Este servicio no contiene metodos asociados')
+    }
+
     setSelectedService(service)
     setLoading(true)
 
