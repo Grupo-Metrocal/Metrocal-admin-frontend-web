@@ -21,7 +21,6 @@ export const UnitMeasurements = ({
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <CInput
-          type="number"
           label="Medida"
           name="measure"
           value={values?.measure}
@@ -29,7 +28,7 @@ export const UnitMeasurements = ({
         />
         <CInput
           type="number"
-          label="Resolucion"
+          label="Resolución"
           name="resolution"
           value={values?.resolution}
           onChange={handleInputChange}

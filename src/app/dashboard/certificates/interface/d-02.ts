@@ -29,19 +29,20 @@ export interface ICertificate_D_02 {
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  description_pattern: DescriptionPattern
+  description_pattern: string[]
   used_patterns: UsedPatterns
   creditable: boolean
   observations: string
 }
 
 export interface EquipmentInformation {
-  certificate_code: string
+  certification_code: string
+  service_code: string
   calibration_date: string
-  issue_date: string
-  calibration_object: string
-  brand: string
-  series: string
+  certificate_issue_date: string
+  object_calibrated: string
+  maker: string
+  serial_number: string
   model: string
   measurement_range: string
   resolution: string
@@ -56,18 +57,18 @@ export interface CalibrationResults {
 }
 
 export interface CalibrationAccuracyTest {
-  nominal_value: number
-  actual_length: number
-  current_reading: number
-  deviation: number
-  expanded_uncertainty: number
+  C: number  
+  F: number 
+  K: number 
+  Q: number 
+  W: number 
 }
 
 export interface EnvironmentalConditions {
   temperature: string
   humidity: string
-  stabilization: string
-  time: string
+  temperature2: string
+  humidity2: string
 }
 
 export interface DescriptionPattern {

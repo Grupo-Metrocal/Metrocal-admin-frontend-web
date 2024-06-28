@@ -5,6 +5,7 @@ export const TableB_01 = ({
 }: {
   certificate: ICertificate_B_01
 }) => {
+  console.log(certificate)
   return (
     <div className="table-b-01">
       <section className="table-b-01__equipment-information">
