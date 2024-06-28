@@ -31,7 +31,6 @@
     }
   
     &__calibration-result,
-    &__environmental_conditions,
     &__used_patterns {
       table {
         margin-top: 1.8em;
@@ -67,7 +66,8 @@
       }
     }
   
-    &__observations {
+    &__observations,
+    &__environmental_conditions {
       display: flex;
       flex-direction: column;
       gap: 2em;
