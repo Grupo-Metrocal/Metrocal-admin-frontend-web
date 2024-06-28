@@ -7,6 +7,7 @@ import { Content } from '@/components/Content'
 import { TabsNavigations } from '@/components/Tabs'
 import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
+import { ResultMedition } from './component/result_medition'
 
 export const Generic_method = ({
   equipment,
@@ -67,6 +68,16 @@ export const Generic_method = ({
             Component: () => (
               <EnvironmentalConditions
                 environmentalConditions={equipment.environmental_conditions}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'result_medition',
+            label: 'Medición de resultados',
+            Component: () => (
+              <ResultMedition
+                result_medition={equipment.result_medition}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
