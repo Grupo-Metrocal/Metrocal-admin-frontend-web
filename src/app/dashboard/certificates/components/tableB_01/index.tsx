@@ -86,15 +86,15 @@ export const TableB_01 = ({
             </tr>
           </thead>
           <tbody>
-            {certificate.calibration_results.result_tests.map(
+            {certificate.calibration_results.result_test.map(
               (result, index) => (
                 <tr key={index}>
-                  <td>{result.reference_mass} </td>
-                  <td>{result.equipment_indication}</td>
-                  <td>{result.error}</td>
-                  <td>{result.repeatability}</td>
-                  <td>{result.maximum_eccentricity}</td>
-                  <td>{result.expanded_uncertainty}</td>
+                  <td>{result?.reference_mass ?? ' '} </td>
+                  <td>{result?.equipment_indication ?? ' '}</td>
+                  <td>{result?.error ?? ' '}</td>
+                  <td>{result?.repeatability ?? ' '}</td>
+                  <td>{result?.maximum_eccentricity ?? ' '}</td>
+                  <td>{result?.expanded_uncertainty ?? ' '}</td>
                 </tr>
               ),
             )}
@@ -138,15 +138,24 @@ export const TableB_01 = ({
         <h2>Condiciones ambientales</h2>
         <div>
           <p>Temperatura:</p>
-          <span>( { certificate.environmental_conditions.temperature } {' ± ' } { certificate.environmental_conditions.temperature2 } ) °C</span>
+          <span>
+            ( {certificate.environmental_conditions.temperature1} {' ± '}{' '}
+            {certificate.environmental_conditions.temperature2} ) °C
+          </span>
         </div>
         <div>
           <p>Humedad:</p>
-          <span>( { certificate.environmental_conditions.humidity } { ' ± ' } { certificate.environmental_conditions.humidity2 } ) %HR</span>
+          <span>
+            ( {certificate.environmental_conditions.humidity1} {' ± '}{' '}
+            {certificate.environmental_conditions.humidity2} ) %HR
+          </span>
         </div>
         <div>
           <p>Presión</p>
-          <span>( { certificate.environmental_conditions.pressure } { ' ± ' } { certificate.environmental_conditions.pressure2 } hPa)</span>
+          <span>
+            ( {certificate.environmental_conditions.pressure1} {' ± '}{' '}
+            {certificate.environmental_conditions.pressure2} hPa)
+          </span>
         </div>
       </section>
 
@@ -155,7 +164,7 @@ export const TableB_01 = ({
 
         <div>
           <p>Patrón utilizado:</p>
-          <span>{certificate.description_pattern}</span>
+          <span>{certificate.pattern}</span>
         </div>
 
         <div>
