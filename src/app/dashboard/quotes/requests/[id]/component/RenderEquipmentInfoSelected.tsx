@@ -99,6 +99,9 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               <option value="NI-MCIT-V-01 Acreditado">
                 NI-MCIT-V-01 Acreditado
               </option>
+              <option value="GENERIC_METHOD">
+                Método Genérico de Calibración
+              </option>
               <option value="No Aplica (N/A)">No Aplica (N/A)</option>
             </select>
           </div>
