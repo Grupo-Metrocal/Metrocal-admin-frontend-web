@@ -194,7 +194,7 @@ export default function Page({ params }: Props) {
               <span>Equipo</span>
               <span>Cantidad</span>
               <span>Método de calibración</span>
-              <span>Descuento U. (%)</span>
+              <span>Observación adicional</span>
               <span>Precio U. (USD)</span>
               <span>Precio total (USD)</span>
             </div>
@@ -239,9 +239,11 @@ export default function Page({ params }: Props) {
                   <span data-label="Método de calibración">
                     {equipment.calibration_method || 'N/A'}
                   </span>
-                  <span data-label="Descuento U. (%)">
+                  <span data-label="Observación adicional" className='
+
+                  '>
                     {equipment.status === 'done'
-                      ? equipment.discount + '%'
+                      ? equipment.additional_remarks
                       : '---'}
                   </span>
                   <span data-label="Precio U. (USD)">
