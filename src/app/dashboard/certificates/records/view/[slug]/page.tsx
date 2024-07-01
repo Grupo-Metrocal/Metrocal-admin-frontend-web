@@ -27,7 +27,6 @@ import {
 import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IClient } from '@/app/contactInformation'
 
@@ -53,27 +52,15 @@ const getMethods = async (id: number) => {
 }
 
 const emmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
-  toast.loading('Preparando certificado...', {
-    description: 'Esto puede tardar unos segundos, por favor espere'
-  })
+
   const url = `methods/${method_name.toLowerCase()}/generate-certificate/send/pdf/${activity_id}/${method_id}`
 
-  const response = await fetchData({
+  return await fetchData({
     url,
     headers: {
       Authorization: `Bearer ${getCookie('token')}`,
     }
   })
-
-  toast.dismiss()
-
-  if (response.success) {
-    toast.success('Certificado emitido correctamente')
-  } else {
-    toast.error('Error al emitir el certificado', {
-      description: response.details,
-    })
-  }
 }
 
 export interface IRoot {
@@ -129,6 +116,33 @@ export default function Page({ params }: IRoot) {
     }
 
     setLoading(false)
+  }
+
+  const handleEmmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
+    toast.loading('Preparando certificado...', {
+      description: 'Esto puede tardar unos segundos, por favor espere'
+    })
+    setLoading(true)
+
+    emmitCertificate(method_name, activity_id, method_id).then((response) => {
+
+      if (response.success) {
+        toast.success('Certificado emitido correctamente')
+      } else {
+        toast.error('Error al emitir el certificado', {
+          description: response.details,
+        })
+      }
+    })
+      .catch((error) => {
+        toast.error('Error al emitir el certificado', {
+          description: error.message,
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+        toast.dismiss()
+      })
   }
 
   useEffect(() => {
@@ -295,6 +309,7 @@ export default function Page({ params }: IRoot) {
                           ''
                         }
                         activityID={data?.id || 0}
+                        handleEmmitCertificate={handleEmmitCertificate}
                       />
                     </div>{' '}
                   </div>
@@ -312,11 +327,13 @@ interface IPropsActions {
   equipment: any
   calibration_method: string
   activityID: number
+  handleEmmitCertificate: (method_name: string, activity_id: number, method_id: number) => void
 }
 const ActionsItems = ({
   equipment,
   activityID,
   calibration_method,
+  handleEmmitCertificate,
 }: IPropsActions) => {
   return (
     <DropdownMenu>
@@ -341,7 +358,7 @@ const ActionsItems = ({
           }}
         >
           <AlertDialogModal
-            onConfirm={() => emmitCertificate(calibration_method, activityID, equipment.id)}
+            onConfirm={() => handleEmmitCertificate(calibration_method, activityID, equipment.id)}
             nameButton='Emitir certificado'
             useButton={false}
             title='¿Estas seguro de querer emitir este certificado?'
