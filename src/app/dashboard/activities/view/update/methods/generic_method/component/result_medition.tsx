@@ -64,6 +64,7 @@ export const ResultMedition = ({
             <tr key={index}>
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.patron1 ?? 0}
                   onChange={(e) => {
@@ -75,6 +76,7 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.equiopo1 ?? 0}
                   onChange={(e) => {
@@ -87,6 +89,7 @@ export const ResultMedition = ({
 
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.patron2 ?? 0}
                   onChange={(e) => {
@@ -98,6 +101,7 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.equiopo2 ?? 0}
                   onChange={(e) => {
@@ -109,6 +113,7 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.patron3 ?? 0}
                   onChange={(e) => {
@@ -120,6 +125,7 @@ export const ResultMedition = ({
               </td>
               <td>
                 <input
+                  style={{ textAlign: 'center' }}
                   type="number"
                   value={medition.equiopo3 ?? 0}
                   onChange={(e) => {

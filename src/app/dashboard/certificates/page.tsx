@@ -56,7 +56,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-01': TableD_01,
   'NI-MCIT-D-02': TableD_02,
   'NI-MCIT-B-01': TableB_01,
-  'Generic_Method': TableGenericMethod,
+  'GENERIC_METHOD': TableGenericMethod,
   
 }
 
@@ -120,6 +120,8 @@ export default function Page() {
   }
 
   useEffect(() => {
+    console.log(certificate)
+
     getData()
       .then((data) => {
         if (data.success) {
@@ -208,7 +210,7 @@ export default function Page() {
         colorTitle="green"
         className="mt-4 w-full min-h-[200px]"
       >
-        {loadingCalibration ? (
+        {loadingCalibration  ? (
           <div className="flex mt-4 justify-center">
             <Spinner />
           </div>

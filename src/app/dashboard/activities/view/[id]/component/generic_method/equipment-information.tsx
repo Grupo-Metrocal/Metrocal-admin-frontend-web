@@ -38,7 +38,7 @@ export const EquipmentInformation = ({
         <Item title="Código" value={equipment_information?.code} />
         <Item
           title="Longitud"
-          value={equipment_information?.length.toString()}
+          value={equipment_information?.length}
         />
         <Item
           title="Sitio de estabilización"

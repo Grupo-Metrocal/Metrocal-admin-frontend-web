@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { IComputerData } from '../../../../[id]/interface/generic_method'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { CInput } from '@/components/CInput'
+import { useForm } from '@/hooks/useForm'
 
 export const ComputerData = ({
   computerData,
@@ -15,7 +15,7 @@ export const ComputerData = ({
   computerData: IComputerData
 }) => {
   const url = `methods/generic-method/computer-data/`
-  const [data, setData] = useState(computerData)
+  const { values, handleInputChange } = useForm(computerData)
 
   return (
     <div className="flex flex-col space-y-4">
@@ -23,23 +23,21 @@ export const ComputerData = ({
         <CInput
           label="Unidad de medida"
           name="unit_of_measurement"
-          value={data.unit_of_measurement || ''}
-          onChange={(e) =>
-            setData({ ...data, unit_of_measurement: e.target.value })
-          }
+          value={values.unit_of_measurement || ''}
+          onChange={handleInputChange}
         />
         <CInput
           label="Unidad de escala"
           name="scale_unit"
-          value={data.scale_unit || ''}
-          onChange={(e) => setData({ ...data, scale_unit: e.target.value })}
+          value={values.scale_unit || ''}
+          onChange={handleInputChange}
         />
       </div>
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(data, url)}
+          onConfirm={() => handleSaveInformation(values, url)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',

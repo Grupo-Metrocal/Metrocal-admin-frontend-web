@@ -8,6 +8,7 @@ import { TabsNavigations } from '@/components/Tabs'
 import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
 import { ResultMedition } from './component/result_medition'
+import { ComputerData } from './component/computer_data'
 
 export const Generic_method = ({
   equipment,
@@ -71,6 +72,15 @@ export const Generic_method = ({
                 handleSaveInformation={handleSaveInformation}
               />
             ),
+          },
+          {
+            value: 'computer_data',
+            label: 'Datos de la computadora',
+            Component: () => (
+              <ComputerData
+                computerData={equipment.computer_data}
+                handleSaveInformation={handleSaveInformation}
+              />)
           },
           {
             value: 'result_medition',

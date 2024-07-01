@@ -77,7 +77,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-01': D_01,
   'NI-MCIT-D-02': D_02,
   'NI-MCIT-B-01': B_01,
-  'generic-method': Generic_method,
+  'GENERIC_METHOD': Generic_method,
 }
 
 export default function Page({ params }: IRoot) {
@@ -175,7 +175,6 @@ export default function Page({ params }: IRoot) {
   }
 
   const handleSelectedService = async (service: any) => {
-
     if (!service.method_id) {
       return toast.error('Este servicio no contiene metodos asociados')
     }
