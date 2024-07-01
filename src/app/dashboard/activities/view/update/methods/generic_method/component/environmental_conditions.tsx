@@ -2,6 +2,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/generic_method'
 import { CInput } from '@/components/CInput'
+import { useForm } from '@/hooks/useForm'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -15,7 +16,7 @@ export const EnvironmentalConditions = ({
   environmentalConditions: IEnvironmentalConditions
 }) => {
   const url = `methods/generic-method/environmental-conditions/`
-  const [data, setData] = useState(environmentalConditions)
+  const { values, handleInputChange } = useForm(environmentalConditions)
 
   return (
     <div className="flex flex-col space-y-4">
@@ -24,28 +25,28 @@ export const EnvironmentalConditions = ({
           type="number"
           label="Temperatura"
           name="temperature"
-          value={`${data.temperature ?? 0}`}
-          onChange={(e) => setData({ ...data, temperature: e.target.value })}
+          value={`${values.temperature ?? 0}`}
+          onChange={handleInputChange}
         />
         <CInput
           type="number"
           label="Humedad"
           name="humidity"
-          value={`${data.hr ?? 0}`}
-          onChange={(e) => setData({ ...data, hr: e.target.value })}
+          value={`${values.hr ?? 0}`}
+          onChange={handleInputChange}
         />
         <CInput
           label="Equipo utilizado"
           name="equipment_used"
-          value={data.equipment_used ?? ''}
-          onChange={(e) => setData({ ...data, equipment_used: e.target.value })}
+          value={values.equipment_used ?? ''}
+          onChange={handleInputChange}
         />
       </div>
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(data, url)}
+          onConfirm={() => handleSaveInformation(values, url)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',

@@ -8,6 +8,7 @@ import {
 import { EquipmentInformation } from './equipment-information'
 import { EnvironmentalConditions } from './environmental-conditions'
 import { ComputerData } from './computer-data'
+import { ResultMedition } from './result-medition'
 
 interface Props {
   id: number
@@ -30,6 +31,7 @@ export const Generic_method = ({
   computer_data,
   result_medition,
 }: Props) => {
+
   return (
     <TabsNavigations
       items={[
@@ -65,6 +67,19 @@ export const Generic_method = ({
           Component: () => (
             <ComputerData
               computer_data={computer_data}
+              id={id}
+              method_name={method_name}
+              report_messages={report_messages}
+              report_status={report_status}
+            />
+          ),
+        },
+        {
+          value: 'result_medition',
+          label: 'Resultado de la medición',
+          Component: () => (
+            <ResultMedition 
+            result_medition={result_medition}
               id={id}
               method_name={method_name}
               report_messages={report_messages}
