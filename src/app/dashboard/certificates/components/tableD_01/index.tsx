@@ -99,7 +99,7 @@ export const TableD_01 = ({ certificate }: { certificate: any }) => {
                   <td>{calibrationPoint.G}</td>
                   <td>{calibrationPoint.K}</td>
                   <td>{calibrationPoint.O}</td>
-                  <td>{calibrationPoint.S ? 'N/A' : calibrationPoint.S}</td>
+                  <td>{calibrationPoint.S}</td>
                   <td>{calibrationPoint.W}</td>
                 </tr>
               ),
