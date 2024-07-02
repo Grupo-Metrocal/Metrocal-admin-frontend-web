@@ -282,9 +282,8 @@ export default function Page({ params }: IRoot) {
             return (
               <CarouselItemComp
                 key={equipment.id}
-                className={`carousel-item ${
-                  selectedService?.id === equipment.id ? 'selected' : ''
-                }`}
+                className={`carousel-item ${selectedService?.id === equipment.id ? 'selected' : ''
+                  }`}
                 onClick={() => handleSelectedService(equipment)}
               >
                 <div>
@@ -350,7 +349,7 @@ export default function Page({ params }: IRoot) {
 
                       const Renderer =
                         RENDERER_METHOD[
-                          selectedMethod as keyof typeof RENDERER_METHOD
+                        selectedMethod as keyof typeof RENDERER_METHOD
                         ]
 
                       return Renderer ? (
@@ -370,9 +369,8 @@ export default function Page({ params }: IRoot) {
                   >
                     <div
                       key={service.id}
-                      className={`activity-viewer__main-info__details__selected__item ${
-                        selectedService === service.id ? 'selected' : ''
-                      }`}
+                      className={`activity-viewer__main-info__details__selected__item ${selectedService === service.id ? 'selected' : ''
+                        }`}
                     >
                       <div className="flex flex-col gap-2">
                         <p>
@@ -447,13 +445,12 @@ export default function Page({ params }: IRoot) {
                     <p className="flex flex-col">
                       <span>Estado</span>
                       <span
-                        className={`${
-                          renderer?.status === 'done'
+                        className={`${renderer?.status === 'done'
                             ? 'text-green-500'
                             : renderer?.status === 'rejected'
-                            ? 'text-red-500'
-                            : 'text-yellow-500'
-                        }`}
+                              ? 'text-red-500'
+                              : 'text-yellow-500'
+                          }`}
                       >
                         {
                           {
@@ -472,12 +469,12 @@ export default function Page({ params }: IRoot) {
               !data
                 ? []
                 : data?.quote_request?.equipment_quote_request.map(
-                    (equipment) => ({
-                      name: equipment.name,
-                      value: equipment.total,
-                      id: equipment.id,
-                    }),
-                  )
+                  (equipment) => ({
+                    name: equipment.name,
+                    value: equipment.total,
+                    id: equipment.id,
+                  }),
+                )
             }
           />
         </Content>
@@ -537,7 +534,7 @@ const ActionsItems = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link
-            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}`}
+            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}?increase=false`}
           >
             Modificar Resultados
           </Link>

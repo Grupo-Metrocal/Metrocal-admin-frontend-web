@@ -279,7 +279,7 @@ export default function Page({ params }: IRoot) {
                     onClick={() =>
                       router.push(
                         `/dashboard/activities/view/update/${service.id}/${selectedService?.calibration_method?.split(' ')[0]
-                        }/${data?.id}`,
+                        }/${data?.id}?increase=true`,
                       )
                     }
                   >
