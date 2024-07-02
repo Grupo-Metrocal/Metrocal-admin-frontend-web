@@ -11,6 +11,7 @@ import { LinearityTest } from './component/linearity_test'
 import { EccentricityTest } from './component/eccentricity_test'
 import { RepeatabilityTest } from './component/repeatability_test'
 import { UnitMeasurements } from './component/unit_measurements'
+import { useSearchParams } from 'next/navigation'
 
 export const B_01 = ({
   equipment,
@@ -19,12 +20,17 @@ export const B_01 = ({
   equipment: IB_01
   activity_id: string
 }) => {
+
+  const searchParams = useSearchParams()
+
   const handleSaveInformation = async (
     values: any,
     url: string,
     useActivityID?: boolean,
   ) => {
     toast.loading('Guardando información')
+    const increase = searchParams.get('increase') === 'true' ? true : false
+
 
     url = `${url}${equipment.id}`
 
@@ -40,6 +46,9 @@ export const B_01 = ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
       },
+      params: {
+        increase,
+      }
     })
 
     toast.dismiss()
@@ -104,12 +113,12 @@ export const B_01 = ({
                 handleSaveInformation={handleSaveInformation}
               />
             ),
-          },{
+          }, {
             value: 'unit_of_measurement',
             label: 'Unidad de medida',
             Component: () => (
               <UnitMeasurements
-              unit_of_measurement={equipment.unit_of_measurement}
+                unit_of_measurement={equipment.unit_of_measurement}
                 handleSaveInformation={handleSaveInformation}
               />
             ),

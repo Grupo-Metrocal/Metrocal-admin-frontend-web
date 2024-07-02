@@ -13,6 +13,7 @@ import { PreInstallationComment } from './component/pre_installation_comment'
 import { ExteriorParallelismMeasurement } from './component/exterior_parallelism_measurement'
 import { EnvironmentalConditions } from './component/environmental_conditions'
 import { DescriptionPattern } from './component/description_pattern'
+import { useSearchParams } from 'next/navigation'
 
 export const D_01 = ({
   equipment,
@@ -21,12 +22,16 @@ export const D_01 = ({
   equipment: ID_01
   activity_id: string
 }) => {
+
+  const searchParams = useSearchParams()
+
   const handleSaveInformation = async (
     values: any,
     url: string,
     useActivityID?: boolean,
   ) => {
     toast.loading('Guardando información')
+    const increase = searchParams.get('increase') === 'true' ? true : false
 
     url = `${url}${equipment.id}`
 
@@ -41,6 +46,9 @@ export const D_01 = ({
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
+      },
+      params: {
+        increase,
       },
     })
 
@@ -136,7 +144,7 @@ export const D_01 = ({
             label: 'Medición de paralelismo exterior',
             Component: () => (
               <ExteriorParallelismMeasurement
-              exteriorParallelismMeasurement={
+                exteriorParallelismMeasurement={
                   equipment.exterior_parallelism_measurement
                 }
                 handleSaveInformation={handleSaveInformation}

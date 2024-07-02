@@ -9,6 +9,7 @@ import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
 import { CalibrationsResults } from './component/calibrations_results'
 import { DescriptionPattern } from './component/description_pattern'
+import { useSearchParams } from 'next/navigation'
 
 export const T_05 = ({
   equipment,
@@ -17,12 +18,16 @@ export const T_05 = ({
   equipment: IT_05
   activity_id: string
 }) => {
+
+  const searchParams = useSearchParams()
+
   const handleSaveInformation = async (
     values: any,
     url: string,
     useActivityID?: boolean,
   ) => {
     toast.loading('Guardando información')
+    const increase = searchParams.get('increase') === 'true' ? true : false
 
     url = `${url}${equipment.id}`
 
@@ -40,7 +45,7 @@ export const T_05 = ({
       },
 
       params: {
-        increase: true,
+        increase,
       }
     })
 

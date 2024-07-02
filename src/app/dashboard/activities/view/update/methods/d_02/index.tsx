@@ -12,6 +12,7 @@ import { PreInstallationComment } from './component/pre_installation_comment'
 
 import { InstrumentZeroCheck } from './component/instrument_zero_check'
 import { AccuracyTest } from './component/accuracy_test'
+import { useSearchParams } from 'next/navigation'
 
 export const D_02 = ({
   equipment,
@@ -20,12 +21,17 @@ export const D_02 = ({
   equipment: ID_02
   activity_id: string
 }) => {
+
+  const searchParams = useSearchParams()
+
   const handleSaveInformation = async (
     values: any,
     url: string,
     useActivityID?: boolean,
   ) => {
     toast.loading('Guardando información')
+    const increase = searchParams.get('increase') === 'true' ? true : false
+
 
     url = `${url}${equipment.id}`
 
@@ -41,6 +47,9 @@ export const D_02 = ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
       },
+      params: {
+        increase
+      }
     })
 
     toast.dismiss()

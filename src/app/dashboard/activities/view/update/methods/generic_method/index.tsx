@@ -9,6 +9,7 @@ import { EquipmentInformation } from './component/equipment_information'
 import { EnvironmentalConditions } from './component/environmental_conditions'
 import { ResultMedition } from './component/result_medition'
 import { ComputerData } from './component/computer_data'
+import { useSearchParams } from 'next/navigation'
 
 export const Generic_method = ({
   equipment,
@@ -17,12 +18,17 @@ export const Generic_method = ({
   equipment: IGeneric_method
   activity_id: string
 }) => {
+
+  const searchParams = useSearchParams()
+
   const handleSaveInformation = async (
     values: any,
     url: string,
     useActivityID?: boolean,
   ) => {
     toast.loading('Guardando información')
+    const increase = searchParams.get('increase') === 'true' ? true : false
+
 
     url = `${url}${equipment.id}`
 
@@ -38,6 +44,9 @@ export const Generic_method = ({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie('token')}`,
       },
+      params: {
+        increase,
+      }
     })
 
     toast.dismiss()
