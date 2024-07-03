@@ -31,13 +31,14 @@ export type IQuoteRequestRegistered = {
   client_company_name: string
   approved_by: string
   client_phone: string
+  quote_request_no: string
 }
 
 export type IPagination = {
   limit: number
   offset: number
   status: string[]
-  bussinesName: string
+  no_quote: string
   maxPages: number
 }
 
@@ -55,7 +56,7 @@ export const RegisterQuoteList = () => {
     limit: 10,
     offset: 1,
     status: [],
-    bussinesName: '',
+    no_quote: '',
     maxPages: 0,
   })
 
@@ -125,7 +126,7 @@ export const RegisterQuoteList = () => {
     const fetchFromServer = async () => {
       setIsLoading(true)
       try {
-        const URL = `quotes/registered/all?limit=${pagination.limit}&offset=${pagination.offset}&status=${pagination.status}&bussinesName=${pagination.bussinesName}`
+        const URL = `quotes/registered/all?limit=${pagination.limit}&offset=${pagination.offset}&status=${pagination.status}&no_quote=${pagination.no_quote}`
         const response = await fetchData({
           url: URL,
         })
@@ -172,7 +173,7 @@ export const RegisterQuoteList = () => {
     const getData = setTimeout(() => {
       setPagination((prevPagination) => ({
         ...prevPagination,
-        bussinesName: values.search,
+        no_quote: values.search,
       }))
       setRefresh((prev) => !prev)
     }, 750)
@@ -186,7 +187,7 @@ export const RegisterQuoteList = () => {
         <DataTableDemo<IQuoteRequestRegistered>
           columns={columns({ onDelete: deleteItemRegister })}
           data={data ? data : []}
-          search_by="client_company_name"
+          search_by="no"
           searchValue={values.search}
           handleSearch={handleInputChange}
           setPagination={setPagination}
@@ -198,6 +199,7 @@ export const RegisterQuoteList = () => {
           search_placeholder="Nombre de la empresa"
           filter_columns={{
             client_company_name: 'Empresa',
+            quote_request_no: 'No. de cotización',
             client_phone: 'Teléfono',
             quote_request_price: 'Precio',
             quote_request_created_at: 'Fecha de registro',
@@ -261,6 +263,13 @@ const columns = ({
       },
     },
     {
+      accessorKey: 'quote_request_no',
+      header: () => <div className="text-right">No. de cotización</div>,
+      cell: ({ row }) => (
+        <div className="text-right">{row.getValue('quote_request_no')}</div>
+      ),
+    },
+    {
       accessorKey: 'client_phone',
       header: () => <div className="text-right">Teléfono</div>,
       cell: ({ row }) => (
@@ -315,12 +324,12 @@ const columns = ({
                 status === 'done'
                   ? '#10B981'
                   : status === 'rejected'
-                  ? 'tomato'
-                  : status === 'expired'
-                  ? '#808080'
-                  : status === 'next_expired'
-                  ? '#FFD700'
-                  : '#333333',
+                    ? 'tomato'
+                    : status === 'expired'
+                      ? '#808080'
+                      : status === 'next_expired'
+                        ? '#FFD700'
+                        : '#333333',
 
               borderRadius: '5px',
               color: 'white',
@@ -332,12 +341,12 @@ const columns = ({
             {status === 'done'
               ? 'Aprobado'
               : status === 'rejected'
-              ? 'Rechazado'
-              : status === 'expired'
-              ? 'Expirado'
-              : status === 'next_expired'
-              ? 'Próximo a expirar'
-              : 'Cancelado'}
+                ? 'Rechazado'
+                : status === 'expired'
+                  ? 'Expirado'
+                  : status === 'next_expired'
+                    ? 'Próximo a expirar'
+                    : 'Cancelado'}
           </div>
         )
       },
