@@ -73,13 +73,14 @@ export const QuoteList = ({
             quotes={quotesWaiting}
             onClick={handleRememberQuote}
             onClickContent={handleNavigationView}
+            onClickModify={handleNavigationUpd}
           />
         ) : (
           <Spinner />
         )}
       </div>
       <div className="quotes-container__section quotes-container__section--done">
-        <h3 data-status="done">Aprobadas</h3>
+        <h3 data-status="done">Aprobados</h3>
         {loading ? (
           <RendererQuoteList
             onClickContent={handleNavigationView}
@@ -99,12 +100,14 @@ interface IRendererQuoteList {
   onClick?: (id: number) => void
   onClickContent?: (id: number) => void
   useButton?: boolean
+  onClickModify?: (id: number) => void
 }
 const RendererQuoteList = ({
   quotes,
   onClick,
   onClickContent,
   useButton,
+  onClickModify
 }: IRendererQuoteList) => {
   return (
     <div className="quotes-container__list">
@@ -119,6 +122,7 @@ const RendererQuoteList = ({
             onClickContent={onClickContent}
             className="cursor-pointer"
             useButton={useButton}
+            onClickModify={onClickModify}
           />
         ))
       )}
