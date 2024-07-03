@@ -18,6 +18,7 @@ import { TermsAndConditions } from '@/components/TermsAndConditions'
 import { formatPrice } from '@/utils/formatPrice'
 import commentIcon from '@/assets/icons/comment.svg'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ModifyQuote } from './_components/ModifyQuote'
 
 interface Props {
   params: {
@@ -334,7 +335,8 @@ export default function Page({ params }: Props) {
             <Modal
               nameButton="SOLICITAR MODIFICACIÓN"
               title="Solicitar modificación"
-              Component={() => <h1>Editar</h1>}
+              description='Si desea realizar alguna modificación a la cotización, por favor escriba los cambios que desea realizar y haga clic en "Enviar solicitud". Nos pondremos en contacto con usted para confirmar los cambios realizados.'
+              Component={() => <ModifyQuote id={quote?.id as number} />}
               buttonStyle={{
                 color: '#09f',
                 fontWeight: 'bold',
