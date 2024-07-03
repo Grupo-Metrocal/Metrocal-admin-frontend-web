@@ -19,6 +19,7 @@ import { formatPrice } from '@/utils/formatPrice'
 import commentIcon from '@/assets/icons/comment.svg'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ModifyQuote } from './_components/ModifyQuote'
+import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
 
 interface Props {
   params: {
@@ -59,28 +60,6 @@ export default function Page({ params }: Props) {
 
     getQuoteRequest()
   }, [token])
-
-  const handleGeneratePDF = async () => {
-    toast.loading('Generando PDF...', {
-      description: 'Espere un momento por favor',
-    })
-    const response = await fetchData({
-      url: `quotes/request/pdf/${quote?.id}`,
-      method: 'GET',
-      responseType: 'blob',
-    })
-
-    if (response) {
-      const blob = new Blob([response], { type: 'application/pdf' })
-      const link = document.createElement('a')
-      link.href = window.URL.createObjectURL(blob)
-      link.download = `${quote?.no}.pdf`
-      link.click()
-      toast.success('PDF generado correctamente')
-    } else {
-      toast.error('Error al generar el PDF')
-    }
-  }
 
   const handleApproveQuote = async () => {
     toast.loading('Aprobando cotización...', {
@@ -365,7 +344,7 @@ export default function Page({ params }: Props) {
               nameButton="Guardar como PDF"
               title="Guardar como PDF"
               description="La descarga del PDF se iniciará automáticamente."
-              onConfirm={handleGeneratePDF}
+              onConfirm={() => handleGeneratePDFQuote({ id: quote?.id as number, no: quote?.no as string, company_name: quote?.client?.company_name as string })}
               buttonStyle={{
                 boxShadow: 'none',
                 color: '#333',
