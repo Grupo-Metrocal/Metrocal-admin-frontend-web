@@ -183,7 +183,7 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
     setMembers(activity.team_members)
   }, [activity, flag])
 
-  useEffect(() => {}, [responsable])
+  useEffect(() => { }, [responsable])
 
   return (
     <div className="activity-item" id={activity.id.toString()}>
@@ -244,9 +244,9 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
         </div>
 
         <div className="phone">
-          <h3>Teléfono</h3>
+          <h3>No. Cotización</h3>
           <span className="font-medium">
-            {activity.quote_request?.client.phone}
+            {activity.quote_request?.no}
           </span>
         </div>
 
