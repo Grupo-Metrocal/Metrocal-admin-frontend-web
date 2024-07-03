@@ -2,6 +2,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { IUnitOfMeasurement } from '../../../../[id]/interface/b_01'
 import { CInput } from '@/components/CInput'
 import { useForm } from '@/hooks/useForm'
+import { use } from 'react'
 
 export const UnitMeasurements = ({
   unit_of_measurement,
@@ -38,7 +39,7 @@ export const UnitMeasurements = ({
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(values, url)}
+          onConfirm={() => handleSaveInformation(values, url, true)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
