@@ -29,6 +29,7 @@ import { Modal } from '@/components/Modal'
 import { CButton } from '@/components/CButton'
 import { useRouter } from 'next/navigation'
 import { formatPrice } from '@/utils/formatPrice'
+import { Content } from '@/components/Content'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -74,6 +75,8 @@ export interface IQuote {
   comment: string
   options: string[]
   extras: number
+  quote_modification_message: string
+  quote_modification_status: 'none' | 'pending' | 'done'
 }
 
 export interface IRoot {
@@ -100,6 +103,8 @@ export default function Page({ params }: IRoot) {
     (state) => state.quote.selectedEquipment,
   )
 
+  const [quote, setQuote] = useState<IQuote>()
+
   const status = useAppSelector((state) => state.quote.status)
 
   const dispatch = useAppDispatch()
@@ -119,6 +124,7 @@ export default function Page({ params }: IRoot) {
       const response = await getQuote(id)
 
       if (response.success) {
+        setQuote(response.data as IQuote)
         dispatch(handleDispatchOnLoad(response.data as IQuote))
       }
     }
@@ -135,17 +141,27 @@ export default function Page({ params }: IRoot) {
         status && status === 'waiting'
           ? 'En espera de aprobación del cliente'
           : status === 'done'
-          ? 'Cotización aprobada'
-          : status === 'rejected'
-          ? 'Cotización rechazada'
-          : ''
+            ? 'Cotización aprobada'
+            : status === 'rejected'
+              ? 'Cotización rechazada'
+              : ''
       }
     >
+
+      {
+        quote?.quote_modification_status === 'pending' && (
+          <Content title='Información sobre modificación de cotización'>
+            <p>
+              {quote?.quote_modification_message}
+            </p>
+          </Content>
+        )
+      }
+
       <div className="only-quote">
         <section
-          className={`equipment-container ${
-            equipment?.length > 3 ? 'with-before' : ''
-          }`}
+          className={`equipment-container ${equipment?.length > 3 ? 'with-before' : ''
+            }`}
           data-equipment-length={equipment?.length}
           style={{
             height:
@@ -274,7 +290,7 @@ const Footer = () => {
           type="number"
         />
         <CInput
-          onChange={(e) => {}}
+          onChange={(e) => { }}
           value={subtotal.toString()}
           label="Subtotal"
           dissabled={true}
@@ -283,7 +299,7 @@ const Footer = () => {
           type="number"
         />
         <CInput
-          onChange={(e) => {}}
+          onChange={(e) => { }}
           value={total.toString()}
           label="Total"
           dissabled={true}
