@@ -22,6 +22,7 @@ import {
 } from '@/redux/features/quote/quoteRequestSlice'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useForm } from '@/hooks/useForm'
+import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
 
 export type IQuoteRequestRegistered = {
   id: number
@@ -389,7 +390,21 @@ const columns = ({
                   Actualizar cotización
                 </Linking>
               </DropdownMenuItem>
-              {/* <DropdownMenuItem>Enviar recordatorio</DropdownMenuItem> */}
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <AlertDialogModal
+                  nameButton="Guardar como PDF"
+                  title="Guardar como PDF"
+                  description="La descarga del PDF se iniciará automáticamente."
+                  onConfirm={() => handleGeneratePDFQuote({ id: payment.id, no: payment.quote_request_no, company_name: payment.client_company_name })}
+                  useButton={false}
+                />
+              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 style={{
@@ -413,7 +428,7 @@ const columns = ({
                 />
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu >
         )
       },
     },
