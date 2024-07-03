@@ -19,6 +19,8 @@ export interface IRoot {
   no?: string
   equipment_quote_request: IEquipmentQuoteRequest[]
   client: IClient
+  quote_modification_message: string
+  quote_modification_status: 'none' | 'pending' | 'done'
 }
 
 export interface IEquipmentQuoteRequest {
@@ -128,7 +130,7 @@ export default function Page() {
   return (
     <LayoutPage
       title="Cotizaciones / solicitudes"
-      // Footer={() => <PaginationFooter onClick={handleNextPage} />}
+    // Footer={() => <PaginationFooter onClick={handleNextPage} />}
     >
       <QuoteList
         quotesPending={quotesPending}
