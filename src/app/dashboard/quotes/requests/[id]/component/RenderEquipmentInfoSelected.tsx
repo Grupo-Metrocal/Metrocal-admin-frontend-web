@@ -69,29 +69,17 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               <option value="NI-MCIT-D-02 Acreditado">
                 NI-MCIT-D-02 Acreditado
               </option>
-              <option value="NI-MCIT-FQ-01 Trazable">
-                NI-MCIT-FQ-01 Trazable
-              </option>
               <option value="NI-MCIT-M-01 Acreditado">
                 NI-MCIT-M-01 Acreditado
               </option>
               <option value="NI-MCIT-P-01 Acreditado">
                 NI-MCIT-P-01 Acreditado
               </option>
-              <option value="NI-MCIT-P-02 Trazable">
-                NI-MCIT-P-02 Trazable
-              </option>
               <option value="NI-MCIT-T-01 Acreditado">
                 NI-MCIT-T-01 Acreditado
               </option>
-              <option value="NI-MCIT-T-02 Trazable">
-                NI-MCIT-T-02 Trazable
-              </option>
               <option value="NI-MCIT-T-03 Acreditado">
                 NI-MCIT-T-03 Acreditado
-              </option>
-              <option value="NI-MCIT-T-04 Trazable">
-                NI-MCIT-T-04 Trazable
               </option>
               <option value="NI-MCIT-T-05 Acreditado">
                 NI-MCIT-T-05 Acreditado
