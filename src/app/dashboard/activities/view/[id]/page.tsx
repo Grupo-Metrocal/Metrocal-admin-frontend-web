@@ -295,7 +295,9 @@ export default function Page({ params }: IRoot) {
                   </p>
                   <p className="text-sm">
                     Metodo:{' '}
-                    <span>{equipment.calibration_method.split(' ')[0]}</span>
+                    <span>{
+                      equipment.calibration_method.split(' ')[0] === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : equipment.calibration_method.split(' ')[0]
+                    }</span>
                   </p>
                 </div>
               </CarouselItemComp>
@@ -446,10 +448,10 @@ export default function Page({ params }: IRoot) {
                       <span>Estado</span>
                       <span
                         className={`${renderer?.status === 'done'
-                            ? 'text-green-500'
-                            : renderer?.status === 'rejected'
-                              ? 'text-red-500'
-                              : 'text-yellow-500'
+                          ? 'text-green-500'
+                          : renderer?.status === 'rejected'
+                            ? 'text-red-500'
+                            : 'text-yellow-500'
                           }`}
                       >
                         {
