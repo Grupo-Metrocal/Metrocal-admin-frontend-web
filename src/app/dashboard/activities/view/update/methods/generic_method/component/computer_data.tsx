@@ -23,13 +23,13 @@ export const ComputerData = ({
         <CInput
           label="Unidad de medida"
           name="unit_of_measurement"
-          value={values.unit_of_measurement || ''}
+          value={values?.unit_of_measurement}
           onChange={handleInputChange}
         />
         <CInput
           label="Unidad de escala"
           name="scale_unit"
-          value={values.scale_unit || ''}
+          value={values?.scale_unit}
           onChange={handleInputChange}
         />
       </div>
