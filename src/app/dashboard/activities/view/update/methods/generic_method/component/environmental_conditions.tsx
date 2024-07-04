@@ -25,20 +25,20 @@ export const EnvironmentalConditions = ({
           type="number"
           label="Temperatura"
           name="temperature"
-          value={`${values.temperature ?? 0}`}
+          value={`${values?.temperature}`}
           onChange={handleInputChange}
         />
         <CInput
           type="number"
           label="Humedad"
           name="humidity"
-          value={`${values.hr ?? 0}`}
+          value={`${values?.hr}`}
           onChange={handleInputChange}
         />
         <CInput
           label="Equipo utilizado"
           name="equipment_used"
-          value={values.equipment_used ?? ''}
+          value={values?.equipment_used}
           onChange={handleInputChange}
         />
       </div>
