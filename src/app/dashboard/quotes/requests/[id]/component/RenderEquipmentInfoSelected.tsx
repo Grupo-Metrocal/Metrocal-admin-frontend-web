@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hook'
 import type { IEquipmentQuoteRequest } from '../page'
 import { CInput } from '@/components/CInput'
 import {
+  setAdditionalRemarks,
   setCalibrationRethod,
   setComment,
   setMeasuringRange,
@@ -102,9 +103,12 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
 
       <div className="equipment-info-selected__body">
         <div>
-          <span className='font-semibold'>Puntos de calibración y/u observación adicional:</span>
-
-          <p className='mt-3'>{selectedEquipment?.additional_remarks || 'N/A'}</p>
+          <CInput
+            name='additional_remarks'
+            label='Puntos de calibración y/u observación adicional:'
+            onChange={(e) => { dispatch(setAdditionalRemarks({ id: selectedEquipment?.id, additional_remarks: e.value })) }}
+            value={selectedEquipment?.additional_remarks}
+          />
 
         </div>
         <div>
