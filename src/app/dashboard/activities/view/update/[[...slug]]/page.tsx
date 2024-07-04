@@ -59,7 +59,7 @@ export default async function Page({ params }: IRoot) {
 
   return (
     <LayoutPage
-      title={`Modificación de resultados en equipo ${calibration_method}`}
+      title={`Modificación de resultados en equipo ${calibration_method === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : calibration_method}`}
       rollBack
     >
       {Renderer ? (
