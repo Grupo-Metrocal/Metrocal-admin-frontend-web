@@ -60,8 +60,8 @@ export const ResultMedition = ({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {result_medition.medition.length > 0 ? (
-            result_medition.medition.map((item, index) => (
+          {result_medition?.medition.length > 0 ? (
+            result_medition?.medition.map((item, index) => (
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {item.patron1}
