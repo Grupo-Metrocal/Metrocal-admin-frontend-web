@@ -58,7 +58,7 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               <option value="" disabled>
                 Seleccione el método
               </option>
-              <option value="Comp. Directa Trazable">
+              <option value="GENERIC_METHOD">
                 Comp. Directa Trazable
               </option>
               <option value="NI-MCIT-B-01 Acreditado">
@@ -88,10 +88,7 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               <option value="NI-MCIT-V-01 Acreditado">
                 NI-MCIT-V-01 Acreditado
               </option>
-              <option value="GENERIC_METHOD">
-                Método Genérico de Calibración
-              </option>
-              <option value="No Aplica (N/A)">No Aplica (N/A)</option>
+              <option value="(N/A)">No Aplica (N/A)</option>
             </select>
           </div>
         </div>
