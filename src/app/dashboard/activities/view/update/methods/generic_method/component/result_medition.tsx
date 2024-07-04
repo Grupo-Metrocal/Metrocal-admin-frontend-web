@@ -143,7 +143,7 @@ export const ResultMedition = ({
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(data, url)}
+          onConfirm={() => handleSaveInformation(data, url,true)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
