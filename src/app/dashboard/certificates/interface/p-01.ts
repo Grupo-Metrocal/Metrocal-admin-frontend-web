@@ -40,6 +40,7 @@ export interface ICertificate_P_01 {
   ta_eq_enviromental_conditions: string
   hPa_eq_enviromental_conditions: string
   observations: string
+  CMC: ICMC
 }
 
 export interface EquipmentInformation {
@@ -57,6 +58,14 @@ export interface EquipmentInformation {
   applicant: string
   address: string
   calibration_location: string
+}
+
+export interface ICMC {
+  cmcPoint: string[]
+  cmcPref: string[]
+  uncertaintyCMC: string[]
+  cmc: string[]
+  mincmc: string[]
 }
 
 export interface CalibrationResults {
