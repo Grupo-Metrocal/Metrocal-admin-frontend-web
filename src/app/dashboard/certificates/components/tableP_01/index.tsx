@@ -19,7 +19,7 @@ export const TableP_01 = ({
 }) => {
 
   const { values, handleSelectChange } = useForm({
-    option: 'asterisks'
+    option: certificate.optionsCMCOnCertificate
   })
 
   const handleChangeOptionsCMC = async (target: any) => {
@@ -28,6 +28,11 @@ export const TableP_01 = ({
     const response = await fetchData({
       url: 'methods/options-cmc-on-certificate',
       method: 'POST',
+      body: {
+        optionsCMCOnCertificate: target.target.value,
+        method_id: id,
+        method_name: method_name.replaceAll('-', '_'),
+      },
       headers: {
         'Content-Type': 'application/json',
         Autorization: `Bearer ${getCookie('token')}`,
@@ -38,6 +43,7 @@ export const TableP_01 = ({
 
     if (response.success) {
       toast.success('Se ha cambiado la visualización de la tabla de resultados')
+      handleSelectChange(target)
     } else {
       toast.error('Ha ocurrido un error', {
         description: 'Si el error persiste, contacta con el administrador',
