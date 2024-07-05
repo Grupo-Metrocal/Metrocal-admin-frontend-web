@@ -57,7 +57,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-02': TableD_02,
   'NI-MCIT-B-01': TableB_01,
   'GENERIC_METHOD': TableGenericMethod,
-  
+
 }
 
 export default function Page() {
@@ -210,7 +210,7 @@ export default function Page() {
         colorTitle="green"
         className="mt-4 w-full min-h-[200px]"
       >
-        {loadingCalibration  ? (
+        {loadingCalibration ? (
           <div className="flex mt-4 justify-center">
             <Spinner />
           </div>
@@ -218,7 +218,11 @@ export default function Page() {
           <div className="flex justify-center items-center h-full flex-col gap-8">
             {Renderer ? (
               <>
-                <Renderer certificate={certificate} />
+                <Renderer certificate={certificate}
+                  method_name={certificate.renderer_method}
+                  id={certificate.renderer_method_id}
+                />
+
               </>
             ) : (
               <p className="text-center mt-4">
