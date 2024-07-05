@@ -1,7 +1,14 @@
 import './index.scss'
 import { ICertificate_D_02 } from '../../interface/d-02'
 
-export const TableD_02 = ({ certificate }: { certificate: any }) => {
+export const TableD_02 = ({ certificate,
+  id,
+  method_name,
+}: {
+  certificate: any
+  id: number
+  method_name: string
+}) => {
 
   const certificateData: ICertificate_D_02 = certificate.certificate
 

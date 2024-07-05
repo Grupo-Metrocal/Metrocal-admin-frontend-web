@@ -1,11 +1,50 @@
 import './index.scss'
 import { ICertificate_P_01 } from '../../interface/p-01'
+import { TableCMC } from './_components/tableCMC'
+import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
+import { useForm } from '@/hooks/useForm'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { toast } from 'sonner'
+import { fetchData } from '@/utils/fetch'
+import { getCookie } from 'cookies-next'
 
 export const TableP_01 = ({
   certificate,
+  id,
+  method_name,
 }: {
   certificate: ICertificate_P_01
+  id: number
+  method_name: string
 }) => {
+
+  const { values, handleSelectChange } = useForm({
+    option: 'asterisks'
+  })
+
+  const handleChangeOptionsCMC = async (target: any) => {
+    toast.loading('Cambiando visualización...')
+
+    const response = await fetchData({
+      url: 'methods/options-cmc-on-certificate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Autorization: `Bearer ${getCookie('token')}`,
+      }
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Se ha cambiado la visualización de la tabla de resultados')
+    } else {
+      toast.error('Ha ocurrido un error', {
+        description: 'Si el error persiste, contacta con el administrador',
+      })
+    }
+  }
+
   return (
     <div className="table-p-01">
       <section className="table-p-01__equipment-information">
@@ -72,7 +111,21 @@ export const TableP_01 = ({
       </section>
 
       <section className="table-p-01__calibration-result">
-        <h2>Tabla de resultados de calibración</h2>
+
+        <div className='flex justify-between'>
+          <h2>Tabla de resultados de calibración</h2>
+
+          <Popover>
+            <PopoverTrigger>
+              <span className='text-[#09f]'>Mostrar tabla de la CMC</span>
+            </PopoverTrigger>
+            <PopoverContent
+              className='w-[600px] bg-white'
+            >
+              <TableCMC cmc={certificate.CMC} />
+            </PopoverContent>
+          </Popover>
+        </div>
 
         <table>
           <thead>
@@ -147,6 +200,49 @@ export const TableP_01 = ({
             )}
           </tbody>
         </table>
+
+        <div className='m-5 flex flex-col gap-4'>
+          <span>
+            Visualización de la tabla de resultados
+          </span>
+          <AlertDialogModal
+            useCheckbox={true}
+            onConfirm={() => {
+              handleChangeOptionsCMC(
+                {
+                  target: {
+                    value: values.option === 'change_values' ? 'asterisks' : 'change_values',
+                    name: 'option'
+                  }
+                }
+              )
+            }}
+            nameCheckbox={values.option}
+            checked={values.option === 'asterisks' ? true : false}
+            label="Usar asteriscos"
+            title="
+            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
+          />
+
+          <AlertDialogModal
+            useCheckbox={true}
+            onConfirm={() => {
+              handleChangeOptionsCMC(
+                {
+                  target: {
+                    value: values.option === 'asterisks' ? 'change_values' : 'asterisks',
+                    name: 'option'
+                  }
+                }
+              )
+            }}
+            nameCheckbox={values.option}
+            checked={values.option === 'change_values' ? true : false}
+            label="Cambiar resultados por valores de CMC"
+            title="
+            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
+          />
+        </div>
 
         <section className="table-p-01__environmental-conditions">
           <h2>Condiciones ambientales</h2>

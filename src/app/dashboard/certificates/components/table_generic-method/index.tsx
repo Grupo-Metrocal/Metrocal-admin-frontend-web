@@ -3,8 +3,12 @@ import './index.scss'
 
 export const TableGenericMethod = ({
   certificate,
+  id,
+  method_name,
 }: {
   certificate: ICertificate_Generic_Method
+  id: number
+  method_name: string
 }) => {
   return (
     <div className="table">

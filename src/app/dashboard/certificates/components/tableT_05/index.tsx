@@ -3,8 +3,12 @@ import { ICertificate_T_05 } from '../../interface/t-05'
 
 export const TableT_05 = ({
   certificate,
+  id,
+  method_name,
 }: {
   certificate: ICertificate_T_05
+  id: number
+  method_name: string
 }) => {
   return (
     <div className="table-t-03">
