@@ -41,6 +41,7 @@ export interface ICertificate_P_01 {
   hPa_eq_enviromental_conditions: string
   observations: string
   CMC: ICMC
+  optionsCMCOnCertificate: string
 }
 
 export interface EquipmentInformation {
