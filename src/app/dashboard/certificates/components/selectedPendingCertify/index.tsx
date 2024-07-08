@@ -170,7 +170,7 @@ export const SelectedPendingCertify = ({
     <div className="pending-certificate__selected">
       <div className="client">
         <div className="flex flex-col items-start justify-between">
-          <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+          <h2>{selectedActivity?.quoteRequest?.client.company_name} <span className='text-gray-400'>{selectedActivity?.quoteRequest?.no}</span></h2>
           <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f]'>
             Modificar actividad
           </Link>
