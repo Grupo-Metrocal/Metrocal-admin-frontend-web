@@ -141,24 +141,18 @@ export const TableB_01 = ({
       <section className="table-d-01__environmental_conditions">
         <h2>Condiciones ambientales</h2>
         <div>
-          <p>Temperatura:</p>
           <span>
-            ( {certificate.environmental_conditions.temperature1} {' ± '}{' '}
-            {certificate.environmental_conditions.temperature2} ) °C
+            {certificate.environmental_conditions.temperature}
           </span>
         </div>
         <div>
-          <p>Humedad:</p>
           <span>
-            ( {certificate.environmental_conditions.humidity1} {' ± '}{' '}
-            {certificate.environmental_conditions.humidity2} ) %HR
+            {certificate.environmental_conditions.humidity}
           </span>
         </div>
         <div>
-          <p>Presión</p>
           <span>
-            ( {certificate.environmental_conditions.pressure1} {' ± '}{' '}
-            {certificate.environmental_conditions.pressure2} hPa)
+            {certificate.environmental_conditions.atmospheric_pressure}
           </span>
         </div>
       </section>

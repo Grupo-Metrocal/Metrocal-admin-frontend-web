@@ -55,8 +55,8 @@ export interface EquipmentInformation {
 }
 
 export interface CalibrationResults {
-    result_test: ResultTest[]
-    result_tests_lb?: ResultTest[]
+  result_test: ResultTest[]
+  result_tests_lb?: ResultTest[]
 }
 
 export interface ResultTest {
@@ -69,34 +69,30 @@ export interface ResultTest {
 }
 
 export interface EnvironmentalConditions {
-    temperature1: string
-    temperature2: string
-    humidity1: string
-    humidity2: string
-    pressure1:string
-    pressure2: string
-    stabilization: string
-    time: string
-  }
-  export interface DescriptionPattern {
-    id: number
-    pattern: string
-    observation: any
-    creditable: boolean
-  }
-  
-  export interface UsedPatterns {
-    pressure_pattern: PressurePattern[]
-  }
-  
-  export interface PressurePattern {
-    id: number
-    method: string
-    equipment: string
-    code: string
-    certificate: string
-    traceability: string
-    next_calibration: string
-    created_at: string
-  }
-  
+  temperature: string
+  atmospheric_pressure: string
+  humidity: string
+  stabilization: string
+  time: string
+}
+export interface DescriptionPattern {
+  id: number
+  pattern: string
+  observation: any
+  creditable: boolean
+}
+
+export interface UsedPatterns {
+  pressure_pattern: PressurePattern[]
+}
+
+export interface PressurePattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  next_calibration: string
+  created_at: string
+}
