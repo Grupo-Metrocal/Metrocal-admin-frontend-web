@@ -22,6 +22,8 @@ export const EnvironmentalConditions = ({
     'NI-MCPPT-02',
     'NI-MCPPT-03',
     'NI-MCPPT-04',
+    'NI-MCPPT-05',
+    'NI-MCPPT-06',
   ]
 
   const equipementOPTHPA = ['NI-MCPPT-06']
