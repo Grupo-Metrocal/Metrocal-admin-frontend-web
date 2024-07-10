@@ -74,75 +74,77 @@ export const LinearityTest = ({
         <tbody>
           {Array.isArray(data?.linearity_test)
             ? data.linearity_test.map((test, index) => (
-                <tr key={index} className="text-center">
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.point}
-                      onChange={(e) =>
-                        handleInputChange(e.target.value, 'point', index)
-                      }
-                    />
-                  </td>
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.pointsComposition.join(', ')}
-                      onChange={(e) =>
-                        handleInputChange(
-                          e.target.value.split(', '),
-                          'pointsComposition',
-                          index,
-                        )
-                      }
-                    />
-                  </td>
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.indicationIL}
-                      onChange={(e) =>
-                        handleInputChange(e.target.value, 'indicationIL', index)
-                      }
-                    />
-                  </td>
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.noLoadInfdication}
-                      onChange={(e) =>
-                        handleInputChange(
-                          e.target.value,
-                          'noLoadInfdication',
-                          index,
-                        )
-                      }
-                    />
-                  </td>
-                </tr>
-              ))
+              <tr key={index} className="text-center">
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.point}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, 'point', index)
+                    }
+                  />
+                </td>
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.pointsComposition.join(', ')}
+                    onChange={(e) =>
+                      handleInputChange(
+                        e.target.value.split(', '),
+                        'pointsComposition',
+                        index,
+                      )
+                    }
+                  />
+                </td>
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.indicationIL}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, 'indicationIL', index)
+                    }
+                  />
+                </td>
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.noLoadInfdication}
+                    onChange={(e) =>
+                      handleInputChange(
+                        e.target.value,
+                        'noLoadInfdication',
+                        index,
+                      )
+                    }
+                  />
+                </td>
+              </tr>
+            ))
             : null}
         </tbody>
       </table>
-      <button
+      {/* <button
         onClick={handleAddRow}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
       >
         Agregar Fila
-      </button>
-      <AlertDialogModal
-        title="Guardar modificaciones"
-        description="¿Estás seguro de guardar las modificaciones?"
-        onConfirm={() => handleSaveInformation(data, url, false)}
-        nameButton="Guardar modificaciones"
-        buttonStyle={{
-          margin: '1em 0',
-        }}
-      />
+      </button> */}
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url, false)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
+      </div>
     </div>
   )
 }
