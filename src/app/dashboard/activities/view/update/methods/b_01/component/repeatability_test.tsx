@@ -98,16 +98,18 @@ export const RepeatabilityTest = ({
           ))}
         </tbody>
       </table>
-      <button onClick={handleAddPoint}>Agregar punto</button>
-      <AlertDialogModal
-        title="Guardar modificaciones"
-        description="¿Estás seguro de guardar las modificaciones?"
-        onConfirm={() => handleSaveInformation(data, url)}
-        nameButton="Guardar modificaciones"
-        buttonStyle={{
-          margin: '1em 0',
-        }}
-      />
+      {/* <button onClick={handleAddPoint}>Agregar punto</button> */}
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
+      </div>
     </div>
   )
 }
