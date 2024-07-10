@@ -13,7 +13,7 @@ export const EccentricityTest = ({
   ) => void
   eccentricityTest: IEccentricityTest
 }) => {
-  
+
   const defaultEccentricityTest: IEccentricityTest = {
     pointNumber: 0,
     eccentricity_test: [
@@ -79,46 +79,48 @@ export const EccentricityTest = ({
           {' '}
           {Array.isArray(data?.eccentricity_test)
             ? data?.eccentricity_test?.map((test, index) => (
-                <tr key={index} className="text-center">
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.indicationIL}
-                      onChange={(e) =>
-                        handleInputChange(e.target.value, 'indicationIL', index)
-                      }
-                    />
-                  </td>
-                  <td className="border px-4 py-2">
-                    <input
-                      className="w-full p-1 border rounded"
-                      type="text"
-                      value={test.noLoadInfdication}
-                      onChange={(e) =>
-                        handleInputChange(
-                          e.target.value,
-                          'noLoadInfdication',
-                          index,
-                        )
-                      }
-                    />
-                  </td>
-                </tr>
-              ))
+              <tr key={index} className="text-center">
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.indicationIL}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, 'indicationIL', index)
+                    }
+                  />
+                </td>
+                <td className="border px-4 py-2">
+                  <input
+                    className="w-full p-1 border rounded"
+                    type="text"
+                    value={test.noLoadInfdication}
+                    onChange={(e) =>
+                      handleInputChange(
+                        e.target.value,
+                        'noLoadInfdication',
+                        index,
+                      )
+                    }
+                  />
+                </td>
+              </tr>
+            ))
             : null}
         </tbody>
       </table>
-      <button onClick={handleAddPoint}>Agregar punto</button>
-      <AlertDialogModal
-        title="Guardar modificaciones"
-        description="¿Estás seguro de guardar las modificaciones?"
-        onConfirm={() => handleSaveInformation(data, url)}
-        nameButton="Guardar modificaciones"
-        buttonStyle={{
-          margin: '1em 0',
-        }}
-      />
+      {/* <button onClick={handleAddPoint}>Agregar punto</button> */}
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
+      </div>
     </div>
   )
 }
