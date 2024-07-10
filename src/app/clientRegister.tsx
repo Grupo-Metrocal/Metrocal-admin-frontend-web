@@ -19,7 +19,7 @@ export default function ClientRegister({ reload }: IProps) {
     email: '',
     no_ruc: '',
   }
-  const { values, handleInputChange } = useForm(initialContactInformationForm)
+  const { values, handleInputChange, reset } = useForm(initialContactInformationForm)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -29,6 +29,12 @@ export default function ClientRegister({ reload }: IProps) {
         description: 'Los campos son obligatorios',
       })
       return
+    }
+
+    if (values.no_ruc.length !== 14) {
+      return toast.error('El No. RUC es invalido o esta incompleto', {
+        description: 'Porfavor verifique este campo',
+      })
     }
 
     toast.loading('Registrando cliente...')
@@ -48,6 +54,7 @@ export default function ClientRegister({ reload }: IProps) {
         description: 'Porfavor recargue la página para ver los cambios',
       })
 
+      reset()
       reload && reload()
     } else {
       toast.error('Ops! Ocurrió un error al registrar el cliente', {
@@ -65,8 +72,7 @@ export default function ClientRegister({ reload }: IProps) {
       !requested_by ||
       // !no ||
       !phone ||
-      !email ||
-      !no_ruc
+      !email
     ) {
       return false
     }
