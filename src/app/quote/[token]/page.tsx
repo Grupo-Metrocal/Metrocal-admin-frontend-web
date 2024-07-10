@@ -90,6 +90,19 @@ export default function Page({ params }: Props) {
     }
   }
 
+  const subtotal1 =
+    quote?.equipment_quote_request ?
+      quote?.equipment_quote_request
+        ?.map((equipment: IEquipmentQuoteRequest) =>
+          equipment.status === 'done' ? equipment.total : 0,
+        )
+        .reduce((a, b) => a + b, 0) + quote?.extras
+      : 0
+
+  const general_discount = quote?.general_discount || 0
+  const subtotal2 = subtotal1 - (subtotal1 * general_discount) / 100
+
+
   return error ? (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-2xl font-bold">Error</h1>
@@ -269,36 +282,36 @@ export default function Page({ params }: Props) {
 
           <div className="prices">
             <h4>
-              <span>IVA</span>
-              <span>{quote?.tax}%</span>
-            </h4>
-
-            <h4>
-              <span>Descuento</span>
-              <span>{quote?.general_discount}%</span>
-            </h4>
-
-            <h4>
-              <span>Traslado técnico</span>
+              <span>TRASLADO TÉCNICO ($):</span>
               <span>{formatPrice(quote?.extras || 0)}</span>
             </h4>
-
             <h4>
-              <span>Subtotal</span>
+              <span>SUB-TOTAL ($):</span>
               <span>
-                {formatPrice(
-                  quote?.equipment_quote_request &&
-                  quote?.equipment_quote_request
-                    ?.map((equipment: IEquipmentQuoteRequest) =>
-                      equipment.status === 'done' ? equipment.total : 0,
-                    )
-                    .reduce((a, b) => a + b, 0),
-                )}
+                {formatPrice(subtotal1)}
               </span>
             </h4>
 
             <h4>
-              <span>Total</span>
+              <span>DESCUENTO:</span>
+              <span>{quote?.general_discount}%</span>
+            </h4>
+
+
+            <h4>
+              <span>SUB-TOTAL ($):</span>
+              <span>
+                {formatPrice(subtotal2)}
+              </span>
+            </h4>
+            <h4>
+              <span>I.V.A:</span>
+              <span>{quote?.tax}%</span>
+            </h4>
+
+
+            <h4>
+              <span>TOTAL ($):</span>
               <span>{formatPrice(quote?.price)}</span>
             </h4>
           </div>
