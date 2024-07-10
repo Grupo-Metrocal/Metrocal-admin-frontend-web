@@ -15,18 +15,30 @@ export const UnitMeasurements = ({
   ) => void
   unit_of_measurement: IUnitOfMeasurement
 }) => {
-  const { values, handleInputChange } = useForm({ ...unit_of_measurement })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...unit_of_measurement })
   const url = `methods/ni-mcit-b-01/unit-of-measurement/`
 
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <CInput
-          label="Medida"
-          name="measure"
-          value={values?.measure}
-          onChange={handleInputChange}
-        />
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="measure" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+          <select
+            name="measure"
+            id="measure"
+            defaultValue={values?.measure}
+            value={values?.measure}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+          </select>
+        </div>
         <CInput
           type="number"
           label="Resolución"
