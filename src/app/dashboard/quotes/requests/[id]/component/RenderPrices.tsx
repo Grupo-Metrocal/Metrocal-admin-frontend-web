@@ -129,7 +129,7 @@ export const RenderPrices = () => {
               selectedEquipment.count ? selectedEquipment.count.toFixed(2) : ''
             }
             name="count"
-            onChange={(_) => {}}
+            onChange={(_) => { }}
             dissabled={true}
           />
         </div>
@@ -140,7 +140,7 @@ export const RenderPrices = () => {
             value={
               selectedEquipment.total ? selectedEquipment.total.toFixed(2) : ''
             }
-            onChange={(_) => {}}
+            onChange={(_) => { }}
             icon={dollarIcon}
             dissabled={true}
           />
