@@ -20,11 +20,11 @@ export const EnvironmentalConditions = ({
   const url = `methods/ni-mcit-b-01/enviromental-condition/`
   const [data, setData] = useState(environmentalConditions)
 
-  const equipmentOptions = [
-    'NI-MCPD-01',
-    'NI-MCPD-02',
-    'NI-MCPD-03',
+  const enviromentalOptions = [
+    'NI-MCPPT-01',
     'NI-MCPPT-02',
+    'NI-MCPPT-03',
+    'NI-MCPPT-04',
     'NI-MCPPT-05',
     'NI-MCPPT-06',
   ]
@@ -92,10 +92,9 @@ export const EnvironmentalConditions = ({
     ) {
       toast.dismiss()
       toast.error(
-        `Valor inválido para ${key}: ${value}. ${
-          key === 'hours'
-            ? 'Las horas deben estar entre 0 y 23.'
-            : 'Los minutos deben estar entre 0 y 59.'
+        `Valor inválido para ${key}: ${value}. ${key === 'hours'
+          ? 'Las horas deben estar entre 0 y 23.'
+          : 'Los minutos deben estar entre 0 y 59.'
         }`,
       )
       return
@@ -190,17 +189,19 @@ export const EnvironmentalConditions = ({
               />
             </td>
 
-            <td className="border px-4 py-2">
-              <input
-                className="w-full p-1 border rounded"
-                type="text"
-                value={data?.equipment_used ?? 0}
+            <td>
+              <select name="" id=""
                 onChange={(e) =>
                   handleFieldChange('equipment_used', e.target.value)
                 }
-              />
+              >
+                {enviromentalOptions.map((option) => (
+                  <option value={option} selected={option === data?.equipment_used
+                  }>{option}</option>
+                ))}
+              </select>
             </td>
-           
+
 
             <td className="border px-4 py-2">
               <input
