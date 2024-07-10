@@ -133,6 +133,49 @@ export const TableP_01 = ({
           </Popover>
         </div>
 
+        <div className='m-5 flex flex-col gap-4'>
+          <span>
+            Visualización de la tabla de resultados
+          </span>
+          <AlertDialogModal
+            useCheckbox={true}
+            onConfirm={() => {
+              handleChangeOptionsCMC(
+                {
+                  target: {
+                    value: values.option === 'change_values' ? 'asterisks' : 'change_values',
+                    name: 'option'
+                  }
+                }
+              )
+            }}
+            nameCheckbox={values.option}
+            checked={values.option === 'asterisks' ? true : false}
+            label="Usar asteriscos"
+            title="
+            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
+          />
+
+          <AlertDialogModal
+            useCheckbox={true}
+            onConfirm={() => {
+              handleChangeOptionsCMC(
+                {
+                  target: {
+                    value: values.option === 'asterisks' ? 'change_values' : 'asterisks',
+                    name: 'option'
+                  }
+                }
+              )
+            }}
+            nameCheckbox={values.option}
+            checked={values.option === 'change_values' ? true : false}
+            label="Cambiar resultados por valores de CMC"
+            title="
+            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
+          />
+        </div>
+
         <table>
           <thead>
             <tr>
@@ -207,48 +250,7 @@ export const TableP_01 = ({
           </tbody>
         </table>
 
-        <div className='m-5 flex flex-col gap-4'>
-          <span>
-            Visualización de la tabla de resultados
-          </span>
-          <AlertDialogModal
-            useCheckbox={true}
-            onConfirm={() => {
-              handleChangeOptionsCMC(
-                {
-                  target: {
-                    value: values.option === 'change_values' ? 'asterisks' : 'change_values',
-                    name: 'option'
-                  }
-                }
-              )
-            }}
-            nameCheckbox={values.option}
-            checked={values.option === 'asterisks' ? true : false}
-            label="Usar asteriscos"
-            title="
-            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
-          />
 
-          <AlertDialogModal
-            useCheckbox={true}
-            onConfirm={() => {
-              handleChangeOptionsCMC(
-                {
-                  target: {
-                    value: values.option === 'asterisks' ? 'change_values' : 'asterisks',
-                    name: 'option'
-                  }
-                }
-              )
-            }}
-            nameCheckbox={values.option}
-            checked={values.option === 'change_values' ? true : false}
-            label="Cambiar resultados por valores de CMC"
-            title="
-            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
-          />
-        </div>
 
         <section className="table-p-01__environmental-conditions">
           <h2>Condiciones ambientales</h2>
