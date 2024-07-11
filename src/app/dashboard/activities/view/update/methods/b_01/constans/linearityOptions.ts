@@ -23,7 +23,7 @@ export const linearityOptions = [
   'NI-MCPM-JM-02 (200g)',
   'NI-MCPM-JM-03 (200g ZZ18M)',
   'NI-MCPM-JM-03 (200g ZZ19M)',
-  'NI-MCPM-JM-02 (500g)")',
+  'NI-MCPM-JM-02 (500g)',
   'NI-MCPM-JM-03 (500g ZZ60E)',
   'NI-MCPM-1-01 (1 000g)',
   'NI-MCPM-JM-02 (1 000g)',
