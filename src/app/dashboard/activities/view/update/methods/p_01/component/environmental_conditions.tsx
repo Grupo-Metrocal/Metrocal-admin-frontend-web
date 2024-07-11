@@ -20,7 +20,6 @@ export const EnvironmentalConditions = ({
   const equipmentOptions = [
     'NI-MCPPT-01',
     'NI-MCPPT-02',
-    'NI-MCPPT-03',
     'NI-MCPPT-04',
     'NI-MCPPT-05',
     'NI-MCPPT-06',
