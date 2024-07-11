@@ -195,9 +195,9 @@ export const EnvironmentalConditions = ({
                   handleFieldChange('equipment_used', e.target.value)
                 }
               >
-                {enviromentalOptions.map((option) => (
+                {enviromentalOptions.map((option, index) => (
                   <option value={option} selected={option === data?.equipment_used
-                  }>{option}</option>
+                  } key={index}>{option}</option>
                 ))}
               </select>
             </td>

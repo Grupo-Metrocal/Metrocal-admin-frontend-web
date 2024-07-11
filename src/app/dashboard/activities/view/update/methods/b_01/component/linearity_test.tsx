@@ -96,9 +96,9 @@ export const LinearityTest = ({
                       )
                     }
                   >
-                    {linearityOptions.map((option) => (
+                    {linearityOptions.map((option, index) => (
                       <option value={option} selected={option === test.pointsComposition[0]
-                      }>{option}</option>
+                      } key={index}>{option}</option>
                     ))}
                   </select>
                 </td>
