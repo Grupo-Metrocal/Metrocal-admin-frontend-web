@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ILinearityTest } from '../../../../[id]/interface/b_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { linearityOptions } from '../constans/linearityOptions'
 
 export const LinearityTest = ({
   linearityTest,
@@ -86,10 +87,7 @@ export const LinearityTest = ({
                   />
                 </td>
                 <td className="border px-4 py-2">
-                  <input
-                    className="w-full p-1 border rounded"
-                    type="text"
-                    value={test.pointsComposition.join(', ')}
+                  <select className='w-full p-1 border rounded'
                     onChange={(e) =>
                       handleInputChange(
                         e.target.value.split(', '),
@@ -97,7 +95,12 @@ export const LinearityTest = ({
                         index,
                       )
                     }
-                  />
+                  >
+                    {linearityOptions.map((option) => (
+                      <option value={option} selected={option === test.pointsComposition[0]
+                      }>{option}</option>
+                    ))}
+                  </select>
                 </td>
                 <td className="border px-4 py-2">
                   <input
