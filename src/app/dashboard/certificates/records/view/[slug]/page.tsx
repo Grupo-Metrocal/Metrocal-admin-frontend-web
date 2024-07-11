@@ -29,6 +29,7 @@ import { MoreHorizontal } from 'lucide-react'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useRouter } from 'next/navigation'
 import { IClient } from '@/app/contactInformation'
+import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -371,11 +372,22 @@ const ActionsItems = ({
             e.stopPropagation()
           }}
         >
-          Descargar certificado
+          <AlertDialogModal
+            nameButton='Descargar certificado'
+            title='Descargar certificado'
+            description="La descarga del PDF se iniciará automáticamente."
+            onConfirm={() => handleGeneratePDFCertificate({
+              method_name: calibration_method.replaceAll('-', '_'),
+              method_id: equipment.id,
+              activity_id: activityID,
+              no: equipment.certificate_code
+            })}
+            useButton={false}
+          />
         </DropdownMenuItem>
 
         {/* <DropdownMenuSeparator /> */}
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -392,7 +404,7 @@ const ActionsItems = ({
             }}
             useButton={false}
           />
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   )
