@@ -17,7 +17,7 @@ export const EquipmentInformation = ({
 }) => {
   const { values, handleInputChange } = useForm({
     ...equipment,
-    
+
   })
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = event.target;
@@ -96,12 +96,7 @@ export const EquipmentInformation = ({
           value={values.code}
           onChange={handleInputChange}
         />
-        <CInput
-          label="Logitud"
-          name="length"
-          value={values.length}
-          onChange={handleInputChange}
-        />
+
         <label htmlFor="acredited">
           Acreditado
           <input
