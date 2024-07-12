@@ -293,11 +293,11 @@ export default function Page({ params }: Props) {
             </h4>
 
             <h4>
-              <span>DESCUENTO:</span>
-              <span>{quote?.general_discount}%</span>
+              <span>DESCUENTO ($):</span>
+              <span>{
+                formatPrice(subtotal1 * general_discount / 100)
+              }</span>
             </h4>
-
-
             <h4>
               <span>SUB-TOTAL ($):</span>
               <span>
@@ -305,8 +305,10 @@ export default function Page({ params }: Props) {
               </span>
             </h4>
             <h4>
-              <span>I.V.A:</span>
-              <span>{quote?.tax}%</span>
+              <span>I.V.A ($):</span>
+              <span>{
+                formatPrice(subtotal2 * (quote?.tax || 0) / 100)
+              }</span>
             </h4>
 
 
@@ -386,7 +388,7 @@ export default function Page({ params }: Props) {
       />
 
       <Toaster closeButton />
-    </main>
+    </main >
   )
 }
 
