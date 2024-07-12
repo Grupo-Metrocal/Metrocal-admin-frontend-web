@@ -124,7 +124,7 @@ const renderTableTr = ({
 }: ITableTrProps) => {
   const equipmentList = authorizedServices.map(
     (service: TAuthorizedServices) => {
-      return state?.type_service === service.service && service.equipment
+      return service.equipment
         ? {
           id: service.id,
           name: service.equipment,
@@ -132,6 +132,8 @@ const renderTableTr = ({
         : { id: 0, name: '' }
     },
   )
+
+  console.log('equipmentList', equipmentList.length)
 
   const rangeList = authorizedServices.map((service: TAuthorizedServices) => {
     return state?.name === service.equipment && service.measuring_range !== ''
