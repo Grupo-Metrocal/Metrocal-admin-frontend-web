@@ -5,16 +5,15 @@ export interface IB_01 {
   updated_at: string
   certificate_code?: string
   certificate_url?: string
-  certificate_id?: string 
+  certificate_id?: string
   review_state?: boolean
   review_user_id?: number
   report_status?: boolean
   equipment_information: IEquipmentInformation
   environmental_conditions: IEnvironmentalConditions
-  linearity_test:ILinearityTest
-  eccentricity_test:IEccentricityTest
-  repeatability_test:IRepeatabilityTest
-  unit_of_measurement: IUnitOfMeasurement
+  linearity_test: ILinearityTest
+  eccentricity_test: IEccentricityTest
+  repeatability_test: IRepeatabilityTest
 }
 
 export interface IEquipmentInformation {
@@ -24,6 +23,7 @@ export interface IEquipmentInformation {
   serial_number: string
   measurement_range: string
   resolution: string
+  unit: string
   model: string
   code: string
   length: string
@@ -65,39 +65,32 @@ export interface ITime {
 }
 
 export interface ILinearityTest {
-  linearity_test: ILinearityPoint[];
+  linearity_test: ILinearityPoint[]
 }
 
 interface ILinearityPoint {
-  point: number;
-  pointsComposition: string[];
-  indicationIL: number;
-  noLoadInfdication: number;
+  point: number
+  pointsComposition: string[]
+  indicationIL: number
+  noLoadInfdication: number
 }
 
-
 export interface IEccentricityTest {
-  pointNumber: number;
-  eccentricity_test: IEccentricityPoint[];
+  pointNumber: number
+  eccentricity_test: IEccentricityPoint[]
 }
 
 interface IEccentricityPoint {
-  indicationIL: number;
-  noLoadInfdication: number;
+  indicationIL: number
+  noLoadInfdication: number
 }
 
-
 export interface IRepeatabilityTest {
-  pointNumber: number;
-  repeatability_test: IRepeatabilityPoint[];
+  pointNumber: number
+  repeatability_test: IRepeatabilityPoint[]
 }
 
 interface IRepeatabilityPoint {
-  indicationIL: number;
-  noLoadInfdication: number;
-}
-
-export interface IUnitOfMeasurement {
-  measure: string;
-  resolution: number;
+  indicationIL: number
+  noLoadInfdication: number
 }
