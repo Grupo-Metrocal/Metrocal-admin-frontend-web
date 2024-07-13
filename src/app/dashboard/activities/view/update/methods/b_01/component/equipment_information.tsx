@@ -15,7 +15,12 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({
+
+  const unitOptions = [
+    'lb', 'kg', 'g'
+  ]
+
+  const { values, handleInputChange, handleSelectChange } = useForm({
     ...equipment,
 
   })
@@ -96,6 +101,24 @@ export const EquipmentInformation = ({
           value={values.code}
           onChange={handleInputChange}
         />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+
+          <select name="unit" id="unit"
+            className="border border-gray-300 rounded-md p-2 h-fit"
+
+            onChange={
+              handleSelectChange
+            }
+          >
+            {unitOptions.map((option, index) => (
+              <option value={option} selected={option === values?.unit
+              } key={index}>{option}</option>
+            ))}
+          </select>
+        </div>
 
         <label htmlFor="acredited">
           Acreditado
