@@ -10,7 +10,6 @@ import { EnvironmentalConditions } from './component/environmental_conditions'
 import { LinearityTest } from './component/linearity_test'
 import { EccentricityTest } from './component/eccentricity_test'
 import { RepeatabilityTest } from './component/repeatability_test'
-import { UnitMeasurements } from './component/unit_measurements'
 import { useSearchParams } from 'next/navigation'
 
 export const B_01 = ({
@@ -110,15 +109,6 @@ export const B_01 = ({
             Component: () => (
               <RepeatabilityTest
                 repeatabilityTest={equipment.repeatability_test}
-                handleSaveInformation={handleSaveInformation}
-              />
-            ),
-          }, {
-            value: 'unit_of_measurement',
-            label: 'Unidad de medida',
-            Component: () => (
-              <UnitMeasurements
-                unit_of_measurement={equipment.unit_of_measurement}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
