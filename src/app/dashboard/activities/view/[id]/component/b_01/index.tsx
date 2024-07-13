@@ -5,14 +5,12 @@ import {
   IEquipmentInformation,
   ILinearityTest,
   IRepeatabilityTest,
-  IUnitOfMeasurement,
 } from '../../interface/b_01'
 import { EquipmentInformation } from './equipment-information'
 import { EnvironmentalConditions } from './enviromental-condition'
 import { EccentricityTest } from './eccentricity-test'
 import { LinearityTest } from './linearity-test'
 import { RepeatabilityTest } from './repeatability-test'
-import { UnitOfMeasurement } from './unit-of-measurement'
 
 interface Props {
   equipment_information: IEquipmentInformation
@@ -20,7 +18,6 @@ interface Props {
   eccentricity_test: IEccentricityTest
   linearity_test: ILinearityTest
   repeatability_test: IRepeatabilityTest
-  unit_of_measurement: IUnitOfMeasurement
   id: number
   method_name: string
   report_status: boolean
@@ -33,7 +30,6 @@ export const B_01 = ({
   eccentricity_test,
   linearity_test,
   repeatability_test,
-  unit_of_measurement,
   id,
   method_name,
   report_status,
@@ -107,19 +103,7 @@ export const B_01 = ({
             />
           ),
         },
-        {
-          value: 'unit_of_measurement',
-          label: 'Unidad de medida',
-          Component: () => (
-            <UnitOfMeasurement
-              id={id}
-              method_name={method_name}
-              report_status={report_status}
-              report_messages={report_messages}
-              unit_of_measurement={unit_of_measurement}
-            />
-          ),
-        },
+
       ]}
     />
   )
