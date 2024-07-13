@@ -41,7 +41,7 @@ export const EquipmentInformation = ({
           title="Código"
           value={equipment_information?.code}
         />
-        <Item title="Longitud" value={equipment_information?.length?.toString()} />
+        <Item title="Unidad de medida" value={equipment_information?.unit} />
       </div>
 
       <ReportMethodActivity
