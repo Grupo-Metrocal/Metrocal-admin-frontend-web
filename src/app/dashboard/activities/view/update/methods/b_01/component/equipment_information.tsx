@@ -24,19 +24,13 @@ export const EquipmentInformation = ({
     ...equipment,
 
   })
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = event.target;
-    const newValue = type === 'checkbox' ? checked : value;
 
-    handleInputChange({
-      target: {
-        name,
-        value: newValue,
-      },
-    })
+  const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let { name, checked } = e.target
+
+    handleInputChange({ name, value: checked })
   }
 
-  console.log(values)
   const url = `methods/ni-mcit-b-01/equipment-information/`
   return (
     <div className="flex flex-col space-y-4">
@@ -120,17 +114,22 @@ export const EquipmentInformation = ({
           </select>
         </div>
 
-        <label htmlFor="acredited">
-          Acreditado
-          <input
-            id="acredited"
-            checked={values.acredited}
-            type="checkbox"
-            name="acredited"
-            onChange={handleCheckboxChange}
-            className="ml-2"
-          />
-        </label>
+        <div className="my-4 w-fit">
+          <label
+            htmlFor="creditable"
+            className="text-sm flex items-center cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              name="acredited"
+              id="creditable"
+              checked={values.acredited}
+              onChange={handleCheckedChange}
+              className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
+            />
+            ¿Equipo acreditado?
+          </label>
+        </div>
       </div>
       <div>
         <AlertDialogModal
