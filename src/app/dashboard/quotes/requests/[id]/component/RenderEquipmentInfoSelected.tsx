@@ -7,6 +7,7 @@ import {
   setCalibrationRethod,
   setComment,
   setMeasuringRange,
+  setTypeService,
 } from '@/redux/features/quote/quoteSlice'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
 
@@ -38,7 +39,44 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
 
   return (
     <div className="equipment-info-selected">
+      <div>
+        <h4>Tipo de servicio</h4>
+
+        <div className="table__body__tr__td">
+          <select
+            name="service_type"
+            onChange={(e) => {
+              dispatch(
+                setTypeService({
+                  id: selectedEquipment?.id,
+                  type_service: e.target.value,
+                }),
+              )
+            }}
+            value={selectedEquipment?.type_service}
+            className="p-4 rounded-md border border-gray-300"
+          >
+            <option value="" disabled>
+              Seleccione
+            </option>
+            <option value="Caracterización">Caracterización</option>
+            <option value="Calificación">Calificación</option>
+            <option value="Diagnóstico">Diagnóstico</option>
+            <option value="Calibracion">Calibración</option>
+            <option value="Informe Técnico">Informe Técnico</option>
+            <option value="Mant. Preventivo">Mant. Preventivo</option>
+            <option value="Mant. Correctivo">Mant. Correctivo</option>
+            <option value="Proyecto">Proyecto</option>
+            <option value="Suministro">Suministro</option>
+            <option value="Verificación de Cal">Verificación de Cal</option>
+            <option value="Otros">Otros</option>
+            <option value="No Aplica (N/A)">No Aplica (N/A)</option>
+          </select>
+        </div>
+      </div>
+
       <div className="equipment-info-selected__header">
+
         <div className="">
           <h4>Método de calibración: </h4>
           <div className="table__body__tr__td">
