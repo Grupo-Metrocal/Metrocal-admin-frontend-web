@@ -136,7 +136,7 @@ export const EquipmentInformation = ({
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(values, url)}
+          onConfirm={() => handleSaveInformation(values, url, true)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
