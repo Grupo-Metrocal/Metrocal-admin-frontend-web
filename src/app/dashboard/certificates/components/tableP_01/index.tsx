@@ -1,6 +1,5 @@
 import './index.scss'
 import { ICertificate_P_01 } from '../../interface/p-01'
-import { TableCMC } from './_components/tableCMC'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { useForm } from '@/hooks/useForm'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
@@ -117,64 +116,7 @@ export const TableP_01 = ({
       </section>
 
       <section className="table-p-01__calibration-result">
-
-        <div className='flex justify-between'>
-          <h2>Tabla de resultados de calibración</h2>
-
-          <Popover>
-            <PopoverTrigger>
-              <span className='text-[#09f]'>Mostrar tabla de la CMC</span>
-            </PopoverTrigger>
-            <PopoverContent
-              className='w-[600px] bg-white'
-            >
-              <TableCMC cmc={certificate.CMC} />
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        <div className='m-5 flex flex-col gap-4'>
-          <span>
-            Visualización de la tabla de resultados
-          </span>
-          <AlertDialogModal
-            useCheckbox={true}
-            onConfirm={() => {
-              handleChangeOptionsCMC(
-                {
-                  target: {
-                    value: values.option === 'change_values' ? 'asterisks' : 'change_values',
-                    name: 'option'
-                  }
-                }
-              )
-            }}
-            nameCheckbox={values.option}
-            checked={values.option === 'asterisks' ? true : false}
-            label="Usar asteriscos"
-            title="
-            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
-          />
-
-          <AlertDialogModal
-            useCheckbox={true}
-            onConfirm={() => {
-              handleChangeOptionsCMC(
-                {
-                  target: {
-                    value: values.option === 'asterisks' ? 'change_values' : 'asterisks',
-                    name: 'option'
-                  }
-                }
-              )
-            }}
-            nameCheckbox={values.option}
-            checked={values.option === 'change_values' ? true : false}
-            label="Cambiar resultados por valores de CMC"
-            title="
-            ¿Estás seguro de querer cambiar la visualización de la tabla de resultados?"
-          />
-        </div>
+        <h2>Resultados de la calibración</h2>
 
         <table>
           <thead>
