@@ -55,17 +55,17 @@ export interface EquipmentInformation {
 }
 
 export interface CalibrationResults {
-  result_test: ResultTest[]
+  result_test: ResultTest
   result_tests_lb?: ResultTest[]
 }
 
 export interface ResultTest {
-  reference_mass: number
-  equipment_indication: number
-  error: number
-  repeatability?: number
-  maximum_eccentricity?: number
-  expanded_uncertainty?: number
+  reference_mass: string[]
+  equipment_indication: string[]
+  error: string[]
+  uncertainty: [string, string, string, string, string, string, number, number]
+  repeatability: string[]
+  maximum_eccentricity: string[]
 }
 
 export interface EnvironmentalConditions {
