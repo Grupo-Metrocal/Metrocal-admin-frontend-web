@@ -9,9 +9,10 @@ import { CertifiedRecords } from './components/records'
 import { StatisticsActivity } from './components/statistics'
 import { useForm } from '@/hooks/useForm'
 
-const getRecords = async (page: number, company_name?: string) => {
+const getRecords = async (page: number, no?: string) => {
+
   return await fetchData({
-    url: `activities/certified-activities/${page}/10/${company_name}`,
+    url: `activities/certified-activities/${page}/10/${no}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
