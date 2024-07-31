@@ -58,11 +58,11 @@ export const CertifiedRecords = ({
     <div className="bg-white p-4 rounded-lg">
       {
         <DataTableDemo<ICertifiedRecordsTable>
-          columns={ColumnsCertifiedRecords({ onDelete: () => {} })}
+          columns={ColumnsCertifiedRecords({ onDelete: () => { } })}
           searchValue={searchValue}
           handleSearch={handleInputChange}
           data={records ?? []}
-          search_by="client_company_name"
+          search_by="no"
           setPagination={(event: { target: { value: any } }) => {
             setPagination({
               ...pagination,
