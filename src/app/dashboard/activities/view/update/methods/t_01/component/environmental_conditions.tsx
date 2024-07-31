@@ -34,21 +34,28 @@ export const EnvironmentalConditions = ({
     field: string,
     value: number | string,
   ) => {
+
+
+
     if (
-      isNaN(value as number) &&
-      section !== 'ta.equipment' &&
-      section !== 'hpa.equipment'
+      isNaN(value as number) && field !== 'equipment'
     ) {
       return
     }
+
+    console.log('section', section)
+    console.log('field', field)
+    console.log('value', value)
 
     setData((prev) => {
       const updatedData = { ...prev }
       const sectionFields = section.split('.')
       if (sectionFields.length === 2) {
+
         updatedData.environment[sectionFields[0]][sectionFields[1]][field] =
           value
       } else {
+
         updatedData.environment[
           sectionFields[0] as keyof typeof updatedData.environment
         ][field] = value
