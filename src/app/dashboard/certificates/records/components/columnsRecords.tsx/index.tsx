@@ -14,6 +14,7 @@ import { Linking } from '@/utils/functions'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { ICertifiedRecordsTable } from '../records'
+import { formatDate } from '@/utils/formatDate'
 
 type IColumns = {
   onDelete: (id: number) => void
@@ -24,25 +25,25 @@ export const ColumnsCertifiedRecords = ({
 }: IColumns): ColumnDef<ICertifiedRecordsTable>[] => {
   return [
     {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-          aria-label="Selccionar todo"
-        />
-      ),
-
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Seleccionar"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
+      accessorKey: 'no',
+      header: ({ column }) => {
+        return (
+          <Button
+            variant={'ghost'}
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          >
+            No. Cotización
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => {
+        return (
+          <div className="text-center">{row.getValue('no')}</div>
+        )
+      },
     },
+
     {
       accessorKey: 'client_company_name',
       header: ({ column }) => {
@@ -77,13 +78,7 @@ export const ColumnsCertifiedRecords = ({
       cell: ({ row }) => {
         const date = new Date(row.getValue('emited_date'))
 
-        const formmatted = date.toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-
-        return <div className="text-center">{formmatted}</div>
+        return <div className="text-center">{formatDate(row.getValue('emited_date'))}</div>
       },
     },
     {
