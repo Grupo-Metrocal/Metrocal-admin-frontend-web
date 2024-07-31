@@ -1,5 +1,8 @@
 export const formatDate = (date: string) => {
-  const dateObj = new Date(date);
+  const dateObj = new Date(date)
 
-  return `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+  let month: any = dateObj.getMonth() + 1
+  month = month < 10 ? `0${month}` : month
+
+  return `${dateObj.getFullYear()}-${month}-${dateObj.getDate()}`
 }
