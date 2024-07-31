@@ -74,7 +74,7 @@ export const CertifiedRecords = ({
           currentPage={currentPage}
           totalPages={pagination.total_pages}
           isLoading={loading}
-          search_placeholder="Buscar nombre de client"
+          search_placeholder="Buscar No. cotización"
           filter_columns={{
             client_company_name: 'Empresa',
             client_email: 'Correo del cliente',
