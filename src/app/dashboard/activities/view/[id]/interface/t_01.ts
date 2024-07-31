@@ -28,6 +28,7 @@ export interface IEquipmentInformation {
   model: string
   code: string
   resolution: number
+  probe_type: string
 }
 
 export interface IEnvironmentalConditions {
