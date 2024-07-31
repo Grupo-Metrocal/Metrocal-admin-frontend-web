@@ -37,7 +37,7 @@ export const EquipmentInformation = ({
         <Item title="Unidad" value={equipment_information?.unit} />
         <Item title="Modelo" value={equipment_information?.model} />
         <Item title="Código" value={equipment_information?.code} />
-
+        <Item title="Tipo de sonda" value={equipment_information?.probe_type} />
         <Item
           title="Resolución"
           value={equipment_information?.resolution?.toString()}
