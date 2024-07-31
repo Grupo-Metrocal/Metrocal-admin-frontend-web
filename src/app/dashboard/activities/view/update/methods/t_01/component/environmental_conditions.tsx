@@ -43,10 +43,6 @@ export const EnvironmentalConditions = ({
       return
     }
 
-    console.log('section', section)
-    console.log('field', field)
-    console.log('value', value)
-
     setData((prev) => {
       const updatedData = { ...prev }
       const sectionFields = section.split('.')
