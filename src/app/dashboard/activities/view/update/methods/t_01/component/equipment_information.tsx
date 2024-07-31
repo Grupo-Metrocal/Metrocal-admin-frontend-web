@@ -98,6 +98,25 @@ export const EquipmentInformation = ({
           onChange={handleInputChange}
           type="number"
         />
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="probe_type" className="text-xs font-semibold ">
+            Tipo de sonda
+          </label>
+          <select
+            name="probe_type"
+            id="probe_type"
+            defaultValue={values.probe_type}
+            value={values.probe_type}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="RTD">RTD</option>
+            <option value="TC">TC</option>
+            <option value="Bimetal">Bimetal</option>
+            <option value="Termistor">Termistor</option>
+          </select>
+        </div>
         <CInput
           label="Código"
           name="code"
