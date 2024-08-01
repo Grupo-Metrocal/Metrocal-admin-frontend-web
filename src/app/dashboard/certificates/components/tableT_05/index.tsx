@@ -47,6 +47,10 @@ export const TableT_05 = ({
             <span>{certificate.equipment_information.measurement_range}</span>
           </div>
           <div>
+            <p>Resolución</p>
+            <span>{certificate.equipment_information.resolution}</span>
+          </div>
+          <div>
             <p>Modelo:</p>
             <span>{certificate.equipment_information.model}</span>
           </div>
