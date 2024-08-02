@@ -174,8 +174,8 @@ export const CalibrationsResults = ({
                       onChange={(e) => handleEdit(index, 'balance', e.target.value, null)}
                     >
                       <option value="N/A">N/A</option>
-                      <option value="Precisa Gravimetrics ES Swiss Made">Precisa Gravimetrics ES Swiss Made</option>
-                      <option value="Cobos Precision, S. L.">Cobos Precision, S. L.</option>
+                      <option value="NI-MCBAL-01">NI-MCBAL-01</option>
+                      <option value="NI-MCBAL-02">NI-MCBAL-02</option>
                     </select>
                   </div>
 
@@ -187,9 +187,10 @@ export const CalibrationsResults = ({
                       className="border border-gray-300 rounded-md p-2 h-fit"
                       onChange={(e) => handleEdit(index, 'thermometer', e.target.value, null)}
                     >
-                      <option value="Fluke 971">Fluke 971</option>
-                      <option value="Testo 608-H1">Testo 608-H1</option>
-                      <option value="Extech">Extech</option>
+                      <option value="NI-MCPPT-01">NI-MCPPT-01</option>
+                      <option value="NI-MCPPT-02">NI-MCPPT-02</option>
+                      <option value="NI-MCPPT-05">NI-MCPPT-05</option>
+                      <option value="NI-MCPPT-06">NI-MCPPT-06</option>
                     </select>
                   </div>
                 </div>
