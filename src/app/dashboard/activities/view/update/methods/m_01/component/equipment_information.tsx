@@ -52,6 +52,13 @@ export const EquipmentInformation = ({
           value={values.code}
           onChange={handleInputChange}
         />
+
+        <CInput
+          label="Capacidad máxima"
+          name="maximum_capacity"
+          value={values.maximum_capacity}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <AlertDialogModal

@@ -23,6 +23,7 @@ export interface IEquipmentInformation {
   maker: string
   model: string
   code: string
+  maximum_capacity: number
 }
 
 export interface IEnvironmentalConditions {
@@ -54,7 +55,6 @@ export interface Temperature {
 
 export interface IDescriptionPattern {
   id: number
-  maximum_capacity: number
   observation: string
   creditable: boolean
 }
