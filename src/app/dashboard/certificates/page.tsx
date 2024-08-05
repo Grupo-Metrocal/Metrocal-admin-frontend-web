@@ -19,6 +19,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { TableD_01 } from './components/tableD_01'
 import { TableD_02 } from './components/tableD_02'
 import { TableB_01 } from './components/tableB_01'
+import { TableM_01 } from './components/tableM_01'
 import { TableGenericMethod } from './components/table_generic-method'
 
 const getData = async () => {
@@ -56,8 +57,8 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-01': TableD_01,
   'NI-MCIT-D-02': TableD_02,
   'NI-MCIT-B-01': TableB_01,
+  'NI-MCIT-M-01': TableM_01,
   'GENERIC_METHOD': TableGenericMethod,
-
 }
 
 export default function Page() {
