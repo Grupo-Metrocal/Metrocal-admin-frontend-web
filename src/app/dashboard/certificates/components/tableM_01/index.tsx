@@ -31,7 +31,7 @@ export const TableM_01 = ({
             <span>{certificate.equipment_information.calibration_date}</span>
           </div>
           <div>
-            <p>Equipo calibrado:</p>
+            <p>Objeto de calibración:</p>
             <span>{certificate.equipment_information.device}</span>
           </div>
           <div>
@@ -43,15 +43,11 @@ export const TableM_01 = ({
             <span>{certificate.equipment_information.serial_number}</span>
           </div>
           <div>
-            <p>Cap. nominal/alcance:</p>
-            <span>{certificate.equipment_information.nominal_range}</span>
+            <p>Capacidad máxima:</p>
+            <span>{certificate.equipment_information.maximum_capacity}</span>
           </div>
           <div>
-            <p>División de escala:</p>
-            <span>{certificate.equipment_information.scale_division}</span>
-          </div>
-          <div>
-            <p>Código:</p>
+            <p>Código de identificación:</p>
             <span>{certificate.equipment_information.code}</span>
           </div>
           <div>
