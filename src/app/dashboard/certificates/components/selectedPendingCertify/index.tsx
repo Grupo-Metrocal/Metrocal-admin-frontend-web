@@ -263,11 +263,11 @@ export const SelectedPendingCertify = ({
                 >
                   <span>
                     <span className="font-bold">Equipo:</span>{' '}
-                    <span>{method.equipment_information?.device}</span>
+                    <span>{method.equipment_information?.device || method.equipment_information.calibration_object}</span>
                   </span>
                   <span>
                     <span className="font-bold">No. Serie:</span>{' '}
-                    <span>{method.equipment_information?.serial_number}</span>
+                    <span>{method.equipment_information?.serial_number || 'N/A'}</span>
                   </span>
                   <span>
                     <span className="font-bold">Certificado:</span>{' '}

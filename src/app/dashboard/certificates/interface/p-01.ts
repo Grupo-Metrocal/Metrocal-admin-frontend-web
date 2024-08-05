@@ -12,6 +12,7 @@ export interface IP_01 {
 }
 
 export interface EquipmentInformation {
+  calibration_object: string
   id: number
   device: string
   maker: string
