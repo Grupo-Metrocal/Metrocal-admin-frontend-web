@@ -58,7 +58,7 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="ml">ml</option>
+            <option value="mL">ml</option>
             <option value="L">L</option>
           </select>
         </div>
@@ -102,9 +102,8 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="1">g</option>
-            <option value="2">g</option>
-            <option value="3">kg</option>
+            <option value="Swiss Made">Swiss Made</option>
+            <option value="Cobos">Cobos</option>
           </select>
         </div>
 
@@ -120,7 +119,7 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="1">Accumac</option>
+            <option value="Accumac">Accumac</option>
           </select>
         </div>
 
@@ -139,8 +138,8 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="1">ml</option>
-            <option value="2">L</option>
+            <option value="mL">mL</option>
+            <option value="L">L</option>
           </select>
         </div>
         <div className="flex flex-col gap-[1em]">
@@ -155,10 +154,7 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="1">5 mm</option>
-            <option value="2">10 mm</option>
-            <option value="3">20 mm</option>
-            <option value="4">30 mm</option>
+            <option value="30 mm">30 mm</option>
           </select>
         </div>
         <div className="flex flex-col gap-[1em]">
@@ -173,13 +169,13 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="1">Vidrio borosilicato 3.3</option>
-            <option value="2">Vidrio borosilicato 5.0</option>
-            <option value="3">Vidrio soda Lime</option>
-            <option value="4">Plastico propileno</option>
-            <option value="5">Plastico</option>
-            <option value="6">Acero Inoxidable 304</option>
-            <option value="7">Acero Inoxidable 316</option>
+            <option value="Vidrio borosilicato 3.3">Vidrio borosilicato 3.3</option>
+            <option value="Vidrio borosilicato 5.0">Vidrio borosilicato 5.0</option>
+            <option value="Vidrio soda Lime">Vidrio soda Lime</option>
+            <option value="Plastico propileno">Plastico propileno</option>
+            <option value="Plastico">Plastico</option>
+            <option value="Acero Inoxidable 304">Acero Inoxidable 304</option>
+            <option value="Acero Inoxidable 316">Acero Inoxidable 316</option>
           </select>
         </div>
       </div>
