@@ -287,7 +287,7 @@ export default function Page({ params }: IRoot) {
                     <div className="flex flex-col gap-2">
                       <p>
                         <span>Equipo:</span>{' '}
-                        {service.equipment_information?.device}
+                        {service.equipment_information?.device || service.equipment_information?.calibration_object}
                       </p>
                       <p>
                         <span>Fabricante:</span>{' '}
@@ -295,7 +295,7 @@ export default function Page({ params }: IRoot) {
                       </p>
                       <p>
                         <span>Numero de serie:</span>{' '}
-                        {service.equipment_information?.serial_number}
+                        {service.equipment_information?.serial_number || 'N/A'}
                       </p>
                       <p>
                         <span>Certificado:</span> {service?.certificate_code}
