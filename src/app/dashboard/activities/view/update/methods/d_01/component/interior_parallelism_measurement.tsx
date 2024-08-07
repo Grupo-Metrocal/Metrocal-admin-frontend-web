@@ -16,27 +16,29 @@ export const InteriorParallelismMeasurement = ({
 }) => {
   const url = `methods/ni-mcit-d-01/interior-parallelism-measurement/`
   const [data, setData] = useState({
-    ...(interiorParallelismMeasurement || { measurementsd01: [
-      {
-        nominal_patron: '',
-        verification_lengths: {
-          Exteriors: {
-            x1: 0,
-            x2: 0,
-            x3: 0,
-            x4: 0,
-            x5: 0,
-          },
-          Interiors: {
-            x1: 0,
-            x2: 0,
-            x3: 0,
-            x4: 0,
-            x5: 0,
+    ...(interiorParallelismMeasurement || {
+      measurementsd01: [
+        {
+          nominal_patron: '',
+          verification_lengths: {
+            Exteriors: {
+              x1: 0,
+              x2: 0,
+              x3: 0,
+              x4: 0,
+              x5: 0,
+            },
+            Interiors: {
+              x1: 0,
+              x2: 0,
+              x3: 0,
+              x4: 0,
+              x5: 0,
+            },
           },
         },
-      },
-    ] }),
+      ]
+    }),
   })
 
   const handleNominalPatronChange = (
@@ -57,8 +59,8 @@ export const InteriorParallelismMeasurement = ({
   }
 
   interface IPlaces {
-    Exteriors: IMeditions
-    Interiors: IMeditions
+    Exterior: IMeditions
+    Interior: IMeditions
   }
 
   const handleInputChange = (
@@ -71,6 +73,8 @@ export const InteriorParallelismMeasurement = ({
     newData[index].verification_lengths[place][key] = parseFloat(e.target.value)
     setData({ ...data, measurementsd01: newData })
   }
+
+  console.log('measurementsd01  -->>>>', data.measurementsd01[0])
 
   return (
     <div className="flex flex-col space-y-4">
@@ -107,17 +111,13 @@ export const InteriorParallelismMeasurement = ({
                     className="w-full p-1 border text-center rounded"
                     type="number"
                     step="0.001"
-                    value={
-                      measurement.verification_lengths.Exteriors[
-                        key as keyof IMeditions
-                      ]
-                    }
+                    value={measurement.verification_lengths.Exterior[key as keyof IMeditions]}
                     onChange={(e) =>
                       handleInputChange(
                         e,
                         index,
                         key as keyof IMeditions,
-                        'Exteriors',
+                        'Exterior',
                       )
                     }
                   />
@@ -129,17 +129,13 @@ export const InteriorParallelismMeasurement = ({
                     className="w-full p-1 border text-center rounded"
                     type="number"
                     step="0.001"
-                    value={
-                      measurement.verification_lengths.Interiors[
-                        key as keyof IMeditions
-                      ]
-                    }
+                    value={measurement.verification_lengths.Interior[key as keyof IMeditions]}
                     onChange={(e) =>
                       handleInputChange(
                         e,
                         index,
                         key as keyof IMeditions,
-                        'Interiors',
+                        'Interior',
                       )
                     }
                   />
