@@ -16,7 +16,6 @@ export interface ID_01 {
   instrument_zero_check: IInstrumentzerocheck
   pre_installation_comment: IPreinstallationcomment
   certificate_data: ICertificateData
-
 }
 
 export interface IEquipmentInformation {
@@ -32,33 +31,32 @@ export interface IEquipmentInformation {
 }
 
 export interface IEnvironmentalConditions {
-  id: number;
-  cycles: ICycles;
-  equipment_used: string;
-  time: ITime;
-  stabilization_site: string;
+  id: number
+  cycles: ICycles
+  equipment_used: string
+  time: ITime
+  stabilization_site: string
 }
 
 export interface ICycles {
-  hr: IHr;
-  ta: ITa;
+  hr: IHr
+  ta: ITa
 }
 
 export interface ITa {
-  end: number;
-  initial: number;
+  end: number
+  initial: number
 }
 
 export interface IHr {
-  end: number;
-  initial: number;
+  end: number
+  initial: number
 }
 
 export interface ITime {
-  hours: number;
-  minute: number;
+  hours: number
+  minute: number
 }
-
 
 export interface IDescriptionPattern {
   id: number
@@ -84,7 +82,6 @@ interface IMeditions {
   x5: number
 }
 
-
 //IExteriorParallelismMeasurement
 export interface IExteriorParallelismMeasurement {
   id: number
@@ -109,7 +106,6 @@ interface IMedition {
   x5: number
 }
 
-
 //IInterior_parallelism_measurement
 export interface IInterior_parallelism_measurement {
   id: number
@@ -122,8 +118,8 @@ interface IMeasurements {
 }
 
 interface IPlaces {
-  Exteriors: IMeditions
-  Interiors: IMeditions
+  Exterior: IMeditions
+  Interior: IMeditions
 }
 
 interface IMeditions {
@@ -133,8 +129,6 @@ interface IMeditions {
   x4: number
   x5: number
 }
-
-
 
 //IInstrument_zero_check
 export interface IInstrumentzerocheck {
@@ -151,7 +145,7 @@ export interface IInstrumentzerocheck {
 export interface IPreinstallationcomment {
   id: number
   comment: string
-  accredited : boolean
+  accredited: boolean
 }
 
 //ICertificateData
