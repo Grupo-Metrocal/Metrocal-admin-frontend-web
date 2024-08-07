@@ -11,8 +11,11 @@ interface Props {
 export const TabsNavigations = ({ items }: Props) => {
   return (
     <Tabs defaultValue={items[0]?.value} className="w-full">
-      {/* alinear al inicio */}
-      <TabsList className="flex gap-2 mb-6 justify-start">
+
+      <TabsList className="flex gap-2 mb-6 justify-start
+      flex-wrap h-auto
+
+      ">
         {items?.map((item, index) => (
           <TabsTrigger value={item.value} key={index}>
             {item.label}
