@@ -17,7 +17,7 @@ export const InteriorParallelismMeasurement = ({
 }: InteriorParallelismMeasurementProps) => {
     return (
         <div className="flex flex-col space-y-4">
-            <div className="interior-parallelism-measurement grid grid-row-1 p-4 gap-2">
+            <div className="interior-parallelism-measurement grid grid-row-1 p-4 gap-2 h-[500px] overflow-auto">
                 <div className="grid grid-cols-4 border text-center p-2 font-semibold">
                     <Item title="ID" value={String(id)} />
                     <Item title="Method Name" value={method_name} />
@@ -41,21 +41,21 @@ export const InteriorParallelismMeasurement = ({
                                 <div>
                                     <div className="font-semibold">Verification Lengths:</div>
                                     <div className="grid grid-cols-2 gap-2">
-                                    <div>
+                                        <div>
                                             <div className="font-semibold">Exteriors:</div>
-                                            <Item title="X1" value={String(item?.verification_lengths.Exteriors.x1)} />
-                                            <Item title="X2" value={String(item?.verification_lengths.Exteriors.x2)} />
-                                            <Item title="X3" value={String(item?.verification_lengths.Exteriors.x3)} />
-                                            <Item title="X4" value={String(item?.verification_lengths.Exteriors.x4)} />
-                                            <Item title="X5" value={String(item?.verification_lengths.Exteriors.x5)} />
+                                            <Item title="X1" value={String(item?.verification_lengths.Exterior.x1)} />
+                                            <Item title="X2" value={String(item?.verification_lengths.Exterior.x2)} />
+                                            <Item title="X3" value={String(item?.verification_lengths.Exterior.x3)} />
+                                            <Item title="X4" value={String(item?.verification_lengths.Exterior.x4)} />
+                                            <Item title="X5" value={String(item?.verification_lengths.Exterior.x5)} />
                                         </div>
                                         <div>
                                             <div className="font-semibold">Interiors:</div>
-                                            <Item title="X1" value={String(item?.verification_lengths.Interiors.x1)} />
-                                            <Item title="X2" value={String(item?.verification_lengths.Interiors.x2)} />
-                                            <Item title="X3" value={String(item?.verification_lengths.Interiors.x3)} />
-                                            <Item title="X4" value={String(item?.verification_lengths.Interiors.x4)} />
-                                            <Item title="X5" value={String(item?.verification_lengths.Interiors.x5)} />
+                                            <Item title="X1" value={String(item?.verification_lengths.Interior.x1)} />
+                                            <Item title="X2" value={String(item?.verification_lengths.Interior.x2)} />
+                                            <Item title="X3" value={String(item?.verification_lengths.Interior.x3)} />
+                                            <Item title="X4" value={String(item?.verification_lengths.Interior.x4)} />
+                                            <Item title="X5" value={String(item?.verification_lengths.Interior.x5)} />
                                         </div>
                                     </div>
                                 </div>
@@ -69,17 +69,17 @@ export const InteriorParallelismMeasurement = ({
 };
 
 interface Props {
-  title: string;
-  value: string;
+    title: string;
+    value: string;
 }
 
 export const Item = ({ title, value }: Props) => {
-  return (
-      <div className="p-2">
-          <p className="text-sm font-semibold text-gray-500">{title}</p>
-          <span className="text-sm font-semibold text-gray-800">
-              {value || '---'}
-          </span>
-      </div>
-  );
+    return (
+        <div className="p-2">
+            <p className="text-sm font-semibold text-gray-500">{title}</p>
+            <span className="text-sm font-semibold text-gray-800">
+                {value || '---'}
+            </span>
+        </div>
+    );
 };

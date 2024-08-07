@@ -18,7 +18,7 @@ export const ExteriorMeasurementAccuracy = ({
 }: ExteriorMeasurementAccuracyProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <div className="grid grid-cols-2 gap-4 p-4">
+      <div className="grid grid-cols-2 gap-4 p-4 h-[500px] overflow-auto">
         {exterior_measurement_accuracy?.measure.map((item, index) => (
           <div key={index} className="p-2 col-span-2">
             <div className="font-semibold">Medición {index + 1}</div>

@@ -17,7 +17,7 @@ export const InstrumentalZeroCheck = ({
 }: InstrumentZeroCheckProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <div className="instrument-zero-check grid grid-row-1 p-4 gap-2 bg-gray-100 rounded-lg">
+      <div className="instrument-zero-check grid grid-row-1 p-4 gap-2 bg-gray-100 rounded-lg h-[500px] overflow-auto">
         <div className="grid grid-cols-4 text-center font-semibold">
           <Item title="ID" value={String(id)} />
           <Item title="Method Name" value={method_name} />

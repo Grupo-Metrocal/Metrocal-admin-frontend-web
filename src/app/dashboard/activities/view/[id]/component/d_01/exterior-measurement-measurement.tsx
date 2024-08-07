@@ -17,7 +17,7 @@ export const ExteriorParallelismMeasurement = ({
 }: ExteriorParallelismMeasurementProps) => {
     return (
         <div className="flex flex-col space-y-4">
-            <div className="exterior-measurement-measurement grid grid-row-1 p-4 gap-2">
+            <div className="exterior-measurement-measurement grid grid-row-1 p-4 gap-2 h-[500px] overflow-auto">
                 <div className="text-center font-semibold flex">
                     <Item title="ID" value={String(id)} />
                     <Item title="Method Name" value={method_name} />
