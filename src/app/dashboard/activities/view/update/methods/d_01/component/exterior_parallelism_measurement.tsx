@@ -16,28 +16,30 @@ export const ExteriorParallelismMeasurement = ({
 }) => {
   const url = `methods/ni-mcit-d-01/exterior-parallelism-measurement/`
   const [data, setData] = useState<IExteriorParallelismMeasurement>({
-    ...exteriorParallelismMeasurement || {measurements:[
-      {
-        point_number: [],
-        verification_lengths: {
-          Exterior: {
-            x1: 0,
-            x2: 0,
-            x3: 0,
-            x4: 0,
-            x5: 0,
-          },
-          Interior: {
-            x1: 0,
-            x2: 0,
-            x3: 0,
-            x4: 0,
-            x5: 0,
+    ...exteriorParallelismMeasurement || {
+      measurements: [
+        {
+          point_number: [],
+          verification_lengths: {
+            Exterior: {
+              x1: 0,
+              x2: 0,
+              x3: 0,
+              x4: 0,
+              x5: 0,
+            },
+            Interior: {
+              x1: 0,
+              x2: 0,
+              x3: 0,
+              x4: 0,
+              x5: 0,
+            },
           },
         },
-      },
-    
-    ]},
+
+      ]
+    },
   })
 
   interface IMedition {
@@ -96,7 +98,7 @@ export const ExteriorParallelismMeasurement = ({
             <tr className="text-center" key={index}>
               <td className="border px-4 py-2">
                 <textarea
-                  className="w-full p-1 border text-center rounded"
+                  className="w-full p-1 border text-center rounded resize-none"
                   value={measurement.point_number.join(', ')}
                   onChange={(e) => handlePointNumberChange(e, index)}
                 />
@@ -109,7 +111,7 @@ export const ExteriorParallelismMeasurement = ({
                     step="0.001"
                     value={
                       measurement.verification_lengths.Exterior[
-                        key as keyof IMedition
+                      key as keyof IMedition
                       ]
                     }
                     onChange={(e) =>
@@ -131,7 +133,7 @@ export const ExteriorParallelismMeasurement = ({
                     step="0.001"
                     value={
                       measurement.verification_lengths.Interior[
-                        key as keyof IMedition
+                      key as keyof IMedition
                       ]
                     }
                     onChange={(e) =>
