@@ -36,14 +36,14 @@ export const DescriptionPattern = ({
     <div className="flex flex-col space-y-4">
       <table className="w-full table-auto">
         <thead>
-          <tr className="bg-gray-200">
+          {/* <tr className="bg-gray-200">
             <th className="border px-4 py-2">Patrón utilizado</th>
-          </tr>
+          </tr> */}
         </thead>
         <tbody>
           {patterns?.map((pattern, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">
+              {/* <td className="border px-4 py-2">
                 <input
                   className="w-full p-1 border rounded"
                   type="text"
@@ -51,14 +51,32 @@ export const DescriptionPattern = ({
                   onChange={(e) => handlePatternChange(index, e.target.value)}
                   placeholder="Ingrese el patrón"
                 />
-              </td>
+              </td> */}
+
+              <div className="flex flex-col gap-[1em]">
+                <label htmlFor="unit" className="text-xs font-semibold ">
+                  Patrón utilizado
+                </label>
+                <select
+                  name="pattern"
+                  id="pattern"
+                  defaultValue={values.pattern}
+                  value={pattern}
+                  onChange={(e) => handlePatternChange(index, e.target.value)}
+                  placeholder="Ingrese el patrón"
+                  className="border border-gray-300 rounded-md p-2 h-fit"
+                >
+                  <option value="NI-MCPD-02">NI-MCPD-02</option>
+                  <option value="NI-MCPD-03">NI-MCPD-03</option>
+                </select>
+              </div>
             </tr>
           ))}
-          <tr>
+          {/* <tr>
             <td className="border px-4 py-2">
               <button onClick={handleAddPattern}>Agregar patrón</button>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
       <div>

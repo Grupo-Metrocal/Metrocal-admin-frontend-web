@@ -59,7 +59,7 @@ export const EnvironmentalConditions = ({
 
       return { ...prev, cycles: updatedCycles }
     })
-   
+
   }
 
   const handleFieldChange = (field: string, value: string | number) => {
@@ -76,10 +76,9 @@ export const EnvironmentalConditions = ({
     ) {
       toast.dismiss()
       toast.error(
-        `Valor inválido para ${key}: ${value}. ${
-          key === 'hours'
-            ? 'Las horas deben estar entre 0 y 23.'
-            : 'Los minutos deben estar entre 0 y 59.'
+        `Valor inválido para ${key}: ${value}. ${key === 'hours'
+          ? 'Las horas deben estar entre 0 y 23.'
+          : 'Los minutos deben estar entre 0 y 59.'
         }`,
       )
       return
@@ -97,7 +96,7 @@ export const EnvironmentalConditions = ({
       <table className="w-full table-auto">
         <thead>
           <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Ciclos</th>
+            {/* <th className="border px-4 py-2">Ciclos</th> */}
             <th className="border px-4 py-2">T. A. (ºC) Inicial</th>
             <th className="border px-4 py-2">T. A. (ºC) Final</th>
             <th className="border px-4 py-2">H R (%) Inicial</th>
@@ -110,7 +109,7 @@ export const EnvironmentalConditions = ({
         </thead>
         <tbody>
           <tr className="text-center">
-            <td className="border px-4 py-2">1</td>
+            {/* <td className="border px-4 py-2">1</td> */}
             <td className="border px-4 py-2">
               <input
                 className="w-full p-1 border rounded"
