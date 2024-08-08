@@ -140,7 +140,7 @@ export const TableD_01 = ({ certificate,
         </table>
       </section>
       <section className="table-d-01__measurement_faces">
-        <h2>Caras de medición de exteriores</h2>
+        <h2>Caras de medición de interiores</h2>
         <table>
           <thead>
             <tr>
