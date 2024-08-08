@@ -5,11 +5,10 @@ export const TableD_01 = ({ certificate,
   id,
   method_name,
 }: {
-  certificate: any
+  certificate: ICertificate_D_01
   id: number
   method_name: string
 }) => {
-  const certificateData: ICertificate_D_01 = certificate.certificate
 
   return (
     <div className="table-d-01">
@@ -20,67 +19,67 @@ export const TableD_01 = ({ certificate,
           <div>
             <p>Código de servicio:</p>
             <span>
-              {certificateData.equipment_information.service_code || '---'}
+              {certificate.equipment_information.service_code || '---'}
             </span>
           </div>
           <div>
             <p>Fecha de emisión del certificado:</p>
             <span>
-              {certificateData.equipment_information.certificate_issue_date}
+              {certificate.equipment_information.certificate_issue_date}
             </span>
           </div>
           <div>
             <p>Fecha de calibración:</p>
             <span>
-              {certificateData.equipment_information.calibration_date}
+              {certificate.equipment_information.calibration_date}
             </span>
           </div>
           <div>
             <p>Equipo calibrado:</p>
             <span>
-              {certificateData.equipment_information.object_calibrated}
+              {certificate.equipment_information.object_calibrated}
             </span>
           </div>
           <div>
             <p>Fabricante / Marca:</p>
-            <span>{certificateData.equipment_information.maker}</span>
+            <span>{certificate.equipment_information.maker}</span>
           </div>
           <div>
             <p>No. Serie:</p>
-            <span>{certificateData.equipment_information.serial_number}</span>
+            <span>{certificate.equipment_information.serial_number}</span>
           </div>
           <div>
             <p>Modelo:</p>
-            <span>{certificateData.equipment_information.model}</span>
+            <span>{certificate.equipment_information.model}</span>
           </div>
           <div>
             <p>Rango de medición:</p>
             <span>
-              {certificateData.equipment_information.measurement_range}
+              {certificate.equipment_information.measurement_range}
             </span>
           </div>
           <div>
             <p>Resolución:</p>
-            <span>{certificateData.equipment_information.resolution}</span>
+            <span>{certificate.equipment_information.resolution}</span>
           </div>
           <div>
             <p>Código:</p>
             <span>
-              {certificateData.equipment_information.identification_code}
+              {certificate.equipment_information.code}
             </span>
           </div>
           <div>
             <p>Solicitante:</p>
-            <span>{certificateData.equipment_information.applicant}</span>
+            <span>{certificate.equipment_information.applicant}</span>
           </div>
           <div>
             <p>Dirección del solicitante:</p>
-            <span>{certificateData.equipment_information.address}</span>
+            <span>{certificate.equipment_information.address}</span>
           </div>
           <div>
             <p>Ubicación de calibración:</p>
             <span>
-              {certificateData.equipment_information.calibration_location}
+              {certificate.equipment_information.calibration_location}
             </span>
           </div>
         </div>
@@ -99,18 +98,29 @@ export const TableD_01 = ({ certificate,
             </tr>
           </thead>
           <tbody>
-            {certificateData.calibration_results.calibration_points.map(
-              (calibrationPoint) => (
-                <tr key={calibrationPoint.C}>
-                  <td>{calibrationPoint.C}</td>
-                  <td>{calibrationPoint.G}</td>
-                  <td>{calibrationPoint.K}</td>
-                  <td>{calibrationPoint.O}</td>
-                  <td>{calibrationPoint.S}</td>
-                  <td>{calibrationPoint.W}</td>
+            {certificate.calibrations.calibration_result.calibration_point.map(
+              (calibrationPoint, index) => (
+                <tr key={index}>
+                  <td>{calibrationPoint}</td>
+                  <td>
+                    {certificate.calibrations.calibration_result.nominal_value[index]}
+                  </td>
+                  <td>
+                    {certificate.calibrations.calibration_result.value[index]}
+                  </td>
+                  <td>
+                    {certificate.calibrations.calibration_result.current_reading[index]}
+                  </td>
+                  <td>
+                    {certificate.calibrations.calibration_result.deviation[index]}
+                  </td>
+                  <td>
+                    {certificate.calibrations.calibration_result.uncertainty[index]}
+                  </td>
                 </tr>
               ),
             )}
+
           </tbody>
         </table>
       </section>
@@ -126,16 +136,29 @@ export const TableD_01 = ({ certificate,
             </tr>
           </thead>
           <tbody>
-            {certificateData.calibration_results.exterior_measurement_faces.map(
-              (measurementFace, index) => (
+            {certificate.calibrations.calibration_result_outside.current_reading_outside.map(
+              (nominalValue, index) => (
                 <tr key={index}>
-                  <td>{measurementFace.position ? 'Superior' : 'Inferior'}</td>
-                  <td>{measurementFace.E || ''}</td>
-                  <td>{measurementFace.H || ''}</td>
-                  <td>{measurementFace.L || ''}</td>
+                  <td>
+                    {
+                      index % 2 === 0 ? 'Superior' : 'Inferior'
+                    }
+                  </td>
+                  <td
+                  >
+                    {certificate.calibrations.calibration_result_outside.nominal_value_outside[index]}
+                  </td>
+                  <td>
+                    {nominalValue}
+                  </td>
+                  <td
+                  >
+                    {certificate.calibrations.calibration_result_outside.deviation_outside[index]}
+                  </td>
                 </tr>
-              ),
+              )
             )}
+
           </tbody>
         </table>
       </section>
@@ -151,16 +174,29 @@ export const TableD_01 = ({ certificate,
             </tr>
           </thead>
           <tbody>
-            {certificateData.calibration_results.interior_measurement_faces.map(
-              (measurementFace, index) => (
-                <tr key={index}>
-                  <td>{measurementFace.position ? 'Superior' : 'Inferior'}</td>
-                  <td>{measurementFace.T || ''}</td>
-                  <td>{measurementFace.W || ''}</td>
-                  <td>{measurementFace.Z || ''}</td>
-                </tr>
-              ),
-            )}
+            {
+              certificate.calibrations.calibration_result_inside.current_reading_inside.map(
+                (nominalValue, index) => (
+                  <tr key={index}>
+                    <td>
+                      {
+                        index % 2 === 0 ? 'Superior' : 'Inferior'
+                      }
+                    </td>
+                    <td
+                    >
+                      {certificate.calibrations.calibration_result_inside.nominal_value_inside[index]}
+                    </td>
+                    <td>
+                      {nominalValue}
+                    </td>
+                    <td>
+                      {certificate.calibrations.calibration_result_inside.deviation_inside[index]}
+                    </td>
+                  </tr>
+                )
+              )
+            }
           </tbody>
         </table>
       </section>
@@ -171,12 +207,12 @@ export const TableD_01 = ({ certificate,
           <div>
             <p>Temperatura ambiente:</p>
             <span>
-              {certificateData.environmental_conditions.temperature} (°C)
+              {certificate.environmental_conditions.temperature} (°C)
             </span>
           </div>
           <div>
             <p>Humedad relativa:</p>
-            <span>{certificateData.environmental_conditions.humidity} (%)</span>
+            <span>{certificate.environmental_conditions.humidity} (%)</span>
           </div>
         </div>
       </section>
@@ -185,13 +221,13 @@ export const TableD_01 = ({ certificate,
 
         <div>
           <p>Patrón utilizado:</p>
-          <span>{certificateData.description_pattern.join(', ')}</span>
+          <span>{certificate.descriptionPattern.calibration_method_used.method}</span>
         </div>
 
         <div>
           <p>
             Este certificado{' '}
-            {certificateData.creditable
+            {certificate.creditable
               ? 'es acreditado ✅'
               : 'no es acreditado'}
           </p>
@@ -199,7 +235,7 @@ export const TableD_01 = ({ certificate,
 
         <div>
           <p>Observaciones adicionales</p>
-          <span>{certificateData.observations}</span>
+          <span>{certificate.observations}</span>
         </div>
       </section>
     </div>
