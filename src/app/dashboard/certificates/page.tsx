@@ -121,8 +121,6 @@ export default function Page() {
   }
 
   useEffect(() => {
-    console.log(certificate)
-
     getData()
       .then((data) => {
         if (data.success) {
