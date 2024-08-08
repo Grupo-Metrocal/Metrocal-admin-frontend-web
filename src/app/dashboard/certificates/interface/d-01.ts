@@ -28,10 +28,9 @@ export interface ICertificate_D_01 {
   pattern: string
   email: string
   equipment_information: EquipmentInformation
-  calibration_results: CalibrationResults
+  calibrations: Calibrations
   environmental_conditions: EnvironmentalConditions
-  description_pattern: string[]
-  used_patterns: UsedPatterns
+  descriptionPattern: DescriptionPattern
   creditable: boolean
   observations: string
 }
@@ -47,71 +46,65 @@ export interface EquipmentInformation {
   model: string
   measurement_range: string
   resolution: string
-  identification_code: string
+  code: string
   applicant: string
   address: string
   calibration_location: string
 }
 
-export interface CalibrationPoint {
-  C: number
-  G: number
-  K: number
-  O: number
-  S: number
-  W: number
+export interface Calibrations {
+  calibration_result: CalibrationResult
+  calibration_result_inside: CalibrationResultInside
+  calibration_result_outside: CalibrationResultOutside
 }
 
-export interface MeasurementFace {
-  position: boolean
-  H: string
-  L?: string
-  E?: number
+export interface CalibrationResult {
+  calibration_point: string[]
+  nominal_value: string[]
+  value: string[]
+  current_reading: string[]
+  deviation: string[]
+  uncertainty: string[]
 }
 
-export interface MeasurementFaceInterior {
-  position: boolean
-  T: string
-  W?: string
-  Z?: number
+export interface CalibrationResultInside {
+  nominal_value_inside: string[]
+  current_reading_inside: string[]
+  deviation_inside: string[]
 }
 
-export interface Current_reading {
-  interior_point: number
-  exterior_point: number
-}
-
-export interface CalibrationResults {
-  calibration_points: CalibrationPoint[]
-  exterior_measurement_faces: MeasurementFace[]
-  interior_measurement_faces: MeasurementFaceInterior[]
+export interface CalibrationResultOutside {
+  nominal_value_outside: [
+    string,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ]
+  current_reading_outside: string[]
+  deviation_outside: string[]
 }
 
 export interface EnvironmentalConditions {
   temperature: string
   humidity: string
-  stabilization: string
-  time: string
 }
 
 export interface DescriptionPattern {
-  id: number
-  pattern: string
-  observation: any
-  creditable: boolean
+  calibration_method_used: CalibrationMethodUsed
 }
 
-export interface UsedPatterns {
-  pressure_pattern: PressurePattern[]
-}
-
-export interface PressurePattern {
+export interface CalibrationMethodUsed {
   id: number
   method: string
   equipment: string
   code: string
   certificate: string
   traceability: string
+  pattern_range: string
   next_calibration: string
   created_at: string
 }
