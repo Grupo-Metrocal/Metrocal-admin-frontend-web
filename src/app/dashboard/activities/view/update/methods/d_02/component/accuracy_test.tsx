@@ -15,24 +15,26 @@ export const AccuracyTest = ({
 }) => {
   const url = `methods/ni-mcit-d-02/accuracy-test/`
   const [data, setData] = useState<IAccuracyTest>({
-    ...(accuracyTest || { measureD02: [
-      {
-        nominal_value: [],
-        varification_lengths: {
-          x1: 0,
-          x2: 0,
-          x3: 0,
-          x4: 0,
-          x5: 0,
-          x6: 0,
-          x7: 0,
-          x8: 0,
-          x9: 0,
-          x10: 0,
+    ...(accuracyTest || {
+      measureD02: [
+        {
+          nominal_value: [],
+          varification_lengths: {
+            x1: 0,
+            x2: 0,
+            x3: 0,
+            x4: 0,
+            x5: 0,
+            x6: 0,
+            x7: 0,
+            x8: 0,
+            x9: 0,
+            x10: 0,
+          },
         },
-      },
-    
-    ] }),
+
+      ]
+    }),
   })
 
   type VerificationLengthKeys =
@@ -191,15 +193,17 @@ export const AccuracyTest = ({
           ))}
         </tbody>
       </table>
-      <AlertDialogModal
-        title="Guardar modificaciones"
-        description="¿Estás seguro de guardar las modificaciones?"
-        onConfirm={() => handleSaveInformation(data, url, true)}
-        nameButton="Guardar modificaciones"
-        buttonStyle={{
-          margin: '1em 0',
-        }}
-      />
+      <div>
+        <AlertDialogModal
+          title="Guardar modificaciones"
+          description="¿Estás seguro de guardar las modificaciones?"
+          onConfirm={() => handleSaveInformation(data, url, true)}
+          nameButton="Guardar modificaciones"
+          buttonStyle={{
+            margin: '1em 0',
+          }}
+        />
+      </div>
     </div>
   )
 }
