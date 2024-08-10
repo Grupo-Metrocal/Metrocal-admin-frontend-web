@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_T_03 } from '../../interface/t-03'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableT_03 = ({
   certificate,
@@ -91,18 +92,18 @@ export const TableT_03 = ({
             {certificate.calibration_results.pattern_indication.map(
               (item: any, index: any) => (
                 <tr key={index}>
-                  <td>{item}</td>
+                  <td>{renderValue(item)}</td>
                   <td>
                     {
-                      certificate.calibration_results.instrument_indication[index]
+                      renderValue(certificate.calibration_results.instrument_indication[index])
                     }
                   </td>
                   <td>
-                    {certificate.calibration_results.correction[index]}
+                    {renderValue(certificate.calibration_results.correction[index])}
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.uncertainty[index]
+                      renderValue(certificate.calibration_results.uncertainty[index])
                     }
                   </td>
                 </tr>

@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_B_01 } from '../../interface/b-01'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableB_01 = ({
   certificate,
@@ -93,21 +94,21 @@ export const TableB_01 = ({
             {certificate?.calibration_results?.result_test?.reference_mass?.map(
               (result, index) => (
                 <tr key={index}>
-                  <td>{result} </td>
+                  <td>{renderValue(result)} </td>
                   <td>
-                    {certificate.calibration_results.result_test.equipment_indication[index]}
+                    {renderValue(certificate.calibration_results.result_test.equipment_indication[index])}
                   </td>
                   <td>
-                    {certificate.calibration_results.result_test.error[index]}
+                    {renderValue(certificate.calibration_results.result_test.error[index])}
                   </td>
                   <td>
-                    {certificate.calibration_results.result_test.repeatability[index]}
+                    {renderValue(certificate.calibration_results.result_test.repeatability[index])}
                   </td>
                   <td>
-                    {certificate.calibration_results.result_test.maximum_eccentricity[index]}
+                    {renderValue(certificate.calibration_results.result_test.maximum_eccentricity[index])}
                   </td>
                   <td>
-                    {certificate.calibration_results.result_test.uncertainty[index]}
+                    {renderValue(certificate.calibration_results.result_test.uncertainty[index])}
                   </td>
                 </tr>
               ),
@@ -134,12 +135,12 @@ export const TableB_01 = ({
               {certificate.calibration_results.result_tests_lb?.map(
                 (result, index) => (
                   <tr key={index}>
-                    <td>{result.reference_mass} </td>
-                    <td>{result.equipment_indication}</td>
-                    <td>{result.error}</td>
-                    <td>{result.repeatability}</td>
-                    <td>{result.maximum_eccentricity}</td>
-                    <td>{result.uncertainty}</td>
+                    <td>{renderValue(result.reference_mass)} </td>
+                    <td>{renderValue(result.equipment_indication)}</td>
+                    <td>{renderValue(result.error)}</td>
+                    <td>{renderValue(result.repeatability)}</td>
+                    <td>{renderValue(result.maximum_eccentricity)}</td>
+                    <td>{renderValue(result.uncertainty)}</td>
                   </tr>
                 ),
               )}

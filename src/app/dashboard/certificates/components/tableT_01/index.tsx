@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_T_01 } from '../../interface/t-01'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableT_01 = ({
   certificate,
@@ -94,17 +95,17 @@ export const TableT_01 = ({
                   <td>{item}</td>
                   <td>
                     {
-                      certificate.calibration_results.result
-                        .thermometerIndication[index]
+                      renderValue(certificate.calibration_results.result
+                        .thermometerIndication[index])
                     }
                   </td>
                   <td>
-                    {certificate.calibration_results.result.correction[index]}
+                    {renderValue(certificate.calibration_results.result.correction[index])}
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.result
-                        .expandedUncertaintyK2[index]
+                      renderValue(certificate.calibration_results.result
+                        .expandedUncertaintyK2[index])
                     }
                   </td>
                 </tr>
@@ -132,23 +133,23 @@ export const TableT_01 = ({
                 {certificate.calibration_results.result_unid_system.temperatureReference.map(
                   (item: any, index: any) => (
                     <tr key={index}>
-                      <td>{item}</td>
+                      <td>{renderValue(item)}</td>
                       <td>
                         {
-                          certificate.calibration_results.result_unid_system
-                            .thermometerIndication[index]
+                          renderValue(certificate.calibration_results.result_unid_system
+                            .thermometerIndication[index])
                         }
                       </td>
                       <td>
                         {
-                          certificate.calibration_results.result_unid_system
-                            .correction[index]
+                          renderValue(certificate.calibration_results.result_unid_system
+                            .correction[index])
                         }
                       </td>
                       <td>
                         {
-                          certificate.calibration_results.result_unid_system
-                            .expandedUncertaintyK2[index]
+                          renderValue(certificate.calibration_results.result_unid_system
+                            .expandedUncertaintyK2[index])
                         }
                       </td>
                     </tr>

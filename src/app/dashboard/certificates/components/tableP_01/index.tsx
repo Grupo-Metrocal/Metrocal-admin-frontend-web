@@ -6,6 +6,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { toast } from 'sonner'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableP_01 = ({
   certificate,
@@ -131,18 +132,18 @@ export const TableP_01 = ({
             {certificate.calibration_results.result.reference_pressure.map(
               (item: any, index: any) => (
                 <tr key={index}>
-                  <td>{item}</td>
+                  <td>{renderValue(item)}</td>
                   <td>
                     {
-                      certificate.calibration_results.result
-                        .equipment_indication[index]
+                      renderValue(certificate.calibration_results.result
+                        .equipment_indication[index])
                     }
                   </td>
                   <td>
-                    {certificate.calibration_results.result.correction[index]}
+                    {renderValue(certificate.calibration_results.result.correction[index])}
                   </td>
                   <td>
-                    {certificate.calibration_results.result.uncertainty[index]}
+                    {renderValue(certificate.calibration_results.result.uncertainty[index])}
                   </td>
                 </tr>
               ),
@@ -170,20 +171,20 @@ export const TableP_01 = ({
                   <td>{item}</td>
                   <td>
                     {
-                      certificate.calibration_results.result_unid_system
-                        .equipment_indication[index]
+                      renderValue(certificate.calibration_results.result_unid_system
+                        .equipment_indication[index])
                     }
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.result_unid_system
-                        .correction[index]
+                      renderValue(certificate.calibration_results.result_unid_system
+                        .correction[index])
                     }
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.result_unid_system
-                        .uncertainty[index]
+                      renderValue(certificate.calibration_results.result_unid_system
+                        .uncertainty[index])
                     }
                   </td>
                 </tr>

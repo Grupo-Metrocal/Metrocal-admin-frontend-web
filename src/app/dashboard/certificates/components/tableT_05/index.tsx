@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_T_05 } from '../../interface/t-05'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableT_05 = ({
   certificate,
@@ -91,18 +92,18 @@ export const TableT_05 = ({
             {certificate.calibration_results.reference_temperature.map(
               (item: any, index: any) => (
                 <tr key={index}>
-                  <td>{item}</td>
+                  <td>{renderValue(item)}</td>
                   <td>
                     {
-                      certificate.calibration_results.thermometer_indication[index]
+                      renderValue(certificate.calibration_results.thermometer_indication[index])
                     }
                   </td>
                   <td>
-                    {certificate.calibration_results.correction[index]}
+                    {renderValue(certificate.calibration_results.correction[index])}
                   </td>
                   <td>
                     {
-                      certificate.calibration_results.uncertainty[index]
+                      renderValue(certificate.calibration_results.uncertainty[index])
                     }
                   </td>
                 </tr>

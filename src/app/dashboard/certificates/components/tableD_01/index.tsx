@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_D_01 } from '../../interface/d-01'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableD_01 = ({ certificate,
   id,
@@ -103,19 +104,19 @@ export const TableD_01 = ({ certificate,
                 <tr key={index}>
                   <td>{calibrationPoint}</td>
                   <td>
-                    {certificate.calibrations.calibration_result.nominal_value[index]}
+                    {renderValue(certificate.calibrations.calibration_result.nominal_value[index])}
                   </td>
                   <td>
-                    {certificate.calibrations.calibration_result.value[index]}
+                    {renderValue(certificate.calibrations.calibration_result.value[index])}
                   </td>
                   <td>
-                    {certificate.calibrations.calibration_result.current_reading[index]}
+                    {renderValue(certificate.calibrations.calibration_result.current_reading[index])}
                   </td>
                   <td>
-                    {certificate.calibrations.calibration_result.deviation[index]}
+                    {renderValue(certificate.calibrations.calibration_result.deviation[index])}
                   </td>
                   <td>
-                    {certificate.calibrations.calibration_result.uncertainty[index]}
+                    {renderValue(certificate.calibrations.calibration_result.uncertainty[index])}
                   </td>
                 </tr>
               ),
@@ -146,14 +147,14 @@ export const TableD_01 = ({ certificate,
                   </td>
                   <td
                   >
-                    {certificate.calibrations.calibration_result_outside.nominal_value_outside[index]}
+                    {renderValue(certificate.calibrations.calibration_result_outside.nominal_value_outside[index])}
                   </td>
                   <td>
-                    {nominalValue}
+                    {renderValue(nominalValue)}
                   </td>
                   <td
                   >
-                    {certificate.calibrations.calibration_result_outside.deviation_outside[index]}
+                    {renderValue(certificate.calibrations.calibration_result_outside.deviation_outside[index])}
                   </td>
                 </tr>
               )
@@ -185,13 +186,13 @@ export const TableD_01 = ({ certificate,
                     </td>
                     <td
                     >
-                      {certificate.calibrations.calibration_result_inside.nominal_value_inside[index]}
+                      {renderValue(certificate.calibrations.calibration_result_inside.nominal_value_inside[index])}
                     </td>
                     <td>
-                      {nominalValue}
+                      {renderValue(nominalValue)}
                     </td>
                     <td>
-                      {certificate.calibrations.calibration_result_inside.deviation_inside[index]}
+                      {renderValue(certificate.calibrations.calibration_result_inside.deviation_inside[index])}
                     </td>
                   </tr>
                 )

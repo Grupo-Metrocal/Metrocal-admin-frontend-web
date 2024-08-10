@@ -1,5 +1,6 @@
 import './index.scss'
 import { ICertificate_V_01 } from '../../interface/v-01'
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 
 export const TableV_01 = ({
   certificate,
@@ -159,11 +160,4 @@ export const TableV_01 = ({
       </section>
     </div>
   )
-}
-
-function renderValue(value: any) {
-  if (typeof value === 'object' && value !== null && '_error' in value) {
-    return value._error || 'Error';
-  }
-  return value != null ? value.toString() : 'N/A';
 }
