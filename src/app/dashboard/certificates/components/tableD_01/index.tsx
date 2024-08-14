@@ -206,13 +206,11 @@ export const TableD_01 = ({ certificate,
 
         <div>
           <div>
-            <p>Temperatura ambiente:</p>
             <span>
               {certificate.environmental_conditions.temperature} (°C)
             </span>
           </div>
           <div>
-            <p>Humedad relativa:</p>
             <span>{certificate.environmental_conditions.humidity} (%)</span>
           </div>
         </div>
