@@ -10,7 +10,7 @@ interface LayoutPageProps {
   title: string
   rollBack?: boolean
   Footer?: React.FC
-  subTitle?: string
+  subTitle?: string | React.ReactNode
 }
 
 export const LayoutPage = ({
