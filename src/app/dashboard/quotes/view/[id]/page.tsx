@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import { formatDate } from '@/utils/formatDate'
 import { Spinner } from '@/components/Spinner'
 import { formatPrice } from '@/utils/formatPrice'
+import { CButton } from '@/components/CButton'
+import { useRouter } from 'next/navigation'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -36,6 +38,7 @@ export default function Page({ params }: IRoot) {
   const { id } = params
   const [data, setData] = useState<IQuotes | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   useEffect(() => {
     const getDataQuote = async () => {
@@ -53,7 +56,13 @@ export default function Page({ params }: IRoot) {
   }, [id])
 
   return (
-    <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer">
+    <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer"
+      subTitle={
+        <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}`)}>
+          Editar cotización
+        </CButton>
+      }
+    >
       <Content
         title="Detalles de la cotización"
         colorTitle="green"
@@ -94,19 +103,19 @@ export default function Page({ params }: IRoot) {
                     data?.status === 'done'
                       ? '#00b894'
                       : data?.status === 'pending'
-                      ? '#d5303e'
-                      : data?.status === 'waiting'
-                      ? '#ff8000'
-                      : 'tomato',
+                        ? '#d5303e'
+                        : data?.status === 'waiting'
+                          ? '#ff8000'
+                          : 'tomato',
                 }}
                 value={
                   data?.status === 'done'
                     ? 'Aprobado'
                     : data?.status === 'pending'
-                    ? 'Pendiente'
-                    : data?.status === 'waiting'
-                    ? 'En espera'
-                    : 'Rechazado'
+                      ? 'Pendiente'
+                      : data?.status === 'waiting'
+                        ? 'En espera'
+                        : 'Rechazado'
                 }
               />
             </>
@@ -255,15 +264,15 @@ const EquipmentInfo = ({
               status === 'done'
                 ? 'green'
                 : status === 'pending'
-                ? 'gray'
-                : 'tomato',
+                  ? 'gray'
+                  : 'tomato',
           }}
         >
           {status === 'done'
             ? 'Aprobado'
             : status === 'pending'
-            ? 'Pendiente'
-            : 'Rechazado'}
+              ? 'Pendiente'
+              : 'Rechazado'}
         </span>
       </p>
     </div>
