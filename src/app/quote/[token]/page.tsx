@@ -252,6 +252,23 @@ export default function Page({ params }: Props) {
                 </div>
               ),
             )}
+            {
+              quote && quote.extras > 0 && (
+                <div className="table__body__tr">
+                  <span data-label="Tipo de servicio">Traslado técnico</span>
+                  <span data-label="Equipo">---</span>
+                  <span data-label="Cantidad">---</span>
+                  <span data-label="Método de calibración">---</span>
+                  <span data-label="Observación adicional">---</span>
+                  <span data-label="Precio U. (USD)">
+                    {formatPrice(quote?.extras)}
+                  </span>
+                  <span data-label="Precio total (USD)">
+                    {formatPrice(quote?.extras)}
+                  </span>
+                </div>
+              )
+            }
           </div>
         </section>
 
@@ -281,10 +298,6 @@ export default function Page({ params }: Props) {
           </div>
 
           <div className="prices">
-            <h4>
-              <span>TRASLADO TÉCNICO ($):</span>
-              <span>{formatPrice(quote?.extras || 0)}</span>
-            </h4>
             <h4>
               <span>SUB-TOTAL ($):</span>
               <span>
