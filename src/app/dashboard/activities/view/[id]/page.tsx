@@ -39,6 +39,7 @@ import { M_01 } from './component/m_01'
 import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
+import { IsNotCalibration } from './component/IsNotCalibration'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -78,6 +79,7 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-02': D_02,
   'NI-MCIT-B-01': B_01,
   'GENERIC_METHOD': Generic_method,
+  '(N/A)': IsNotCalibration,
 }
 
 export default function Page({ params }: IRoot) {
@@ -175,14 +177,24 @@ export default function Page({ params }: IRoot) {
   }
 
   const handleSelectedService = async (service: any) => {
-    if (!service.method_id) {
+    if (!service.calibration_method) {
       return toast.error('Este servicio no contiene metodos asociados')
     }
 
     setSelectedService(service)
     setLoading(true)
 
-    const response = await getMethods(service.method_id)
+    if (service.method_id && service.calibration_method !== '(N/A)') {
+      await handleLoadMethodsStack(service.method_id)
+    } else {
+      setStackServices([])
+    }
+
+    setLoading(false)
+  }
+
+  const handleLoadMethodsStack = async (method_id: number) => {
+    const response = await getMethods(method_id)
 
     if (response.success) {
       setStackServices(response.data)
@@ -191,8 +203,6 @@ export default function Page({ params }: IRoot) {
         description: response.details,
       })
     }
-
-    setLoading(false)
   }
 
   const handleDeleteEquipment = async (
@@ -290,6 +300,9 @@ export default function Page({ params }: IRoot) {
                   <strong className="font-bold">{equipment.name}</strong>
                 </div>
                 <div className="info">
+                  <p>Servicio: <span>{
+                    equipment.type_service
+                  }</span></p>
                   <p className="text-sm">
                     Cantidad: <span>{equipment.count}</span>
                   </p>
@@ -306,16 +319,16 @@ export default function Page({ params }: IRoot) {
         </CarouselComp>
 
         <div className="activity-viewer__main-info__details">
-          <p className="font-semibold text-[#333] text-lg mt-4 mb-2 border-b-2 border-[#999] w-full pb-2">
+          <p className="font-semibold text-[#333] text-lg mt-4 mb-2 border-b-2 border-[#dedede] w-full pb-2">
             Equipos asociados
           </p>
 
-          <div className="flex items-center gap-2 w-full justify-end my-6">
-            <span>Filtrar equipo</span>
+          <div className="flex items-center gap-2 w-full justify-start my-6">
             <CInput
-              placeholder="escribe el certificado del equipo"
+              placeholder='xx-xxxx-xxxx-xx'
               value={search.search}
               name="search"
+              label='Buscar por certificado'
               onChange={handleInputChange}
               type="text"
               input_style={{
@@ -325,7 +338,7 @@ export default function Page({ params }: IRoot) {
               }}
             />
           </div>
-          {!stackServices.length ? (
+          {!stackServices.length && selectedService?.calibration_method !== '(N/A)' ? (
             <div className="h-[400px] w-full grid place-items-center">
               <p className="text-center flex items-center gap-2 justify-center flex-col">
                 <span className=" font-bold bg-[#333] rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">
@@ -341,7 +354,7 @@ export default function Page({ params }: IRoot) {
                   <Spinner />
                 </div>
               ) : (
-                filteredServices.map((service) => (
+                selectedService?.calibration_method !== '(N/A)' ? filteredServices.map((service) => (
                   <Modal
                     key={service.id}
                     title="Detalles del equipo"
@@ -409,6 +422,19 @@ export default function Page({ params }: IRoot) {
                     </div>
                   </Modal>
                 ))
+                  : (
+                    <div className="grid place-items-center h-full w-full">
+                      <p className="text-center flex items-center gap-2 justify-center flex-col">
+                        <span className={`font-bold ${selectedService?.isResolved ? 'bg-green-500' : 'bg-red-500'}
+                           rounded-full w-[20px] h-[20px] text-white flex justify-center items-center`}>
+                          !
+                        </span>
+                        <span>
+                          {selectedService?.isResolved ? 'Este servicio ya fue completado por el tecnico' : 'Este servicio aun no ha sido resuelto'}
+                        </span>
+                      </p>
+                    </div>
+                  )
               )}
             </div>
           )}
