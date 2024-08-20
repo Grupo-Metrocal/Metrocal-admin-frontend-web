@@ -39,7 +39,6 @@ import { M_01 } from './component/m_01'
 import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
-import { IsNotCalibration } from './component/IsNotCalibration'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -79,7 +78,6 @@ const RENDERER_METHOD = {
   'NI-MCIT-D-02': D_02,
   'NI-MCIT-B-01': B_01,
   'GENERIC_METHOD': Generic_method,
-  '(N/A)': IsNotCalibration,
 }
 
 export default function Page({ params }: IRoot) {
