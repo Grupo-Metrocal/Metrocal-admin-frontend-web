@@ -30,6 +30,7 @@
       cursor: pointer;
       padding: 1em;
       margin: 0 1em;
+      background-color: #fff;
 
       .info {
         display: flex;
@@ -50,6 +51,8 @@
     }
 
     .selected {
+      background-color: rgb(0, 153, 255, 0.1);
+
       &::after {
         content: '';
         position: absolute;
@@ -72,10 +75,6 @@
         left: 0;
         z-index: -1;
         border-radius: 5px;
-      }
-
-      &:hover {
-        background-color: transparent;
       }
     }
 
