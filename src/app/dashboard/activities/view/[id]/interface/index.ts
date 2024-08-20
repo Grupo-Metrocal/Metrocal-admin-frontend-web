@@ -53,6 +53,7 @@ export interface EquipmentQuoteRequest {
   total: number
   method_id: number
   review_status: string
+  isResolved: boolean
 }
 
 export interface ApprovedBy {
