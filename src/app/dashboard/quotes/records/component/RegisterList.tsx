@@ -223,26 +223,6 @@ const columns = ({
 }: IColumns): ColumnDef<IQuoteRequestRegistered>[] => {
   return [
     {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-          aria-label="Selccionar todo"
-        />
-      ),
-
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Seleccionar"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
       accessorKey: 'client_company_name',
       header: ({ column }) => {
         return (
