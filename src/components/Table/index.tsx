@@ -61,7 +61,6 @@ export type DataTableProps<T> = {
 export function DataTableDemo<T>({
   data,
   columns,
-  search_by,
   searchValue,
   handleSearch,
   handlePreviousPage,
@@ -200,9 +199,9 @@ export function DataTableDemo<T>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   )
                 })}
@@ -240,10 +239,14 @@ export function DataTableDemo<T>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} de{' '}
-          {table.getFilteredRowModel().rows.length}{' '}
-          {data.length > 1 ? 'filas' : 'fila'} seleccionadas
+        <div className="flex-1 text-sm text-muted-foreground text-gray-400">
+          {/* {table.getFilteredSelectedRowModel().rows.length} de{' '} */}
+          {/* {table.getFilteredRowModel().rows.length}{' '} */}
+          {/* {data.length > 1 ? 'filas' : 'fila'} seleccionadas */}
+
+          <span className="mx-2">
+            Página {currentPage} de {totalPages}
+          </span>
         </div>
         <div className="space-x-2">
           <Button
