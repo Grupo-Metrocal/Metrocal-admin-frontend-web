@@ -44,7 +44,7 @@ export const V_01 = ({
         Authorization: `Bearer ${getCookie('token')}`,
       },
       params: {
-        increase: true,
+        increase
       }
     })
 
