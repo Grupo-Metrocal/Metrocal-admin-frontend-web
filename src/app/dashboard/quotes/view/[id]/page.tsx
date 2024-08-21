@@ -58,7 +58,7 @@ export default function Page({ params }: IRoot) {
   return (
     <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer"
       subTitle={
-        <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}`)}>
+        <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
           Editar cotización
         </CButton>
       }
