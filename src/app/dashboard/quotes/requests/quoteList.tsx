@@ -22,8 +22,11 @@ export const QuoteList = ({
 }: TQuotesProps) => {
   const router = useRouter()
 
-  const handleNavigationUpd = (id: number) =>
-    router.push(`/dashboard/quotes/requests/${id}`)
+  const handleNavigationQuote = (id: number) =>
+    router.push(`/dashboard/quotes/requests/${id}?increase=false`)
+
+  const handleNavigationUpdQuote = (id: number) =>
+    router.push(`/dashboard/quotes/requests/${id}?increase=true`)
 
   const handleNavigationView = (id: number) => {
     router.push(`/dashboard/quotes/view/${id}`)
@@ -59,8 +62,8 @@ export const QuoteList = ({
         {loading ? (
           <RendererQuoteList
             quotes={quotesPending}
-            onClick={handleNavigationUpd}
-            onClickContent={handleNavigationUpd}
+            onClick={handleNavigationQuote}
+            onClickContent={handleNavigationQuote}
           />
         ) : (
           <Spinner />
@@ -73,7 +76,7 @@ export const QuoteList = ({
             quotes={quotesWaiting}
             onClick={handleRememberQuote}
             onClickContent={handleNavigationView}
-            onClickModify={handleNavigationUpd}
+            onClickModify={handleNavigationUpdQuote}
           />
         ) : (
           <Spinner />
