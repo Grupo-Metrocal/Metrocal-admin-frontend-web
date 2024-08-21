@@ -366,7 +366,7 @@ const columns = ({
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Linking href={`/dashboard/quotes/requests/${payment.id}`}>
+                <Linking href={`/dashboard/quotes/requests/${payment.id}?increase=true`}>
                   Actualizar cotización
                 </Linking>
               </DropdownMenuItem>
