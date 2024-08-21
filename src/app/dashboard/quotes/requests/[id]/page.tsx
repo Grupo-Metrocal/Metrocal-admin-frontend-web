@@ -27,7 +27,7 @@ import { Spinner } from '@/components/Spinner'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
 import { CButton } from '@/components/CButton'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { formatPrice } from '@/utils/formatPrice'
 import { Content } from '@/components/Content'
 
@@ -214,12 +214,14 @@ const Footer = () => {
   } = useAppSelector((state) => state.quote)
 
   const dispatch = useAppDispatch()
-
+  const searchParams = useSearchParams()
   const route = useRouter()
 
   const handleApproveQuote = async () => {
     if (!isAllEquipmentReviewed())
       return toast.error('Debe revisar todos los equipos')
+    const increase = searchParams.get('increase') === 'true' ? true : false
+
 
     toast.loading('Aprobando cotización', {
       description: 'Espere un momento por favor...',
@@ -240,6 +242,9 @@ const Footer = () => {
         status: 'waiting',
         authorized_token: getCookie('token'),
       },
+      params: {
+        increase
+      }
     })
 
     toast.dismiss()
@@ -357,13 +362,16 @@ const CommentRejectedQuote = ({
   discount: number
 }) => {
   const { values, handleInputChange } = useForm({ comment: '' })
-
+  const searchParams = useSearchParams()
   const route = useRouter()
 
   const handleRejectQuote = () => {
     toast.loading('Rechazando cotización', {
       description: 'Espere un momento por favor...',
     })
+
+    const increase = searchParams.get('increase') === 'true' ? true : false
+
 
     fetchData({
       url: 'quotes/request/update',
@@ -380,6 +388,9 @@ const CommentRejectedQuote = ({
         authorized_token: getCookie('token'),
         rejected_comment: values.comment,
       },
+      params: {
+        increase
+      }
     })
       .then((response) => {
         toast.dismiss()
