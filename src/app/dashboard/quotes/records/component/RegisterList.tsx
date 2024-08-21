@@ -197,7 +197,7 @@ export const RegisterQuoteList = () => {
           currentPage={pagination.offset}
           totalPages={pagination.maxPages}
           isLoading={isLoading}
-          search_placeholder="Nombre de la empresa"
+          search_placeholder="No. de cotización"
           filter_columns={{
             client_company_name: 'Empresa',
             quote_request_no: 'No. de cotización',
