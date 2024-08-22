@@ -124,7 +124,7 @@ export default function Page({ params }: Props) {
         <div className="main-code">
           <h5>
             código
-            <span>{quote?.no}</span>
+            <span>NI-R02-MCPR-02</span>
           </h5>
         </div>
       </header>
@@ -138,6 +138,15 @@ export default function Page({ params }: Props) {
               : quote?.status === 'done'
                 ? 'Aprobada y aceptada.'
                 : 'No aprobada.'}
+          </span>
+        </h4>
+      </div>
+
+      <div className="mt-4 -mb-2">
+        <h4 className="text-center font-bold ">
+          No. de cotización:{' '}
+          <span className="font-medium">
+            {quote?.no}
           </span>
         </h4>
       </div>
