@@ -156,17 +156,17 @@ const renderTableTr = ({
             Seleccione
           </option>
           <option value="Calibracion">Calibración</option>
-          <option value="Caracterización">Caracterización</option>
-          <option value="Calificación">Calificación</option>
-          <option value="Diagnóstico">Diagnóstico</option>
-          <option value="Informe Técnico">Informe Técnico</option>
+          <option value="Caracterizacion">Caracterización</option>
+          <option value="Calificacion">Calificación</option>
+          <option value="Diagnostico">Diagnóstico</option>
+          <option value="Informe Tecnico">Informe Técnico</option>
           <option value="Mant. Preventivo">Mant. Preventivo</option>
           <option value="Mant. Correctivo">Mant. Correctivo</option>
           <option value="Proyecto">Proyecto</option>
           <option value="Suministro">Suministro</option>
-          <option value="Verificación de Cal">Verificación de Cal</option>
+          <option value="Verificacion de Cal">Verificación de Cal</option>
           <option value="Otros">Otros</option>
-          <option value="No Aplica (N/A)">No Aplica (N/A)</option>
+          <option value="(N/A)">No Aplica (N/A)</option>
         </select>
       </div>
       <div className="table__body__tr__td">
