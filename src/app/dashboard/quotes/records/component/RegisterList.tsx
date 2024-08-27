@@ -315,7 +315,7 @@ const columns = ({
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Linking href={`/dashboard/quotes/requests/${payment.id}?increase=true`}>
+                <Linking href={`/dashboard/quotes/requests/${payment.id}?${payment.quote_request_status !== 'waiting' ? "increase=true" : "increase=false"}`}>
                   Actualizar cotización
                 </Linking>
               </DropdownMenuItem>
