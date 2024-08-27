@@ -57,9 +57,6 @@ export const ClientRecords = ({
           handleSearch={handleSearchChange}
           data={records ?? []}
           search_by="client_company_name"
-          setPagination={(event: { target: { value: any } }) => {
-            setCurrentPage(event.target.value)
-          }}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
           currentPage={currentPage}
