@@ -1,8 +1,7 @@
 'use client'
 import { fetchData } from '@/utils/fetch'
 import { useEffect, useState } from 'react'
-import { DataTableDemo, filter } from '@/components/Table'
-import { Checkbox } from '@/components/ui/checkbox'
+import { DataTableDemo } from '@/components/Table'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
@@ -15,189 +14,135 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Linking, deleteQuoteRequest } from '@/utils/functions'
-import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import {
-  deleteItemQuoteRequestRegisters,
-  setQuoteRequest,
-} from '@/redux/features/quote/quoteRequestSlice'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useForm } from '@/hooks/useForm'
 import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
+import { getCookie } from 'cookies-next'
+import { toast } from 'sonner'
+import { quoteRecordsType } from '@/types/quoteRecords'
 
-export type IQuoteRequestRegistered = {
-  id: number
-  quote_request_status: string
-  quote_request_price: number
-  quote_request_created_at: string
-  client_company_name: string
-  approved_by: string
-  client_phone: string
-  quote_request_no: string
+interface IParamsGetRecords {
+  page: number
+  no?: string
+  quoteRequestType?: string[]
 }
 
-export type IPagination = {
-  limit: number
-  offset: number
-  status: string[]
-  no_quote: string
-  maxPages: number
+const getRecords = async ({ page, no, quoteRequestType }: IParamsGetRecords) => {
+
+  return await fetchData({
+    url: `quotes/registered/all/${page}/10/${no}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+    params: {
+      quoteRequestType,
+    }
+  })
 }
 
 export const RegisterQuoteList = () => {
-  const data = useAppSelector((state) => state.quoteRequest.data)
-  const [nextExpiredFilter, setNextExpiredFilter] = useState(false)
-  const [approvedFilter, setApprovedFilter] = useState(false)
-  const [rejectedFilter, setRejectedFilter] = useState(false)
-  const [canceledFilter, setCanceledFilter] = useState(false)
-  const [expiredFilter, setExpiredFilter] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [refresh, setRefresh] = useState(true)
-
-  const [pagination, setPagination] = useState<IPagination>({
-    limit: 10,
-    offset: 1,
-    status: [],
-    no_quote: '',
-    maxPages: 0,
+  const [records, setRecords] = useState<quoteRecordsType[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const { values, handleInputChange } = useForm({
+    search: '',
+  })
+  const [pagination, setPagination] = useState<any>({
+    current_page: 0,
+    total_pages: 0,
+    total_data: 0,
   })
 
-  const dispatch = useAppDispatch()
+  const handleDeleteQuote = async (id: number) => {
 
-  const filters: filter[] = [
-    {
-      id: 'next_expired',
-      label: 'Próximos a expirar',
-      checked: nextExpiredFilter,
-      onChangeCheckbox: () => setNextExpiredFilter(!nextExpiredFilter),
-    },
-    {
-      id: 'approved',
-      label: 'Aprobados',
-      checked: approvedFilter,
-      onChangeCheckbox: () => setApprovedFilter(!approvedFilter),
-    },
-    {
-      id: 'rejected',
-      label: 'Rechazados',
-      checked: rejectedFilter,
-      onChangeCheckbox: () => setRejectedFilter(!rejectedFilter),
-    },
-    {
-      id: 'canceled',
-      label: 'Cancelados',
-      checked: canceledFilter,
-      onChangeCheckbox: () => setCanceledFilter(!canceledFilter),
-    },
-    {
-      id: 'expired',
-      label: 'Expirados',
-      checked: expiredFilter,
-      onChangeCheckbox: () => setExpiredFilter(!expiredFilter),
-    },
-  ]
+    const response = await deleteQuoteRequest(id)
 
-  // const getCheckedFilters = (filters: filter[]) => {
-  //   return filters.filter((filter) => filter.checked).map((filter) => filter.id)
-  // }
-
-  const getCheckedFilters = (filters: filter[]): string[] => {
-    const checkedFilters = filters.filter((filter) => filter.checked)
-    if (checkedFilters.length === 0) {
-      return filters.map((filter) => filter.id)
+    if (response.success) {
+      toast.success('Cotización eliminada correctamente')
+      setRecords(records.filter((record: any) => record.id !== id))
     } else {
-      return checkedFilters.map((filter) => filter.id)
+      toast.error('No se pudo eliminar la cotización')
     }
   }
 
   const handlePreviousPage = () => {
-    if (pagination.offset > 1) {
-      setPagination({ ...pagination, offset: pagination.offset - 1 })
-      setRefresh((prev) => !prev)
+    if (pagination.current_page > 1) {
+      setCurrentPage(pagination.current_page - 1)
     }
   }
 
   const handleNextPage = () => {
-    if (pagination.offset < pagination.maxPages) {
-      setPagination({ ...pagination, offset: pagination.offset + 1 })
-      setRefresh((prev) => !prev)
+    if (pagination.current_page < pagination.total_pages) {
+      setCurrentPage(pagination.current_page + 1)
     }
   }
 
+
   useEffect(() => {
-    const fetchFromServer = async () => {
-      setIsLoading(true)
-      try {
-        const URL = `quotes/registered/all?limit=${pagination.limit}&offset=${pagination.offset}&status=${pagination.status}&no_quote=${pagination.no_quote}`
-        const response = await fetchData({
-          url: URL,
+    const timeOut = setTimeout(() => {
+      getRecords({ page: currentPage, no: values.search })
+        .then((data) => {
+          if (data.success) {
+            setRecords(data.data)
+            setPagination({
+              current_page: data.current_page,
+              total_pages: data.total_pages,
+              total_data: data.total_data,
+            })
+          } else {
+            setRecords([])
+            toast.error('No se pudieron cargar los registros')
+          }
         })
+        .finally(() => {
+          toast.dismiss()
+          setLoading(false)
+        })
+    }, 700)
 
-        if (response) {
-          setPagination({ ...pagination, maxPages: response.total_pages })
-          dispatch(setQuoteRequest(response.data))
+    return () => clearTimeout(timeOut)
+  }, [values.search, currentPage])
+
+  useEffect(() => {
+    toast.loading('Cargando registros...')
+
+    getRecords({ page: currentPage })
+      .then((data) => {
+        if (data.success) {
+          setRecords(data.data)
+          setPagination({
+            current_page: data.current_page,
+            total_pages: data.total_pages,
+            total_data: data.total_data,
+          })
+        } else {
+          setRecords([])
+          toast.error('No se pudieron cargar los registros')
         }
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchFromServer()
-  }, [refresh])
-
-  useEffect(() => {
-    const status = getCheckedFilters(filters)
-    setPagination({ ...pagination, status })
-    setRefresh((prev) => !prev)
-  }, [
-    nextExpiredFilter,
-    approvedFilter,
-    rejectedFilter,
-    canceledFilter,
-    expiredFilter,
-  ])
-
-  const deleteItemRegister = async (id: number) => {
-    const response = await deleteQuoteRequest(id)
-
-    if (response.success) return dispatch(deleteItemQuoteRequestRegisters(id))
-
-    return false
-  }
-
-  const { values, handleInputChange } = useForm({
-    search: '',
-  })
-
-  useEffect(() => {
-    const getData = setTimeout(() => {
-      setPagination((prevPagination) => ({
-        ...prevPagination,
-        no_quote: values.search,
-      }))
-      setRefresh((prev) => !prev)
-    }, 750)
-
-    return () => clearTimeout(getData)
-  }, [values, setPagination, setRefresh])
+      })
+      .finally(() => {
+        toast.dismiss()
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <div>
       {
-        <DataTableDemo<IQuoteRequestRegistered>
-          columns={columns({ onDelete: deleteItemRegister })}
-          data={data ? data : []}
-          search_by="no"
+        <DataTableDemo<quoteRecordsType>
+          columns={columns({ onDelete: handleDeleteQuote })}
           searchValue={values.search}
           handleSearch={handleInputChange}
-          setPagination={setPagination}
+          data={records as any ?? []}
+          search_by="no"
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
-          currentPage={pagination.offset}
-          totalPages={pagination.maxPages}
-          isLoading={isLoading}
-          search_placeholder="No. consecutivo de cotización"
+          currentPage={currentPage}
+          totalPages={pagination.total_pages}
+          isLoading={loading}
+          search_placeholder="Buscar No. consecutivo de cotización"
           filter_columns={{
             client_company_name: 'Empresa',
             quote_request_no: 'No. de cotización',
@@ -207,7 +152,6 @@ export const RegisterQuoteList = () => {
             approved_by: 'Aprobado por',
             quote_request_status: 'Estado',
           }}
-          filters={filters as filter[]}
         />
       }
     </div>
@@ -220,7 +164,7 @@ type IColumns = {
 
 const columns = ({
   onDelete,
-}: IColumns): ColumnDef<IQuoteRequestRegistered>[] => {
+}: IColumns): ColumnDef<quoteRecordsType>[] => {
   return [
     {
       accessorKey: 'client_company_name',
