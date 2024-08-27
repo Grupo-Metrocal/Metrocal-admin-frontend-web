@@ -63,12 +63,6 @@ export const CertifiedRecords = ({
           handleSearch={handleInputChange}
           data={records ?? []}
           search_by="no"
-          setPagination={(event: { target: { value: any } }) => {
-            setPagination({
-              ...pagination,
-              current_page: event.target.value,
-            })
-          }}
           handleNextPage={handleNextPage}
           handlePreviousPage={handlePreviousPage}
           currentPage={currentPage}
