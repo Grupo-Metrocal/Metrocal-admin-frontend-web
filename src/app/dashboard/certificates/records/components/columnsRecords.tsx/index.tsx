@@ -1,7 +1,4 @@
-import { IQuoteRequestRegistered } from '@/app/dashboard/quotes/records/component/RegisterList'
-import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuContent,
