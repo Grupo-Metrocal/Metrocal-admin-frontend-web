@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IQuoteRequestRegistered } from '@/app/dashboard/quotes/records/component/RegisterList'
 const initialState = {
-  data: [] as IQuoteRequestRegistered[],
+  data: [] as any[],
 }
 
 export const quoteRequestSlice = createSlice({
@@ -22,8 +21,6 @@ export const deleteItemQuoteRequestRegisters =
   (id: number) => (dispatch: any, getState: any) => {
     const { quoteRequest } = getState()
     const { data } = quoteRequest
-    const newData = data.filter(
-      (item: IQuoteRequestRegistered) => item.id !== id,
-    )
+    const newData = data.filter((item: any) => item.id !== id)
     dispatch(setQuoteRequest(newData))
   }
