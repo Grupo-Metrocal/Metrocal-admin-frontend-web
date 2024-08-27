@@ -250,11 +250,13 @@ const columns = ({
                   ? '#10B981'
                   : status === 'rejected'
                     ? 'tomato'
-                    : status === 'expired'
-                      ? '#808080'
-                      : status === 'next_expired'
-                        ? '#FFD700'
-                        : '#333333',
+                    : status === 'canceled'
+                      ? '#333333'
+                      : status === 'pending'
+                        ? '#F59E0B'
+                        : status === 'waiting'
+                          ? '#6B7280'
+                          : 'gray',
 
               borderRadius: '5px',
               color: 'white',
@@ -267,11 +269,14 @@ const columns = ({
               ? 'Aprobado'
               : status === 'rejected'
                 ? 'Rechazado'
-                : status === 'expired'
-                  ? 'Expirado'
-                  : status === 'next_expired'
-                    ? 'Próximo a expirar'
-                    : 'Cancelado'}
+                : status === 'canceled'
+                  ? 'Cancelado'
+                  : status === 'pending'
+                    ? 'Pendiente'
+                    : status === 'waiting'
+                      ? 'En espera'
+                      : 'Desconocido'
+            }
           </div>
         )
       },
