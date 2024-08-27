@@ -53,7 +53,6 @@ export type DataTableProps<T> = {
   handleSearch: (target: any) => void
   totalPages: number
   isLoading: boolean
-  setPagination: any
   search_placeholder?: string
   filter_columns?: Record<string, string>
   filters?: filter[]
