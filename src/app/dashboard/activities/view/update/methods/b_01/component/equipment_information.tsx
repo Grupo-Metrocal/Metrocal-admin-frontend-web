@@ -25,12 +25,6 @@ export const EquipmentInformation = ({
 
   })
 
-  const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let { name, checked } = e.target
-
-    handleInputChange({ name, value: checked })
-  }
-
   const url = `methods/ni-mcit-b-01/equipment-information/`
   return (
     <div className="flex flex-col space-y-4">
@@ -118,7 +112,7 @@ export const EquipmentInformation = ({
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(values, url, true)}
+          onConfirm={() => handleSaveInformation(values, url)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
