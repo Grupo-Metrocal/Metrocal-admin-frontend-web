@@ -14,6 +14,7 @@ export interface IB_01 {
   linearity_test: ILinearityTest
   eccentricity_test: IEccentricityTest
   repeatability_test: IRepeatabilityTest
+  description_pattern: IDescriptionPattern
 }
 
 export interface IEquipmentInformation {
@@ -93,4 +94,9 @@ export interface IRepeatabilityTest {
 interface IRepeatabilityPoint {
   indicationIL: number
   noLoadInfdication: number
+}
+
+export interface IDescriptionPattern {
+  creditable: string
+  observation: string
 }
