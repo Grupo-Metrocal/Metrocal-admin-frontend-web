@@ -113,23 +113,6 @@ export const EquipmentInformation = ({
             ))}
           </select>
         </div>
-
-        <div className="my-4 w-fit">
-          <label
-            htmlFor="creditable"
-            className="text-sm flex items-center cursor-pointer"
-          >
-            <input
-              type="checkbox"
-              name="acredited"
-              id="creditable"
-              checked={values.acredited}
-              onChange={handleCheckedChange}
-              className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
-            />
-            ¿Equipo acreditado?
-          </label>
-        </div>
       </div>
       <div>
         <AlertDialogModal
