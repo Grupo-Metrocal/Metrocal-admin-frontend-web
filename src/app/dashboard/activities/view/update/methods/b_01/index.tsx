@@ -10,6 +10,7 @@ import { EnvironmentalConditions } from './component/environmental_conditions'
 import { LinearityTest } from './component/linearity_test'
 import { EccentricityTest } from './component/eccentricity_test'
 import { RepeatabilityTest } from './component/repeatability_test'
+import { DescriptionPattern } from './component/description_pattern'
 import { useSearchParams } from 'next/navigation'
 
 export const B_01 = ({
@@ -109,6 +110,16 @@ export const B_01 = ({
             Component: () => (
               <RepeatabilityTest
                 repeatabilityTest={equipment.repeatability_test}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'description_pattern',
+            label: 'Descripción del patrón',
+            Component: () => (
+              <DescriptionPattern
+                description_pattern={equipment.description_pattern}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
