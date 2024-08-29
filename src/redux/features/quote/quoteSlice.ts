@@ -67,6 +67,22 @@ export const quoteSlice = createSlice({
       state.equipment = equipment
       state.selectedEquipment.name = name
     },
+    setCountEquipment: (state, action) => {
+      const { id, count } = action.payload
+
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            count,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.count = count
+    },
     setAdditionalRemarks: (state, action) => {
       const { id, additional_remarks } = action.payload
       const equipment = state.equipment.map((item) => {
@@ -266,6 +282,7 @@ export const {
   setAdditionalRemarks,
   setTypeService,
   setName,
+  setCountEquipment,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
