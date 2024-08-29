@@ -133,7 +133,6 @@ const renderTableTr = ({
     },
   )
 
-  console.log('equipmentList', equipmentList.length)
 
   const rangeList = authorizedServices.map((service: TAuthorizedServices) => {
     return state?.name === service.equipment && service.measuring_range !== ''
