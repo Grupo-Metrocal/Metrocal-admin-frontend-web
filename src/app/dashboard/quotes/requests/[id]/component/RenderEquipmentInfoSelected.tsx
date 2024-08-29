@@ -7,6 +7,7 @@ import {
   setCalibrationRethod,
   setComment,
   setMeasuringRange,
+  setName,
   setTypeService,
 } from '@/redux/features/quote/quoteSlice'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
@@ -39,7 +40,18 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
 
   return (
     <div className="equipment-info-selected">
-      <div>
+      <CInput
+        name='name'
+        label='Nombre del equipo'
+        onChange={(e) => {
+          dispatch(setName({ id: selectedEquipment?.id, name: e.value }))
+        }}
+        value={selectedEquipment?.name
+          ? selectedEquipment?.name.toString()
+          : ''}
+
+      />
+      <div className='flex items-center gap-4'>
         <h4>Tipo de servicio</h4>
 
         <div className="table__body__tr__td">
