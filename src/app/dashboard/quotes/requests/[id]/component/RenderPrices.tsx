@@ -10,6 +10,7 @@ import {
   handleStatus,
   calculateSubtotal,
   calculateTotalQuote,
+  setCountEquipment,
 } from '@/redux/features/quote/quoteSlice'
 import { useAppSelector, useAppDispatch } from '@/redux/hook'
 import { fetchData } from '@/utils/fetch'
@@ -23,6 +24,18 @@ export const RenderPrices = () => {
   const dispatch = useAppDispatch()
 
   const handleApprove = async () => {
+    if (!selectedEquipment) return
+
+    if (selectedEquipment.count < 1) {
+      toast.error('La cantidad debe ser mayor a 0')
+      return
+    }
+
+    if (!selectedEquipment.price) {
+      toast.error('El precio unitario no puede estar vacío')
+      return
+    }
+
     dispatch(handleStatus(selectedEquipment?.id || 0, 'done'))
     const equipment = {
       ...selectedEquipment,
@@ -123,14 +136,16 @@ export const RenderPrices = () => {
 
         <div className="prices__item">
           <CInput
-            type="number"
+            type='number'
             label="Cantidad"
             value={
-              selectedEquipment.count ? selectedEquipment.count.toFixed(2) : ''
+              selectedEquipment?.count?.toString() || ''
             }
             name="count"
-            onChange={(_) => { }}
-            dissabled={true}
+            onChange={e => dispatch(setCountEquipment({
+              id: selectedEquipment?.id,
+              count: e.value,
+            }))}
           />
         </div>
         <div className="prices__item">
