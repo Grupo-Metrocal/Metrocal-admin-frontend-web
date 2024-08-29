@@ -52,6 +52,21 @@ export const quoteSlice = createSlice({
       state.equipment = equipment
       state.selectedEquipment.type_service = type_service
     },
+    setName: (state, action) => {
+      const { id, name } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            name,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.name = name
+    },
     setAdditionalRemarks: (state, action) => {
       const { id, additional_remarks } = action.payload
       const equipment = state.equipment.map((item) => {
@@ -250,6 +265,7 @@ export const {
   setDiscountValue,
   setAdditionalRemarks,
   setTypeService,
+  setName,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
