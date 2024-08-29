@@ -213,6 +213,7 @@ export const quoteSlice = createSlice({
     },
     changeDiscount: (state, action) => {
       const { id, discount } = action.payload
+
       const equipment = state.equipment.map((item) => {
         if (item.id === id) {
           return {
@@ -307,7 +308,16 @@ export const handlePrice = (id: number, target: any) => (dispatch: any) => {
   dispatch(calculateTotalQuote())
 }
 
+export const handleCount = (id: number, target: any) => (dispatch: any) => {
+  dispatch(setCountEquipment({ id, count: target.value }))
+  dispatch(calculateTotal())
+  dispatch(calculateSubtotal())
+  dispatch(calculateTotalQuote())
+}
+
 export const handleDiscount = (id: number, target: any) => (dispatch: any) => {
+  if (target.value > 100) target.value = 99
+
   dispatch(changeDiscount({ id, discount: target.value }))
   dispatch(changeDiscountSelectedEquipment({ discount: target.value }))
   dispatch(calculateTotal())
