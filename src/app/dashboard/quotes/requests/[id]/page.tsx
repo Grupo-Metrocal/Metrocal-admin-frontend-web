@@ -30,6 +30,8 @@ import { CButton } from '@/components/CButton'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { formatPrice } from '@/utils/formatPrice'
 import { Content } from '@/components/Content'
+import { AddEquipmentToQuoteButton } from './component/AddEquipmentButton'
+import { AddEquipmentToQuote } from './component/AddEquipmentToQuote'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -159,31 +161,43 @@ export default function Page({ params }: IRoot) {
       }
 
       <div className="only-quote">
-        <section
-          className={`equipment-container ${equipment?.length > 3 ? 'with-before' : ''
-            }`}
-          data-equipment-length={equipment?.length}
-          style={{
-            height:
-              equipment?.length > 3
-                ? 3 * 150 + 'px'
-                : equipment?.length * 150 + 'px',
-          }}
-        >
-          {loading ? (
-            equipment?.map((equipment, index) => (
-              <RenderEquipment
-                key={index}
-                equipment={equipment}
-                status={equipment.discount > 0}
-                onClick={() => handleSelectEquipment(equipment.id)}
-                selected={selectedEquipment?.id === equipment.id}
+        <section>
+          <div
+            className={`equipment-container ${equipment?.length > 3 ? 'with-before' : ''
+              }`}
+            data-equipment-length={equipment?.length}
+            style={{
+              height:
+                equipment?.length > 3
+                  ? 3 * 150 + 'px'
+                  : equipment?.length * 150 + 'px',
+            }}
+          >
+            {loading ? (
+              equipment?.map((equipment, index) => (
+                <RenderEquipment
+                  key={index}
+                  equipment={equipment}
+                  status={equipment.discount > 0}
+                  onClick={() => handleSelectEquipment(equipment.id)}
+                  selected={selectedEquipment?.id === equipment.id}
+                />
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </div>
+
+          {
+            loading && equipment?.length > 0 && (
+              <AddEquipmentToQuoteButton
+                Component={() => <AddEquipmentToQuote quoteId={id} />}
               />
-            ))
-          ) : (
-            <Spinner />
-          )}
+            )
+
+          }
         </section>
+
         <section className="only-quote__body">
           <div className="only-quote__body__client">
             <RenderClient client={client && client} />
