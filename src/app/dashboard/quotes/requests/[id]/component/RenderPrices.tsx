@@ -11,6 +11,7 @@ import {
   calculateSubtotal,
   calculateTotalQuote,
   setCountEquipment,
+  handleCount,
 } from '@/redux/features/quote/quoteSlice'
 import { useAppSelector, useAppDispatch } from '@/redux/hook'
 import { fetchData } from '@/utils/fetch'
@@ -33,6 +34,11 @@ export const RenderPrices = () => {
 
     if (!selectedEquipment.price) {
       toast.error('El precio unitario no puede estar vacío')
+      return
+    }
+
+    if (!selectedEquipment.name) {
+      toast.error('El nombre del equipo no puede estar vacío')
       return
     }
 
@@ -142,10 +148,10 @@ export const RenderPrices = () => {
               selectedEquipment?.count?.toString() || ''
             }
             name="count"
-            onChange={e => dispatch(setCountEquipment({
-              id: selectedEquipment?.id,
-              count: e.value,
-            }))}
+            onChange={e => dispatch(handleCount(
+              selectedEquipment?.id,
+              e,
+            ))}
           />
         </div>
         <div className="prices__item">
