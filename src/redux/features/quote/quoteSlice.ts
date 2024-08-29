@@ -249,6 +249,9 @@ export const quoteSlice = createSlice({
     setNo: (state, action) => {
       state.no = action.payload
     },
+    setNewEquipment: (state, action) => {
+      state.equipment.push(action.payload)
+    },
   },
 })
 
@@ -284,6 +287,7 @@ export const {
   setTypeService,
   setName,
   setCountEquipment,
+  setNewEquipment,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
