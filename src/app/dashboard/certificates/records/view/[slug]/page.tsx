@@ -73,9 +73,7 @@ export interface IRoot {
 export default function Page({ params }: IRoot) {
   const { slug: id } = params
   const [data, setData] = useState<Data>()
-  const [teamMember, setTeamMember] = useState<TeamMember[]>([])
   const [client, setClient] = useState<IClient>({} as IClient)
-  const [responsable, setResponsable] = useState<number>(0)
   const [selectedService, setSelectedService] =
     useState<EquipmentQuoteRequest | null>(null)
   const [stackServices, setStackServices] = useState<any[]>([])
@@ -103,17 +101,26 @@ export default function Page({ params }: IRoot) {
   }, [search.search, stackServices])
 
   const handleSelectedService = async (service: any) => {
+    if (!service.calibration_method) {
+      return toast.error('Este servicio no contiene metodos asociados')
+    }
+
     setSelectedService(service)
     setLoading(true)
 
-    const response = await getMethods(service.method_id)
 
-    if (response.success) {
-      setStackServices(response.data)
+    if (service.method_id && service.calibration_method !== '(N/A)') {
+      const response = await getMethods(service.method_id)
+
+      if (response.success) {
+        setStackServices(response.data)
+      } else {
+        toast.error('Error al obtener los métodos', {
+          description: response.details,
+        })
+      }
     } else {
-      toast.error('Error al obtener los métodos', {
-        description: response.details,
-      })
+      setStackServices([])
     }
 
     setLoading(false)
@@ -150,8 +157,6 @@ export default function Page({ params }: IRoot) {
     getData(id).then((response) => {
       if (response.success) {
         setData(response.data)
-        setTeamMember(response.data.team_members)
-        setResponsable(response.data.responsable)
         setClient(response.data.quote_request.client)
 
         const service = response.data.quote_request.equipment_quote_request[0]
@@ -161,13 +166,6 @@ export default function Page({ params }: IRoot) {
       }
     })
   }, [id])
-
-  useEffect(() => {
-    if (responsable) {
-      const user = teamMember.find((user) => user.id === responsable)
-      user && setResponsable(user.id)
-    }
-  }, [teamMember, responsable])
 
   return (
     <LayoutPage
@@ -267,7 +265,7 @@ export default function Page({ params }: IRoot) {
               }}
             />
           </div>
-          {!stackServices.length ? (
+          {!stackServices.length && selectedService?.calibration_method !== '(N/A)' ? (
             <div className="h-[400px] w-full grid place-items-center">
               <p className="text-center flex items-center gap-2 justify-center flex-col">
                 <span className=" font-bold bg-[#333] rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">
@@ -283,49 +281,62 @@ export default function Page({ params }: IRoot) {
                   <Spinner />
                 </div>
               ) : (
-                filteredServices.map((service) => (
-                  <div
-                    key={service.id}
-                    className={`certificates-viewer__main-info__details__selected__item ${selectedService === service.id ? 'selected' : ''
-                      }`}
-                    onClick={() =>
-                      router.push(
-                        `/dashboard/activities/view/update/${service.id}/${selectedService?.calibration_method?.split(' ')[0]
-                        }/${data?.id}?increase=true`,
-                      )
-                    }
-                  >
-                    <div className="flex flex-col gap-2">
-                      <p>
-                        <span>Equipo:</span>{' '}
-                        {service.equipment_information?.device || service.equipment_information?.calibration_object}
-                      </p>
-                      <p>
-                        <span>Codigo:</span>{' '}
-                        {service.equipment_information?.code}
-                      </p>
-                      <p>
-                        <span>Numero de serie:</span>{' '}
-                        {service.equipment_information?.serial_number || 'N/A'}
-                      </p>
-                      <p>
-                        <span>Certificado:</span> {service?.certificate_code}
-                      </p>
+                selectedService?.calibration_method !== '(N/A)' ?
+                  filteredServices.map((service) => (
+                    <div
+                      key={service.id}
+                      className={`certificates-viewer__main-info__details__selected__item ${selectedService === service.id ? 'selected' : ''
+                        }`}
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/activities/view/update/${service.id}/${selectedService?.calibration_method?.split(' ')[0]
+                          }/${data?.id}?increase=true`,
+                        )
+                      }
+                    >
+                      <div className="flex flex-col gap-2">
+                        <p>
+                          <span>Equipo:</span>{' '}
+                          {service.equipment_information?.device || service.equipment_information?.calibration_object}
+                        </p>
+                        <p>
+                          <span>Codigo:</span>{' '}
+                          {service.equipment_information?.code}
+                        </p>
+                        <p>
+                          <span>Numero de serie:</span>{' '}
+                          {service.equipment_information?.serial_number || 'N/A'}
+                        </p>
+                        <p>
+                          <span>Certificado:</span> {service?.certificate_code}
+                        </p>
+                      </div>
+                      <div>
+                        <ActionsItems
+                          equipment={service}
+                          key={service.id}
+                          calibration_method={
+                            selectedService?.calibration_method?.split(' ')[0] ||
+                            ''
+                          }
+                          activityID={data?.id || 0}
+                          handleEmmitCertificate={handleEmmitCertificate}
+                        />
+                      </div>{' '}
                     </div>
-                    <div>
-                      <ActionsItems
-                        equipment={service}
-                        key={service.id}
-                        calibration_method={
-                          selectedService?.calibration_method?.split(' ')[0] ||
-                          ''
-                        }
-                        activityID={data?.id || 0}
-                        handleEmmitCertificate={handleEmmitCertificate}
-                      />
-                    </div>{' '}
+                  ))
+                  :
+                  <div className="grid place-items-center h-full w-full">
+                    <p className="text-center flex items-center gap-2 justify-center flex-col">
+                      <span className={`font-bold ${selectedService?.isResolved ? 'bg-green-500' : 'bg-red-500'}
+                         rounded-full w-[20px] h-[20px] text-white flex justify-center items-center`}>
+                        !
+                      </span>
+                      <span>
+                        {selectedService?.isResolved ? 'Este servicio ya fue completado por el tecnico' : 'Este servicio aun no ha sido resuelto'}
+                      </span>
+                    </p>
                   </div>
-                ))
               )}
             </div>
           )}
