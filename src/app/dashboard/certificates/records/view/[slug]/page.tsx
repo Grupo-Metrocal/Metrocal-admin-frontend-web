@@ -225,12 +225,23 @@ export default function Page({ params }: IRoot) {
                   }`}
                 onClick={() => handleSelectedService(equipment)}
               >
-                <p className="font-bold">{equipment.name}</p>
-
-                <span className="text-sm">Cantidad: {equipment.count}</span>
-                <span>
-                  Metodo: {equipment.calibration_method.split(' ')[0]}
-                </span>
+                <div>
+                  <strong className="font-bold">{equipment.name}</strong>
+                </div>
+                <div className="info">
+                  <p>Servicio: <span>{
+                    equipment.type_service
+                  }</span></p>
+                  <p className="text-sm">
+                    Cantidad: <span>{equipment.count}</span>
+                  </p>
+                  <p className="text-sm">
+                    Metodo:{' '}
+                    <span>{
+                      equipment.calibration_method.split(' ')[0] === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : equipment.calibration_method.split(' ')[0]
+                    }</span>
+                  </p>
+                </div>
               </CarouselItemComp>
             )
           })}
@@ -290,8 +301,8 @@ export default function Page({ params }: IRoot) {
                         {service.equipment_information?.device || service.equipment_information?.calibration_object}
                       </p>
                       <p>
-                        <span>Fabricante:</span>{' '}
-                        {service.equipment_information?.maker}
+                        <span>Codigo:</span>{' '}
+                        {service.equipment_information?.code}
                       </p>
                       <p>
                         <span>Numero de serie:</span>{' '}

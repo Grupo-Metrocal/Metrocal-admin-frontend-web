@@ -5,29 +5,40 @@
     .carousel {
       background-color: #f7f7f7;
       margin-top: 1em;
+      padding: 1em;
 
       // width: fit-content;
     }
 
+    .child {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 120px;
+    }
+
     .carousel-item {
       border-radius: 5px;
-      background-color: #fff;
       max-width: 300px;
       position: relative;
       cursor: pointer;
       padding: 1em;
-      margin: 1em 2em 1em 2em;
-      display: flex;
-      min-height: 130px;
-      position: relative;
+      margin: 0 1em;
+      background-color: #fff;
 
-      p {
-        min-height: 60%;
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+
+        p {
+          font-weight: 500;
+          span {
+            font-weight: 600;
+          }
+        }
       }
 
-      span {
-        display: block;
-      }
       &:hover {
         background-color: rgb(0, 153, 255, 0.1);
       }
