@@ -252,8 +252,6 @@ export default function Page({ params }: IRoot) {
         setTeamMember(response.data.team_members)
         setResponsable(response.data.responsable)
 
-        console.log(response.data)
-
         const service = response.data.quote_request.equipment_quote_request[0]
         handleSelectedService(service)
       } else {
