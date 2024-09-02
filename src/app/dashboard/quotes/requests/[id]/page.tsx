@@ -388,7 +388,7 @@ const CommentRejectedQuote = ({
 
 
     fetchData({
-      url: 'quotes/request/update',
+      url: 'quotes/request/rejected-review',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
