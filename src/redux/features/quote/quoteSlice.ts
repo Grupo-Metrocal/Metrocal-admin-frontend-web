@@ -252,6 +252,13 @@ export const quoteSlice = createSlice({
     setNewEquipment: (state, action) => {
       state.equipment.push(action.payload)
     },
+    deleteEquipmentFromQuote: (state, action) => {
+      const { id } = action.payload
+
+      state.equipment = state.equipment.filter(
+        (equipment) => equipment.id !== id,
+      )
+    },
   },
 })
 
@@ -288,6 +295,7 @@ export const {
   setName,
   setCountEquipment,
   setNewEquipment,
+  deleteEquipmentFromQuote,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer
@@ -390,6 +398,15 @@ export const handleDiscountQuote = (target: any) => (dispatch: any) => {
   dispatch(setDiscountQuote(target.value))
   dispatch(calculateTotalQuote())
 }
+
+export const handleDeleteEquipmentFromQuote =
+  (id: number) => (dispatch: any) => {
+    dispatch(deleteEquipmentFromQuote({ id }))
+
+    dispatch(calculateTotal())
+    dispatch(calculateSubtotal())
+    dispatch(calculateTotalQuote())
+  }
 
 export const handleDispatchOnLoad = (response: IQuote) => (dispatch: any) => {
   dispatch(setID(response.id))
