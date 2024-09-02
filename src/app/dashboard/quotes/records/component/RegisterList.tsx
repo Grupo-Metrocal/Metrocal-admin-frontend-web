@@ -60,7 +60,6 @@ export const RegisterQuoteList = () => {
     const response = await deleteQuoteRequest(id)
 
     if (response.success) {
-      toast.success('Cotización eliminada correctamente')
       setRecords(records.filter((record: any) => record.id !== id))
     } else {
       toast.error('No se pudo eliminar la cotización')
