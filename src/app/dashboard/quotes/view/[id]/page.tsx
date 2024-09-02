@@ -46,7 +46,8 @@ export default function Page({ params }: IRoot) {
       const response = await getData(id)
 
       if (response.success) {
-        setData(response.data)
+        const { data } = response
+        setData({ ...data, rejected_options: data.rejected_options && data.rejected_options.replace(/[{}"]/g, '') })
       }
 
       setLoading(false)
@@ -58,7 +59,7 @@ export default function Page({ params }: IRoot) {
   return (
     <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer"
       subTitle={
-        <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
+        data?.status !== 'rejected' && <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
           Editar cotización
         </CButton>
       }
@@ -198,13 +199,43 @@ export default function Page({ params }: IRoot) {
           </div>
         </Content>
 
-        {/* <Content
-          title="Actividad de la cotización"
+        {data?.status === 'rejected' && <Content
+          title="Motivo de Rechazo"
           colorTitle="yellow"
           className="aside-info__content"
         >
-          p
-        </Content> */}
+          {
+            data?.rejected_by === 'client' ? (<div>
+              <div className='flex flex-col gap-2'>
+                <span className='text-gray-500'>Opciones de rechazo seleccionados</span>
+
+                <ul>
+                  {
+                    data?.rejected_options !== '' ? data?.rejected_options.split(',').map((item: string) => {
+                      return <li className='list-disc ml-4'>{item}</li>
+                    })
+                      : <span>No se selecciono ninguna opción</span>
+                  }
+                </ul>
+
+                <span className='text-gray-500'>Mensaje enviado:</span>
+
+                <p>
+                  {data?.rejected_comment ? data?.rejected_comment : 'No se envio ningun mensaje'}
+                </p>
+              </div>
+            </div>) : (<div className='flex flex-col gap-2'>
+              <span className='text-gray-400'>Esta cotización fue rechazada por el personal de Metrocal <span className='text-red-400'>*</span></span>
+
+              <span className='text-gray-500'>Mensaje enviado:</span>
+
+              <p>
+                {data?.rejected_comment ? data?.rejected_comment : 'No se envio ningun mensaje'}
+              </p>
+            </div>)
+          }
+        </Content>
+        }
       </div>
     </LayoutPage>
   )
