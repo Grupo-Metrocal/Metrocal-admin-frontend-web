@@ -313,11 +313,13 @@ const columns = ({
                   Ver cotización
                 </Linking>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Linking href={`/dashboard/quotes/requests/${payment.id}?${payment.quote_request_status !== 'waiting' ? "increase=true" : "increase=false"}`}>
-                  Actualizar cotización
-                </Linking>
-              </DropdownMenuItem>
+              {
+                payment.quote_request_status !== 'rejected' && <DropdownMenuItem>
+                  <Linking href={`/dashboard/quotes/requests/${payment.id}?${payment.quote_request_status !== 'waiting' ? "increase=true" : "increase=false"}`}>
+                    Actualizar cotización
+                  </Linking>
+                </DropdownMenuItem>
+              }
               <DropdownMenuItem
                 onClick={(e) => {
                   e.preventDefault()
