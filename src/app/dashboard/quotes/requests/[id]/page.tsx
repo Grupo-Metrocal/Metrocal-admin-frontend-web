@@ -73,10 +73,13 @@ export interface IQuote {
   updated_at: any
   no: string
   equipment_quote_request: IEquipmentQuoteRequest[]
+  rejected_comment: string
   client: IClient
   comment: string
   options: string[]
   extras: number
+  rejected_by: 'client' | 'staff'
+  rejected_options: string
   quote_modification_message: string
   quote_modification_status: 'none' | 'pending' | 'done'
 }
