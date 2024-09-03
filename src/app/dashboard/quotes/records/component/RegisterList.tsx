@@ -20,6 +20,7 @@ import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { quoteRecordsType } from '@/types/quoteRecords'
+import { isDateOutOfRange } from '@/utils/isDateOutOfRange'
 
 interface IParamsGetRecords {
   page: number
@@ -314,12 +315,18 @@ const columns = ({
                 </Linking>
               </DropdownMenuItem>
               {
-                payment.quote_request_status !== 'rejected' && <DropdownMenuItem>
-                  <Linking href={`/dashboard/quotes/requests/${payment.id}?${payment.quote_request_status !== 'waiting' ? "increase=true" : "increase=false"}`}>
-                    Actualizar cotización
-                  </Linking>
-                </DropdownMenuItem>
+                !(payment.quote_request_status === 'rejected' ||
+                  (payment.quote_request_status === 'pending' || payment.quote_request_status === 'waiting') &&
+                  isDateOutOfRange(payment.quote_request_created_at, 30))
+                && (
+                  <DropdownMenuItem>
+                    <Linking href={`/dashboard/quotes/requests/${payment.id}?${payment.quote_request_status !== 'waiting' ? "increase=true" : "increase=false"}`}>
+                      Actualizar cotización
+                    </Linking>
+                  </DropdownMenuItem>
+                )
               }
+
               <DropdownMenuItem
                 onClick={(e) => {
                   e.preventDefault()
@@ -334,6 +341,25 @@ const columns = ({
                   useButton={false}
                 />
               </DropdownMenuItem>
+
+              {
+                ((payment.quote_request_status === 'pending' || payment.quote_request_status === 'waiting') && isDateOutOfRange(payment.quote_request_created_at, 30)) && (
+                  <DropdownMenuItem
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                    }}
+                  >
+                    <AlertDialogModal
+                      nameButton="Generar Nueva Cotización"
+                      title="Generar Nueva Cotización"
+                      description="Se copiaran la informacion de esta cotización para generar una nueva"
+                      onConfirm={() => { }}
+                      useButton={false}
+                    />
+                  </DropdownMenuItem>
+                )
+              }
 
               <DropdownMenuSeparator />
               <DropdownMenuItem
