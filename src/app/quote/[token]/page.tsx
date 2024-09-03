@@ -117,7 +117,7 @@ export default function Page({ params }: Props) {
         <div className="main-title">
           <h4>
             <span>METROLOGÍA CONSULTORES DE NICARAGUA, S.A</span>
-            <span>RUC : {quote?.client?.no_ruc}</span>
+            <span>RUC : J0310000169420</span>
             <span>COTIZACIÓN DE SERVICIOS</span>
           </h4>
         </div>
