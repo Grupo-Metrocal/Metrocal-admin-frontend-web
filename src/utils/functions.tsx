@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { fetchData } from './fetch'
 import { toast } from 'sonner'
+import { getCookie } from 'cookies-next'
 
 type LinkingProps = {
   href: string
@@ -83,4 +84,13 @@ export const assignRole = async ({
     toast.error('Error al asignar rol')
     return false
   }
+}
+
+export const generateQuoteBasedOnCurrent = async (quoteID: number) => {
+  return await fetchData({
+    url: `quotes/generate/by-quote-id/${quoteID}`,
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    }
+  })
 }
