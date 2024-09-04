@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Linking, deleteQuoteRequest } from '@/utils/functions'
+import { Linking, deleteQuoteRequest, generateQuoteBasedOnCurrent } from '@/utils/functions'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useForm } from '@/hooks/useForm'
 import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
@@ -21,6 +21,7 @@ import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { quoteRecordsType } from '@/types/quoteRecords'
 import { isDateOutOfRange } from '@/utils/isDateOutOfRange'
+import { useRouter } from 'next/navigation'
 
 interface IParamsGetRecords {
   page: number
@@ -165,6 +166,9 @@ type IColumns = {
 const columns = ({
   onDelete,
 }: IColumns): ColumnDef<quoteRecordsType>[] => {
+
+  const router = useRouter()
+
   return [
     {
       accessorKey: 'client_company_name',
@@ -354,7 +358,18 @@ const columns = ({
                       nameButton="Generar Nueva Cotización"
                       title="Generar Nueva Cotización"
                       description="Se copiaran la informacion de esta cotización para generar una nueva"
-                      onConfirm={() => { }}
+                      onConfirm={async () => {
+                        const response = await generateQuoteBasedOnCurrent(payment.id)
+
+                        if (response.success) {
+                          toast.success('Cotización generada correctamente')
+                          router.push(`/dashboard/quotes/requests/${response.data.id}?increase=false`)
+                        } else {
+                          toast.error('Hubo un error al generar la nueva cotización', {
+                            description: response.details
+                          })
+                        }
+                      }}
                       useButton={false}
                     />
                   </DropdownMenuItem>
