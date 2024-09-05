@@ -11,6 +11,7 @@ import { Spinner } from '@/components/Spinner'
 import { formatPrice } from '@/utils/formatPrice'
 import { CButton } from '@/components/CButton'
 import { useRouter } from 'next/navigation'
+import { RegisterQuoteItem } from './_components/registerQuoteItem'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -57,185 +58,202 @@ export default function Page({ params }: IRoot) {
   }, [id])
 
   return (
-    <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer"
+    <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer flex flex-col gap-4"
       subTitle={
         data?.status !== 'rejected' && <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
           Editar cotización
         </CButton>
       }
     >
-      <Content
-        title="Detalles de la cotización"
-        colorTitle="green"
-        className="quote-viewer__main-info"
-        titleStyle={{
-          fontSize: '1.5em',
-        }}
-      >
-        <div className="quote-viewer__main-info__content">
-          {!data ? (
-            <Spinner />
-          ) : (
-            <>
-              <TextInfo title="Número de cotización" value={data?.no} />
-              <TextInfo title="Precio total" value={formatPrice(data?.price)} />
-              <TextInfo title="IVA" value={`${data?.tax} %`} />
-              <TextInfo
-                title="Descuento general"
-                value={`${data?.general_discount} %`}
-              />
-              <TextInfo
-                title="Traslado técnico"
-                value={formatPrice(data?.extras)}
-              />
-              <TextInfo
-                title="Revisado por"
-                value={data?.approved_by?.username || 'Aun no ha sido aprobada'}
-              />
+      {
+        (data?.modifications_list_json && data?.modifications_list_json?.length > 0 && data?.modification_number && data.modification_number > 0) && (
+          <Content title='Registro de Modificaciones'>
+            <div className='grid gap-2 grid-cols-4'>
+              {
+                data.modifications_list_json?.map((quote, index) => {
+                  return <RegisterQuoteItem key={index} quote={quote} index={index} />
+                })
+              }
+            </div>
+          </Content>
+        )
+      }
 
-              <TextInfo
-                title="Fecha de creación"
-                value={formatDate(data?.created_at)}
-              />
-              <TextInfo
-                title="Estado"
-                style={{
-                  color:
-                    data?.status === 'done'
-                      ? '#00b894'
-                      : data?.status === 'pending'
-                        ? '#d5303e'
-                        : data?.status === 'waiting'
-                          ? '#ff8000'
-                          : 'tomato',
-                }}
-                value={
-                  data?.status === 'done'
-                    ? 'Aprobado'
-                    : data?.status === 'pending'
-                      ? 'Pendiente'
-                      : data?.status === 'waiting'
-                        ? 'En espera'
-                        : 'Rechazado'
-                }
-              />
-            </>
-          )}
-        </div>
-
-        <div className="quote-viewer__main-info__content-equipment">
-          <span
-            style={{
-              fontSize: '1.5em',
-            }}
-          >
-            Equipos solicitados
-          </span>
-          <ul className="items">
-            {!data ? (
-              <Spinner />
-            ) : (
-              data?.equipment_quote_request.map((equipment, index) => (
-                <li key={index}>
-                  <EquipmentInfo
-                    key={equipment.id}
-                    equipment={equipment.name}
-                    price={formatPrice(equipment.price)}
-                    discount={`${equipment.discount} %`}
-                    status={equipment.status}
-                    count={equipment.count}
-                    total={formatPrice(equipment.total)}
-                  />
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
-      </Content>
-
-      <div className="aside-info">
+      <div className='flex justify-between gap-4'>
         <Content
-          title="Información del cliente"
-          colorTitle="red"
-          className="aside-info__content"
+          title="Detalles de la cotización"
+          colorTitle="green"
+          className="quote-viewer__main-info"
           titleStyle={{
             fontSize: '1.5em',
           }}
         >
-          <div className="aside-info__content__info">
+
+          <div className="quote-viewer__main-info__content">
             {!data ? (
               <Spinner />
             ) : (
               <>
+                <TextInfo title="Número de cotización" value={data?.no} />
+                <TextInfo title="Precio total" value={formatPrice(data?.price)} />
+                <TextInfo title="IVA" value={`${data?.tax} %`} />
                 <TextInfo
-                  title="Empresa"
-                  value={data?.client?.company_name || ''}
+                  title="Descuento general"
+                  value={`${data?.general_discount} %`}
                 />
                 <TextInfo
-                  title="Dirección"
-                  value={data?.client?.address || ''}
+                  title="Traslado técnico"
+                  value={formatPrice(data?.extras)}
+                />
+                <TextInfo
+                  title="Revisado por"
+                  value={data?.approved_by?.username || 'Aun no ha sido aprobada'}
                 />
 
                 <TextInfo
-                  title="Teléfono"
+                  title="Fecha de creación"
+                  value={formatDate(data?.created_at)}
+                />
+                <TextInfo
+                  title="Estado"
+                  style={{
+                    color:
+                      data?.status === 'done'
+                        ? '#00b894'
+                        : data?.status === 'pending'
+                          ? '#d5303e'
+                          : data?.status === 'waiting'
+                            ? '#ff8000'
+                            : 'tomato',
+                  }}
                   value={
-                    data?.client?.phone
-                      .toString()
-                      .replace(/(\d{4})(\d{4})/, '$1 $2') || ''
+                    data?.status === 'done'
+                      ? 'Aprobado'
+                      : data?.status === 'pending'
+                        ? 'Pendiente'
+                        : data?.status === 'waiting'
+                          ? 'En espera'
+                          : 'Rechazado'
                   }
                 />
-                <TextInfo title="Correo" value={data?.client?.email || ''} />
-                <TextInfo
-                  title="Solicitado por"
-                  value={data?.client?.requested_by || ''}
-                />
-                <TextInfo
-                  title="Fecha de creación"
-                  value={formatDate(data?.client?.created_at || '')}
-                />
-                <TextInfo title="No. RUC" value={data?.client?.no_ruc || ''} />
               </>
             )}
           </div>
+
+          <div className="quote-viewer__main-info__content-equipment">
+            <span
+              style={{
+                fontSize: '1.5em',
+              }}
+            >
+              Equipos solicitados
+            </span>
+            <ul className="items">
+              {!data ? (
+                <Spinner />
+              ) : (
+                data?.equipment_quote_request.map((equipment, index) => (
+                  <li key={index}>
+                    <EquipmentInfo
+                      key={equipment.id}
+                      equipment={equipment.name}
+                      price={formatPrice(equipment.price)}
+                      discount={`${equipment.discount} %`}
+                      status={equipment.status}
+                      count={equipment.count}
+                      total={formatPrice(equipment.total)}
+                    />
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
         </Content>
 
-        {data?.status === 'rejected' && <Content
-          title="Motivo de Rechazo"
-          colorTitle="yellow"
-          className="aside-info__content"
-        >
-          {
-            data?.rejected_by === 'client' ? (<div>
-              <div className='flex flex-col gap-2'>
-                <span className='text-gray-500'>Opciones de rechazo seleccionados</span>
+        <div className="aside-info">
+          <Content
+            title="Información del cliente"
+            colorTitle="red"
+            className="aside-info__content"
+            titleStyle={{
+              fontSize: '1.5em',
+            }}
+          >
+            <div className="aside-info__content__info">
+              {!data ? (
+                <Spinner />
+              ) : (
+                <>
+                  <TextInfo
+                    title="Empresa"
+                    value={data?.client?.company_name || ''}
+                  />
+                  <TextInfo
+                    title="Dirección"
+                    value={data?.client?.address || ''}
+                  />
 
-                <ul>
-                  {
-                    data?.rejected_options !== '' ? data?.rejected_options.split(',').map((item: string) => {
-                      return <li className='list-disc ml-4'>{item}</li>
-                    })
-                      : <span>No se selecciono ninguna opción</span>
-                  }
-                </ul>
+                  <TextInfo
+                    title="Teléfono"
+                    value={
+                      data?.client?.phone
+                        .toString()
+                        .replace(/(\d{4})(\d{4})/, '$1 $2') || ''
+                    }
+                  />
+                  <TextInfo title="Correo" value={data?.client?.email || ''} />
+                  <TextInfo
+                    title="Solicitado por"
+                    value={data?.client?.requested_by || ''}
+                  />
+                  <TextInfo
+                    title="Fecha de creación"
+                    value={formatDate(data?.client?.created_at || '')}
+                  />
+                  <TextInfo title="No. RUC" value={data?.client?.no_ruc || ''} />
+                </>
+              )}
+            </div>
+          </Content>
+
+          {data?.status === 'rejected' && <Content
+            title="Motivo de Rechazo"
+            colorTitle="yellow"
+            className="aside-info__content"
+          >
+            {
+              data?.rejected_by === 'client' ? (<div>
+                <div className='flex flex-col gap-2'>
+                  <span className='text-gray-500'>Opciones de rechazo seleccionados</span>
+
+                  <ul>
+                    {
+                      data?.rejected_options !== '' ? data?.rejected_options.split(',').map((item: string) => {
+                        return <li className='list-disc ml-4'>{item}</li>
+                      })
+                        : <span>No se selecciono ninguna opción</span>
+                    }
+                  </ul>
+
+                  <span className='text-gray-500'>Mensaje enviado:</span>
+
+                  <p>
+                    {data?.rejected_comment ? data?.rejected_comment : 'No se envio ningun mensaje'}
+                  </p>
+                </div>
+              </div>) : (<div className='flex flex-col gap-2'>
+                <span className='text-gray-400'>Esta cotización fue rechazada por el personal de Metrocal <span className='text-red-400'>*</span></span>
 
                 <span className='text-gray-500'>Mensaje enviado:</span>
 
                 <p>
                   {data?.rejected_comment ? data?.rejected_comment : 'No se envio ningun mensaje'}
                 </p>
-              </div>
-            </div>) : (<div className='flex flex-col gap-2'>
-              <span className='text-gray-400'>Esta cotización fue rechazada por el personal de Metrocal <span className='text-red-400'>*</span></span>
-
-              <span className='text-gray-500'>Mensaje enviado:</span>
-
-              <p>
-                {data?.rejected_comment ? data?.rejected_comment : 'No se envio ningun mensaje'}
-              </p>
-            </div>)
+              </div>)
+            }
+          </Content>
           }
-        </Content>
-        }
+        </div>
       </div>
     </LayoutPage>
   )
