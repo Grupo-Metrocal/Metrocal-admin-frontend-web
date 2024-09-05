@@ -7,6 +7,9 @@
 
   .content__title {
     margin-bottom: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
 
     h4 {
       margin-bottom: 1.5em;
