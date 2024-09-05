@@ -82,6 +82,8 @@ export interface IQuote {
   rejected_options: string
   quote_modification_message: string
   quote_modification_status: 'none' | 'pending' | 'done'
+  modifications_list_json?: IQuote[]
+  modification_number?: number
 }
 
 export interface IRoot {
