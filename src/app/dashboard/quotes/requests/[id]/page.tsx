@@ -109,6 +109,7 @@ export default function Page({ params }: IRoot) {
   )
 
   const [quote, setQuote] = useState<IQuote>()
+  const [saveQuote, setSaveQuote] = useState<any>()
 
   const status = useAppSelector((state) => state.quote.status)
 
@@ -130,6 +131,7 @@ export default function Page({ params }: IRoot) {
 
       if (response.success) {
         setQuote(response.data as IQuote)
+        setSaveQuote(response.data)
         dispatch(handleDispatchOnLoad(response.data as IQuote))
       }
     }
@@ -141,7 +143,7 @@ export default function Page({ params }: IRoot) {
     <LayoutPage
       title="Cotizaciones / solicitudes"
       rollBack={true}
-      Footer={Footer}
+      Footer={() => <Footer saveQuote={saveQuote} />}
       subTitle={
         status && status === 'waiting'
           ? 'En espera de aprobación del cliente'
@@ -216,8 +218,10 @@ export default function Page({ params }: IRoot) {
     </LayoutPage>
   )
 }
-
-const Footer = () => {
+interface IFooterProps {
+  saveQuote: any
+}
+const Footer = ({ saveQuote }: IFooterProps) => {
   const {
     id,
     total,
@@ -258,6 +262,7 @@ const Footer = () => {
         extras: Number(extras),
         status: 'waiting',
         authorized_token: getCookie('token'),
+        modifiedQuote: saveQuote
       },
       params: {
         increase
