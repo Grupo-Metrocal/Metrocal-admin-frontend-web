@@ -83,9 +83,9 @@ export const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
           height: '20px',
           position: 'absolute',
           top: 0,
-          background: 'tomato',
-          borderRadius: '3px 10px 3px 3px',
-          border: '3px solid tomato',
+          background: '#333',
+          borderRadius: '4px 10px 4px 4px',
+          border: '4px solid #333',
           boxSizing: 'content-box',
           right: 0,
           padding: 0
