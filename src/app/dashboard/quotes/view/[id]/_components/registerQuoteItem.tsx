@@ -5,6 +5,7 @@ import { Download } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import messageIcon from '@/assets/icons/comment.svg'
 import Image from "next/image";
+import { handleGeneratePDFromModifiedQuoteList } from "@/utils/downloadPDFromModifiedQuoteList";
 
 interface IProps {
   quote: IQuote
@@ -30,7 +31,14 @@ export const RegisterQuoteItem = ({ quote, index }: IProps) => {
       <div className="flex justify-between gap-2 items-center">
         <span className="text-gray-400">{formatDate(quote.updated_at)}</span>
 
-        <Button variant={"outline"}>
+        <Button variant={"outline"} onClick={async () => {
+          return await handleGeneratePDFromModifiedQuoteList({
+            id: quote.id,
+            no: quote.no,
+            company_name: quote.client.company_name,
+            index
+          })
+        }}>
           <Download width={17} />
         </Button>
       </div>
