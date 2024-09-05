@@ -1,3 +1,4 @@
+import React from 'react'
 import './index.scss'
 
 interface IContentProps {
@@ -7,6 +8,7 @@ interface IContentProps {
   style?: React.CSSProperties
   colorTitle?: 'red' | 'blue' | 'green' | 'yellow' | 'purple'
   className?: string
+  RightComponent?: React.FC
 }
 export const Content = ({
   children,
@@ -15,6 +17,7 @@ export const Content = ({
   titleStyle,
   className,
   style,
+  RightComponent
 }: IContentProps) => {
   return (
     <div className={`content-content ${className}`} style={style}>
@@ -26,6 +29,8 @@ export const Content = ({
         >
           {title}
         </h4>
+
+        {RightComponent && <RightComponent />}
       </div>
       <div className="content__body">{children}</div>
     </div>
