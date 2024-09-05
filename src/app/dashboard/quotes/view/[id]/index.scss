@@ -1,9 +1,15 @@
 @use '@/sass/index' as *;
 
-.quote-viewer .layout-page__content {
+.quote-viewer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.layout-page__content {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1em;
 
   .quote-viewer__main-info {
