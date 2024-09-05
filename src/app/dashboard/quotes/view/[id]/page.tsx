@@ -12,6 +12,9 @@ import { formatPrice } from '@/utils/formatPrice'
 import { CButton } from '@/components/CButton'
 import { useRouter } from 'next/navigation'
 import { RegisterQuoteItem } from './_components/registerQuoteItem'
+import { Button } from '@/components/ui/button'
+import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
+import { Download } from 'lucide-react'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -87,6 +90,19 @@ export default function Page({ params }: IRoot) {
           titleStyle={{
             fontSize: '1.5em',
           }}
+          RightComponent={
+            () => <Button variant={"outline"} onClick={async () => {
+              return await handleGeneratePDFQuote({
+                id: data?.id ? data?.id : 0,
+                no: data?.no ? data?.no : '',
+                company_name: data?.client?.company_name ? data?.client.company_name : '',
+              })
+            }}>
+              <Download width={17} />
+            </Button>
+
+
+          }
         >
 
           <div className="quote-viewer__main-info__content">
