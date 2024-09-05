@@ -1,4 +1,3 @@
-import { formatQuoteCode } from "@/utils/formatQuoteCode";
 import { IQuote } from "../../../requests/[id]/page";
 import { formatDate } from "@/utils/formatDate";
 import { Button } from "@/components/ui/button";
