@@ -244,8 +244,8 @@ export default function Page({ params }: IRoot) {
 
                   <ul>
                     {
-                      data?.rejected_options !== '' ? data?.rejected_options.split(',').map((item: string) => {
-                        return <li className='list-disc ml-4'>{item}</li>
+                      data?.rejected_options !== '' ? data?.rejected_options.split(',').map((item: string, index) => {
+                        return <li key={index} className='list-disc ml-4'>{item}</li>
                       })
                         : <span>No se selecciono ninguna opción</span>
                     }
