@@ -348,6 +348,10 @@ export default function Page({ params }: Props) {
 
         <div className="actions">
           <div>
+            {/*  */}
+          </div>
+          <div>
+
             <Modal
               nameButton="SOLICITAR MODIFICACIÓN"
               title="Solicitar modificación"
@@ -358,8 +362,15 @@ export default function Page({ params }: Props) {
                 fontWeight: 'bold',
               }}
             />
-          </div>
-          <div>
+            <AlertDialogModal
+              nameButton="Aprobar cotización"
+              description="Una vez aprobada la cotización, el equipo de Metrología Consultores de Nicaragua, S.A. se pondrá en contacto con usted para llevar a cabo los servicios solicitados."
+              title="Aprobar cotización"
+              onConfirm={handleApproveQuote}
+              buttonStyle={{
+                boxShadow: 'none',
+              }}
+            />
             <Modal
               nameButton="No Aprobar"
               title="¿Estas seguro de no aprobar esta cotización?"
@@ -389,15 +400,7 @@ export default function Page({ params }: Props) {
                 border: '1px solid #999',
               }}
             />
-            <AlertDialogModal
-              nameButton="Aprobar cotización"
-              description="Una vez aprobada la cotización, el equipo de Metrología Consultores de Nicaragua, S.A. se pondrá en contacto con usted para llevar a cabo los servicios solicitados."
-              title="Aprobar cotización"
-              onConfirm={handleApproveQuote}
-              buttonStyle={{
-                boxShadow: 'none',
-              }}
-            />
+
           </div>
         </div>
       </section>
