@@ -337,8 +337,8 @@ const columns = ({
                 }}
               >
                 <AlertDialogModal
-                  nameButton="Guardar como PDF"
-                  title="Guardar como PDF"
+                  nameButton="Descargar PDF"
+                  title="Descargar PDF"
                   description="La descarga del PDF se iniciará automáticamente."
                   onConfirm={() => handleGeneratePDFQuote({ id: payment.id, no: payment.quote_request_no, company_name: payment.client_company_name })}
                   useButton={false}

@@ -378,8 +378,8 @@ export default function Page({ params }: Props) {
               )}
             />
             <AlertDialogModal
-              nameButton="Guardar como PDF"
-              title="Guardar como PDF"
+              nameButton="Descargar PDF"
+              title="Descargar PDF"
               description="La descarga del PDF se iniciará automáticamente."
               onConfirm={() => handleGeneratePDFQuote({ id: quote?.id as number, no: quote?.no as string, company_name: quote?.client?.company_name as string })}
               buttonStyle={{
