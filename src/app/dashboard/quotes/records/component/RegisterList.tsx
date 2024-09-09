@@ -319,8 +319,7 @@ const columns = ({
                 </Linking>
               </DropdownMenuItem>
               {
-                !(payment.quote_request_status === 'rejected' ||
-                  (payment.quote_request_status === 'pending' || payment.quote_request_status === 'waiting') &&
+                !((payment.quote_request_status === 'pending' || payment.quote_request_status === 'waiting') &&
                   isDateOutOfRange(payment.quote_request_created_at, 30))
                 && (
                   <DropdownMenuItem>
