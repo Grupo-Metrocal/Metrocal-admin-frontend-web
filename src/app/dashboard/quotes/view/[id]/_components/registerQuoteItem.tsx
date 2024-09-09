@@ -22,7 +22,7 @@ export const RegisterQuoteItem = ({ quote, index }: IProps) => {
             <Image src={messageIcon} alt="Icono Mensaje de modificación" width={20} />
           </PopoverTrigger>
           <PopoverContent className="bg-white p-4 shadow-lg w-full z-20">
-            <p className="w-96">{quote.quote_modification_message || 'No hay mensjae'}</p>
+            <p className="w-96">{quote.quote_modification_message || 'No hay mensaje'}</p>
           </PopoverContent>
         </Popover>
       </div >

@@ -288,7 +288,7 @@ export default function Page({ params }: Props) {
             </h4>
             <ul className="conditions">
               <li>
-                Certificados de calibraciån se entregan los dias miércoles o
+                Certificados de calibración se entregan los dias miércoles o
                 retirar en nuestras instalaciones.
               </li>
               <li>
