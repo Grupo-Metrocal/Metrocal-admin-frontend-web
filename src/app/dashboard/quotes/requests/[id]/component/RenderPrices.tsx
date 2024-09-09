@@ -169,7 +169,7 @@ export const RenderPrices = () => {
       </div>
 
       <div className="prices__footer">
-        {/* <CButton
+        <CButton
           style={{
             background: 'none',
             color: 'tomato',
@@ -178,7 +178,7 @@ export const RenderPrices = () => {
           onClick={handleReject}
         >
           Rechazar equipo
-        </CButton> */}
+        </CButton>
         <CButton style={{ boxShadow: 'none' }} onClick={handleApprove}>
           Aprobar equipo
         </CButton>
