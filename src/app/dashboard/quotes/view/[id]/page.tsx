@@ -15,6 +15,7 @@ import { RegisterQuoteItem } from './_components/registerQuoteItem'
 import { Button } from '@/components/ui/button'
 import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
 import { Download } from 'lucide-react'
+import { isDateOutOfRange } from '@/utils/isDateOutOfRange'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -63,10 +64,10 @@ export default function Page({ params }: IRoot) {
   return (
     <LayoutPage title={`Cotización`} rollBack={true} className="quote-viewer flex flex-col gap-4"
       subTitle={
-        data?.status !== 'rejected' && <CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
+        !((data?.status === 'pending' || data?.status === 'waiting') && isDateOutOfRange(data.created_at, 30)) && (<CButton onClick={() => router.push(`/dashboard/quotes/requests/${id}?increase=true`)}>
           Editar cotización
         </CButton>
-      }
+        )}
     >
       {
         (data?.modifications_list_json && data?.modifications_list_json?.length > 0 && data?.modification_number && data.modification_number > 0) && (
