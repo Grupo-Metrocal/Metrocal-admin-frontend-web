@@ -61,7 +61,7 @@ export const NAVLINK_MENU_LIST = [
     icon: settingsIcon,
   },
   {
-    name: 'certificados',
+    name: 'Certificados',
     href: '/dashboard/certificates',
     segment: 'certificates',
     category: 'organización',
