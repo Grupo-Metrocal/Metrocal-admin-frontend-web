@@ -23,6 +23,8 @@ export interface AllQuotes {
 export interface RejectedQuotes {
   number_quotes_rejected_by_client: number
   number_quotes_rejected_by_staff: number
+  invoice_rejected_by_staff: number
+  invoice_rejected_by_client: number
 }
 
 export interface ApprovedQuotes {
@@ -97,13 +99,13 @@ export const QuotationsDetails = () => {
                   />
                   <SeparatorLine />
                   <Gauge
-                    value={formatPrice(statistics.rejected_quotes.number_quotes_rejected_by_client, 0)}
+                    value={formatPrice(statistics.rejected_quotes.invoice_rejected_by_client)}
                     label='Cotizaciones Rechazadas por Clientes'
                     increase={0}
                   />
                   <SeparatorLine />
                   <Gauge
-                    value={formatPrice(statistics.rejected_quotes.number_quotes_rejected_by_staff, 0)}
+                    value={formatPrice(statistics.rejected_quotes.invoice_rejected_by_staff)}
                     label='Cotizaciones Rechazadas por Metrocal'
                     increase={0}
                   />
