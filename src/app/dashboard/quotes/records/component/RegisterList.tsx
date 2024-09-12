@@ -1,7 +1,7 @@
 'use client'
 import { fetchData } from '@/utils/fetch'
 import { useEffect, useState } from 'react'
-import { DataTableDemo } from '@/components/Table'
+import { DataTableDemo, filter } from '@/components/Table'
 import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation'
 interface IParamsGetRecords {
   page: number
   no?: string
-  quoteRequestType?: string[]
+  quoteRequestType?: string
 }
 
 const getRecords = async ({ page, no, quoteRequestType }: IParamsGetRecords) => {
@@ -48,6 +48,7 @@ export const RegisterQuoteList = () => {
   const [records, setRecords] = useState<quoteRecordsType[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [quoteRequestType, setQuoteRequestType] = useState<string>('')
   const { values, handleInputChange } = useForm({
     search: '',
   })
@@ -56,6 +57,58 @@ export const RegisterQuoteList = () => {
     total_pages: 0,
     total_data: 0,
   })
+  const [filters, setFilters] = useState<filter[]>([
+    {
+      id: 'done',
+      label: 'Aprobados',
+      checked: false,
+      onChangeCheckbox() {
+        handleFilterChange('done');
+      },
+    },
+    {
+      id: 'rejected',
+      label: 'Rechazados',
+      checked: false,
+      onChangeCheckbox() {
+        handleFilterChange('rejected');
+      },
+    },
+    {
+      id: 'pending',
+      label: 'Pendientes de revisión',
+      checked: false,
+      onChangeCheckbox() {
+        handleFilterChange('pending');
+      },
+    },
+    {
+      id: 'waiting',
+      label: 'Espera de aprobación',
+      checked: false,
+      onChangeCheckbox() {
+        handleFilterChange('waiting');
+      },
+    },
+  ])
+
+  const handleFilterChange = (id: string) => {
+    setFilters((prevFilters) =>
+      prevFilters.map((filter) =>
+        filter.id === id ? { ...filter, checked: !filter.checked } : filter
+      )
+    );
+
+    setQuoteRequestType((prevState) => {
+      const selectedFilters = prevState ? prevState.split(',') : [];
+
+      if (selectedFilters.includes(id)) {
+        return selectedFilters.filter((filter) => filter !== id).join(',');
+      } else {
+        return [...selectedFilters, id].join(',');
+      }
+    });
+  };
 
   const handleDeleteQuote = async (id: number) => {
 
@@ -82,8 +135,9 @@ export const RegisterQuoteList = () => {
 
 
   useEffect(() => {
+    setLoading(true)
     const timeOut = setTimeout(() => {
-      getRecords({ page: currentPage, no: values.search })
+      getRecords({ page: currentPage, no: values.search, quoteRequestType })
         .then((data) => {
           if (data.success) {
             setRecords(data.data)
@@ -104,30 +158,30 @@ export const RegisterQuoteList = () => {
     }, 700)
 
     return () => clearTimeout(timeOut)
-  }, [values.search, currentPage])
+  }, [values.search, currentPage, quoteRequestType])
 
-  useEffect(() => {
-    toast.loading('Cargando registros...')
+  // useEffect(() => {
+  //   toast.loading('Cargando registros...')
 
-    getRecords({ page: currentPage })
-      .then((data) => {
-        if (data.success) {
-          setRecords(data.data)
-          setPagination({
-            current_page: data.current_page,
-            total_pages: data.total_pages,
-            total_data: data.total_data,
-          })
-        } else {
-          setRecords([])
-          toast.error('No se pudieron cargar los registros')
-        }
-      })
-      .finally(() => {
-        toast.dismiss()
-        setLoading(false)
-      })
-  }, [])
+  //   getRecords({ page: currentPage })
+  //     .then((data) => {
+  //       if (data.success) {
+  //         setRecords(data.data)
+  //         setPagination({
+  //           current_page: data.current_page,
+  //           total_pages: data.total_pages,
+  //           total_data: data.total_data,
+  //         })
+  //       } else {
+  //         setRecords([])
+  //         toast.error('No se pudieron cargar los registros')
+  //       }
+  //     })
+  //     .finally(() => {
+  //       toast.dismiss()
+  //       setLoading(false)
+  //     })
+  // }, [])
 
   return (
     <div>
@@ -153,6 +207,7 @@ export const RegisterQuoteList = () => {
             approved_by: 'Aprobado por',
             quote_request_status: 'Estado',
           }}
+          filters={filters}
         />
       }
     </div>
