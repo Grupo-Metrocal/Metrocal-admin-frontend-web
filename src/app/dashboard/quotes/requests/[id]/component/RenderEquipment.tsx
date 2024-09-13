@@ -71,7 +71,7 @@ export const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
       data-equipment-status={equipment.status}
     >
 
-      {/* <AlertDialogModal
+      <AlertDialogModal
         nameButton='X'
         onConfirm={handleDeleteEquipment}
         title='Eliminar servicio de la cotizacion'
@@ -90,7 +90,7 @@ export const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
           right: 0,
           padding: 0
         }}
-      /> */}
+      />
       <div className="status">
         <div className="img">
           <Image
