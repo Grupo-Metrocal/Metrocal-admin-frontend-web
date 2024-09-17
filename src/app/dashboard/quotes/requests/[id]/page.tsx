@@ -168,17 +168,9 @@ export default function Page({ params }: IRoot) {
       }
 
       <div className="only-quote">
-        <section>
+        <section className='h-fit'>
           <div
-            className={`equipment-container ${equipment?.length > 3 ? 'with-before' : ''
-              }`}
-            data-equipment-length={equipment?.length}
-            style={{
-              height:
-                equipment?.length > 3
-                  ? 3 * 150 + 'px'
-                  : equipment?.length * 150 + 'px',
-            }}
+            className={`equipment-container`}
           >
             {loading ? (
               equipment?.map((equipment, index) => (

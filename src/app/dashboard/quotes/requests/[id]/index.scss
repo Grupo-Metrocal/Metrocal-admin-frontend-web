@@ -12,6 +12,10 @@
     flex-direction: column;
     gap: 1em;
     position: relative;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: none;
+    width: 100%;
 
     .equipment {
       background-color: #fff;
@@ -24,19 +28,6 @@
       gap: 1em;
       transition: all 0.3s ease-in-out;
       position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        right: calc(-1.5em - 16.5px);
-        width: 17px;
-        height: 17px;
-        background: #dfdfdf;
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        cursor: auto;
-      }
 
       &[data-equipment-status='done'] {
         &::after {
@@ -100,14 +91,6 @@
     }
   }
 
-  .with-before {
-    overflow: auto;
-    width: calc(100% + 2.5em);
-    padding-right: 2.5em;
-    &::before {
-      display: none;
-    }
-  }
   &__body {
     &__client {
       background-color: #fff;
@@ -217,10 +200,6 @@
         height: auto;
         border: 1px solid transparent;
         width: auto;
-
-        &::after {
-          display: none;
-        }
 
         .status {
           .img {
