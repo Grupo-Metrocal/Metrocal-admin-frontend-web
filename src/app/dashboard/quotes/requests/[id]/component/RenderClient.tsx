@@ -29,9 +29,6 @@ export const RenderClient = ({ client }: { client?: IClient }) => {
         <h5>
           Dirección: <span>{client?.address}</span>
         </h5>
-        <h5>
-          Teléfono de empresa: <span>{client?.company_phone}</span>
-        </h5>
       </div>
     </>
   )
