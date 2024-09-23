@@ -137,15 +137,11 @@ export default function Page({ params }: IRoot) {
       if (response.success) {
         toast.success('Certificado emitido correctamente')
       } else {
-        toast.error('Error al emitir el certificado', {
-          description: response.details,
-        })
+        toast.error('Error al emitir el certificado')
       }
     })
       .catch((error) => {
-        toast.error('Error al emitir el certificado', {
-          description: error.message,
-        })
+        toast.error('Error al emitir el certificado')
       })
       .finally(() => {
         setLoading(false)
