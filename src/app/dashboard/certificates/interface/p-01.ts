@@ -35,8 +35,8 @@ export interface ICertificate_P_01 {
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  descriptionPattern: DescriptionPattern
-  used_patterns: UsedPatterns
+  used_pattern: DescriptionPattern
+  description_pattern: UsedPatterns
   creditable: boolean
   ta_eq_enviromental_conditions: string
   hPa_eq_enviromental_conditions: string

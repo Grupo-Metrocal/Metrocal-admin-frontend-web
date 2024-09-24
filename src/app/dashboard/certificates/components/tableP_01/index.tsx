@@ -223,7 +223,7 @@ export const TableP_01 = ({
 
           <div>
             <p>Patron utilizado</p>
-            <span>{certificate.descriptionPattern?.pattern}</span>
+            <span>{certificate.used_pattern?.pattern}</span>
           </div>
 
           <div>
