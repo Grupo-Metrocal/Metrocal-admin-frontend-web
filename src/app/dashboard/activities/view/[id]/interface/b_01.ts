@@ -28,7 +28,6 @@ export interface IEquipmentInformation {
   unit: string
   model: string
   code: string
-  acredited: boolean
 }
 
 export interface IEnvironmentalConditions {
