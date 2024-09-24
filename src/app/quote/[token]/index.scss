@@ -182,6 +182,36 @@
       display: flex;
       gap: 1em;
     }
+
+    .currency-type {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      label {
+        font-weight: bold;
+        color: #333;
+      }
+
+      select {
+        padding: 1em;
+        font-size: 1em;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.3s ease;
+
+        &:hover {
+          border-color: #888;
+        }
+
+        &:focus {
+          border-color: #555;
+        }
+      }
+    }
   }
 }
 
