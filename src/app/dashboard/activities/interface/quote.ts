@@ -13,6 +13,7 @@ export interface IQuote {
   equipment_quote_request: EquipmentQuoteRequest[]
   client: Client
   activity: Activity
+  currency_type: 'NIO' | 'USD'
 }
 
 export interface EquipmentQuoteRequest {

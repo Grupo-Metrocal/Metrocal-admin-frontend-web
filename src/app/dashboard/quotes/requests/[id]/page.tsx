@@ -84,6 +84,7 @@ export interface IQuote {
   quote_modification_status: 'none' | 'pending' | 'done'
   modifications_list_json?: IQuote[]
   modification_number?: number
+  currency_type: 'NIO' | 'USD'
 }
 
 export interface IRoot {
