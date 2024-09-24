@@ -22,12 +22,12 @@ export interface IEquipmentInformation {
   device: string
   maker: string
   serial_number: string
-  measurement_range: string
+  range_min: number
+  range_max: number
   resolution: string
   unit: string
   model: string
   code: string
-  length: string
   acredited: boolean
 }
 

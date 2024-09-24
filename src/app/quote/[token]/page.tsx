@@ -12,8 +12,6 @@ import type {
 import { FooterComponent } from '@/app/footer'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { Toaster, toast } from 'sonner'
-import { useForm } from '@/hooks/useForm'
-import { CButton } from '@/components/CButton'
 import { TermsAndConditions } from '@/components/TermsAndConditions'
 import { formatPrice } from '@/utils/formatPrice'
 import commentIcon from '@/assets/icons/comment.svg'
