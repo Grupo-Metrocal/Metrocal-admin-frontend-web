@@ -90,6 +90,23 @@ export default function Page({ params }: Props) {
     }
   }
 
+  const handleChangeCurrencyType = async (type: string) => {
+    toast.loading('Cambiando Tipo de Moneda...')
+
+    const response = await fetchData({
+      url: `quotes/currency/change-type/${type}/${quote?.id}`,
+      method: 'GET',
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success(`Se ha cambiado el tipo de moneda ha ${type}`)
+    } else {
+      toast.error('Hubo un error en la solicitud')
+    }
+  }
+
   const subtotal1 =
     quote?.equipment_quote_request ?
       quote?.equipment_quote_request
@@ -349,10 +366,14 @@ export default function Page({ params }: Props) {
         <div className="actions">
           <div className='currency-type'>
             <label htmlFor="currency_type">Tipo de Moneda</label>
-            <select name='currency_type' id='currency_type'>
+            <select name='currency_type' id='currency_type'
+              onChange={(e) => handleChangeCurrencyType(e.currentTarget.value)}
+            >
               {
                 Object.values(CurrencyType).map((currencyOption, index) => (
-                  <option value={currencyOption} key={index}>{currencyOption}</option>
+                  <option value={currencyOption} key={index}
+                    selected={currencyOption === quote?.currency_type}
+                  >{currencyOption}</option>
                 ))
               }
             </select>
