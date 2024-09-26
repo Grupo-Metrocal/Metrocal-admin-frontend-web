@@ -34,7 +34,7 @@ export interface ICertificate_B_01 {
   used_patterns: UsedPatterns
   creditable: boolean
   observations: string
-  withLb: boolean
+  show_additional_table: '' | 'lb' | 'kg'
 }
 
 export interface EquipmentInformation {

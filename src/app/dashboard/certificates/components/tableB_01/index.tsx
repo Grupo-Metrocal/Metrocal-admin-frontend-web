@@ -117,7 +117,7 @@ export const TableB_01 = ({
         </table>
       </section>
 
-      {certificate.withLb && (
+      {certificate.show_additional_table !== '' && (
         <section className="table-b-01__calibration-result">
           <h2>Tabla de resultados de la calibración en lb</h2>
           <table>
