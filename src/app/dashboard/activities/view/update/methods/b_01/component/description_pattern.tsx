@@ -2,7 +2,6 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/b_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { AutocompleteInput } from '@/components/AutocompleteInput'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -15,7 +14,7 @@ export const DescriptionPattern = ({
   ) => void
   description_pattern: IDescriptionPattern
 }) => {
-  const { values, handleInputChange } = useForm({ ...description_pattern })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-b-01/description-pattern/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +26,6 @@ export const DescriptionPattern = ({
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
         <CInput
           label="Observaciones"
           name="observation"
@@ -50,6 +48,24 @@ export const DescriptionPattern = ({
             />
             ¿Equipo acreditado?
           </label>
+        </div>
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="show_additional_table" className="text-xs font-semibold ">
+            Mostrar tabla de conversión en el certificado
+          </label>
+          <select
+            name="show_additional_table"
+            id="show_additional_table"
+            defaultValue={values.show_additional_table}
+            value={values.show_additional_table}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="">NO MOSTRAR</option>
+            <option value="lb">lb</option>
+            <option value="kg">kg</option>
+          </select>
         </div>
       </div>
       <div>

@@ -98,4 +98,5 @@ interface IRepeatabilityPoint {
 export interface IDescriptionPattern {
   creditable: string
   observation: string
+  show_additional_table: 'lb' | 'kg'
 }
