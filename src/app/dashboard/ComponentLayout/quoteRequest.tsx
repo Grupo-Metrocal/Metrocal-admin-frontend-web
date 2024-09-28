@@ -8,7 +8,7 @@ import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CButton } from '@/components/CButton'
 import { Linking } from '@/utils/functions'
 
-const getClientsEmails = async () => {
+export const getClientsEmails = async () => {
   const response = await fetchData({
     url: 'clients/emails/all',
     headers: {
@@ -19,7 +19,7 @@ const getClientsEmails = async () => {
   return response
 }
 
-type IClientEmail = {
+export type IClientEmail = {
   id: number
   company_name: string
   email: string
@@ -75,7 +75,7 @@ export const QuoteRequest = () => {
         onChange={(e) => {
           setSelectedEmail(
             clients.find((client) => client.company_name === e.value)?.email ||
-              e.value,
+            e.value,
           )
         }}
         keyList="clients"
