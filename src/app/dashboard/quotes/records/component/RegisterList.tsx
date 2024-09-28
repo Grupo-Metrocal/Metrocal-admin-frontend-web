@@ -22,6 +22,8 @@ import { toast } from 'sonner'
 import { quoteRecordsType } from '@/types/quoteRecords'
 import { isDateOutOfRange } from '@/utils/isDateOutOfRange'
 import { useRouter } from 'next/navigation'
+import { Modal } from '@/components/Modal'
+import { CopyQuote } from './copyQuote'
 
 interface IParamsGetRecords {
   page: number
@@ -429,6 +431,19 @@ const columns = ({
                   </DropdownMenuItem>
                 )
               }
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <Modal
+                  title='Copiar cotización'
+                  description='Porfavor seleccione el cliente a quien desee copiar esta cotización'
+                  nameButton='Copiar cotización'
+                  Component={() => <CopyQuote quoteId={payment.id} />}
+                />
+              </DropdownMenuItem>
 
               <DropdownMenuSeparator />
               <DropdownMenuItem
