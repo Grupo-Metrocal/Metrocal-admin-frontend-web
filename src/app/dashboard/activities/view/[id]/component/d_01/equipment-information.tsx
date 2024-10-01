@@ -25,10 +25,6 @@ export const EquipmentInformation = ({
           title="Número de serie"
           value={equipment_information?.serial_number}
         />
-        <Item
-          title="Rango de medición"
-          value={equipment_information?.measurement_range}
-        />
         <Item title="Resolución" value={equipment_information?.resolution} />
         <Item title="Modelo" value={equipment_information?.model} />
         <Item title="Código" value={equipment_information?.code} />
