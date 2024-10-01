@@ -8,7 +8,7 @@ export interface ID_02 {
   description_pattern: IDescriptionPattern
   pre_installation_comment: IPreinstallationcomment
   instrument_zero_check: IInstrumentzerocheck
-  accuracy_test:IAccuracyTest
+  accuracy_test: IAccuracyTest
   certificate_code?: string
   certificate_url?: string
   review_state?: boolean
@@ -20,7 +20,8 @@ export interface IEquipmentInformation {
   device: string
   maker: string
   serial_number: string
-  measurement_range: string
+  range_min: number
+  range_max: number
   resolution: string
   model: string
   code: string
@@ -102,8 +103,6 @@ export interface IMeasure_D02 {
   }
 }
 
-
 export interface ICertificateData {
   certificado_result: string[]
 }
-

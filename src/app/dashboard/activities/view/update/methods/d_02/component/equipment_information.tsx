@@ -50,21 +50,23 @@ export const EquipmentInformation = ({
           value={values.serial_number}
           onChange={handleInputChange}
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values.measurement_range}
-          label="Rango de medida"
-          name="measurement_range"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su unidad"
-          list={[{ id: 1, name: '0 mm a 150 mm' }]}
-          keyList="measurement_range"
-        />
         <CInput
           label="Resolución"
           name="resolution"
           value={values.resolution}
+          onChange={handleInputChange}
+          type="number"
+        />
+        <CInput
+          label="Rango Minimo"
+          name="range_min"
+          value={values.range_min}
+          onChange={handleInputChange}
+          type="number"
+        /><CInput
+          label="Rango Maximo"
+          name="range_max"
+          value={values.range_max}
           onChange={handleInputChange}
           type="number"
         />
