@@ -26,6 +26,7 @@ export interface IEquipmentInformation {
   model: string
   code: string
   length: string
+  unit: string
 }
 
 export interface IEnvironmentalConditions {

@@ -15,7 +15,7 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm({ ...equipment })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...equipment })
   const url = `methods/ni-mcit-d-02/equipment-information/`
   return (
     <div className="flex flex-col space-y-4">
@@ -29,12 +29,11 @@ export const EquipmentInformation = ({
           required
           placeholder="Escriba o seleccione su dispositivo"
           list={[
-            { id: 1, name: 'Micrómetro' },
+            { id: 1, name: 'Micrómetro Digital' },
             { id: 2, name: 'Pie de Rey' },
             { id: 3, name: 'Juego de Bloques Patrón' },
             { id: 4, name: 'Higro Termómetro' },
-            { id: 5, name: 'Higro Termómetro' },
-            { id: 6, name: 'Higro Termómetro' },
+            { id: 5, name: 'Micrómetro Analógico' },
           ]}
           keyList="device"
         />
@@ -63,13 +62,30 @@ export const EquipmentInformation = ({
           value={values.range_min}
           onChange={handleInputChange}
           type="number"
-        /><CInput
+        />
+        <CInput
           label="Rango Maximo"
           name="range_max"
           value={values.range_max}
           onChange={handleInputChange}
           type="number"
         />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Unidad de medida
+          </label>
+          <select
+            name="unit"
+            id="unit"
+            defaultValue={values.unit}
+            value={values.unit}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            <option value="mm">mm</option>
+            <option value="plg">plg</option>
+          </select>
+        </div>
         <CInput
           label="Modelo"
           name="model"
