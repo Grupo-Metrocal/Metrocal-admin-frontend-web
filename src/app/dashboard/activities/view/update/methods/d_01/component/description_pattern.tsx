@@ -2,6 +2,7 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/d_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
+import { CInput } from '@/components/CInput'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -79,6 +80,16 @@ export const DescriptionPattern = ({
           </tr> */}
         </tbody>
       </table>
+
+      <div>
+        <CInput
+          label="Fecha de siguiente calibración"
+          name="next_calibration"
+          value={values.next_calibration}
+          onChange={handleInputChange}
+          type='date'
+        />
+      </div>
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"

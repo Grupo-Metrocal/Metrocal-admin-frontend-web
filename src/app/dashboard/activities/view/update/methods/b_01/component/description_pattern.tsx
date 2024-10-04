@@ -67,6 +67,14 @@ export const DescriptionPattern = ({
             <option value="kg">kg</option>
           </select>
         </div>
+
+        <CInput
+          label="Fecha de siguiente calibración"
+          name="next_calibration"
+          value={values.next_calibration}
+          onChange={handleInputChange}
+          type='date'
+        />
       </div>
       <div>
         <AlertDialogModal

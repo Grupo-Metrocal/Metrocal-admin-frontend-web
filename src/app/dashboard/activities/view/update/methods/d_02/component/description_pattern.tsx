@@ -2,6 +2,7 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/d_02'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
+import { CInput } from '@/components/CInput'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -72,13 +73,20 @@ export const DescriptionPattern = ({
               </div>
             </tr>
           ))}
-          {/* <tr>
-          <td className="border px-4 py-2">
-            <button onClick={handleAddPattern}>Agregar patrón</button>
-          </td>
-        </tr> */}
         </tbody>
+
+        <div>
+          <CInput
+            label="Fecha de siguiente calibración"
+            name="next_calibration"
+            value={values.next_calibration}
+            onChange={handleInputChange}
+            type='date'
+          />
+        </div>
       </table>
+
+
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"
