@@ -219,11 +219,6 @@ export const TableD_01 = ({ certificate,
         <h2>Observaciones</h2>
 
         <div>
-          <p>Patrón utilizado:</p>
-          <span>{certificate.descriptionPattern.calibration_method_used.method}</span>
-        </div>
-
-        <div>
           <p>
             Este certificado{' '}
             {certificate.creditable

@@ -30,9 +30,9 @@ export interface ICertificate_D_01 {
   equipment_information: EquipmentInformation
   calibrations: Calibrations
   environmental_conditions: EnvironmentalConditions
-  descriptionPattern: DescriptionPattern
-  creditable: boolean
+  descriptionPattern: DescriptionPattern[]
   observations: string
+  creditable: boolean
 }
 
 export interface EquipmentInformation {
@@ -40,6 +40,7 @@ export interface EquipmentInformation {
   service_code: string
   certificate_issue_date: string
   calibration_date: string
+  next_calibration_date: string
   object_calibrated: string
   maker: string
   serial_number: string
@@ -54,23 +55,26 @@ export interface EquipmentInformation {
 
 export interface Calibrations {
   calibration_result: CalibrationResult
-  calibration_result_inside: CalibrationResultInside
   calibration_result_outside: CalibrationResultOutside
+  calibration_result_inside: CalibrationResultInside
 }
 
 export interface CalibrationResult {
-  calibration_point: string[]
+  calibration_point: [
+    string,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number,
+  ]
   nominal_value: string[]
   value: string[]
   current_reading: string[]
   deviation: string[]
-  uncertainty: string[]
-}
-
-export interface CalibrationResultInside {
-  nominal_value_inside: string[]
-  current_reading_inside: string[]
-  deviation_inside: string[]
+  uncertainty: [string, string, string, string, string, string, number, number]
 }
 
 export interface CalibrationResultOutside {
@@ -88,16 +92,18 @@ export interface CalibrationResultOutside {
   deviation_outside: string[]
 }
 
+export interface CalibrationResultInside {
+  nominal_value_inside: string[]
+  current_reading_inside: string[]
+  deviation_inside: string[]
+}
+
 export interface EnvironmentalConditions {
   temperature: string
   humidity: string
 }
 
 export interface DescriptionPattern {
-  calibration_method_used: CalibrationMethodUsed
-}
-
-export interface CalibrationMethodUsed {
   id: number
   method: string
   equipment: string
@@ -106,5 +112,6 @@ export interface CalibrationMethodUsed {
   traceability: string
   pattern_range: string
   next_calibration: string
+  brand: string
   created_at: string
 }
