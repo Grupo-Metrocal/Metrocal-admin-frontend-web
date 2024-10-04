@@ -69,6 +69,24 @@ export const DescriptionPattern = ({
             ¿Equipo acreditado?
           </label>
         </div>
+
+        <div className="mt-4">
+          <label
+            htmlFor="show_table_international_system_units"
+            className="text-sm flex items-center cursor-pointer"
+          >
+            <input
+              type="checkbox"
+              name="show_table_international_system_units"
+              id="show_table_international_system_units"
+              checked={values.show_table_international_system_units}
+              onChange={handleCheckedChange}
+              className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
+            />
+            ¿Mostrar tabla unidades del sistema internacional en el
+            certificado?
+          </label>
+        </div>
       </div>
       <div>
         <AlertDialogModal
