@@ -18,39 +18,6 @@ export const TableP_01 = ({
   method_name: string
 }) => {
 
-  const { values, handleSelectChange } = useForm({
-    option: certificate.optionsCMCOnCertificate
-  })
-
-  const handleChangeOptionsCMC = async (target: any) => {
-    toast.loading('Cambiando visualización...')
-
-    const response = await fetchData({
-      url: 'methods/options-cmc-on-certificate',
-      method: 'POST',
-      body: {
-        optionsCMCOnCertificate: target.target.value,
-        method_id: id,
-        method_name: method_name.replaceAll('-', '_'),
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        Autorization: `Bearer ${getCookie('token')}`,
-      }
-    })
-
-    toast.dismiss()
-
-    if (response.success) {
-      toast.success('Se ha cambiado la visualización de la tabla de resultados')
-      handleSelectChange(target)
-    } else {
-      toast.error('Ha ocurrido un error', {
-        description: 'Si el error persiste, contacta con el administrador',
-      })
-    }
-  }
-
   return (
     <div className="table-p-01">
       <section className="table-p-01__equipment-information">
@@ -70,6 +37,10 @@ export const TableP_01 = ({
           <div>
             <p>Fecha de calibración:</p>
             <span>{certificate.equipment_information.calibration_date}</span>
+          </div>
+          <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
           </div>
           <div>
             <p>Equipo calibrado:</p>
@@ -218,14 +189,46 @@ export const TableP_01 = ({
           </table>
         </section>
 
-        <section className="table-p-01__observations">
-          <h2>Observaciones</h2>
+        <section className="table-p-01__calibration-result">
+          <h2>Descripción de patrones utilizados</h2>
 
+          <table>
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Código</th>
+                <th>Trazabilidad</th>
+                <th>Próx. Calibr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificate.description_pattern.map(
+                (item, index) => (
+                  <tr key={index}>
+                    <td>{renderValue(item.equipment)}</td>
+                    <td>
+                      {
+                        renderValue(item.code)
+                      }
+                    </td>
+                    <td>
+                      {renderValue(item.traceability)}
+                    </td>
+                    <td>
+                      {renderValue(item.next_calibration)}
+                    </td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </section>
+
+        <section className="table-p-01__observations">
           <div>
             <p>Patron utilizado</p>
             <span>{certificate.used_pattern?.pattern}</span>
           </div>
-
           <div>
             <p>
               Este certificado{' '}
