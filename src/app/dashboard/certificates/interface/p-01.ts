@@ -32,17 +32,26 @@ export interface EquipmentInformation {
 export interface ICertificate_P_01 {
   pattern: string
   email: string
+  CMC: Cmc
+  optionsCMCOnCertificate: string
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  used_pattern: DescriptionPattern
-  description_pattern: UsedPatterns
+  used_pattern: UsedPattern
+  description_pattern: DescriptionPattern[]
   creditable: boolean
   ta_eq_enviromental_conditions: string
   hPa_eq_enviromental_conditions: string
   observations: string
-  CMC: ICMC
-  optionsCMCOnCertificate: string
+  show_table_international_system_units: any
+}
+
+export interface Cmc {
+  cmcPoint: string[]
+  cmcPref: number[]
+  uncertaintyCMC: number[]
+  cmc: number[]
+  mincmc: number[]
 }
 
 export interface EquipmentInformation {
@@ -50,6 +59,7 @@ export interface EquipmentInformation {
   service_code: string
   certificate_issue_date: string
   calibration_date: string
+  next_calibration_date: string
   object_calibrated: string
   manufacturer: string
   no_series: string
@@ -60,14 +70,6 @@ export interface EquipmentInformation {
   applicant: string
   address: string
   calibration_location: string
-}
-
-export interface ICMC {
-  cmcPoint: string[]
-  cmcPref: string[]
-  uncertaintyCMC: string[]
-  cmc: string[]
-  mincmc: string[]
 }
 
 export interface CalibrationResults {
@@ -86,7 +88,7 @@ export interface ResultUnidSystem {
   reference_pressure: string[]
   equipment_indication: string[]
   correction: string[]
-  uncertainty: string[]
+  uncertainty: [string, number, number, number, number, number]
 }
 
 export interface EnvironmentalConditions {
@@ -95,18 +97,16 @@ export interface EnvironmentalConditions {
   humidity: string
 }
 
-export interface DescriptionPattern {
+export interface UsedPattern {
   id: number
   pattern: string
-  observation: any
+  observation: string
   creditable: boolean
+  next_calibration: any
+  show_table_international_system_units: any
 }
 
-export interface UsedPatterns {
-  pressurePattern: PressurePattern
-}
-
-export interface PressurePattern {
+export interface DescriptionPattern {
   id: number
   method: string
   equipment: string
@@ -115,5 +115,6 @@ export interface PressurePattern {
   traceability: string
   pattern_range: string
   next_calibration: string
+  brand: string
   created_at: string
 }
