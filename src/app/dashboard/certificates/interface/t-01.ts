@@ -31,13 +31,13 @@ export interface EquipmentInformation {
 export interface ICertificate_T_01 {
   pattern: string
   email: string
+  optionsCMCOnCertificate: string
   show_table_international_system_units: boolean
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
-  environment_method_used: EnvironmentMethodUsed
-  calibration_method_used: CalibrationMethodUsed
   creditable: boolean
-  description_pattern: DescriptionPattern
+  description_pattern: DescriptionPattern[]
+  used_pattern: UsedPattern
   environmental_conditions: EnvironmentalConditions
   observations: string
 }
@@ -47,6 +47,7 @@ export interface EquipmentInformation {
   service_code: string
   certificate_issue_date: string
   calibration_date: string
+  next_calibration_date: string
   object_calibrated: string
   maker: string
   serial_number: string
@@ -73,42 +74,32 @@ export interface Result {
 }
 
 export interface ResultUnidSystem {
-  temperatureReference: any[]
-  thermometerIndication: any[]
-  correction: any[]
-  expandedUncertaintyK2: any[]
-}
-
-export interface EnvironmentMethodUsed {
-  id: number
-  method: string
-  equipment: string
-  code: string
-  certificate: string
-  traceability: string
-  pattern_range: string
-  next_calibration: string
-  created_at: string
-}
-
-export interface CalibrationMethodUsed {
-  id: number
-  method: string
-  equipment: string
-  code: string
-  certificate: string
-  traceability: string
-  pattern_range: string
-  next_calibration: string
-  created_at: string
+  temperatureReference: string[]
+  thermometerIndication: string[]
+  correction: string[]
+  expandedUncertaintyK2: string[]
 }
 
 export interface DescriptionPattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  pattern_range: string
+  next_calibration: string
+  brand: string
+  created_at: string
+}
+
+export interface UsedPattern {
   id: number
   pattern: string
   observation: string
   creditable: boolean
   show_table_international_system_units: boolean
+  next_calibration: string
 }
 
 export interface EnvironmentalConditions {

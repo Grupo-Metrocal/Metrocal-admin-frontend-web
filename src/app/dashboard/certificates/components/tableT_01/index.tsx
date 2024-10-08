@@ -32,6 +32,10 @@ export const TableT_01 = ({
             <span>{certificate.equipment_information.calibration_date}</span>
           </div>
           <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
+          </div>
+          <div>
             <p>Equipo calibrado:</p>
             <span>{certificate.equipment_information.object_calibrated}</span>
           </div>
@@ -163,8 +167,7 @@ export const TableT_01 = ({
         <section className="table-t-01__environmental-conditions">
           <h2>
             <span>
-              Condiciones ambientales (Higrotermómetro
-              {' ' + certificate.pattern})
+              Condiciones ambientales
             </span>
           </h2>
 
@@ -185,14 +188,42 @@ export const TableT_01 = ({
           </table>
         </section>
 
+        <section className="table-p-01__calibration-result">
+          <h2>Descripción de patrones utilizados</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Código</th>
+                <th>Trazabilidad</th>
+                <th>Próx. Calibr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificate.description_pattern.map(
+                (item, index) => (
+                  <tr key={index}>
+                    <td>{renderValue(item.equipment)}</td>
+                    <td>
+                      {
+                        renderValue(item.code)
+                      }
+                    </td>
+                    <td>
+                      {renderValue(item.traceability)}
+                    </td>
+                    <td>
+                      {renderValue(item.next_calibration)}
+                    </td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </section>
+
         <section className="table-t-01__observations">
-          <h2>Observaciones</h2>
-
-          <div>
-            <p>Patron utilizado</p>
-            <span>{certificate.description_pattern?.pattern}</span>
-          </div>
-
           <div>
             <p>
               Este certificado{' '}

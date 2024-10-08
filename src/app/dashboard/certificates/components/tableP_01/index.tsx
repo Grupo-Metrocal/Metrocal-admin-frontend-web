@@ -226,10 +226,6 @@ export const TableP_01 = ({
 
         <section className="table-p-01__observations">
           <div>
-            <p>Patron utilizado</p>
-            <span>{certificate.used_pattern?.pattern}</span>
-          </div>
-          <div>
             <p>
               Este certificado{' '}
               {certificate.creditable ? 'es acreditado ✅' : 'no es acreditado'}
