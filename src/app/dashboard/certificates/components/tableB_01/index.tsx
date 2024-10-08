@@ -34,6 +34,10 @@ export const TableB_01 = ({
             <span>{certificate.equipment_information.calibration_date}</span>
           </div>
           <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
+          </div>
+          <div>
             <p>Equipo calibrado:</p>
             <span>{certificate.equipment_information.object_calibrated}</span>
           </div>
@@ -132,50 +136,79 @@ export const TableB_01 = ({
               </tr>
             </thead>
             <tbody>
-              {certificate.calibration_results.result_tests_lb?.map(
-                (result, index) => (
+              {certificate.calibration_results.result_test_extra.reference_mass.map(
+                (item, index) => (
                   <tr key={index}>
-                    <td>{renderValue(result.reference_mass)} </td>
-                    <td>{renderValue(result.equipment_indication)}</td>
-                    <td>{renderValue(result.error)}</td>
-                    <td>{renderValue(result.repeatability)}</td>
-                    <td>{renderValue(result.maximum_eccentricity)}</td>
-                    <td>{renderValue(result.uncertainty)}</td>
+                    <td>{renderValue(item)}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test.equipment_indication[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test.error[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test.repeatability[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test.maximum_eccentricity[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test.uncertainty[index])}</td>
                   </tr>
                 ),
               )}
             </tbody>
           </table>
         </section>
-      )}
+      )
+      }
 
-      <section className="table-d-01__environmental_conditions">
+      <section className="table-b-01__environmental-conditions">
         <h2>Condiciones ambientales</h2>
-        <div>
-          <span>
-            {certificate.environmental_conditions.temperature}
-          </span>
-        </div>
-        <div>
-          <span>
-            {certificate.environmental_conditions.humidity}
-          </span>
-        </div>
-        <div>
-          <span>
-            {certificate.environmental_conditions.atmospheric_pressure}
-          </span>
-        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Temperatura (°C)</th>
+              <th>Humedad relativa (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{certificate.environmental_conditions.temperature}</td>
+              <td>{certificate.environmental_conditions.humidity}</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
-      <section className="table-d-01__observations">
-        <h2>Observaciones</h2>
+      <section className="table-p-01__calibration-result">
+        <h2>Descripción de patrones utilizados</h2>
 
-        <div>
-          <p>Patrón utilizado:</p>
-          <span>{certificate.pattern}</span>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Código</th>
+              <th>Trazabilidad</th>
+              <th>Próx. Calibr.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {certificate.description_pattern.map(
+              (item, index) => (
+                <tr key={index}>
+                  <td>{renderValue(item.equipment)}</td>
+                  <td>
+                    {
+                      renderValue(item.code)
+                    }
+                  </td>
+                  <td>
+                    {renderValue(item.traceability)}
+                  </td>
+                  <td>
+                    {renderValue(item.next_calibration)}
+                  </td>
+                </tr>
+              ),
+            )}
+          </tbody>
+        </table>
+      </section>
 
+      <section className="table-b-01__observations">
         <div>
           <p>
             Este certificado{' '}
@@ -188,6 +221,6 @@ export const TableB_01 = ({
           <span>{certificate.observations}</span>
         </div>
       </section>
-    </div>
+    </div >
   )
 }
