@@ -73,8 +73,8 @@ export interface CalibrationResult {
   nominal_value: string[]
   value: string[]
   current_reading: string[]
-  deviation: string[]
-  uncertainty: [string, string, string, string, string, string, number, number]
+  deviation: [string, string, number, string, number, number, number, string]
+  uncertainty: [string, number, number, number, number, number, number, number]
 }
 
 export interface CalibrationResultOutside {

@@ -36,6 +36,10 @@ export const TableD_01 = ({ certificate,
             </span>
           </div>
           <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
+          </div>
+          <div>
             <p>Equipo calibrado:</p>
             <span>
               {certificate.equipment_information.object_calibrated}
@@ -201,23 +205,65 @@ export const TableD_01 = ({ certificate,
           </tbody>
         </table>
       </section>
-      <section className="table-d-01__environmental_conditions">
-        <h2>Condiciones ambientales</h2>
+      <section className="table-d-01__environmental-conditions">
+        <h2>
+          <span>
+            Condiciones ambientales
+          </span>
+        </h2>
 
-        <div>
-          <div>
-            <span>
-              {certificate.environmental_conditions.temperature} (°C)
-            </span>
-          </div>
-          <div>
-            <span>{certificate.environmental_conditions.humidity} (%)</span>
-          </div>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Temperatura</th>
+              <th>Humedad relativa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{certificate.environmental_conditions.temperature}</td>
+              <td>{certificate.environmental_conditions.humidity}</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
-      <section className="table-d-01__observations">
-        <h2>Observaciones</h2>
 
+      <section className="table-p-01__calibration-result">
+        <h2>Descripción de patrones utilizados</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Código</th>
+              <th>Trazabilidad</th>
+              <th>Próx. Calibr.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {certificate.descriptionPattern.map(
+              (item, index) => (
+                <tr key={index}>
+                  <td>{renderValue(item.equipment)}</td>
+                  <td>
+                    {
+                      renderValue(item.code)
+                    }
+                  </td>
+                  <td>
+                    {renderValue(item.traceability)}
+                  </td>
+                  <td>
+                    {renderValue(item.next_calibration)}
+                  </td>
+                </tr>
+              ),
+            )}
+          </tbody>
+        </table>
+      </section>
+
+      <section className="table-d-01__observations">
         <div>
           <p>
             Este certificado{' '}
