@@ -39,6 +39,7 @@ export interface EquipmentInformation {
   service_code: string
   certificate_issue_date: string
   calibration_date: string
+  next_calibration_date: string
   object_calibrated: string
   maker: string
   serial_number: string
@@ -56,19 +57,7 @@ export interface CalibrationResult {
   current_length: string[]
   current_reading: string[]
   deviation: string[]
-  uncertainty: [
-    string,
-    number,
-    number,
-    number,
-    string,
-    number,
-    number,
-    number,
-    string,
-    number,
-    string,
-  ]
+  uncertainty: string[]
 }
 
 export interface EnvironmentalConditions {
@@ -85,5 +74,6 @@ export interface DescriptionPattern {
   traceability: string
   pattern_range: string
   next_calibration: string
+  brand: string
   created_at: string
 }
