@@ -82,7 +82,7 @@ export const TableB_01 = ({
         </div>
       </section>
       <section className="table-b-01__calibration-result">
-        <h2>Tabla de resultados de la calibración en g</h2>
+        <h2>Tabla de resultados de la calibración</h2>
         <table>
           <thead>
             <tr>
@@ -123,7 +123,7 @@ export const TableB_01 = ({
 
       {certificate.show_additional_table !== '' && (
         <section className="table-b-01__calibration-result">
-          <h2>Tabla de resultados de la calibración en lb</h2>
+          <h2>Tabla de resultados de la calibración</h2>
           <table>
             <thead>
               <tr>
@@ -136,15 +136,15 @@ export const TableB_01 = ({
               </tr>
             </thead>
             <tbody>
-              {certificate.calibration_results.result_test_extra.reference_mass.map(
+              {certificate?.calibration_results?.result_test_extra?.reference_mass?.map(
                 (item, index) => (
                   <tr key={index}>
                     <td>{renderValue(item)}</td>
-                    <td>{renderValue(certificate.calibration_results.result_test.equipment_indication[index])}</td>
-                    <td>{renderValue(certificate.calibration_results.result_test.error[index])}</td>
-                    <td>{renderValue(certificate.calibration_results.result_test.repeatability[index])}</td>
-                    <td>{renderValue(certificate.calibration_results.result_test.maximum_eccentricity[index])}</td>
-                    <td>{renderValue(certificate.calibration_results.result_test.uncertainty[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test_extra.equipment_indication[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test_extra.error[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test_extra.repeatability[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test_extra.maximum_eccentricity[index])}</td>
+                    <td>{renderValue(certificate.calibration_results.result_test_extra.uncertainty[index])}</td>
                   </tr>
                 ),
               )}
