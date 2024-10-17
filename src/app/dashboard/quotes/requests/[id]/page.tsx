@@ -85,6 +85,9 @@ export interface IQuote {
   modifications_list_json?: IQuote[]
   modification_number?: number
   currency_type: 'NIO' | 'USD'
+  alt_client_email: string
+  alt_client_requested_by: string
+  alt_client_phone: string
 }
 
 export interface IRoot {
@@ -200,7 +203,11 @@ export default function Page({ params }: IRoot) {
 
         <section className="only-quote__body">
           <div className="only-quote__body__client">
-            <RenderClient client={client && client} />
+            <RenderClient client={client && client}
+              alt_client_email={quote?.alt_client_email}
+              alt_client_phone={quote?.alt_client_phone}
+              alt_client_requested_by={quote?.alt_client_requested_by}
+            />
           </div>
           <div className="only-quote__body__info">
             <RenderEquipmentInfoSelected equipment={selectedEquipment} />
