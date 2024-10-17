@@ -111,7 +111,7 @@ export const InteriorParallelismMeasurement = ({
                     className="w-full p-1 border text-center rounded"
                     type="number"
                     step="0.001"
-                    value={measurement.verification_lengths.Exterior[key as keyof IMeditions]}
+                    value={measurement.verification_lengths?.Exterior?.[key as keyof IMeditions]}
                     onChange={(e) =>
                       handleInputChange(
                         e,
@@ -129,7 +129,7 @@ export const InteriorParallelismMeasurement = ({
                     className="w-full p-1 border text-center rounded"
                     type="number"
                     step="0.001"
-                    value={measurement.verification_lengths.Interior[key as keyof IMeditions]}
+                    value={measurement.verification_lengths?.Interior?.[key as keyof IMeditions]}
                     onChange={(e) =>
                       handleInputChange(
                         e,
