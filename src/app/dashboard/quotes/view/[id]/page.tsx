@@ -213,15 +213,13 @@ export default function Page({ params }: IRoot) {
                   <TextInfo
                     title="Teléfono"
                     value={
-                      data?.client?.phone
-                        .toString()
-                        .replace(/(\d{4})(\d{4})/, '$1 $2') || ''
+                      data?.alt_client_phone || data?.client?.phone
                     }
                   />
-                  <TextInfo title="Correo" value={data?.client?.email || ''} />
+                  <TextInfo title="Correo" value={data?.alt_client_email || data?.client?.email} />
                   <TextInfo
                     title="Solicitado por"
-                    value={data?.client?.requested_by || ''}
+                    value={data?.alt_client_requested_by || data?.client?.requested_by}
                   />
                   <TextInfo
                     title="Fecha de creación"

@@ -1,7 +1,14 @@
 import type { IClient } from '../page'
 import { useAppSelector } from '@/redux/hook'
 
-export const RenderClient = ({ client }: { client?: IClient }) => {
+interface IProps {
+  client?: IClient
+  alt_client_email?: string
+  alt_client_requested_by?: string
+  alt_client_phone?: string
+}
+
+export const RenderClient = ({ client, alt_client_email, alt_client_phone, alt_client_requested_by }: IProps) => {
   const { no } = useAppSelector((state) => state.quote)
   return (
     <>
@@ -10,13 +17,13 @@ export const RenderClient = ({ client }: { client?: IClient }) => {
           Empresa: <span>{client?.company_name}</span>
         </h5>
         <h5>
-          Solicitado por: <span>{client?.requested_by}</span>
+          Solicitado por: <span>{alt_client_requested_by || client?.requested_by}</span>
         </h5>
         <h5>
-          Teléfono: <span>{client?.phone}</span>
+          Teléfono: <span>{alt_client_phone || client?.phone}</span>
         </h5>
         <h5>
-          Email: <span>{client?.email}</span>
+          Email: <span>{alt_client_email || client?.email}</span>
         </h5>
       </div>
       <div>
