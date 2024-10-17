@@ -129,6 +129,9 @@ export default function Home() {
       general_discount: 0,
       tax: 0,
       price: 0,
+      alt_client_email: contactInfValue.email,
+      alt_client_phone: contactInfValue.phone,
+      alt_client_requested_by: contactInfValue.requested_by,
     }
 
     fetchData({

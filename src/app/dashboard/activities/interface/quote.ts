@@ -14,6 +14,9 @@ export interface IQuote {
   client: Client
   activity: Activity
   currency_type: 'NIO' | 'USD'
+  alt_client_email: string
+  alt_client_requested_by: string
+  alt_client_phone: string
 }
 
 export interface EquipmentQuoteRequest {
