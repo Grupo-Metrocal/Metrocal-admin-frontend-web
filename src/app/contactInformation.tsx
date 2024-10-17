@@ -4,6 +4,7 @@ import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { fetchData } from '@/utils/fetch'
+import { useForm } from '@/hooks/useForm'
 
 export interface IClient {
   id: number
@@ -50,7 +51,7 @@ export default function ContactInformation({
       }
     })
 
-    return () => {}
+    return () => { }
   }, [])
 
   return (
@@ -69,9 +70,9 @@ export default function ContactInformation({
             list={
               Object.keys(clients).length > 0
                 ? clients.map((client) => ({
-                    id: client.id,
-                    name: client.company_name,
-                  }))
+                  id: client.id,
+                  name: client.company_name,
+                }))
                 : []
             }
             value={state.company_name}
@@ -90,7 +91,6 @@ export default function ContactInformation({
             onChange={onChange}
             required={true}
             placeholder="Nombre de la persona que solicita el servicio"
-            dissabled={true}
           />
 
           {/* <CInput
@@ -108,7 +108,6 @@ export default function ContactInformation({
             onChange={onChange}
             type="text"
             required={true}
-            dissabled={true}
             placeholder="Teléfono de la empresa o persona que solicita el servicio"
           />
         </section>
@@ -120,7 +119,6 @@ export default function ContactInformation({
             onChange={onChange}
             type="email"
             required={true}
-            dissabled={true}
             placeholder="Correo electrónico de contacto"
           />
 
