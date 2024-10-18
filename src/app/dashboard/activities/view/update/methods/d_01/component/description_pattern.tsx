@@ -18,9 +18,6 @@ export const DescriptionPattern = ({
   description_pattern: IDescriptionPattern
 }) => {
   const { values, handleInputChange } = useForm({ ...description_pattern })
-  const { values: valuePatternSelected, handleSelectChange } = useForm({
-    pattern: ''
-  })
 
   const url = `methods/ni-mcit-d-01/description-pattern/`
 
@@ -52,16 +49,12 @@ export const DescriptionPattern = ({
 
   const PATTERNS_ITEMS = ['NI-MCPD-01', 'NI-MCPD-02', 'NI-MCPD-03']
 
-
-
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-
           <div className='flex flex-col gap-4'>
             <span>Patrones seleccionados</span>
-
             <div>
               {
                 patterns.length > 0 ? patterns.map((patten, index) => {
@@ -100,7 +93,6 @@ export const DescriptionPattern = ({
                   </span>
               }
             </div>
-
             <div>
               <CButton onClick={addEmptyPattern} style={{
                 background: 'white',

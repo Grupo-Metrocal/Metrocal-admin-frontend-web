@@ -1,8 +1,10 @@
 import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/d_02'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CInput } from '@/components/CInput'
+import { CButton } from '@/components/CButton'
+import { Trash2 } from 'lucide-react'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -18,63 +20,90 @@ export const DescriptionPattern = ({
   const { values, handleInputChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-d-02/description-pattern/`
 
-  const [patterns, setPatterns] = useState<string[]>(values.descriptionPattern || [])
+  const [patterns, setPatterns] = useState<string[]>(values.descriptionPattern || []);
 
-  const handlePatternChange = (index: number, value: string) => {
-    const updatedPatterns = [...patterns]
-    updatedPatterns[index] = value
-    setPatterns(updatedPatterns)
-    handleInputChange({ ...values, descriptionPattern: updatedPatterns })
-  }
+  const handleChangePattern = (pattern: string, index: number) => {
+    setPatterns((prevPatterns) =>
+      prevPatterns.map((item, i) => {
+        if (i === index) {
+          return pattern;
+        }
+        return item;
+      })
+    );
+  };
 
-  const handleAddPattern = () => {
-    const updatedPatterns = [...patterns, '']
-    setPatterns(updatedPatterns)
-    handleInputChange({ ...values, descriptionPattern: updatedPatterns })
-  }
+  const addEmptyPattern = () => {
+    setPatterns((prevPatterns) => [...prevPatterns, '']);
+  };
+
+  const removePattern = (index: number) => {
+    setPatterns((prevPatterns) => prevPatterns.filter((_, i) => i !== index));
+  };
+
+
+  useEffect(() => {
+    handleInputChange({ name: 'descriptionPattern', value: patterns })
+  }, [patterns])
+
+  const PATTERNS_ITEMS = ['NI-MCPD-01', 'NI-MCPD-02', 'NI-MCPD-03']
+
   return (
     <div className="flex flex-col space-y-4">
-      <table className="w-full table-auto">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Patrón utilizado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {patterns?.map((pattern, index) => (
-            <tr key={index}>
-              {/* <td className="border px-4 py-2">
-                <input
-                  className="w-full p-1 border rounded"
-                  type="text"
-                  value={pattern}
-                  onChange={(e) => handlePatternChange(index, e.target.value)}
-                  placeholder="Ingrese el patrón"
-                />
-              </td> */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <div className='flex flex-col gap-4'>
+            <span>Patrones seleccionados</span>
+            <div>
+              {
+                patterns.length > 0 ? patterns.map((patten, index) => {
+                  return (
+                    <div className="flex gap-4" key={index}>
+                      <select
+                        name="pattern"
+                        id="pattern"
+                        defaultValue={patten}
+                        value={patten}
+                        onChange={e => {
+                          handleChangePattern(e.currentTarget.value, index)
+                        }}
+                        className="border border-gray-300 rounded-md p-2 h-fit"
+                      >
+                        <option value="" disabled selected>Seleccione un patrón</option>
+                        {
+                          PATTERNS_ITEMS.map((item, itemIndex) => {
+                            return (
+                              <option value={item} key={itemIndex}
+                                disabled={patterns.includes(item)}
+                              >{item}</option>
+                            )
+                          })
+                        }
+                      </select>
 
-              <div className="flex flex-col gap-[1em]">
-                <label htmlFor="unit" className="text-xs font-semibold ">
-                  Patrón utilizado
-                </label>
-                <select
-                  name="pattern"
-                  id="pattern"
-                  defaultValue={values.pattern}
-                  value={pattern}
-                  onChange={(e) => handlePatternChange(index, e.target.value)}
-                  placeholder="Ingrese el patrón"
-                  className="border border-gray-300 rounded-md p-2 h-fit"
-                >
-                  <option value="NI-MCPD-01">NI-MCPD-01</option>
-                  <option value="NI-MCPD-02">NI-MCPD-02</option>
-                  <option value="NI-MCPD-03">NI-MCPD-03</option>
-                </select>
-              </div>
-            </tr>
-          ))}
-        </tbody>
-
+                      <Trash2 className='text-red-400 cursor-pointer' width={20}
+                        onClick={() => removePattern(index)}
+                      />
+                    </div>
+                  )
+                })
+                  : <span className='py-4 text-gray-400'>
+                    No se han seleccionado patrones
+                  </span>
+              }
+            </div>
+            <div>
+              <CButton onClick={addEmptyPattern} style={{
+                background: 'white',
+                color: '#333'
+              }}
+                disabled={patterns.length >= 3}
+              >
+                Agregar patron
+              </CButton>
+            </div>
+          </div>
+        </div>
         <div>
           <CInput
             label="Fecha de siguiente calibración"
@@ -84,25 +113,24 @@ export const DescriptionPattern = ({
             type='date'
           />
         </div>
-      </table>
 
-
-      <div>
-        <AlertDialogModal
-          title="Guardar modificaciones"
-          description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() =>
-            handleSaveInformation(
-              { ...values, descriptionPattern: patterns },
-              url,
-              false,
-            )
-          }
-          nameButton="Guardar modificaciones"
-          buttonStyle={{
-            margin: '1em 0',
-          }}
-        />
+        <div>
+          <AlertDialogModal
+            title="Guardar modificaciones"
+            description="¿Estás seguro de guardar las modificaciones?"
+            onConfirm={() =>
+              handleSaveInformation(
+                { ...values },
+                url,
+                false,
+              )
+            }
+            nameButton="Guardar modificaciones"
+            buttonStyle={{
+              margin: '1em 0',
+            }}
+          />
+        </div>
       </div>
     </div>
   )
