@@ -176,7 +176,7 @@ export default function Page({ params }: Props) {
 
         <h4>
           <span className="font-bold">Telefono: </span>
-          <span className="font-medium">{quote?.client?.phone}</span>
+          <span className="font-medium">{quote?.alt_client_phone || quote?.client?.phone}</span>
         </h4>
 
         <h4>
@@ -186,12 +186,12 @@ export default function Page({ params }: Props) {
 
         <h4>
           <span className="font-bold">Solicitado por: </span>
-          <span className="font-medium">{quote?.client?.requested_by}</span>
+          <span className="font-medium">{quote?.alt_client_requested_by || quote?.client?.requested_by}</span>
         </h4>
 
         <h4>
           <span className="font-bold">E-Mail: </span>
-          <span className="font-medium">{quote?.client?.email}</span>
+          <span className="font-medium">{quote?.alt_client_email || quote?.client?.email}</span>
         </h4>
 
         <h4>
