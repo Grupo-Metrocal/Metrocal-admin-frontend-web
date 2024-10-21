@@ -46,7 +46,7 @@ export const InteriorParallelismMeasurement = ({
     index: number,
   ) => {
     const newData = [...data.measurementsd01]
-    newData[index].nominal_patron = e.target.value
+    newData[index].point_number[0] = e.target.value
     setData({ ...data, measurementsd01: newData })
   }
 
@@ -74,8 +74,6 @@ export const InteriorParallelismMeasurement = ({
     setData({ ...data, measurementsd01: newData })
   }
 
-  console.log('measurementsd01  -->>>>', data.measurementsd01[0])
-
   return (
     <div className="flex flex-col space-y-4">
       <table className="w-full table-auto">
@@ -101,7 +99,7 @@ export const InteriorParallelismMeasurement = ({
                 <input
                   className="w-full p-1 border text-center rounded"
                   type="text"
-                  value={measurement.nominal_patron}
+                  value={measurement.point_number[0]}
                   onChange={(e) => handleNominalPatronChange(e, index)}
                 />
               </td>

@@ -116,7 +116,7 @@ export interface IInterior_parallelism_measurement {
 }
 
 interface IMeasurements {
-  nominal_patron: string
+  point_number: string[]
   verification_lengths: IPlaces
 }
 

@@ -37,7 +37,7 @@ export const InteriorParallelismMeasurement = ({
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <div className="font-semibold">Valor nominal:</div>
-                  <div>{item.nominal_patron}</div>
+                  <div>{item.point_number[0]}</div>
                 </div>
                 <div>
                   <div className="font-semibold">Verificación de longitud:</div>
