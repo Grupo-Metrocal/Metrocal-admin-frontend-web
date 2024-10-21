@@ -293,7 +293,7 @@ export const SelectedPendingCertify = ({
             Generar certificado
           </CButton>
 
-          <Link href={`/dashboard/activities/view/update/${calibrationSelected.id}/${selectedService?.calibration_method?.split(' ')[0]}/${selectedActivity?.id}?increase=true`}
+          <Link href={`/dashboard/activities/view/update/${calibrationSelected.id}/${selectedService?.calibration_method?.split(' ')[0]}/${selectedActivity?.id}?increase=false`}
             className='text-[#09f]'>
             Modificar resultados
           </Link>
