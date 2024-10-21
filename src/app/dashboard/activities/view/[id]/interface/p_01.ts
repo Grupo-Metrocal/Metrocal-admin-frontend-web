@@ -98,4 +98,6 @@ export interface IDescriptionPattern {
   pattern: string
   observation: string
   creditable: boolean
+  show_table_international_system_units: boolean
+  next_calibration: string
 }

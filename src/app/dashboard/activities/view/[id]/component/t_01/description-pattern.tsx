@@ -1,5 +1,6 @@
 import { ReportMethodActivity } from '@/components/ReportMethodActivity'
 import { IDescriptionPattern } from '../../interface/t_01'
+import { formatDate } from '@/utils/formatDate'
 
 interface Props {
   description_pattern: IDescriptionPattern
@@ -26,6 +27,14 @@ export const DescriptionPattern = ({
           <div>
             <span className="font-semibold">Patrón:</span>{' '}
             {description_pattern?.pattern}
+          </div>
+          <div>
+            <span className="font-semibold">Mostrar tabla de calibracion internacional:</span>{' '}
+            {description_pattern?.show_table_international_system_units ? 'SI' : 'No mostrar'}
+          </div>
+          <div>
+            <span className="font-semibold">Fecha de siguiente calibración:</span>{' '}
+            {description_pattern?.next_calibration ? formatDate(description_pattern?.next_calibration) : 'No definido'}
           </div>
           <div className="pt-4">
             <span className="font-semibold">

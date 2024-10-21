@@ -1,5 +1,6 @@
 import { TabsNavigations } from '@/components/Tabs'
 import {
+  IDescriptionPattern,
   IEccentricityTest,
   IEnvironmentalConditions,
   IEquipmentInformation,
@@ -11,6 +12,7 @@ import { EnvironmentalConditions } from './enviromental-condition'
 import { EccentricityTest } from './eccentricity-test'
 import { LinearityTest } from './linearity-test'
 import { RepeatabilityTest } from './repeatability-test'
+import { DescriptionPattern } from './description-pattern'
 
 interface Props {
   equipment_information: IEquipmentInformation
@@ -22,6 +24,7 @@ interface Props {
   method_name: string
   report_status: boolean
   report_messages: string[]
+  description_pattern: IDescriptionPattern
 }
 
 export const B_01 = ({
@@ -30,6 +33,7 @@ export const B_01 = ({
   eccentricity_test,
   linearity_test,
   repeatability_test,
+  description_pattern,
   id,
   method_name,
   report_status,
@@ -103,7 +107,19 @@ export const B_01 = ({
             />
           ),
         },
-
+        {
+          value: 'description_pattern',
+          label: 'Descripcion de patrones',
+          Component: () => (
+            <DescriptionPattern
+              id={id}
+              method_name={method_name}
+              report_status={report_status}
+              report_messages={report_messages}
+              description_pattern={description_pattern}
+            />
+          ),
+        },
       ]}
     />
   )

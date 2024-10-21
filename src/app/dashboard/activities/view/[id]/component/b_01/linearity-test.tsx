@@ -18,20 +18,20 @@ export const LinearityTest = ({
 }: ILinearityTestProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 max-h-[70vh] overflow-auto">
         {linearity_test?.linearity_test ? (
           linearity_test.linearity_test.map((point, index) => {
             return (
               <div key={index} className="grid grid-cols-2 gap-4">
-                <Item title="Punto" value={point?.point ?? 0} />
+                <Item title="Punto" value={point?.point ?? ''} />
                 <Item
                   title="Composición de puntos"
-                  value={point?.pointsComposition.join(', ') ?? 0}
+                  value={point?.pointsComposition.join(' , ') ?? ''}
                 />
-                <Item title="Indicación IL" value={point?.indicationIL ?? 0} />
+                <Item title="Indicación IL" value={point?.indicationIL ?? ''} />
                 <Item
                   title="Indicación sin carga"
-                  value={point?.noLoadInfdication ?? 0}
+                  value={point?.noLoadInfdication ?? ''}
                 />
               </div>
             )

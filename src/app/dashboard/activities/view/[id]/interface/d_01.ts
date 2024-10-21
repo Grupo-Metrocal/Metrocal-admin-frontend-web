@@ -63,6 +63,7 @@ export interface ITime {
 export interface IDescriptionPattern {
   id: number
   descriptionPatterns: string[]
+  next_calibration: string
 }
 
 ///IExterior_measurement_accuracy

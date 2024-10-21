@@ -1,3 +1,4 @@
+import { ReportMethodActivity } from '@/components/ReportMethodActivity'
 import { IAccuracyTest } from '../../interface/d_02'
 
 interface AccuracyTestProps {
@@ -17,8 +18,8 @@ export const AccuracyTest = ({
 }: AccuracyTestProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <div className="bg-gray-100 rounded-lg">
-        <div className="flex justify-center my-1">
+      <div className="bg-gray-100 rounded-lg max-h-[70vh] overflow-auto">
+        {/* <div className="flex justify-center my-1">
           <Item title="ID" value={String(id)} />
           <Item title="Method Name" value={method_name} />
           <Item
@@ -26,7 +27,7 @@ export const AccuracyTest = ({
             value={report_status ? 'Completed' : 'Pending'}
           />
           <Item title="Messages" value="" />
-        </div>
+        </div> */}
         <div className="col-span-4 p-2">
           {report_messages.map((message, index) => (
             <div key={index}>{message}</div>
@@ -35,15 +36,15 @@ export const AccuracyTest = ({
         <div className="grid grid-cols-2 gap-4">
           {accuracy_test?.measureD02.map((measure, index) => (
             <div key={index} className="border p-2">
-              <div className="font-semibold">Measurement {index + 1}</div>
+              <div className="font-semibold">Medición {index + 1}</div>
               <div>
-                <div className="font-semibold">Nominal Value:</div>
+                <div className="font-semibold">Valor nominal:</div>
                 {measure.nominal_value.map((value, i) => (
                   <Item key={i} title={`Value ${i + 1}`} value={value} />
                 ))}
               </div>
               <div>
-                <div className="font-semibold">Verification Lengths:</div>
+                <div className="font-semibold">Verificación de longitud:</div>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(measure.varification_lengths).map(
                     ([key, value]) => (
@@ -56,6 +57,13 @@ export const AccuracyTest = ({
           ))}
         </div>
       </div>
+      <ReportMethodActivity
+        method_name={method_name}
+        zone={'Prueba de precisión'}
+        method_id={id}
+        report_messages={report_messages}
+        report_status={report_status}
+      />
     </div>
   )
 }

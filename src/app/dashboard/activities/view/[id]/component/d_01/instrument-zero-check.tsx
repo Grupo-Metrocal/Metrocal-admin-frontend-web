@@ -1,3 +1,4 @@
+import { ReportMethodActivity } from '@/components/ReportMethodActivity'
 import { IInstrumentzerocheck } from '../../interface/d_01'
 
 interface InstrumentZeroCheckProps {
@@ -17,8 +18,8 @@ export const InstrumentalZeroCheck = ({
 }: InstrumentZeroCheckProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <div className="instrument-zero-check grid grid-row-1 p-4 gap-2 bg-gray-100 rounded-lg h-[500px] overflow-auto">
-        <div className="grid grid-cols-4 text-center font-semibold">
+      <div className="instrument-zero-check grid grid-row-1 p-4 gap-2 bg-gray-100 rounded-lg max-h-[70vh] overflow-auto">
+        {/* <div className="grid grid-cols-4 text-center font-semibold">
           <Item title="ID" value={String(id)} />
           <Item title="Method Name" value={method_name} />
           <Item
@@ -26,7 +27,7 @@ export const InstrumentalZeroCheck = ({
             value={report_status ? 'Completed' : 'Pending'}
           />
           <Item title="Messages" value="" />
-        </div>
+        </div> */}
         <div className="col-span-4 p-2">
           {report_messages.map((message, index) => (
             <div key={index}>{message}</div>
@@ -48,6 +49,14 @@ export const InstrumentalZeroCheck = ({
           </div>
         </div>
       </div>
+
+      <ReportMethodActivity
+        method_name={method_name}
+        zone={'Verificación de cero del instrumento'}
+        method_id={id}
+        report_messages={report_messages}
+        report_status={report_status}
+      />
     </div>
   )
 }

@@ -18,7 +18,7 @@ export const InstrumentalZeroCheck = ({
   return (
     <div className="flex flex-col space-y-4">
       <div className="instrument-zero-check grid grid-row-1 p-4 gap-2 bg-gray-100 rounded-lg">
-        <div className="grid grid-cols-4 text-center font-semibold">
+        {/* <div className="grid grid-cols-4 text-center font-semibold">
           <Item title="ID" value={String(id)} />
           <Item title="Method Name" value={method_name} />
           <Item
@@ -26,7 +26,7 @@ export const InstrumentalZeroCheck = ({
             value={report_status ? 'Completed' : 'Pending'}
           />
           <Item title="Messages" value="" />
-        </div>
+        </div> */}
         <div className="col-span-4 p-2">
           {report_messages.map((message, index) => (
             <div key={index}>{message}</div>

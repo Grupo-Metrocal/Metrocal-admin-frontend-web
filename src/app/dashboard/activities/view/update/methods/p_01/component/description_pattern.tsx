@@ -2,7 +2,6 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/p_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { AutocompleteInput } from '@/components/AutocompleteInput'
 
 export const DescriptionPattern = ({
   description_pattern,

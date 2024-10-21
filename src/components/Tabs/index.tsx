@@ -12,12 +12,9 @@ export const TabsNavigations = ({ items }: Props) => {
   return (
     <Tabs defaultValue={items[0]?.value} className="w-full">
 
-      <TabsList className="flex gap-2 mb-6 justify-start
-      flex-wrap h-auto
-
-      ">
+      <TabsList className="flex gap-2 mb-6 justify-start flex-wrap h-auto">
         {items?.map((item, index) => (
-          <TabsTrigger value={item.value} key={index}>
+          <TabsTrigger value={item.value} key={index} className='bg-gray-100'>
             {item.label}
           </TabsTrigger>
         ))}

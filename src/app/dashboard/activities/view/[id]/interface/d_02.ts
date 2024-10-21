@@ -61,6 +61,7 @@ export interface Time {
 export interface IDescriptionPattern {
   id: number
   descriptionPattern: string[]
+  next_calibration: string
 }
 
 export interface IPreinstallationcomment {

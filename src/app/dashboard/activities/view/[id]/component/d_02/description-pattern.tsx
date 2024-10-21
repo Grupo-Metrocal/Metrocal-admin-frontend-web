@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils/formatDate'
 import { IDescriptionPattern } from '../../interface/d_02'
 import { ReportMethodActivity } from '@/components/ReportMethodActivity'
 
@@ -21,11 +22,15 @@ export const DescriptionPattern = ({
       <div className="grid grid-cols-1 gap-4">
         {description_pattern?.descriptionPattern ? (
           description_pattern.descriptionPattern.map((pattern, index) => (
-            <Item key={index} title={`Pattern ${index + 1}`} value={pattern} />
+            <Item key={index} title={`Patron #${index + 1}`} value={pattern} />
           ))
         ) : (
-          <div>No patterns available</div>
+          <div>No hay patrones seleccionados</div>
         )}
+        <div>
+          <span className="font-semibold">Fecha de siguiente calibración:</span>{' '}
+          {description_pattern?.next_calibration ? formatDate(description_pattern?.next_calibration) : 'No definido'}
+        </div>
       </div>
       <ReportMethodActivity
         method_name={method_name}

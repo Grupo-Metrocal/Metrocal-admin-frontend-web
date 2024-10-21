@@ -21,7 +21,7 @@ export const PreinstallationComment = ({
       <div className="grid grid-cols-2 gap-4">
         <Item title="Comentario" value={pre_installation_comment?.comment} />
         <Item
-          title="Acreditado"
+          title="Certificado acreditado?"
           value={pre_installation_comment?.accredited ? 'Si' : 'No'}
         />
       </div>
