@@ -27,7 +27,7 @@ export const LinearityTest = ({
     ],
   }
   const [data, setData] = useState<ILinearityTest>(
-    linearityTest || defaultLinearityTest,
+    linearityTest,
   )
 
   const handleInputChange = (
@@ -46,20 +46,27 @@ export const LinearityTest = ({
     }))
   }
 
-  const handleAddRow = () => {
-    setData((prevData) => ({
+  const handleSelectChange = (
+    newValue: string,
+    index: number,
+    itemIndex: number
+  ) => {
+    setData((prevData: ILinearityTest) => ({
       ...prevData,
-      linearity_test: [
-        ...(Array.isArray(prevData.linearity_test) ? prevData.linearity_test : []),
-        {
-          point: 0,
-          indicationIL: 0,
-          noLoadInfdication: 0,
-          pointsComposition: [],
-        },
-      ],
-    }))
-  }
+      linearity_test: prevData.linearity_test.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            pointsComposition: item.pointsComposition.map((composition, i) =>
+              i === itemIndex ? newValue : composition
+            ),
+          };
+        }
+        return item;
+      }),
+    }));
+  };
+
 
   return (
     <div className="flex flex-col space-y-4">
@@ -87,20 +94,29 @@ export const LinearityTest = ({
                   />
                 </td>
                 <td className="border px-4 py-2">
-                  <select className='w-full p-1 border rounded'
-                    onChange={(e) =>
-                      handleInputChange(
-                        e.target.value.split(', '),
-                        'pointsComposition',
-                        index,
-                      )
-                    }
-                  >
-                    {linearityOptions.map((option, index) => (
-                      <option value={option} selected={option === test.pointsComposition[0]
-                      } key={index}>{option}</option>
-                    ))}
-                  </select>
+                  {test.pointsComposition.map((item, itemIndex) => {
+                    return (
+                      <select
+                        key={itemIndex}
+                        className="flex flex-col"
+                        value={item}
+                        onChange={(e) =>
+                          handleSelectChange(e.target.value, index, itemIndex)
+                        }
+                      >
+                        {linearityOptions.map((option, optionIndex) => (
+                          <option
+                            key={optionIndex}
+                            value={option}
+                            className={`${option === item ? 'font-bold' : ''
+                              }`}
+                          >
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    );
+                  })}
                 </td>
                 <td className="border px-4 py-2">
                   <input
@@ -151,3 +167,4 @@ export const LinearityTest = ({
     </div>
   )
 }
+
