@@ -94,3 +94,30 @@ export const generateQuoteBasedOnCurrent = async (quoteID: number) => {
     }
   })
 }
+
+export const handleApproveQuote = async (quoteId: number) => {
+  toast.loading('Aprobando cotización...', {
+    description: 'Espere un momento por favor',
+  })
+  const response = await fetchData({
+    url: 'quotes/request/approved-rejected/client',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      id: quoteId,
+      status: 'done',
+    },
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Cotización aprobada correctamente')
+  } else {
+    toast('Error al aprobar la cotización', {
+      description: response.details,
+    })
+  }
+}

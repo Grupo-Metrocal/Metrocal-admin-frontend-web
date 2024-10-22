@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Linking, deleteQuoteRequest, generateQuoteBasedOnCurrent } from '@/utils/functions'
+import { Linking, deleteQuoteRequest, generateQuoteBasedOnCurrent, handleApproveQuote } from '@/utils/functions'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useForm } from '@/hooks/useForm'
 import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
@@ -444,8 +444,23 @@ const columns = ({
                   Component={() => <CopyQuote quoteId={payment.id} />}
                 />
               </DropdownMenuItem>
+              {
+                payment.quote_request_status === 'waiting' && <DropdownMenuItem
+                  onClick={(e) => {
+                    e.preventDefault()
+                  }}
+                >
+                  <AlertDialogModal
+                    nameButton="Aprobar cotización"
+                    title="¿Estás seguro de aprobar esta cotización?"
+                    onConfirm={async () => await handleApproveQuote(payment.id)}
+                    useButton={false}
+                  />
+                </DropdownMenuItem>
+              }
 
               <DropdownMenuSeparator />
+
               <DropdownMenuItem
                 style={{
                   color: 'tomato',
