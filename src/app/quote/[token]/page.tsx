@@ -305,16 +305,14 @@ export default function Page({ params }: Props) {
             </h4>
             <ul className="conditions">
               <li>
-                Certificados de calibración se entregan los dias miércoles o
-                retirar en nuestras instalaciones.
+                Certificados de calibración se entregan en formato digital .PDF, serán enviados al correo del contacto del cliente, en un periodo máximo de diez días hábiles, posterior a la realización del servicio.
               </li>
               <li>
-                Servicio marcado con ( * ) fuera de alcance de acreditación,
-                trazable al Sl.
+                Servicio marcado con ( * ) corresponde a un servicio fuera del alcance de acreditación, trazable al Sl.
               </li>
               <li>
                 Elaborar cheque a nombre de{' '}
-                <strong>Metrologia Consultores de Nicaragua, S.A.</strong>
+                <strong>Metrología Consultores de Nicaragua, S.A.</strong>
               </li>
             </ul>
 
@@ -359,10 +357,8 @@ export default function Page({ params }: Props) {
         </div>
 
         <p className="text-center mt-2 bg-[#166A9B] text-white font-medium p-2 w-full">
-          Certificados de calibración se entregan en formato digital .PDF, serán enviados al correo del contacto del cliente, en un periodo máximo de diez días hábiles, posterior a la realización del servicio.
-          Servicio marcado con ( * ) corresponde a un servicio fuera del alcance de acreditación, trazable al Sl.
-          Elaborar cheque a nombre de Metrología Consultores de Nicaragua, S.A.
-          Condición de pago: Contra entrega de Certificado
+          El certiticado de calibración se entrega maximo en 10 (diez) días hábiles
+          después de realizada la calibración.
         </p>
 
         <div className="actions">
