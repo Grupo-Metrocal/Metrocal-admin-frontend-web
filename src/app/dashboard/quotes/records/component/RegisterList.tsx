@@ -235,7 +235,7 @@ const columns = ({
             variant={'ghost'}
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Empresa
+            Nombre de la Empresa
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         )
@@ -250,21 +250,21 @@ const columns = ({
     },
     {
       accessorKey: 'quote_request_no',
-      header: () => <div className="text-right">No. de cotización</div>,
+      header: () => <div className="text-left">No. de cotización</div>,
       cell: ({ row }) => (
-        <div className="text-right">{row.getValue('quote_request_no')}</div>
+        <div className="text-left">{row.getValue('quote_request_no')}</div>
       ),
     },
     {
       accessorKey: 'client_phone',
-      header: () => <div className="text-right">Teléfono</div>,
+      header: () => <div className="text-left">Teléfono</div>,
       cell: ({ row }) => (
-        <div className="text-right">{row.getValue('client_phone')}</div>
+        <div className="text-left">{row.getValue('client_phone')}</div>
       ),
     },
     {
       accessorKey: 'quote_request_price',
-      header: () => <div className="text-right">Precio</div>,
+      header: () => <div className="text-left">Precio</div>,
       cell: ({ row }) => {
         const price = parseFloat(row.getValue('quote_request_price'))
 
@@ -273,12 +273,12 @@ const columns = ({
           currency: 'USD',
         }).format(price)
 
-        return <div className="text-right">{formatted}</div>
+        return <div className="text-left">{formatted}</div>
       },
     },
     {
       accessorKey: 'quote_request_created_at',
-      header: () => <div className="text-right">Fecha de registro</div>,
+      header: () => <div className="text-left">Fecha de registro</div>,
       cell: ({ row }) => {
         const date = new Date(row.getValue('quote_request_created_at'))
 
@@ -288,19 +288,19 @@ const columns = ({
           day: 'numeric',
         })
 
-        return <div className="text-right">{formmatted}</div>
+        return <div className="text-left">{formmatted}</div>
       },
     },
     {
       accessorKey: 'approved_by',
-      header: () => <div className="text-right">Aprobado por</div>,
+      header: () => <div className="text-left">Aprobado por</div>,
       cell: ({ row }) => (
-        <div className="text-right">{row.getValue('approved_by')}</div>
+        <div className="text-left">{(row.getValue('approved_by') as any).split(' ')[0]}</div>
       ),
     },
     {
       accessorKey: 'quote_request_status',
-      header: () => <div className="text-right">Estado</div>,
+      header: () => <div className="text-left">Estado</div>,
       cell: ({ row }) => {
         const status: string = row.getValue('quote_request_status')
         return (
@@ -324,6 +324,7 @@ const columns = ({
               padding: '0.2rem 0.5rem',
               display: 'inline-block',
               float: 'right',
+              fontSize: '0.9em'
             }}
           >
             {status === 'done'
