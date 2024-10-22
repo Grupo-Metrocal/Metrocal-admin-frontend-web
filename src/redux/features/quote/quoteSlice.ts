@@ -369,7 +369,9 @@ export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
 
   totalQuote -= totalDiscount
 
-  const totalIVA = totalQuote * (IVA / 100)
+  let totalIVA = totalQuote * (IVA / 100)
+  totalQuote = Number(Number(totalQuote).toFixed(1))
+  totalIVA = Number(Number(totalIVA).toFixed(1))
 
   dispatch(setIVAValue(totalIVA))
   dispatch(setDiscountValue(totalDiscount))
