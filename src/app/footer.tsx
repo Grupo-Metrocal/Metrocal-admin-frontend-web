@@ -1,10 +1,10 @@
 import './page.scss'
 const NOTE_ITEMS = [
-  'En este campo se detallan los datos que son requeridos por el cliente para el certificado de calibración.',
-  'En este campo se definen los puntos específicos de calibración requeridos por el cliente.',
-  'En este se especifica el método de calibración requerido por el cliente.',
-  'En este campo se define el tipo de servicio requerido por el cliente.',
-  'La tabla anterior es modificable. se pueden anexar las celdas necesarias hasta completar los datos de los equioos a calibrar.',
+  '(1) Datos generales: En este campo se detallan los datos que son requeridos por el cliente para el certificado de calibración.',
+  '(2) Observación adicional: En este campo se definen los puntos específicos de calibración requeridos por el cliente.',
+  '(3) Método de calibración: En este se especifica el método de calibración requerido por el cliente.',
+  '(4) Tipo de servicio: En este campo se define el tipo de servicio requerido por el cliente, por ejemplo; calibración, mantenimiento, etc...',
+  '(5) Tabla del servicio: En esta tabla, se muestran todos los equipos solicitados por el cliente.',
 ]
 
 type TFooterComponent = {
@@ -52,9 +52,7 @@ export const FooterComponent = ({
 
       <div className="main-footer__note">
         {NOTE_ITEMS.map((item, index) => (
-          <span key={index}>
-            <span className="italic">{`Nota(${index + 1}): `}</span> {item}
-          </span>
+          <span key={index}>{item}</span>
         ))}
       </div>
 

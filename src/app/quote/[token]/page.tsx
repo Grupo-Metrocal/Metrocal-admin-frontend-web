@@ -301,7 +301,7 @@ export default function Page({ params }: Props) {
         <div className="section">
           <div className="observation">
             <h4>
-              Observaciones: <span>Cotización valida por 15 días</span>
+              Observaciones: <span>Cotización válida por 30 días</span>
             </h4>
             <ul className="conditions">
               <li>
@@ -359,8 +359,10 @@ export default function Page({ params }: Props) {
         </div>
 
         <p className="text-center mt-2 bg-[#166A9B] text-white font-medium p-2 w-full">
-          El certiticado de calibración se entrega en 10 (diez) días hábiles
-          después de realizada la calibración.
+          Certificados de calibración se entregan en formato digital .PDF, serán enviados al correo del contacto del cliente, en un periodo máximo de diez días hábiles, posterior a la realización del servicio.
+          Servicio marcado con ( * ) corresponde a un servicio fuera del alcance de acreditación, trazable al Sl.
+          Elaborar cheque a nombre de Metrología Consultores de Nicaragua, S.A.
+          Condición de pago: Contra entrega de Certificado
         </p>
 
         <div className="actions">
