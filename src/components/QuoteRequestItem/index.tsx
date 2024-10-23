@@ -2,7 +2,6 @@ import './index.scss'
 import type { IRoot } from '@/app/dashboard/quotes/requests/page'
 import { CButton } from '../CButton'
 import { formatDate } from '@/utils/formatDate'
-import { ModifyQuote } from '@/app/quote/[token]/_components/ModifyQuote'
 
 interface IProps {
   quote: IRoot

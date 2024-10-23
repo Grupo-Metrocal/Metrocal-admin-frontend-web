@@ -49,6 +49,8 @@ const getData = async (id: string) => {
     },
   })
 
+  console.log({ response })
+
   return response
 }
 

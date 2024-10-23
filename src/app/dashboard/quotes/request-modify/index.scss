@@ -1,0 +1,59 @@
+@use '@/sass/index' as *;
+
+.quotes-container-modify {
+  margin-top: 1.5em;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    h3 {
+      margin-bottom: 1.5em;
+      position: relative;
+      padding-left: 1em;
+      font-weight: 700;
+      font-size: 1em;
+      color: #333;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 6px;
+        border-radius: 30px;
+        height: 100%;
+      }
+
+      &[data-status='waiting'] {
+        &::after {
+          background: #ff8000;
+        }
+      }
+    }
+
+    .quotes-container__list-modify {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+
+      .quotes-container__item {
+        width: 360px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .quotes-container {
+    grid-template-columns: 1fr;
+    gap: 2em;
+
+    &__section {
+      h3 {
+        font-size: 1.2em;
+      }
+    }
+  }
+}

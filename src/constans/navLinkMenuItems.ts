@@ -30,6 +30,10 @@ export const NAVLINK_MENU_LIST = [
         name: 'Registros',
         href: '/dashboard/quotes/records',
       },
+      {
+        name: 'Solicitudes de Modificación',
+        href: '/dashboard/quotes/request-modify',
+      },
     ],
   },
   {
