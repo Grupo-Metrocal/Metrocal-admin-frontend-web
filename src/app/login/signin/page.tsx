@@ -104,7 +104,7 @@ export default function Signin(): JSX.Element {
 
         <div className="signin-metrocal__description">
           <p>
-            <span>manteniendo la visión general</span>
+            {/* <span>manteniendo la visión general</span> */}
             <small>
               No deberías hacer uso de inicio de sesión si no eres un empleado
               de Metrocal.
