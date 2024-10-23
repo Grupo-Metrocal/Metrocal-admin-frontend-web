@@ -99,7 +99,7 @@ export const InteriorParallelismMeasurement = ({
                 <input
                   className="w-full p-1 border text-center rounded"
                   type="text"
-                  value={measurement.point_number[0]}
+                  value={measurement.point_number?.[0]}
                   onChange={(e) => handleNominalPatronChange(e, index)}
                 />
               </td>

@@ -22,7 +22,7 @@ export const PreinstallationComment = ({
         <Item title="Comentario" value={pre_installation_comment?.comment} />
         <Item
           title="Certificado Acreditado?"
-          value={pre_installation_comment.accredited ? 'Si' : 'No'}
+          value={pre_installation_comment?.accredited ? 'Si' : 'No'}
         />
       </div>
       <ReportMethodActivity
