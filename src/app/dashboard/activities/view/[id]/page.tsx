@@ -39,6 +39,8 @@ import { M_01 } from './component/m_01'
 import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
+import { AddEquipmentToActivity } from './component/AddEquipmentToQuote'
+import { CButton } from '@/components/CButton'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -318,9 +320,23 @@ export default function Page({ params }: IRoot) {
         </CarouselComp>
 
         <div className="activity-viewer__main-info__details">
-          <p className="font-semibold text-[#333] text-lg mt-4 mb-2 border-b-2 border-[#dedede] w-full pb-2">
-            Equipos asociados
-          </p>
+          <div className="border-b-2 w-full pb-2 flex justify-between items-center">
+            <div>
+              <span className='font-semibold text-[#333] text-lg'>
+                Equipos asociados
+              </span>
+            </div>
+
+            <Modal
+              title="Estas agregando un servicio a la cotización"
+              description="Por favor recargue la pagina para poder mostrar los nuevos metodos generados"
+              Component={() => <AddEquipmentToActivity quoteId={data?.quote_request.id || 0} />}
+            >
+              <CButton>
+                Agregar Servicio
+              </CButton>
+            </Modal>
+          </div>
 
           <div className="flex items-center gap-2 w-full justify-start my-6">
             <CInput
