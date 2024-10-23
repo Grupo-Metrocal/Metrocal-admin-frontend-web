@@ -82,7 +82,7 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.ta.hrp.initial}
+                value={data?.environment.ta.hrp.initial}
                 onChange={(e) =>
                   handleEdit('ta.hrp', 'initial', e.target.value)
                 }
@@ -92,7 +92,7 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.ta.hrp.final}
+                value={data?.environment.ta.hrp.final}
                 onChange={(e) => handleEdit('ta.hrp', 'final', e.target.value)}
               />
             </td>
@@ -100,7 +100,7 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.ta.tac.initial}
+                value={data?.environment.ta.tac.initial}
                 onChange={(e) =>
                   handleEdit('ta.tac', 'initial', e.target.value)
                 }
@@ -110,13 +110,13 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.ta.tac.final}
+                value={data?.environment.ta.tac.final}
                 onChange={(e) => handleEdit('ta.tac', 'final', e.target.value)}
               />
             </td>
             <td className="border px-4 py-2">
               <select
-                value={data.environment.ta.equipment}
+                value={data?.environment.ta.equipment}
                 onChange={(e) => handleEdit('ta', 'equipment', e.target.value)}
               >
                 {equipmentOptions.map((option) => (
@@ -130,7 +130,7 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.hpa.pa.initial}
+                value={data?.environment.hpa.pa.initial}
                 onChange={(e) =>
                   handleEdit('hpa.pa', 'initial', e.target.value)
                 }
@@ -140,13 +140,13 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.hpa.pa.final}
+                value={data?.environment.hpa.pa.final}
                 onChange={(e) => handleEdit('hpa.pa', 'final', e.target.value)}
               />
             </td>
             <td className="border px-4 py-2">
               <select
-                value={data.environment.hpa.equipment}
+                value={data?.environment.hpa.equipment}
                 onChange={(e) => handleEdit('hpa', 'equipment', e.target.value)}
               >
                 {equipementOPTHPA.map((option) => (
@@ -160,7 +160,7 @@ export const EnvironmentalConditions = ({
               <input
                 className="w-[80px]"
                 type="text"
-                value={data.environment.hpa.stabilization_time}
+                value={data?.environment.hpa.stabilization_time}
                 onChange={(e) =>
                   handleEdit('hpa', 'stabilization_time', e.target.value)
                 }
