@@ -4,7 +4,7 @@ import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { fetchData } from '@/utils/fetch'
-import { useForm } from '@/hooks/useForm'
+import { PopoverSelected } from '@/components/poppoverSelected'
 
 export interface IClient {
   id: number
@@ -65,8 +65,7 @@ export default function ContactInformation({
 
       <div className="contact-information__body">
         <section className="contact-information__body__section-left">
-          <AutocompleteInput
-            requiredLabel={true}
+          <PopoverSelected
             list={
               Object.keys(clients).length > 0
                 ? clients.map((client) => ({
@@ -79,8 +78,6 @@ export default function ContactInformation({
             label="Empresa"
             name="company_name"
             onChange={onChange}
-            setItemSelected={setItemSelected}
-            required={true}
             placeholder="Escriba o seleccione su empresa"
           />
 
