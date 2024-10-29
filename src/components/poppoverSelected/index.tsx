@@ -17,6 +17,7 @@ interface IPopoverSelected {
   label?: string
   name: string
   value?: string
+  setItemSelected: (id: number) => void
 }
 
 export const PopoverSelected = ({
@@ -26,6 +27,7 @@ export const PopoverSelected = ({
   label,
   name,
   value,
+  setItemSelected
 }: IPopoverSelected) => {
 
   const [open, setOpen] = useState(false)
@@ -33,6 +35,7 @@ export const PopoverSelected = ({
 
   useEffect(() => {
     const selectedItem = list.find((item) => item.name === selected)
+    setItemSelected(selectedItem?.id || -1)
     onChange({
       target: {
         name,

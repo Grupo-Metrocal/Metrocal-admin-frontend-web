@@ -78,6 +78,7 @@ export default function ContactInformation({
             label="Empresa"
             name="company_name"
             onChange={onChange}
+            setItemSelected={setItemSelected}
             placeholder="Escriba o seleccione su empresa"
           />
 
