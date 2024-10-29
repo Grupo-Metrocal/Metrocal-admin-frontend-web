@@ -199,12 +199,18 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (companySelected === -1) return
+    if (companySelected === -1) {
+      return setContactInfValue({
+        ...initialContactInformationForm,
+      })
+    }
 
     fetchData({ url: `clients/${companySelected}` }).then(
       (data: typeof contactInfValue) => {
         if (data.status === 200) {
           setContactInfValue(data.data)
+        } else {
+          setContactInfValue({})
         }
       },
     )
