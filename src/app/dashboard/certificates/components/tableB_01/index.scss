@@ -30,44 +30,6 @@
     }
   }
 
-  &__calibration-result,
-  &__environmental_conditions,
-  &__environmental-conditions,
-  &__used_patterns {
-    table {
-      margin-top: 1.8em;
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      thead {
-        tr {
-          th {
-            padding: 10px 0;
-            text-align: left;
-            font-size: 14px;
-            font-weight: 600;
-            color: #2f2a2a;
-            border-bottom: 1px solid #999;
-          }
-        }
-      }
-      tbody {
-        tr {
-          td {
-            padding: 10px 0;
-            text-align: left;
-            font-size: 14px;
-            font-weight: 400;
-            color: #000;
-            border-bottom: 1px solid rgb(0, 0, 0, 0.2);
-          }
-        }
-      }
-    }
-  }
-
   &__observations {
     display: flex;
     flex-direction: column;
