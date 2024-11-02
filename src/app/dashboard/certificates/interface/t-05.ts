@@ -34,6 +34,7 @@ export interface ICertificate_T_05 {
   oilBath: OilBath
   equipment_information: EquipmentInformation
   environmental_conditions: EnvironmentalConditions
+  description_pattern: DescriptionPattern[]
   creditable: boolean
   client_email: string
   observations: string
@@ -89,4 +90,17 @@ export interface EquipmentInformation {
 export interface EnvironmentalConditions {
   temperature: string
   humidity: string
+}
+
+export interface DescriptionPattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  pattern_range: string
+  next_calibration: string
+  brand: string
+  created_at: string
 }

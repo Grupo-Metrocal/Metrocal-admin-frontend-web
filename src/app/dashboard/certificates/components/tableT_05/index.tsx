@@ -12,11 +12,11 @@ export const TableT_05 = ({
   method_name: string
 }) => {
   return (
-    <div className="table-t-03">
-      <section className="table-t-03__equipment-information">
+    <div className="table-t-05">
+      <section className="table-t-05__equipment-information">
         <h2>Información del equipo</h2>
 
-        <div className="table-t-03__equipment-information__content">
+        <div className="table-t-05__equipment-information__content">
           <div>
             <p>Código de servicio:</p>
             <span>{certificate.equipment_information.service_code}</span>
@@ -76,7 +76,7 @@ export const TableT_05 = ({
         </div>
       </section>
 
-      <section className="table-v-01__calibration-result">
+      <section className="table-t-05__calibration-result">
         <h2>Tabla de resultados de calibración</h2>
 
         <table>
@@ -113,6 +113,7 @@ export const TableT_05 = ({
         </table>
       </section>
 
+
       <section className="table-v-01__result_unid_system">
         <section className="table-v-01__environmental-conditions">
           <h2>
@@ -133,6 +134,41 @@ export const TableT_05 = ({
                 <td>{certificate.environmental_conditions.temperature}</td>
                 <td>{certificate.environmental_conditions.humidity}</td>
               </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="table-v-01__calibration-result">
+          <h2>Descripción de patrones utilizados</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Código</th>
+                <th>Trazabilidad</th>
+                <th>Próx. Calibr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificate.description_pattern.map(
+                (item, index) => (
+                  <tr key={index}>
+                    <td>{renderValue(item.equipment)}</td>
+                    <td>
+                      {
+                        renderValue(item.code)
+                      }
+                    </td>
+                    <td>
+                      {renderValue(item.traceability)}
+                    </td>
+                    <td>
+                      {renderValue(item.next_calibration)}
+                    </td>
+                  </tr>
+                ),
+              )}
             </tbody>
           </table>
         </section>
