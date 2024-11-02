@@ -95,6 +95,14 @@ export const DescriptionPattern = ({
           type='date'
         />
 
+        <CInput
+          label="Fecha de calibración"
+          name="calibration_date"
+          value={values.calibration_date}
+          onChange={handleInputChange}
+          type='date'
+        />
+
       </div>
       <div>
         <AlertDialogModal
