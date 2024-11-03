@@ -93,21 +93,21 @@ export const TableT_03 = ({
             </tr>
           </thead>
           <tbody>
-            {certificate.calibration_results.pattern_indication.map(
+            {certificate.calibration_results.result.pattern_indication.map(
               (item: any, index: any) => (
                 <tr key={index}>
                   <td>{renderValue(item)}</td>
                   <td>
                     {
-                      renderValue(certificate.calibration_results.instrument_indication[index])
+                      renderValue(certificate.calibration_results.result.instrument_indication[index])
                     }
                   </td>
                   <td>
-                    {renderValue(certificate.calibration_results.correction[index])}
+                    {renderValue(certificate.calibration_results.result.correction[index])}
                   </td>
                   <td>
                     {
-                      renderValue(certificate.calibration_results.uncertainty[index])
+                      renderValue(certificate.calibration_results.result.uncertainty[index])
                     }
                   </td>
                 </tr>
@@ -116,6 +116,47 @@ export const TableT_03 = ({
           </tbody>
         </table>
       </section>
+
+      {
+        certificate.show_table_international_system_units && (
+          <section className="table-v-01__calibration-result">
+            <h2>Resultados en Unidad del Sistema Internacional de Unidades</h2>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Indicación del Patrón</th>
+                  <th>Indicación del Instrumento</th>
+                  <th>Corrección</th>
+                  <th>Incertidumbre expandida K = 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                {certificate.calibration_results.result_unid_system.pattern_indication.map(
+                  (item: any, index: any) => (
+                    <tr key={index}>
+                      <td>{renderValue(item)}</td>
+                      <td>
+                        {
+                          renderValue(certificate.calibration_results.result_unid_system.instrument_indication[index])
+                        }
+                      </td>
+                      <td>
+                        {renderValue(certificate.calibration_results.result_unid_system.correction[index])}
+                      </td>
+                      <td>
+                        {
+                          renderValue(certificate.calibration_results.result_unid_system.uncertainty[index])
+                        }
+                      </td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
+          </section>
+        )
+      }
 
       <section className="table-v-01__result_unid_system">
         <section className="table-v-01__environmental-conditions">

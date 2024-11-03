@@ -35,12 +35,18 @@ export interface ICertificate_T_03 {
   equipment_information: EquipmentInformation
   environmental_conditions: EnvironmentalConditions
   description_pattern: DescriptionPattern[]
+  show_table_international_system_units: boolean
   creditable: boolean
   client_email: string
   observations: string
 }
 
 export interface CalibrationResults {
+  result: CalibrationItemResult
+  result_unid_system: CalibrationItemResult
+}
+
+export interface CalibrationItemResult {
   pattern_indication: string[]
   instrument_indication: string[]
   correction: string[]
