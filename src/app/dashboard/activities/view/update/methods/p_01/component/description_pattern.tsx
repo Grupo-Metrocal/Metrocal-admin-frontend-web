@@ -43,6 +43,8 @@ export const DescriptionPattern = ({
             <option value="NI-MCPP-04">NI-MCPP-04</option>
             <option value="NI-MCPP-05">NI-MCPP-05</option>
             <option value="NI-MCPP-06">NI-MCPP-06</option>
+            <option value="NI-MCPP-12">NI-MCPP-12</option>
+            <option value="NI-MCPP-13">NI-MCPP-13</option>
           </select>
         </div>
         <CInput
