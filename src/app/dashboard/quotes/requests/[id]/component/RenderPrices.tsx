@@ -27,6 +27,11 @@ export const RenderPrices = () => {
   const handleApprove = async () => {
     if (!selectedEquipment) return
 
+    if (!selectedEquipment.calibration_method) {
+      toast.error('Seleccione un metodo de calibración')
+      return
+    }
+
     if (selectedEquipment.count < 1) {
       toast.error('La cantidad debe ser mayor a 0')
       return
