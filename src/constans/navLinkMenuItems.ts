@@ -34,6 +34,10 @@ export const NAVLINK_MENU_LIST = [
         name: 'Solicitudes de Modificación',
         href: '/dashboard/quotes/request-modify',
       },
+      {
+        name: 'Nueva Cotización',
+        href: '/dashboard/quotes/create',
+      },
     ],
   },
   {

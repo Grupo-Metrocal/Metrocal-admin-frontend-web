@@ -114,7 +114,7 @@ interface ITableTrProps {
   authorizedServices: TAuthorizedServices[]
 }
 
-const renderTableTr = ({
+export const renderTableTr = ({
   key,
   id,
   deleteEquipment,

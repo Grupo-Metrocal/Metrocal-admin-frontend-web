@@ -1,17 +1,17 @@
 interface IFetchData {
   url: string
   method?: string
-  body?: {}
+  body?: {} | FormData // Añadimos soporte para FormData
   headers?: HeadersInit
   responseType?: 'json' | 'text' | 'blob' | 'formData' | 'arrayBuffer'
   params?: {}
-  
 }
+
 export const fetchData = async ({
   url,
-  method,
+  method = 'GET',
   body,
-  headers,
+  headers = {},
   responseType = 'json',
   params,
 }: IFetchData) => {
@@ -25,13 +25,18 @@ export const fetchData = async ({
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method,
-      body: JSON.stringify(body),
-      headers,
+      body: body instanceof FormData ? body : JSON.stringify(body),
+      headers:
+        body instanceof FormData
+          ? headers
+          : { ...headers, 'Content-Type': 'application/json' },
       cache: 'no-cache',
     })
+
     const data = await response[responseType]()
     return data
   } catch (error) {
+    console.error('Fetch error:', error)
     return false
   }
 }

@@ -97,7 +97,7 @@ export const QuoteRequest = () => {
           Solicitar cotización
         </CButton>
 
-        <Linking href="/">Crear cotización</Linking>
+        <Linking href="/dashboard/quotes/create">Crear cotización</Linking>
       </div>
     </div>
   )
