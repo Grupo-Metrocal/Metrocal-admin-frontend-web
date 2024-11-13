@@ -256,7 +256,7 @@ export default function Page({ params }: Props) {
                   </span>
                   <span data-label="Cantidad">{equipment.count}</span>
                   <span data-label="Método de calibración">
-                    {equipment.calibration_method || 'N/A'}
+                    {equipment.calibration_method === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : equipment.calibration_method}
                   </span>
                   <span data-label="Observación adicional" className='
 
