@@ -6,11 +6,13 @@ import {
   setAdditionalRemarks,
   setCalibrationRethod,
   setComment,
+  setIsCreditable,
   setMeasuringRange,
   setName,
   setTypeService,
 } from '@/redux/features/quote/quoteSlice'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
+import { Checkbox } from '@/components/ui/checkbox'
 
 interface IProps {
   equipment?: IEquipmentQuoteRequest
@@ -202,6 +204,19 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               )
             }}
           />
+        </div>
+
+        <div className='flex flex-row gap-4 items-center'>
+
+          <Checkbox className='border-2' checked={selectedEquipment?.is_creditable}
+            onCheckedChange={
+              (e) => { dispatch(setIsCreditable({ id: selectedEquipment?.id, is_creditable: e })) }
+            }
+            id='is_creditable'
+          />
+
+          <label htmlFor="is_creditable" className='font-semibold'>Equipo acreditado?</label>
+
         </div>
       </div>
     </div>

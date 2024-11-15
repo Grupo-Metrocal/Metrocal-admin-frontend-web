@@ -98,6 +98,21 @@ export const quoteSlice = createSlice({
       state.equipment = equipment
       state.selectedEquipment.additional_remarks = additional_remarks
     },
+    setIsCreditable: (state, action) => {
+      const { id, is_creditable } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            is_creditable,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.is_creditable = is_creditable
+    },
     setComment: (state, action) => {
       const { id, comment } = action.payload
       const equipment = state.equipment.map((item) => {
@@ -296,6 +311,7 @@ export const {
   setCountEquipment,
   setNewEquipment,
   deleteEquipmentFromQuote,
+  setIsCreditable,
 } = quoteSlice.actions
 
 export default quoteSlice.reducer

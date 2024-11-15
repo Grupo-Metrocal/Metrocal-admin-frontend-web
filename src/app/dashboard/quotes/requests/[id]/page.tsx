@@ -48,6 +48,7 @@ export interface IEquipmentQuoteRequest {
   comment: string
   price: number
   total: number
+  is_creditable: boolean
 }
 
 export interface IClient {
