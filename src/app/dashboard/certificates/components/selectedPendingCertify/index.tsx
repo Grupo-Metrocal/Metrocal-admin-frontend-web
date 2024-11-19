@@ -220,19 +220,19 @@ export const SelectedPendingCertify = ({
         <div className="services__content">
           {selectedActivity?.quoteRequest.equipment_quote_request.map(
             (item) =>
-              item.type_service === 'Calibracion' && (
-                <div
-                  key={item.id}
-                  className={`services__content__item ${selectedService.id === item.id
-                    ? 'services__content__item-selected'
-                    : ''
-                    }`}
-                  onClick={() => handleSelectedService(item)}
-                >
-                  <p>{item.name}</p>
-                  <span>{item.calibration_method}</span>
-                </div>
-              ),
+            (
+              <div
+                key={item.id}
+                className={`services__content__item ${selectedService.id === item.id
+                  ? 'services__content__item-selected'
+                  : ''
+                  }`}
+                onClick={() => handleSelectedService(item)}
+              >
+                <p>{item.name}</p>
+                <span>{item.calibration_method}</span>
+              </div>
+            ),
           )}
         </div>
       </div>

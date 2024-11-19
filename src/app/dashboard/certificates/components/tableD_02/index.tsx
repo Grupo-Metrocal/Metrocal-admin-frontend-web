@@ -97,7 +97,7 @@ export const TableD_02 = ({
             {certificate.calibration_result.nominal_value.map(
               (item: any, index: any) => (
                 <tr key={index}>
-                  <td>{item}</td>
+                  <td>{renderValue(item)}</td>
                   <td>
                     {
                       renderValue(certificate.calibration_result.current_length[index])
