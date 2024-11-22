@@ -71,10 +71,9 @@ export const EquipmentInformation = ({
         />
         <CInput
           label="División de escala"
-          name="tempescale_divisionrature_max"
+          name="scale_division"
           value={values.scale_division}
           onChange={handleInputChange}
-          type="number"
         />
         <CInput
           label="Código"

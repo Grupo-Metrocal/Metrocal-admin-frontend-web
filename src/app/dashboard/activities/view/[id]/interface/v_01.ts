@@ -24,7 +24,7 @@ export interface IEquipmentInformation {
   serial_number: string
   measurement_range: any
   nominal_range: number
-  scale_division: number
+  scale_division: string
   unit: string
   model: any
   code: string
