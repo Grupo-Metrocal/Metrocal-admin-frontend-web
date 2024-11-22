@@ -58,6 +58,7 @@ export const EquipmentInformation = ({
           name="maximum_capacity"
           value={values.maximum_capacity}
           onChange={handleInputChange}
+          type='number'
         />
       </div>
       <div>
