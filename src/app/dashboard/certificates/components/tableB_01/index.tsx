@@ -23,63 +23,63 @@ export const TableB_01 = ({
           <div>
             <p>Código de servicio:</p>
             <span>
-              {certificate.equipment_information.service_code || '---'}
+              {certificate?.equipment_information.service_code || '---'}
             </span>
           </div>
           <div>
             <p>Fecha de emisión del certificado:</p>
             <span>
-              {certificate.equipment_information.certificate_issue_date}
+              {certificate?.equipment_information.certificate_issue_date}
             </span>
           </div>
           <div>
             <p>Fecha de calibración:</p>
-            <span>{certificate.equipment_information.calibration_date}</span>
+            <span>{certificate?.equipment_information.calibration_date}</span>
           </div>
           <div>
             <p>Fecha de siguiente calibración:</p>
-            <span>{certificate.equipment_information.next_calibration_date}</span>
+            <span>{certificate?.equipment_information.next_calibration_date}</span>
           </div>
           <div>
             <p>Equipo calibrado:</p>
-            <span>{certificate.equipment_information.object_calibrated}</span>
+            <span>{certificate?.equipment_information.object_calibrated}</span>
           </div>
           <div>
             <p>Fabricante / Marca:</p>
-            <span>{certificate.equipment_information.maker}</span>
+            <span>{certificate?.equipment_information.maker}</span>
           </div>
           <div>
             <p>No. Serie:</p>
-            <span>{certificate.equipment_information.serial_number}</span>
+            <span>{certificate?.equipment_information.serial_number}</span>
           </div>
           <div>
             <p>Modelo:</p>
-            <span>{certificate.equipment_information.model}</span>
+            <span>{certificate?.equipment_information.model}</span>
           </div>
           <div>
             <p>Rango de medición:</p>
-            <span>{certificate.equipment_information.measurement_range}</span>
+            <span>{certificate?.equipment_information.measurement_range}</span>
           </div>
           <div>
             <p>Resolución:</p>
-            <span>{certificate.equipment_information.resolution}</span>
+            <span>{certificate?.equipment_information.resolution}</span>
           </div>
           <div>
             <p>Código:</p>
-            <span>{certificate.equipment_information.identification_code}</span>
+            <span>{certificate?.equipment_information.identification_code}</span>
           </div>
           <div>
             <p>Solicitante:</p>
-            <span>{certificate.equipment_information.applicant}</span>
+            <span>{certificate?.equipment_information.applicant}</span>
           </div>
           <div>
             <p>Dirección del solicitante:</p>
-            <span>{certificate.equipment_information.address}</span>
+            <span>{certificate?.equipment_information.address}</span>
           </div>
           <div>
             <p>Ubicación de calibración:</p>
             <span>
-              {certificate.equipment_information.calibration_location}
+              {certificate?.equipment_information.calibration_location}
             </span>
           </div>
         </div>
@@ -104,23 +104,23 @@ export const TableB_01 = ({
                   {renderValue(certificate?.calibration_results?.result_test?.reference_mass[0])}
                 </td>
                 <td className="border py-2 px-4">
-                  {renderValue(certificate.calibration_results.result_test.equipment_indication[0])}
+                  {renderValue(certificate?.calibration_results.result_test.equipment_indication[0])}
                 </td>
                 <td className="border py-2 px-4">
-                  {renderValue(certificate.calibration_results.result_test.error[0])}
+                  {renderValue(certificate?.calibration_results.result_test.error[0])}
                 </td>
                 {
                   <td className="border py-2 px-4">
-                    {renderValue(certificate.calibration_results.result_test.error[0])}
+                    {renderValue(certificate?.calibration_results.result_test.error[0])}
                   </td>
                 }
                 {
                   <td className="border py-2 px-4">
-                    {renderValue(certificate.calibration_results.result_test.repeatability[0])}
+                    {renderValue(certificate?.calibration_results.result_test.repeatability[0])}
                   </td>
                 }
                 <td className="border py-2 px-4">
-                  {renderValue(certificate.calibration_results.result_test.uncertainty[0])}
+                  {renderValue(certificate?.calibration_results.result_test.uncertainty[0])}
                 </td>
               </tr>
             }
@@ -131,23 +131,23 @@ export const TableB_01 = ({
                     {renderValue(certificate?.calibration_results?.result_test?.reference_mass?.[index])}
                   </td>
                   <td className="border py-2 px-4">
-                    {renderValue(certificate.calibration_results.result_test.equipment_indication[index])}
+                    {renderValue(certificate?.calibration_results.result_test.equipment_indication[index])}
                   </td>
                   <td className="border py-2 px-4">
-                    {renderValue(certificate.calibration_results.result_test.error[index])}
+                    {renderValue(certificate?.calibration_results.result_test.error[index])}
                   </td>
                   {index === 0 || index === 1 && (
                     <td className="border py-2 px-4" rowSpan={index === 1 ? totalRows : 0}>
-                      {renderValue(certificate.calibration_results.result_test.repeatability[index])}
+                      {renderValue(certificate?.calibration_results.result_test.repeatability[index])}
                     </td>
                   )}
                   {index === 0 || index === 1 && (
                     <td className="border py-2 px-4" rowSpan={index === 1 ? totalRows : 0}>
-                      {renderValue(certificate.calibration_results.result_test.maximum_eccentricity[index])}
+                      {renderValue(certificate?.calibration_results.result_test.maximum_eccentricity[index])}
                     </td>
                   )}
                   <td className="border py-2 px-4">
-                    {renderValue(certificate.calibration_results.result_test.uncertainty[index])}
+                    {renderValue(certificate?.calibration_results.result_test.uncertainty[index])}
                   </td>
                 </tr>
               )
@@ -158,7 +158,7 @@ export const TableB_01 = ({
       <br />
       <br />
       {
-        certificate.show_additional_table !== '' && (
+        certificate?.show_additional_table !== '' && (
           <section className="table-b-01__calibration-result">
             <h2>Tabla de resultados de la calibración</h2>
             <table className="w-full border-collapse">
@@ -179,23 +179,23 @@ export const TableB_01 = ({
                       {renderValue(certificate?.calibration_results.result_test_extra?.reference_mass[0])}
                     </td>
                     <td className="border py-2 px-4">
-                      {renderValue(certificate.calibration_results.result_test_extra.equipment_indication[0])}
+                      {renderValue(certificate?.calibration_results.result_test_extra.equipment_indication[0])}
                     </td>
                     <td className="border py-2 px-4">
-                      {renderValue(certificate.calibration_results.result_test_extra.error[0])}
+                      {renderValue(certificate?.calibration_results.result_test_extra.error[0])}
                     </td>
                     {
                       <td className="border py-2 px-4">
-                        {renderValue(certificate.calibration_results.result_test_extra.error[0])}
+                        {renderValue(certificate?.calibration_results.result_test_extra.error[0])}
                       </td>
                     }
                     {
                       <td className="border py-2 px-4">
-                        {renderValue(certificate.calibration_results.result_test_extra.repeatability[0])}
+                        {renderValue(certificate?.calibration_results.result_test_extra.repeatability[0])}
                       </td>
                     }
                     <td className="border py-2 px-4">
-                      {renderValue(certificate.calibration_results.result_test_extra.uncertainty[0])}
+                      {renderValue(certificate?.calibration_results.result_test_extra.uncertainty[0])}
                     </td>
                   </tr>
                 }
@@ -206,23 +206,23 @@ export const TableB_01 = ({
                         {renderValue(certificate?.calibration_results?.result_test_extra?.reference_mass?.[index])}
                       </td>
                       <td className="border py-2 px-4">
-                        {renderValue(certificate.calibration_results.result_test_extra.equipment_indication[index])}
+                        {renderValue(certificate?.calibration_results.result_test_extra.equipment_indication[index])}
                       </td>
                       <td className="border py-2 px-4">
-                        {renderValue(certificate.calibration_results.result_test_extra.error[index])}
+                        {renderValue(certificate?.calibration_results.result_test_extra.error[index])}
                       </td>
                       {index === 0 || index === 1 && (
                         <td className="border py-2 px-4" rowSpan={index === 1 ? totalRows : 0}>
-                          {renderValue(certificate.calibration_results.result_test_extra.repeatability[index])}
+                          {renderValue(certificate?.calibration_results.result_test_extra.repeatability[index])}
                         </td>
                       )}
                       {index === 0 || index === 1 && (
                         <td className="border py-2 px-4" rowSpan={index === 1 ? totalRows : 0}>
-                          {renderValue(certificate.calibration_results.result_test_extra.maximum_eccentricity[index])}
+                          {renderValue(certificate?.calibration_results.result_test_extra.maximum_eccentricity[index])}
                         </td>
                       )}
                       <td className="border py-2 px-4">
-                        {renderValue(certificate.calibration_results.result_test_extra.uncertainty[index])}
+                        {renderValue(certificate?.calibration_results.result_test_extra.uncertainty[index])}
                       </td>
                     </tr>
                   )
@@ -246,8 +246,8 @@ export const TableB_01 = ({
           </thead>
           <tbody>
             <tr>
-              <td>{certificate.environmental_conditions.temperature}</td>
-              <td>{certificate.environmental_conditions.humidity}</td>
+              <td>{certificate?.environmental_conditions.temperature}</td>
+              <td>{certificate?.environmental_conditions.humidity}</td>
             </tr>
           </tbody>
         </table>
@@ -266,7 +266,7 @@ export const TableB_01 = ({
             </tr>
           </thead>
           <tbody>
-            {certificate.description_pattern.map(
+            {certificate?.description_pattern.map(
               (item, index) => (
                 <tr key={index}>
                   <td>{renderValue(item.equipment)}</td>
@@ -292,13 +292,13 @@ export const TableB_01 = ({
         <div>
           <p>
             Este certificado{' '}
-            {certificate.creditable ? 'es acreditado ✅' : 'no es acreditado'}
+            {certificate?.creditable ? 'es acreditado ✅' : 'no es acreditado'}
           </p>
         </div>
 
         <div>
           <p>Observaciones adicionales</p>
-          <span>{certificate.observations}</span>
+          <span>{certificate?.observations}</span>
         </div>
       </section>
     </div >

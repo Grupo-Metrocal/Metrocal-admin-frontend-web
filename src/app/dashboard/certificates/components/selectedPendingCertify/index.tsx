@@ -123,7 +123,7 @@ export const SelectedPendingCertify = ({
       toast.success('Certificado cargado con éxito')
     } else {
       toast.error('Error al cargar el certificado', {
-        description: certificate.details,
+        description: certificate.details || '',
       })
       setCertificate({})
     }
@@ -149,7 +149,7 @@ export const SelectedPendingCertify = ({
       })
     } else {
       toast.error('Error al generar los certificados', {
-        description: resopnse.details,
+        description: resopnse.details || '',
       })
     }
   }
