@@ -1,5 +1,4 @@
 import { AlertDialogModal } from "@/components/AlertDialogModal"
-import { CButton } from "@/components/CButton"
 import { useForm } from "@/hooks/useForm"
 import { fetchData } from "@/utils/fetch"
 import { getCookie } from "cookies-next"
@@ -41,6 +40,7 @@ export const ChangeCertCode = ({ calibration_method, equipment_id, current_certf
   const handleOnConfirm = async () => {
 
     if (!newCertCode) return toast('Porfavor extrae el codigo de un metodo')
+    if (!current_certficate_code) return toast('Este equipo no cuenta con un certificado propio')
 
     toast.loading('Reemplazando codigo...')
 
