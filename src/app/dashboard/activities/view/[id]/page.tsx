@@ -41,6 +41,7 @@ import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
 import { AddEquipmentToActivity } from './component/AddEquipmentToQuote'
 import { CButton } from '@/components/CButton'
+import { ChangeCertCode } from './component/changeCertCode'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -582,10 +583,24 @@ const ActionsItems = ({
             Modificar Resultados
           </Link>
         </DropdownMenuItem>
+
+        <div className='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        >
+          <Modal
+            title='Reemplazar código de certificado'
+            description='Al utilizar un codigo alternativo de otro metodo, este sera reemplazado'
+            nameButton='Reemplazar código de certificado'
+            Component={() => <ChangeCertCode calibration_method={calibration_method} current_certficate_code={equipment.certificate_code} equipment_id={equipment.id} />}
+          />
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={(e) => {
             e.preventDefault()
+
           }}
         >
           <AlertDialogModal
