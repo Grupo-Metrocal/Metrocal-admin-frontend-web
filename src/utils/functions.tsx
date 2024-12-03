@@ -121,3 +121,28 @@ export const handleApproveQuote = async (quoteId: number) => {
     })
   }
 }
+
+export const rejectedQuoteRequest = async (quoteId: number) => {
+  toast.loading('Rechazando cotización...')
+
+  const response = await fetchData({
+    url: 'quotes/request/reject',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {
+      id: quoteId
+    }
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Cotización rechazada correctamente')
+  } else {
+    toast('Error al rechazar la cotización', {
+      description: response.details,
+    })
+  }
+}

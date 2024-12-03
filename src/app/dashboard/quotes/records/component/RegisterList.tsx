@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Linking, deleteQuoteRequest, generateQuoteBasedOnCurrent, handleApproveQuote } from '@/utils/functions'
+import { Linking, deleteQuoteRequest, generateQuoteBasedOnCurrent, handleApproveQuote, rejectedQuoteRequest } from '@/utils/functions'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useForm } from '@/hooks/useForm'
 import { handleGeneratePDFQuote } from '@/utils/downloadPDFQuote'
@@ -461,6 +461,26 @@ const columns = ({
               }
 
               <DropdownMenuSeparator />
+              <DropdownMenuItem
+                style={{
+                  color: 'tomato',
+                  fontWeight: 'bold',
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                }}
+              >
+                <AlertDialogModal
+                  nameButton="Rechazar cotización"
+                  title="¿Estás seguro de rechazar esta cotización?"
+                  onConfirm={() => rejectedQuoteRequest(payment.id)}
+                  buttonStyle={{
+                    color: 'tomato',
+                    fontWeight: 'bold',
+                  }}
+                  useButton={false}
+                />
+              </DropdownMenuItem>
 
               <DropdownMenuItem
                 style={{

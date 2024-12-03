@@ -15,18 +15,12 @@ export const EquipmentInformation = ({
   ) => void
   equipment: IEquipmentInformation
 }) => {
-  const { values, handleInputChange } = useForm(equipment);
+  const { values, handleInputChange, handleSelectChange } = useForm(equipment);
 
   const url = `methods/generic-method/equipment-information/`
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <CInput
-          label="Fecha"
-          name="date"
-          value={values?.date}
-          onChange={handleInputChange}
-        />
         <AutocompleteInput
           requiredLabel
           value={values?.device}
@@ -36,12 +30,12 @@ export const EquipmentInformation = ({
           required
           placeholder="Escriba o seleccione su dispositivo"
           list={[
-            { id: 1, name: 'Micrómetro' },
-            { id: 2, name: 'Pie de Rey' },
-            { id: 3, name: 'Juego de Bloques Patrón' },
-            { id: 4, name: 'Higro Termómetro' },
-            { id: 5, name: 'Higro Termómetro' },
-            { id: 6, name: 'Higro Termómetro' },
+            // { id: 1, name: 'Micrómetro' },
+            // { id: 2, name: 'Pie de Rey' },
+            // { id: 3, name: 'Juego de Bloques Patrón' },
+            // { id: 4, name: 'Higro Termómetro' },
+            // { id: 5, name: 'Higro Termómetro' },
+            // { id: 6, name: 'Higro Termómetro' },
           ]}
           keyList="device"
         />
@@ -63,34 +57,34 @@ export const EquipmentInformation = ({
           value={values?.model}
           onChange={handleInputChange}
         />
-        <AutocompleteInput
-          requiredLabel
-          value={values?.measurement_range}
-          label="Rango de medida"
-          name="measurement_range"
+
+        <CInput
+          label="Rango minimo"
+          name="range_min"
+          value={values?.range_min}
           onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su unidad"
-          list={[{ id: 1, name: '0 mm a 150 mm' }]}
-          keyList="measurement_range"
+          type="number"
         />
+
+        <CInput
+          label="Rango maximo"
+          name="range_max"
+          value={values?.range_max}
+          onChange={handleInputChange}
+          type="number"
+        />
+
         <CInput
           label="Intervalo de escala"
           name="scale_interval"
           value={values?.scale_interval}
           onChange={handleInputChange}
-          type="text"
+          type="number"
         />
         <CInput
           label="Código"
           name="code"
           value={values?.code}
-          onChange={handleInputChange}
-        />
-        <CInput
-          label="Logitud"
-          name="length"
-          value={values?.length}
           onChange={handleInputChange}
         />
         <CInput

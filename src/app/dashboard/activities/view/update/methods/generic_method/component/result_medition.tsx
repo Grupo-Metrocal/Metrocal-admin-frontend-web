@@ -16,134 +16,111 @@ export const ResultMedition = ({
   const url = `methods/generic-method/results-medition/`
   const [data, setData] = useState(result_medition)
 
+  const handleEdit = (
+    section: any,
+    field: any,
+    value: any,
+    rowIndex: any,
+    cellIndex: any,
+  ) => {
+    if (isNaN(value)) {
+      return
+    }
+
+    setData((prev) => {
+      const updatedData = { ...prev }
+      updatedData.meditions[rowIndex].medition[cellIndex][field] = value
+      return updatedData
+    })
+  }
+
   return (
     <div className="flex flex-col space-y-4">
-      <table>
-        <thead className="bg-gray-50">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 1
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 1
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 2
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 2
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 3
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 3
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.medition?.map((medition, index) => (
-            <tr key={index}>
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.patron1 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].patron1 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.equiopo1 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].equiopo1 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
-
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.patron2 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].patron2 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.equiopo2 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].equiopo2 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.patron3 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].patron3 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  style={{ textAlign: 'center' }}
-                  type="number"
-                  value={medition.equiopo3 ?? 0}
-                  onChange={(e) => {
-                    const newMedition = [...data.medition]
-                    newMedition[index].equiopo3 = Number(e.target.value)
-                    setData({ ...data, medition: newMedition })
-                  }}
-                />
-              </td>
+      <div className="flex flex-col space-y-4 border p-4">
+        <table className="min-w-full border-collapse border border-gray-400">
+          <thead>
+            <tr className="header-row">
+              <th colSpan={10} className="p-2">
+                Resultados de mediciones
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            <tr className="subheader-row">
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Patrón
+              </th>
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Equipo
+              </th>
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Patrón
+              </th>
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Equipo
+              </th>
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Patrón
+              </th>
+              <th className="border border-gray-400 p-2 bg-gray-200">
+                Equipo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.meditions?.map((result, rowIndex) => {
+              return (
+                <tr key={rowIndex}>
+                  {result?.medition?.map((key, cellIndex) => {
+                    return (
+                      <>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            className="w-full text-center"
+                            type="text"
+                            value={key.patron}
+                            onChange={(e) =>
+                              handleEdit(
+                                'medition',
+                                'patron',
+                                e.target.value,
+                                rowIndex,
+                                cellIndex,
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            className="w-full text-center"
+                            type="text"
+                            value={key.equipment}
+                            onChange={(e) =>
+                              handleEdit(
+                                'medition',
+                                'equipment',
+                                e.target.value,
+                                rowIndex,
+                                cellIndex,
+                              )
+                            }
+                          />
+                        </td>
+                      </>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(data, url,true)}
+          onConfirm={() => {
+            handleSaveInformation(data, url)
+          }}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',

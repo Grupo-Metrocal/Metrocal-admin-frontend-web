@@ -12,19 +12,19 @@ export interface IGeneric_method {
   computer_data: IComputerData
   result_medition: IResultMedition
   certificate_data: ICertificateData
+  description_pattern: IDescriptionPattern
 }
 
 export interface IEquipmentInformation {
   id: number
-  date: string
   device: string
   maker: string
   serial_number: string
   model: string
-  measurement_range: string
-  scale_interval: string
+  range_min: number
+  range_max: number
+  scale_interval: number
   code: string
-  length: string
   estabilization_site: string
 }
 
@@ -38,20 +38,28 @@ export interface IEnvironmentalConditions {
 export interface IComputerData {
   id: number
   unit_of_measurement: string
-  scale_unit: string
+  scale_division: number
 }
 
 export interface IResultMedition {
-  medition: IMeditionItem[]
+  id: number
+  meditions: IMedition[]
 }
 
-interface IMeditionItem {
-  patron1: number
-  equiopo1: number
-  patron2: number
-  equiopo2: number
-  patron3: number
-  equiopo3: number
+export interface IDescriptionPattern {
+  observation?: string
+  creditable?: boolean
+  next_calibration: string
+  calibration_date: string
+}
+
+export interface IMedition {
+  medition:
+    | {
+        patron: number
+        equipment: number
+      }[]
+    | any[]
 }
 
 export interface ICertificateData {

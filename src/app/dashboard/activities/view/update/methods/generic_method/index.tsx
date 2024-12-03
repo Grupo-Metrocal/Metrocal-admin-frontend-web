@@ -10,6 +10,7 @@ import { EnvironmentalConditions } from './component/environmental_conditions'
 import { ResultMedition } from './component/result_medition'
 import { ComputerData } from './component/computer_data'
 import { useSearchParams } from 'next/navigation'
+import { DescriptionPattern } from './component/description_pattern'
 
 export const Generic_method = ({
   equipment,
@@ -97,6 +98,16 @@ export const Generic_method = ({
             Component: () => (
               <ResultMedition
                 result_medition={equipment.result_medition}
+                handleSaveInformation={handleSaveInformation}
+              />
+            ),
+          },
+          {
+            value: 'description_pattern',
+            label: 'Descripcion de patrones',
+            Component: () => (
+              <DescriptionPattern
+                description_pattern={equipment.description_pattern}
                 handleSaveInformation={handleSaveInformation}
               />
             ),
