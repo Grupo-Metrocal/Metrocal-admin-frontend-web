@@ -28,6 +28,11 @@ export const QuoteRequestItem = ({
     done: 'Aprobado',
     rejected: 'Rechazado',
   }
+  let services = 0
+
+  quote.equipment_quote_request.forEach((item) => {
+    services += item.count
+  })
 
   return (
     <div
@@ -48,7 +53,7 @@ export const QuoteRequestItem = ({
       <span>{quote.no || ''}</span>
       <div className="action">
         {/* <span>{quote.status !== 'pending' && quote.updated_at}</span> */}
-        <span>Servicios: {quote.equipment_quote_request.length}</span>
+        <span>Servicios: {services}</span>
 
         {useButton && (
           <CButton

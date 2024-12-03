@@ -37,6 +37,12 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
   const [members, setMembers] = useState<ITeammember[]>([])
   const [flag, setFlag] = useState<boolean>(false)
 
+  let services = 0
+
+  activity?.quote_request?.equipment_quote_request?.forEach((item) => {
+    services += item.count
+  })
+
   const handleChangeResponsable = async (member: ITeammember) => {
     const response = await fetchData({
       url: 'activities/assign-responsable',
@@ -219,7 +225,7 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
               .join(', ')}
           >
             Servicios solicitados:{' '}
-            {activity.quote_request?.equipment_quote_request.length}
+            {services}
             <Image src={alertIcon} alt="Alert" width={14} />
           </span>
         </div>
