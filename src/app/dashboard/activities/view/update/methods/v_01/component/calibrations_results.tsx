@@ -30,8 +30,15 @@ export const CalibrationsResults = ({
     setData((prev) => {
       const results = prev.results?.map((result) => {
         if (result.point_number === cycleNumber) {
+          if (field === 'nominal_value') {
+            return {
+              ...result,
+              nominal_value: Number(value)
+            }
+          }
           const calibrations = result.calibrations.map((calibration, index) => {
             if (index === calibrationIndex) {
+
               if (field === 'pattern_dough.full') {
                 return {
                   ...calibration,
@@ -70,109 +77,129 @@ export const CalibrationsResults = ({
       <div className="flex flex-col space-y-4 gap-4">
         {data?.results?.map((result, index) => {
           return (
-            <table
-              className="min-w-full border-collapse border border-gray-400"
-              key={index}
-            >
-              <thead>
-                <tr>
-                  <th className="border border-gray-400 p-2" colSpan={4}>
-                    Punto {result.point_number}
-                  </th>
-                </tr>
-                <tr>
-                  <th
-                    rowSpan={2}
-                    className="border border-gray-400 p-2 bg-gray-200"
-                  >
-                    Numero de mediciones
-                  </th>
+            <>
+              <span className="border border-gray-400 p-2 w-full block text-center">
+                Punto {result.point_number}
+              </span>
+              <div>
+                <label htmlFor="">Valor nominal</label>
+                <input
+                  type="number"
+                  className="w-full border-2 p-2 text-start rounded"
+                  placeholder='Ingrese el valor'
+                  value={result.nominal_value}
+                  onChange={(e) =>
+                    handleEdit(
+                      'nominal_value',
+                      e.target.value,
+                      result.point_number,
+                      index
+                    )
+                  }
+                />
+              </div>
 
-                  <th
-                    colSpan={2}
-                    className="border border-gray-400 p-2 bg-gray-200"
-                  >
-                    Masa del patrón
-                  </th>
+              <table
+                className="min-w-full border-collapse border border-gray-400"
+                key={index}
+              >
+                <thead>
 
-                  <th className="border border-gray-400 p-2 bg-gray-200">
-                    Densidad del agua
-                  </th>
-                </tr>
+                  <tr>
+                    <th
+                      rowSpan={2}
+                      className="border border-gray-400 p-2 bg-gray-200"
+                    >
+                      Numero de mediciones
+                    </th>
 
-                <tr>
-                  <th className="border border-gray-400 p-2 bg-gray-200">
-                    Lleno
-                  </th>
-                  <th className="border border-gray-400 p-2 bg-gray-200">
-                    Vacio
-                  </th>
-                  <th className="border border-gray-400 p-2 bg-gray-200">
-                    Agua
-                  </th>
-                </tr>
-              </thead>
+                    <th
+                      colSpan={2}
+                      className="border border-gray-400 p-2 bg-gray-200"
+                    >
+                      Masa del patrón
+                    </th>
 
-              <tbody>
-                {result.calibrations.map((calibration, calibrationIndex) => {
-                  return (
-                    <tr key={calibrationIndex}>
-                      <td className="border border-gray-400 p-2 text-center">
-                        {calibrationIndex + 1}
-                      </td>
-                      <td className="border border-gray-400 p-2">
-                        <input
-                          type="number"
-                          className="w-full text-center"
-                          value={calibration.pattern_dough.full}
-                          onChange={(e) =>
-                            handleEdit(
-                              'pattern_dough.full',
-                              e.target.value,
-                              result.point_number,
-                              calibrationIndex,
-                            )
-                          }
-                        />
-                      </td>
-                      <td className="border border-gray-400 p-2">
-                        <input
-                          type="number"
-                          className="w-full text-center"
-                          value={calibration.pattern_dough.empty}
-                          onChange={(e) =>
-                            handleEdit(
-                              'pattern_dough.empty',
-                              e.target.value,
-                              result.point_number,
-                              calibrationIndex,
-                            )
-                          }
-                        />
-                      </td>
-                      <td className="border border-gray-400 p-2">
-                        <input
-                          type="number"
-                          className="w-full text-center"
-                          value={calibration.water_temperature}
-                          onChange={(e) =>
-                            handleEdit(
-                              'water_temperature',
-                              e.target.value,
-                              result.point_number,
-                              calibrationIndex,
-                            )
-                          }
-                        />
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+                    <th className="border border-gray-400 p-2 bg-gray-200">
+                      Densidad del agua
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th className="border border-gray-400 p-2 bg-gray-200">
+                      Lleno
+                    </th>
+                    <th className="border border-gray-400 p-2 bg-gray-200">
+                      Vacio
+                    </th>
+                    <th className="border border-gray-400 p-2 bg-gray-200">
+                      Agua
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {result.calibrations.map((calibration, calibrationIndex) => {
+                    return (
+                      <tr key={calibrationIndex}>
+                        <td className="border border-gray-400 p-2 text-center">
+                          {calibrationIndex + 1}
+                        </td>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            type="number"
+                            className="w-full text-center"
+                            value={calibration.pattern_dough.full}
+                            onChange={(e) =>
+                              handleEdit(
+                                'pattern_dough.full',
+                                e.target.value,
+                                result.point_number,
+                                calibrationIndex,
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            type="number"
+                            className="w-full text-center"
+                            value={calibration.pattern_dough.empty}
+                            onChange={(e) =>
+                              handleEdit(
+                                'pattern_dough.empty',
+                                e.target.value,
+                                result.point_number,
+                                calibrationIndex,
+                              )
+                            }
+                          />
+                        </td>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            type="number"
+                            className="w-full text-center"
+                            value={calibration.water_temperature}
+                            onChange={(e) =>
+                              handleEdit(
+                                'water_temperature',
+                                e.target.value,
+                                result.point_number,
+                                calibrationIndex,
+                              )
+                            }
+                          />
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody >
+              </table>
+            </>
           )
-        })}
-      </div>
+        })
+        }
+      </div >
 
       <div>
         <AlertDialogModal

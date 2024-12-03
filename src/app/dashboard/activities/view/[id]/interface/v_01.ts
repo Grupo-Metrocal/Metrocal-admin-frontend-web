@@ -81,6 +81,7 @@ export interface ICalibrationResults {
 export interface Result {
   calibrations: Calibration[]
   point_number: number
+  nominal_value: number
 }
 
 export interface Calibration {
