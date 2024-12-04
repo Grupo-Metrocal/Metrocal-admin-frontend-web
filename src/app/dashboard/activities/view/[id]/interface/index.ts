@@ -54,6 +54,7 @@ export interface EquipmentQuoteRequest {
   method_id: number
   review_status: string
   isResolved: boolean
+  use_alternative_certificate_method: string
 }
 
 export interface ApprovedBy {

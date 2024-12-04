@@ -433,6 +433,7 @@ export default function Page({ params }: IRoot) {
                           activityID={data?.id || 0}
                           stackId={selectedService?.method_id || 0}
                           onDelete={handleDeleteEquipment}
+                          selectedService={selectedService}
                         />
                       </div>{' '}
                     </div>
@@ -552,6 +553,7 @@ interface IPropsActions {
   activityID: number
   onDelete: (id: number, stackId: number) => void
   stackId: number
+  selectedService: EquipmentQuoteRequest | null
 }
 const ActionsItems = ({
   equipment,
@@ -559,6 +561,7 @@ const ActionsItems = ({
   calibration_method,
   onDelete,
   stackId,
+  selectedService
 }: IPropsActions) => {
   return (
     <DropdownMenu>
@@ -578,7 +581,7 @@ const ActionsItems = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link
-            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}?increase=false`}
+            href={`/dashboard/activities/view/update/${equipment.id}/${calibration_method}/${activityID}/${selectedService?.id}?increase=false?`}
           >
             Modificar Resultados
           </Link>

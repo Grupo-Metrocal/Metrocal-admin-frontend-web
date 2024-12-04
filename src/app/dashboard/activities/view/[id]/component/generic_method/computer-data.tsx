@@ -23,7 +23,7 @@ export const ComputerData = ({
           title="Unidad de medida"
           value={computer_data?.unit_of_measurement}
         />
-        <Item title="Unidad de escala" value={computer_data?.scale_unit} />
+        <Item title="Division de escala" value={computer_data?.scale_division.toString()} />
       </div>
       <ReportMethodActivity
         method_name={method_name}

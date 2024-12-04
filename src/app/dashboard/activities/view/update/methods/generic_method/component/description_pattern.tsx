@@ -14,7 +14,7 @@ export const DescriptionPattern = ({
   ) => void
   description_pattern: IDescriptionPattern
 }) => {
-  const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
+  const { values, handleInputChange } = useForm({ ...description_pattern })
   const url = `methods/generic-method/description-pattern/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
