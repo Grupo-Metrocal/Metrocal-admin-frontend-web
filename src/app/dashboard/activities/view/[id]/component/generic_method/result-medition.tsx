@@ -19,92 +19,52 @@ export const ResultMedition = ({
   return (
     <div className="flex flex-col space-y-4">
       <table>
-        <thead className="bg-gray-50">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 1
+        <thead>
+          <tr className="header-row">
+            <th colSpan={10} className="p-2">
+              Medición
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 1
+          </tr>
+          <tr className="subheader-row">
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              patrón
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 2
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              Equipo
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 2
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              patrón
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Patrón 3
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              Equipo
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Equipo 3
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              patrón
+            </th>
+            <th className="border border-gray-400 p-2 bg-gray-200">
+              Equipo
             </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {result_medition?.medition.length > 0 ? (
-            result_medition?.medition.map((item, index) => (
-              <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {item.patron1}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.equiopo1}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.patron2}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.equiopo2}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.patron3}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {item.equiopo3}
-                </td>
+          {result_medition?.meditions?.map((result, rowIndex) => {
+            return (
+              <tr key={rowIndex}>
+                {result?.medition?.map((key) => {
+                  return (
+                    <>
+                      <td className="border border-gray-400 p-2 text-center">
+                        <span>{key?.pattern}</span>
+                      </td>
+                      <td className="border border-gray-400 p-2 text-center">
+                        <span>{key?.equipment}</span>
+                      </td>
+                    </>
+                  )
+                })}
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                0
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                0
-              </td>
-            </tr>
-          )}
+            )
+          })}
         </tbody>
       </table>
       <ReportMethodActivity

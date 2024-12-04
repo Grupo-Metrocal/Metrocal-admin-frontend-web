@@ -21,25 +21,24 @@ export const EquipmentInformation = ({
       <div className="grid grid-cols-2 gap-4">
         <Item title="Dispositivo" value={equipment_information?.device} />
         <Item title="Marca" value={equipment_information?.maker} />
-        <Item title="Fecha" value={equipment_information?.date} />
         <Item
           title="Número de serie"
           value={equipment_information?.serial_number}
         />
         <Item title="Modelo" value={equipment_information?.model} />
         <Item
-          title="Rango de medición"
-          value={equipment_information?.measurement_range}
+          title="Rango minimo"
+          value={equipment_information?.range_min?.toString()}
+        />
+        <Item
+          title="Rango maximo"
+          value={equipment_information?.range_max?.toString()}
         />
         <Item
           title="Intervalo de escala"
-          value={equipment_information?.scale_interval}
+          value={equipment_information?.scale_interval.toString()}
         />
         <Item title="Código" value={equipment_information?.code} />
-        <Item
-          title="Longitud"
-          value={equipment_information?.length}
-        />
         <Item
           title="Sitio de estabilización"
           value={equipment_information?.estabilization_site}
