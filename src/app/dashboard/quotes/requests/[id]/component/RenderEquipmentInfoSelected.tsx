@@ -4,6 +4,7 @@ import type { IEquipmentQuoteRequest } from '../page'
 import { CInput } from '@/components/CInput'
 import {
   setAdditionalRemarks,
+  setAlternativeCertificateMethod,
   setCalibrationRethod,
   setComment,
   setIsCreditable,
@@ -38,6 +39,20 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
       id: 3,
       name: '0 - 200 mm',
     },
+  ]
+
+  const methods = [
+    { label: 'Comp. Directa Trazable', value: 'GENERIC_METHOD' },
+    { label: 'NI-MCIT-B-01 Acreditado', value: 'NI-MCIT-B-01 Acreditado' },
+    { label: 'NI-MCIT-D-01 Acreditado', value: 'NI-MCIT-D-01 Acreditado' },
+    { label: 'NI-MCIT-D-02 Acreditado', value: 'NI-MCIT-D-02 Acreditado' },
+    { label: 'NI-MCIT-M-01 Acreditado', value: 'NI-MCIT-M-01 Acreditado' },
+    { label: 'NI-MCIT-P-01 Acreditado', value: 'NI-MCIT-P-01 Acreditado' },
+    { label: 'NI-MCIT-T-01 Acreditado', value: 'NI-MCIT-T-01 Acreditado' },
+    { label: 'NI-MCIT-T-03 Acreditado', value: 'NI-MCIT-T-03 Acreditado' },
+    { label: 'NI-MCIT-T-05 Acreditado', value: 'NI-MCIT-T-05 Acreditado' },
+    { label: 'NI-MCIT-V-01 Acreditado', value: 'NI-MCIT-V-01 Acreditado' },
+    { label: '(N/A)', value: 'No Aplica (N/A)' }
   ]
 
   return (
@@ -106,41 +121,17 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
               }}
               value={selectedEquipment?.calibration_method}
               className="p-4 rounded-md border border-gray-300"
+              defaultValue={selectedEquipment?.calibration_method}
             >
               <option value="" disabled>
                 Seleccione el método
               </option>
-              <option value="GENERIC_METHOD">
-                Comp. Directa Trazable
-              </option>
-              <option value="NI-MCIT-B-01 Acreditado">
-                NI-MCIT-B-01 Acreditado
-              </option>
-              <option value="NI-MCIT-D-01 Acreditado">
-                NI-MCIT-D-01 Acreditado
-              </option>
-              <option value="NI-MCIT-D-02 Acreditado">
-                NI-MCIT-D-02 Acreditado
-              </option>
-              <option value="NI-MCIT-M-01 Acreditado">
-                NI-MCIT-M-01 Acreditado
-              </option>
-              <option value="NI-MCIT-P-01 Acreditado">
-                NI-MCIT-P-01 Acreditado
-              </option>
-              <option value="NI-MCIT-T-01 Acreditado">
-                NI-MCIT-T-01 Acreditado
-              </option>
-              <option value="NI-MCIT-T-03 Acreditado">
-                NI-MCIT-T-03 Acreditado
-              </option>
-              <option value="NI-MCIT-T-05 Acreditado">
-                NI-MCIT-T-05 Acreditado
-              </option>
-              <option value="NI-MCIT-V-01 Acreditado">
-                NI-MCIT-V-01 Acreditado
-              </option>
-              <option value="(N/A)">No Aplica (N/A)</option>
+
+              {
+                methods.map((item, index) => (
+                  <option value={item.value} key={index}>{item.label}</option>
+                ))
+              }
             </select>
           </div>
         </div>
@@ -149,6 +140,41 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
           Modelo: <span>{selectedEquipment?.model}</span>
         </h4>
       </div>
+
+      {
+        selectedEquipment?.calibration_method === 'GENERIC_METHOD' && (
+          <div className="flex items-center gap-4 bg-gray-100 p-2 rounded">
+            <h4>Usar codigo de certificado de: </h4>
+            <div className="table__body__tr__td">
+              <select
+                name="use_alternative_certificate_method"
+                onChange={(e) => {
+                  dispatch(
+                    setAlternativeCertificateMethod({
+                      id: selectedEquipment?.id,
+                      use_alternative_certificate_method: e.target.value,
+                    }),
+                  )
+                }}
+                value={selectedEquipment?.use_alternative_certificate_method}
+                className="p-4 rounded-md border border-gray-300"
+                defaultValue={selectedEquipment?.use_alternative_certificate_method}
+              >
+                <option value="" disabled>
+                  Seleccione el método
+                </option>
+
+                {
+                  methods.map((item, index) => (
+                    <option value={item.value} key={index}>{item.label}</option>
+                  ))
+                }
+              </select>
+            </div>
+          </div>
+        )
+      }
+
 
       <div className="equipment-info-selected__body">
         <div>

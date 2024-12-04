@@ -49,6 +49,7 @@ export interface IEquipmentQuoteRequest {
   price: number
   total: number
   is_creditable: boolean
+  use_alternative_certificate_method: string
 }
 
 export interface IClient {

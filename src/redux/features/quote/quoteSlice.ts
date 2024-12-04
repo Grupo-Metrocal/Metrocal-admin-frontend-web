@@ -158,6 +158,22 @@ export const quoteSlice = createSlice({
       state.equipment = equipment
       state.selectedEquipment.calibration_method = calibration_method
     },
+    setAlternativeCertificateMethod: (state, action) => {
+      const { id, use_alternative_certificate_method } = action.payload
+      const equipment = state.equipment.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            use_alternative_certificate_method,
+          }
+        }
+        return item
+      })
+
+      state.equipment = equipment
+      state.selectedEquipment.use_alternative_certificate_method =
+        use_alternative_certificate_method
+    },
     setDiscount: (state, action) => {
       state.discount = action.payload
     },
@@ -302,6 +318,7 @@ export const {
   setNo,
   setMeasuringRange,
   setCalibrationRethod,
+  setAlternativeCertificateMethod,
   changeExtras,
   setIVAValue,
   setDiscountValue,
