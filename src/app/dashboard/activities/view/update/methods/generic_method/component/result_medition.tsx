@@ -76,11 +76,11 @@ export const ResultMedition = ({
                           <input
                             className="w-full text-center"
                             type="text"
-                            value={key.patron}
+                            value={key.pattern}
                             onChange={(e) =>
                               handleEdit(
                                 'medition',
-                                'patron',
+                                'pattern',
                                 e.target.value,
                                 rowIndex,
                                 cellIndex,
