@@ -15,9 +15,11 @@ import { DescriptionPattern } from './component/description_pattern'
 export const Generic_method = ({
   equipment,
   activity_id,
+  equipment_id
 }: {
   equipment: IGeneric_method
   activity_id: string
+  equipment_id: number
 }) => {
 
   const searchParams = useSearchParams()
@@ -109,6 +111,7 @@ export const Generic_method = ({
               <DescriptionPattern
                 description_pattern={equipment.description_pattern}
                 handleSaveInformation={handleSaveInformation}
+                equipment_id={equipment_id}
               />
             ),
           },

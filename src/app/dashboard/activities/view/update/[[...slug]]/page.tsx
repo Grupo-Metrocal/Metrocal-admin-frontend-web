@@ -51,6 +51,7 @@ export default async function Page({ params }: IRoot) {
   const id = slug[0]
   const calibration_method = slug[1]
   const activity_id = slug[2]
+  const equipment_id = slug[3]
 
   const Renderer =
     RENDERER_METHOD[calibration_method as keyof typeof RENDERER_METHOD]
@@ -64,7 +65,7 @@ export default async function Page({ params }: IRoot) {
     >
       {Renderer ? (
         equipment.data ? (
-          <Renderer equipment={equipment.data} activity_id={activity_id} />
+          <Renderer equipment={equipment.data} activity_id={activity_id} equipment_id={Number(equipment_id)} />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <h1

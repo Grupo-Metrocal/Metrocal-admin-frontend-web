@@ -6,6 +6,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 export const DescriptionPattern = ({
   description_pattern,
   handleSaveInformation,
+  equipment_id
 }: {
   handleSaveInformation: (
     values: IDescriptionPattern,
@@ -13,9 +14,10 @@ export const DescriptionPattern = ({
     useActivityID?: boolean,
   ) => void
   description_pattern: IDescriptionPattern
+  equipment_id: number
 }) => {
   const { values, handleInputChange } = useForm({ ...description_pattern })
-  const url = `methods/generic-method/description-pattern/`
+  const url = `methods/generic-method/description-pattern/${equipment_id}/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { name, checked } = e.target

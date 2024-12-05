@@ -14,9 +14,11 @@ import { useSearchParams } from 'next/navigation'
 export const P_01 = ({
   equipment,
   activity_id,
+  equipment_id
 }: {
   equipment: IP_01
   activity_id: string
+  equipment_id: number
 }) => {
 
   const searchParams = useSearchParams()
