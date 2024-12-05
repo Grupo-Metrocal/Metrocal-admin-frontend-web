@@ -230,7 +230,7 @@ export const SelectedPendingCertify = ({
                 onClick={() => handleSelectedService(item)}
               >
                 <p>{item.name}</p>
-                <span>{item.calibration_method}</span>
+                <span>{item.calibration_method === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : item.calibration_method}</span>
               </div>
             ),
           )}

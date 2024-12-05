@@ -1,77 +1,17 @@
-.table {
-    width: 100%;
-  
-    h2 {
-      font-size: 1.2em;
-      font-weight: 700;
-    }
-  
-    &__equipment-information {
-      &__content {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-top: 20px;
-        div {
-          width: 48%;
-          margin-bottom: 20px;
-          p {
-            font-size: 14px;
-            font-weight: 700;
-            color: #2f2a2a;
-            margin-bottom: 5px;
-          }
-          span {
-            font-size: 14px;
-            font-weight: 500;
-            color: #000;
-          }
-        }
-      }
-    }
-  
-    &__calibration-result,
-    &__environmental_conditions,
-    &__used_patterns {
-      table {
-        margin-top: 1.8em;
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        thead {
-          tr {
-            th {
-              padding: 10px 0;
-              text-align: left;
-              font-size: 14px;
-              font-weight: 600;
-              color: #2f2a2a;
-              border-bottom: 1px solid #999;
-            }
-          }
-        }
-        tbody {
-          tr {
-            td {
-              padding: 10px 0;
-              text-align: left;
-              font-size: 14px;
-              font-weight: 400;
-              color: #000;
-              border-bottom: 1px solid rgb(0, 0, 0, 0.2);
-            }
-          }
-        }
-      }
-    }
-  
-    &__observations {
+.table-t-01 {
+  width: 100%;
+
+  h2 {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+
+  &__equipment-information {
+    &__content {
       display: flex;
-      flex-direction: column;
-      gap: 2em;
-  
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 20px;
       div {
         width: 48%;
         margin-bottom: 20px;
@@ -89,4 +29,62 @@
       }
     }
   }
-  
+
+  &__calibration-result,
+  &__result_unid_system {
+    table {
+      margin-top: 1.8em;
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      thead {
+        tr {
+          th {
+            padding: 10px 0;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2f2a2a;
+            border-bottom: 1px solid #999;
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            padding: 10px 0;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 400;
+            color: #000;
+            border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  &__observations {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    div {
+      width: 48%;
+      margin-bottom: 20px;
+      p {
+        font-size: 14px;
+        font-weight: 700;
+        color: #2f2a2a;
+        margin-bottom: 5px;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+      }
+    }
+  }
+}

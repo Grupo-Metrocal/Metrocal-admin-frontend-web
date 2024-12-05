@@ -32,7 +32,7 @@ export interface ICertificate_Generic_Method {
   equipment_information: EquipmentInformation
   calibration_results: CalibrationResults
   environmental_conditions: EnvironmentalConditions
-  description_pattern: string
+  description_pattern: DescriptionPattern[]
   creditable: boolean
   observations: string
 }
@@ -42,32 +42,43 @@ export interface EquipmentInformation {
   service_code: string
   certificate_issue_date: string
   calibration_date: string
+  next_calibration_date: string
   object_calibrated: string
   maker: string
   serial_number: string
   model: string
   measurement_range: string
   scale_interval: string
-  identification_code: string
+  code: string
   applicant: string
   address: string
   calibration_location: string
 }
-
-export interface Results {
-  pattern_indication: number
-  instrument_indication: number
-  correction: number
-  expanded_uncertainty: number
+export interface CalibrationResults {
+  result: Results
 }
 
-export interface CalibrationResults {
-  results: Results[]
+export interface Results {
+  patternIndication: string[]
+  instrumentIndication: string[]
+  correction: string[]
+  uncertainty: string[]
 }
 
 export interface EnvironmentalConditions {
   temperature: string
   humidity: string
-  temperature2: string
-  humidity2: string
+}
+
+export interface DescriptionPattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  pattern_range: string
+  next_calibration: string
+  brand: string
+  created_at: string
 }

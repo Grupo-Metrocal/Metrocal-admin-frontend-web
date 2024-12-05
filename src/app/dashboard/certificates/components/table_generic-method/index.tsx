@@ -1,3 +1,4 @@
+import { renderValue } from '@/utils/renderTableValueToCertificate'
 import { ICertificate_Generic_Method } from '../../interface/generic-method'
 import './index.scss'
 
@@ -11,16 +12,14 @@ export const TableGenericMethod = ({
   method_name: string
 }) => {
   return (
-    <div className="table">
-      <section className="table__equipment-information">
+    <div className="table-t-01">
+      <section className="table-t-01__equipment-information">
         <h2>Información del equipo</h2>
 
-        <div className="table__equipment-information__content">
+        <div className="table-t-01__equipment-information__content">
           <div>
             <p>Código de servicio:</p>
-            <span>
-              {certificate.equipment_information.service_code || '---'}
-            </span>
+            <span>{certificate.equipment_information.service_code}</span>
           </div>
           <div>
             <p>Fecha de emisión del certificado:</p>
@@ -31,6 +30,10 @@ export const TableGenericMethod = ({
           <div>
             <p>Fecha de calibración:</p>
             <span>{certificate.equipment_information.calibration_date}</span>
+          </div>
+          <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
           </div>
           <div>
             <p>Equipo calibrado:</p>
@@ -58,7 +61,7 @@ export const TableGenericMethod = ({
           </div>
           <div>
             <p>Código:</p>
-            <span>{certificate.equipment_information.identification_code}</span>
+            <span>{certificate.equipment_information.code}</span>
           </div>
           <div>
             <p>Solicitante:</p>
@@ -77,70 +80,119 @@ export const TableGenericMethod = ({
         </div>
       </section>
 
-      <section className="table__calibration-result">
-        <h2>Tabla de resultados de la calibración en g</h2>
+      <section className="table-t-01__calibration-result">
+        <h2>Tabla de resultados de calibración</h2>
+
         <table>
           <thead>
             <tr>
-              <th>Indicación del Patrón</th>
-              <th>Indicación del Instrumento</th>
-              <th>Corrección</th>
-              <th>Repetibilidad</th>
+              <th>Temperatura de referencia</th>
+              <th>Indicación del Termómetro</th>
+              <th>Correción</th>
               <th>Incertidumbre expandida K = 2</th>
             </tr>
           </thead>
           <tbody>
-            {certificate.calibration_results.results.map((result, index) => (
-              <tr key={index}>
-                <td>{result.pattern_indication} </td>
-                <td>{result.instrument_indication}</td>
-                <td>{result.correction}</td>
-                <td>{result.expanded_uncertainty}</td>
-              </tr>
-            ))}
+            {certificate.calibration_results.result.patternIndication.map(
+              (item: any, index: any) => (
+                <tr key={index}>
+                  <td>{item}</td>
+                  <td>
+                    {
+                      renderValue(certificate.calibration_results.result
+                        .instrumentIndication[index])
+                    }
+                  </td>
+                  <td>
+                    {renderValue(certificate.calibration_results.result.correction[index])}
+                  </td>
+                  <td>
+                    {
+                      renderValue(certificate.calibration_results.result
+                        .uncertainty[index])
+                    }
+                  </td>
+                </tr>
+              ),
+            )}
           </tbody>
         </table>
       </section>
 
-      <section className="table__environmental_conditions">
-        <h2>Condiciones ambientales</h2>
-        <div>
-          <p>Temperatura:</p>
-          <span>
-            ( {certificate.environmental_conditions.temperature} {' ± '}{' '}
-            {certificate.environmental_conditions.temperature2} ) °C
-          </span>
-        </div>
-        <div>
-          <p>Humedad:</p>
-          <span>
-            ( {certificate.environmental_conditions.humidity} {' ± '}{' '}
-            {certificate.environmental_conditions.humidity2} ) %
-          </span>
-        </div>
+      <section className="table-t-01__result_unid_system">
+        <section className="table-t-01__environmental-conditions">
+          <h2>
+            <span>
+              Condiciones ambientales
+            </span>
+          </h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Temperatura (°C)</th>
+                <th>Humedad relativa (%)</th>
+                {/* <th>Presión atmosférica (hPa)</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{certificate.environmental_conditions.temperature}</td>
+                <td>{certificate.environmental_conditions.humidity}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className="table-p-01__calibration-result">
+          <h2>Descripción de patrones utilizados</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Código</th>
+                <th>Trazabilidad</th>
+                <th>Próx. Calibr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificate.description_pattern.map(
+                (item, index) => (
+                  <tr key={index}>
+                    <td>{renderValue(item.equipment)}</td>
+                    <td>
+                      {
+                        renderValue(item.code)
+                      }
+                    </td>
+                    <td>
+                      {renderValue(item.traceability)}
+                    </td>
+                    <td>
+                      {renderValue(item.next_calibration)}
+                    </td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </section>
+
+        <section className="table-t-01__observations">
+          <div>
+            <p>
+              Este certificado{' '}
+              {certificate.creditable ? 'es acreditado ✅' : 'no es acreditado'}
+            </p>
+          </div>
+
+          <div>
+            <p>Observaciones adicionales</p>
+            <span>{certificate.observations}</span>
+          </div>
+        </section>
       </section>
-
-      <section className="table__observations">
-        <h2>Observaciones</h2>
-
-        <div>
-          <p>Patrón utilizado:</p>
-          <span>{certificate.description_pattern}</span>
-        </div>
-
-        <div>
-          <p>
-            Este certificado{' '}
-            {certificate.creditable ? 'es acreditado ✅' : 'no es acreditado'}
-          </p>
-        </div>
-
-        <div>
-          <p>Observaciones adicionales</p>
-          <span>{certificate.observations}</span>
-        </div>
-      </section>
-
-    </div>
+    </div >
   )
 }
