@@ -86,8 +86,8 @@ export const TableGenericMethod = ({
         <table>
           <thead>
             <tr>
-              <th>Temperatura de referencia</th>
-              <th>Indicación del Termómetro</th>
+              <th>Indicación del Patrón</th>
+              <th>Indicación del Instrumento</th>
               <th>Correción</th>
               <th>Incertidumbre expandida K = 2</th>
             </tr>
