@@ -1,5 +1,5 @@
 import { DataTableDemo } from '@/components/Table'
-import { ColumnsCertifiedRecords } from '../columnsRecords.tsx'
+import { ColumnsServicesOrders } from '../columnsRecords.tsx'
 
 interface IProps {
   records: any[]
@@ -9,33 +9,31 @@ interface IProps {
     total_pages: number
     total_data: number
   }
-  setCurrentPage: any
+  setPagination: any
   loading: boolean
   searchValue: string
   handleInputChange: (target: any) => void
+  setCurrentPage: any
 }
 
-export type ICertifiedRecordsTable = {
+export type IServicesOrderRecords = {
   id: number
-  issued_certificates: number
-  emited_date: string
-  calibrated_equipment: string
-  client_company_name: string
-  emited_by: string
-  client_email: string
-  pending_certificates: number
   quote_request_id: number
+  no: string
+  client_name: string
+  end_date: string
+  services_performed: number
+  resposable: string
 }
 
-export const CertifiedRecords = ({
+export const ServicesOrderRecords = ({
   records,
   currentPage,
   pagination,
-  setCurrentPage,
   loading,
   searchValue,
   handleInputChange,
-
+  setCurrentPage
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -52,8 +50,8 @@ export const CertifiedRecords = ({
   return (
     <div className="bg-white p-4 rounded-lg">
       {
-        <DataTableDemo<ICertifiedRecordsTable>
-          columns={ColumnsCertifiedRecords({ onDelete: () => { } })}
+        <DataTableDemo<IServicesOrderRecords>
+          columns={ColumnsServicesOrders({ onDelete: () => { } })}
           searchValue={searchValue}
           handleSearch={handleInputChange}
           data={records ?? []}
@@ -65,13 +63,11 @@ export const CertifiedRecords = ({
           isLoading={loading}
           search_placeholder="Buscar No. cotización"
           filter_columns={{
-            client_company_name: 'Empresa',
-            client_email: 'Correo del cliente',
-            emited_date: 'Fecha de emisión',
-            calibrated_equipment: 'Equipo calibrado',
-            pending_certificates: 'Certificados pendientes',
-            issued_certificates: 'Certificados emitidos',
-            emited_by: 'Emisor',
+            no: 'No. Cotización',
+            client_name: 'Empresa',
+            end_date: 'Fecha de finalización',
+            services_performed: 'Servicios realizados',
+            resposable: 'Reponsable de actividad',
           }}
         />
       }

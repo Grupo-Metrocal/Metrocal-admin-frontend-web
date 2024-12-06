@@ -5,14 +5,13 @@ import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { CertifiedRecords } from './components/records'
-import { StatisticsActivity } from './components/statistics'
+import { ServicesOrderRecords } from './components/records'
 import { useForm } from '@/hooks/useForm'
 
 const getRecords = async (page: number, no?: string) => {
 
   return await fetchData({
-    url: `activities/certified-activities/${page}/10/${no}`,
+    url: `activities/get-finishied-activities/${page}/10/${no}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -83,28 +82,26 @@ export default function RecordsPage() {
   }, [currentPage])
 
   return (
-    <LayoutPage title="Registros de certificaciones emitidas" rollBack>
+    <LayoutPage title="Ordenes de servicios" rollBack>
       {loading ? (
         <div className="w-full flex items-center justify-center">
           <Spinner />
         </div>
       ) : (
-        <>
-          <StatisticsActivity />
-          <div>
-            {
-              <CertifiedRecords
-                records={records}
-                searchValue={values.search}
-                handleInputChange={handleInputChange}
-                currentPage={currentPage}
-                pagination={pagination}
-                setCurrentPage={setCurrentPage}
-                loading={loading}
-              />
-            }
-          </div>
-        </>
+        <div>
+          {
+            <ServicesOrderRecords
+              records={records}
+              searchValue={values.search}
+              handleInputChange={handleInputChange}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pagination={pagination}
+              setPagination={setPagination}
+              loading={loading}
+            />
+          }
+        </div>
       )}
     </LayoutPage>
   )

@@ -6,6 +6,7 @@ import reportsIcon from '../assets/icons/reports.svg'
 import settingsIcon from '../assets/icons/settings.svg'
 import usersIcon from '../assets/icons/users.svg'
 import clientsIcon from '../assets/icons/clients.svg'
+import paperClip from '../assets/icons/paper.svg'
 
 export const NAVLINK_MENU_LIST = [
   {
@@ -84,6 +85,13 @@ export const NAVLINK_MENU_LIST = [
         href: '/dashboard/certificates/records',
       },
     ],
+  },
+  {
+    name: 'Ordenes de servicios',
+    href: '/dashboard/service-order',
+    segment: 'service-order',
+    category: 'organización',
+    icon: paperClip,
   },
   {
     name: 'Usuarios',
