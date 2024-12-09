@@ -58,7 +58,7 @@ export const EquipmentInformation = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="mL">ml</option>
+            <option value="mL">mL</option>
             <option value="L">L</option>
           </select>
         </div>
@@ -79,6 +79,12 @@ export const EquipmentInformation = ({
           label="Código"
           name="code"
           value={values.code}
+          onChange={handleInputChange}
+        />
+        <CInput
+          label="Modelo"
+          name="model"
+          value={values.model}
           onChange={handleInputChange}
         />
 
