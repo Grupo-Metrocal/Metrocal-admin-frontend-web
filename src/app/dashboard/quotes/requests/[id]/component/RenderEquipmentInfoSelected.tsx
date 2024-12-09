@@ -169,6 +169,11 @@ export const RenderEquipmentInfoSelected = ({ equipment }: IProps) => {
                     <option value={item.value} key={index}>{item.label}</option>
                   ))
                 }
+
+                <option value="NI-MCIT-FQ">Físico Químico</option>
+                <option value="NI-MCIT-F">Fuerza</option>
+                <option value="NI-MCIT-H">Humedad</option>
+                <option value="NI-MCIT-VE">Variables Eléctricas</option>
               </select>
             </div>
           </div>
