@@ -174,6 +174,41 @@ export const TableM_01 = ({
           </table>
         </section>
 
+        <section className="table-m-01__calibration-result">
+          <h2>Descripción de patrones utilizados</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Código</th>
+                <th>Trazabilidad</th>
+                <th>Próx. Calibr.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificate.description_pattern.map(
+                (item, index) => (
+                  <tr key={index}>
+                    <td>{renderValue(item.equipment)}</td>
+                    <td>
+                      {
+                        renderValue(item.code)
+                      }
+                    </td>
+                    <td>
+                      {renderValue(item.traceability)}
+                    </td>
+                    <td>
+                      {renderValue(item.next_calibration)}
+                    </td>
+                  </tr>
+                ),
+              )}
+            </tbody>
+          </table>
+        </section>
+
         <section className="table-v-01__observations">
           <h2>Observaciones</h2>
 

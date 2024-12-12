@@ -31,6 +31,7 @@ export interface ICertificate_M_01 {
   masas: Masas
   equipment_information: EquipmentInformation
   environmental_conditions: EnvironmentalConditions
+  description_pattern: DescriptionPattern[]
   client_email: string
   observations: string
   creditable: boolean
@@ -82,4 +83,17 @@ export interface EnvironmentalConditions {
   temperature: string
   humidity: string
   presion: string
+}
+
+export interface DescriptionPattern {
+  id: number
+  method: string
+  equipment: string
+  code: string
+  certificate: string
+  traceability: string
+  pattern_range: string
+  next_calibration: string
+  brand: string
+  created_at: string
 }
