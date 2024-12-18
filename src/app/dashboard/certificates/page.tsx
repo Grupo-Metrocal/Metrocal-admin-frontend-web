@@ -21,6 +21,7 @@ import { TableD_02 } from './components/tableD_02'
 import { TableB_01 } from './components/tableB_01'
 import { TableM_01 } from './components/tableM_01'
 import { TableGenericMethod } from './components/table_generic-method'
+import { emmitCertificationsToClient } from '@/utils/functions'
 
 const getData = async () => {
   return await fetchData({
@@ -99,13 +100,7 @@ export default function Page() {
       description: 'tiempo estimado de 2 a 7 minutos',
     })
 
-    const response = await fetchData({
-      url: `methods/send-certifications-to-client/${activityID}`,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
-    })
+    const response = await emmitCertificationsToClient(activityID)
 
     toast.dismiss()
     setLoadingEmmitCertificate(false)

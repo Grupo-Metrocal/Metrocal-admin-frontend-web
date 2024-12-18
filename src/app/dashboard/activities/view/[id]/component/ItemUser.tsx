@@ -40,9 +40,8 @@ export const ItemUser = ({
 
         <div className="activity-viewer__personal-item__info">
           <span
-            className={`flex items-center ${
-              responsable === user.id ? 'font-bold ' : ''
-            }
+            className={`flex items-center ${responsable === user.id ? 'font-bold ' : ''
+              }
           `}
           >
             {user.username} {responsable === user.id && '(Responsable)'}

@@ -7,11 +7,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Linking } from '@/utils/functions'
+import { emmitCertificationsToClient, Linking } from '@/utils/functions'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { ICertifiedRecordsTable } from '../records'
 import { formatDate } from '@/utils/formatDate'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { toast } from 'sonner'
 
 type IColumns = {
   onDelete: (id: number) => void
@@ -135,6 +137,38 @@ export const ColumnsCertifiedRecords = ({
                 >
                   Detalles de certificados
                 </Linking>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <AlertDialogModal
+                  onConfirm={async () => {
+                    toast.loading('Reenviando todos los certificados...', {
+                      description: 'Esto puede tardar, porfavor espere...',
+                      duration: 50000
+                    })
+
+                    const response = await emmitCertificationsToClient((payment.id as number) || 0)
+                    toast.dismiss()
+
+                    if (response.success) {
+                      toast.success('Se han enviado todos los certificados')
+                    } else {
+                      toast.error('Hubo un error al enviar los certificados')
+                    }
+                  }}
+                  title="Antes de reenviar todos los certificados, debe verificar que los datos sean correctos"
+                  description="Una vez enviados los certificados se limpiaran los registros generados"
+                  nameButton="Reenviar Certificados"
+                  buttonStyle={{
+                    fontWeight: 'bold',
+                  }}
+                  useButton={false}
+                />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {/* <DropdownMenuItem

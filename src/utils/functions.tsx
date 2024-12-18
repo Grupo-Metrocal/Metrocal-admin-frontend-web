@@ -146,3 +146,13 @@ export const rejectedQuoteRequest = async (quoteId: number) => {
     })
   }
 }
+
+export const emmitCertificationsToClient = async (activityID: number) => {
+  return await fetchData({
+    url: `methods/send-certifications-to-client/${activityID}`,
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
+}
