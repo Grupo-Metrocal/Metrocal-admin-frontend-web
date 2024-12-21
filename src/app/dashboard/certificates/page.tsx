@@ -161,11 +161,6 @@ export default function Page() {
       >
         <div className="pending-certificate">
           <div className="pending-certificate__table">
-            <header>
-              <span>Responsable</span>
-              <span>Detalles</span>
-            </header>
-
             <div className="pending-certificate__table__content">
               {loading ? (
                 <div className="flex mt-4 justify-center">
