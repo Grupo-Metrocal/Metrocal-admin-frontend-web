@@ -27,6 +27,7 @@ interface Teammember {
   id: number
   username: string
   imageURL: string
+  email: string
 }
 interface QuoteRequest {
   id: number

@@ -16,9 +16,8 @@ import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { CarouselComp } from '@/components/Carousel'
 import { CButton } from '@/components/CButton'
 import metrocalLogo from 'public/metrocal.svg'
-import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { Linking } from '@/utils/functions'
 import Link from 'next/link'
+import { PencilLineIcon } from 'lucide-react'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -169,23 +168,31 @@ export const SelectedPendingCertify = ({
   ) : (
     <div className="pending-certificate__selected">
       <div className="client">
-        <div className="flex flex-col items-start justify-between">
-          <h2>{selectedActivity?.quoteRequest?.client.company_name} <span className='text-gray-400'>{selectedActivity?.quoteRequest?.no}</span></h2>
-          <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f]'>
-            Modificar actividad
-          </Link>
+        <div className="client_info">
+          <div className='header'>
+            <h3>Información del cliente</h3>
+
+            <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f] p-1 bg-white rounded flex items-center'>
+              <PencilLineIcon width={18} height={18} color='#333' />
+            </Link>
+          </div>
+
+          <div className='body'>
+            <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
+            <span>{selectedActivity?.quoteRequest?.no}</span>
+          </div>
         </div>
 
         <div className="client__details">
           <span>Finalizado: {momentDate(selectedActivity?.updated_at)}</span>
 
           <span>
-            {selectedActivity?.quoteRequest.equipment_quote_request.reduce(
-              (acc, item) => acc + item.count,
-              0,
-            )}{' '}
+            {Array.isArray(selectedActivity?.quoteRequest?.equipment_quote_request)
+              ? selectedActivity.quoteRequest.equipment_quote_request.reduce((acc, item) => acc + (item.count || 0), 0)
+              : 0}{' '}
             equipos a certificar
           </span>
+
 
           <span>
             Precio total: {formatPrice(selectedActivity?.quoteRequest.price)}
@@ -194,7 +201,11 @@ export const SelectedPendingCertify = ({
       </div>
 
       <div className="team_members">
-        <h3>Técnicos</h3>
+        <div className='header'>
+          <h3>Equipo Técnico</h3>
+
+        </div>
+
         <div className="team_members__content w-full">
           {selectedActivity?.team_members.length > 0 ? (
             selectedActivity?.team_members.map((member) => (
@@ -205,7 +216,10 @@ export const SelectedPendingCertify = ({
                   width={40}
                   height={40}
                 />
-                <p>{member.username}</p>
+                <div>
+                  <p>{member.username}</p>
+                  <span>{member.email}</span>
+                </div>
               </div>
             ))
           ) : (
@@ -215,7 +229,9 @@ export const SelectedPendingCertify = ({
       </div>
 
       <div className="services">
-        <h3>Servicios realizados</h3>
+        <div className="header">
+          <h3>Servicios realizados</h3>
+        </div>
 
         <div className="services__content">
           {selectedActivity?.quoteRequest.equipment_quote_request.map(
