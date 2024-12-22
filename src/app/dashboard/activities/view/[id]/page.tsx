@@ -30,7 +30,7 @@ import { P_01 } from './component/p_01'
 import { T_03 } from './component/t_03'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import Link from 'next/link'
-import { ReviewActivity } from './component/ReviewActivity'
+// import { ReviewActivity } from './component/ReviewActivity'
 import { T_01 } from './component/t_01'
 import { T_05 } from './component/t_05'
 import { D_01 } from './component/d_01'
@@ -64,6 +64,32 @@ const getMethods = async (id: number) => {
       Authorization: `Bearer ${getCookie('token')}`,
     },
   })
+}
+
+const sendReview = async (activityID: number, equipmentId: number) => {
+  toast.loading('Revisando servicios...')
+
+  const response = await fetchData({
+    url: `activities/review-services-activity/${activityID}/${equipmentId}`,
+    method: 'POST',
+    body: {
+      token: getCookie('token'),
+    },
+    headers: {
+      Authorization: `Bearer ${getCookie('token')}`,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  toast.dismiss()
+
+  if (response.success) {
+    toast.success('Todos los servicios han sido revisandos')
+  } else {
+    toast.error('Hubo un error durante la revisión')
+  }
+
+  return response
 }
 
 export interface IRoot {
@@ -278,7 +304,7 @@ export default function Page({ params }: IRoot) {
       title={`Actividad`}
       rollBack={true}
       className="activity-viewer"
-      Footer={() => <ReviewActivity activityID={Number(id)} />}
+    // Footer={() => <ReviewActivity activityID={Number(id)} />}
     >
       <Content
         title="Información principal"
@@ -286,9 +312,20 @@ export default function Page({ params }: IRoot) {
         className="activity-viewer__main-info"
         titleStyle={{ fontSize: '1.2em' }}
       >
-        <span className="font-medium">
-          Seleccione un servicio para mas Información
-        </span>
+        <div className="w-full pb-2 flex justify-between items-center">
+          <span className="font-medium">
+            Seleccione un servicio para mas Información
+          </span>
+          <Modal
+            title="Estas agregando un servicio a la cotización"
+            description="Por favor recargue la pagina para poder mostrar los nuevos metodos generados"
+            Component={() => <AddEquipmentToActivity quoteId={data?.quote_request.id || 0} />}
+          >
+            <CButton>
+              Agregar Servicio
+            </CButton>
+          </Modal>
+        </div>
         <CarouselComp className="carousel">
           {data?.quote_request.equipment_quote_request.map((equipment) => {
             return (
@@ -321,30 +358,22 @@ export default function Page({ params }: IRoot) {
         </CarouselComp>
 
         <div className="activity-viewer__main-info__details">
-          <div className="border-b-2 w-full pb-2 flex justify-between items-center">
+          <div>
             <div>
               <span className='font-semibold text-[#333] text-lg'>
                 Equipos asociados
               </span>
             </div>
 
-            <Modal
-              title="Estas agregando un servicio a la cotización"
-              description="Por favor recargue la pagina para poder mostrar los nuevos metodos generados"
-              Component={() => <AddEquipmentToActivity quoteId={data?.quote_request.id || 0} />}
-            >
-              <CButton>
-                Agregar Servicio
-              </CButton>
-            </Modal>
+
           </div>
 
-          <div className="flex items-center gap-2 w-full justify-start my-6">
+          <div className="flex items-center gap-2 w-full justify-between my-6">
             <CInput
-              placeholder='xx-xxxx-xxxx-xx'
+              placeholder='Codigo de certificado'
               value={search.search}
               name="search"
-              label='Buscar por certificado'
+              // label='Buscar por certificado'
               onChange={handleInputChange}
               type="text"
               input_style={{
@@ -352,6 +381,13 @@ export default function Page({ params }: IRoot) {
                 backgroundColor: '#f5f5f5',
                 fontSize: '1em',
               }}
+            />
+
+            <AlertDialogModal
+              title='Confirmar revision de servicio'
+              description='Al confirmar la revision habilitara la revision de certificados.'
+              nameButton='Confirmar Revisión'
+              onConfirm={() => sendReview(Number(id), selectedService?.id || 0)}
             />
           </div>
           {!stackServices.length && selectedService?.calibration_method !== '(N/A)' ? (
