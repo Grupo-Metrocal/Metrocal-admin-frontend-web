@@ -30,8 +30,6 @@ export interface EquipmentInformation {
 
 export interface ICertificate_T_05 {
   calibration_results: CalibrationResults
-  digitalThermometer: DigitalThermometer
-  oilBath: OilBath
   equipment_information: EquipmentInformation
   environmental_conditions: EnvironmentalConditions
   description_pattern: DescriptionPattern[]
@@ -45,30 +43,6 @@ export interface CalibrationResults {
   thermometer_indication: string[]
   correction: string[]
   uncertainty: string[]
-}
-
-export interface DigitalThermometer {
-  id: number
-  method: string
-  equipment: string
-  code: string
-  certificate: string
-  traceability: string
-  pattern_range: string
-  next_calibration: string
-  created_at: string
-}
-
-export interface OilBath {
-  id: number
-  method: string
-  equipment: string
-  code: string
-  certificate: string
-  traceability: string
-  pattern_range: string
-  next_calibration: string
-  created_at: string
 }
 
 export interface EquipmentInformation {
