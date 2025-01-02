@@ -16,16 +16,6 @@ export const LinearityTest = ({
 }) => {
   const url = `methods/ni-mcit-b-01/linearity-test/`
 
-  const defaultLinearityTest: ILinearityTest = {
-    linearity_test: [
-      {
-        point: 0,
-        indicationIL: 0,
-        noLoadInfdication: 0,
-        pointsComposition: [],
-      },
-    ],
-  }
   const [data, setData] = useState<ILinearityTest>(
     linearityTest,
   )

@@ -1,8 +1,12 @@
-import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/v_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { AutocompleteInput } from '@/components/AutocompleteInput'
+import { PatternsV01 } from '../constanst/patterns'
+import { CButton } from '@/components/CButton'
+import { ChangeEvent, useState } from 'react'
+import { useForm } from '@/hooks/useForm'
+import { Trash } from 'lucide-react'
+import { toast } from 'sonner'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -15,14 +19,47 @@ export const DescriptionPattern = ({
   ) => void
   description_pattern: IDescriptionPattern
 }) => {
-  const { values, handleInputChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-v-01/description-pattern/`
+  const { values, handleSelectChange } = useForm({ pattern: '' })
 
-  const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let { name, checked } = e.target
+  const [data, setData] = useState<IDescriptionPattern>(
+    description_pattern,
+  )
 
-    handleInputChange({ name, value: checked })
-  }
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = event.target as HTMLInputElement;
+    const { name, value, type, checked } = target;
+
+    setData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+
+  const addPattern = (newPattern: string) => {
+    if (!newPattern) return toast('Seleecione un patron')
+
+    setData((prevData) => {
+      if (prevData.patterns?.includes(newPattern)) {
+        toast('El patron ya existe')
+        return prevData;
+      }
+
+      return {
+        ...prevData,
+        patterns: prevData.patterns ? [...prevData.patterns, newPattern] : [newPattern],
+      };
+    });
+  };
+
+
+  const removePattern = (index: number) => {
+    setData((prevData) => ({
+      ...prevData,
+      patterns: prevData.patterns.filter((_, i) => i !== index),
+    }));
+  };
 
   return (
     <div className="flex flex-col space-y-4">
@@ -44,7 +81,7 @@ export const DescriptionPattern = ({
         <CInput
           label="Observaciones"
           name="observation"
-          value={values.observation}
+          value={data.observation}
           onChange={handleInputChange}
         />
 
@@ -57,8 +94,8 @@ export const DescriptionPattern = ({
               type="checkbox"
               name="creditable"
               id="creditable"
-              checked={values.creditable}
-              onChange={handleCheckedChange}
+              checked={data.creditable}
+              onChange={handleInputChange}
               className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
             />
             ¿Equipo acreditado?
@@ -68,7 +105,7 @@ export const DescriptionPattern = ({
         <CInput
           label="Fecha de siguiente calibración"
           name="next_calibration"
-          value={values.next_calibration}
+          value={data.next_calibration}
           onChange={handleInputChange}
           type='date'
         />
@@ -76,21 +113,57 @@ export const DescriptionPattern = ({
         <CInput
           label="Fecha de calibración"
           name="calibration_date"
-          value={values.calibration_date}
+          value={data.calibration_date}
           onChange={handleInputChange}
           type='date'
         />
+
+        <div className="my-4 w-full flex flex-col gap-4">
+          <div className='flex flex-col  gap-4'>
+            <span>Agregar patron utilizado</span>
+            <div className='flex justify-between w-full'>
+              <select name="pattern"
+                className="border border-gray-300 rounded-md p-2 h-fit"
+                onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}>
+                {PatternsV01.map((pattern, patternIndex) => (
+                  <option key={patternIndex}>
+                    {pattern}
+                  </option>
+                ))}
+
+                <option value="" disabled selected>Seleeciones un patron</option>
+              </select>
+              <CButton onClick={() => addPattern(values.pattern)}>+ Agregar</CButton>
+
+            </div>
+          </div>
+          {
+            data?.patterns || data?.patterns?.length < 1 ? data?.patterns?.map((item, itemIndex) => {
+              return (
+                <div key={item} className='flex justify-between'>
+                  <span>{item}</span>
+                  <button type="button" className='mr-[40%]' onClick={() => removePattern(itemIndex)}>
+                    <Trash width={18} />
+                  </button>
+                </div>
+              )
+            }) :
+              <span className='bg-gray-100 p-4 block'>No se han agregado patrones</span>
+          }
+        </div>
       </div>
       <div>
         <AlertDialogModal
           title="Guardar modificaciones"
           description="¿Estás seguro de guardar las modificaciones?"
-          onConfirm={() => handleSaveInformation(values, url, true)}
+          onConfirm={() => handleSaveInformation(data, url, true)}
           nameButton="Guardar modificaciones"
           buttonStyle={{
             margin: '1em 0',
           }}
         />
+
+
       </div>
     </div>
   )

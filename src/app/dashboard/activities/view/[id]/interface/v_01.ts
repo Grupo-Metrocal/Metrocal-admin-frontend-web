@@ -68,9 +68,11 @@ export interface Temperature {
 
 export interface IDescriptionPattern {
   id: number
-  pattern: string
+  patterns: string[]
   observation: string
   creditable: boolean
+  calibration_date: string
+  next_calibration: string
 }
 
 export interface ICalibrationResults {
