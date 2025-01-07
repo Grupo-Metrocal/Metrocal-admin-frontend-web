@@ -87,7 +87,7 @@ export const Generic_method = ({
           },
           {
             value: 'computer_data',
-            label: 'Datos de la computadora',
+            label: 'Datos del equipo',
             Component: () => (
               <ComputerData
                 computerData={equipment.computer_data}
