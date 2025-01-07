@@ -214,8 +214,8 @@ export default function Page({ params }: Props) {
               <span>Cantidad</span>
               <span>Método de calibración</span>
               <span>Observación adicional</span>
-              <span>Precio U. (USD)</span>
-              <span>Precio total (USD)</span>
+              <span>Precio U.</span>
+              <span>Precio total</span>
             </div>
           </div>
           <div className="table__body">
@@ -323,26 +323,26 @@ export default function Page({ params }: Props) {
 
           <div className="prices">
             <h4>
-              <span>SUB-TOTAL ($):</span>
+              <span>SUB-TOTAL (C$):</span>
               <span>
                 {formatPrice(subtotal1)}
               </span>
             </h4>
 
             <h4>
-              <span>DESCUENTO ($):</span>
+              <span>DESCUENTO (C$):</span>
               <span>{
                 formatPrice(subtotal1 * general_discount / 100)
               }</span>
             </h4>
             <h4>
-              <span>SUB-TOTAL ($):</span>
+              <span>SUB-TOTAL (C$):</span>
               <span>
                 {formatPrice(subtotal2)}
               </span>
             </h4>
             <h4>
-              <span>I.V.A ($):</span>
+              <span>I.V.A (C$):</span>
               <span>{
                 formatPrice(subtotal2 * (quote?.tax || 0) / 100)
               }</span>
@@ -350,7 +350,7 @@ export default function Page({ params }: Props) {
 
 
             <h4>
-              <span>TOTAL ($):</span>
+              <span>TOTAL (C$):</span>
               <span>{formatPrice(quote?.price)}</span>
             </h4>
           </div>
