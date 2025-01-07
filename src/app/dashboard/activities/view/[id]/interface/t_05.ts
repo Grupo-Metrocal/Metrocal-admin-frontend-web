@@ -69,10 +69,10 @@ export interface ICalibrationResults {
 export interface Result {
   temperature: number
   calibrations: Calibration[]
+  point_number: number
 }
 
 export interface Calibration {
   final: number
   initial: number
-  point_number: number
 }
