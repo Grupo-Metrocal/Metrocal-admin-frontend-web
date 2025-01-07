@@ -37,6 +37,7 @@ export const ItemPendingCertify = ({
         <p>{activity.quoteRequest.client.company_name}</p>
 
         <div className="client__details">
+          <span className='font-medium text-gray-700'>{activity.quoteRequest.no}</span>
           <span>
             {Array.isArray(activity?.quoteRequest?.equipment_quote_request)
               ? activity.quoteRequest.equipment_quote_request.reduce((acc, item) => acc + (item.count || 0), 0)
