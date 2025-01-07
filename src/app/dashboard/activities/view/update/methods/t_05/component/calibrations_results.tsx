@@ -29,13 +29,13 @@ export const CalibrationsResults = ({
     setData((prevState) => {
       const newResult = prevState.results.map((result) => {
         if (field === 'temperature') {
-          if (result.point_number === point_number) {
+          if (result?.point_number === point_number) {
             result.temperature = value as number
           }
         }
 
         if (field === 'initial') {
-          if (result.point_number === point_number) {
+          if (result?.point_number === point_number) {
             result.calibrations.map((calibration, index) => {
               if (row === index) {
                 calibration.initial = value as number
@@ -47,7 +47,7 @@ export const CalibrationsResults = ({
         }
 
         if (field === 'final') {
-          if (result.point_number === point_number) {
+          if (result?.point_number === point_number) {
             result.calibrations.map((calibration, index) => {
               if (row === index) {
                 calibration.final = value as number
@@ -65,25 +65,6 @@ export const CalibrationsResults = ({
     })
   }
 
-  const handleChangeTemperature = (
-    value: number | string,
-    temperature: number | string,
-  ) => {
-    if (isNaN(value as number)) {
-      return
-    }
-
-    setData((prev) => {
-      const results = prev.results.map((result) => {
-        if (result.temperature === temperature) {
-          return { ...result, temperature: value as number }
-        }
-        return result
-      })
-      return { ...prev, results }
-    })
-  }
-
   return (
     <div className="flex flex-col space-y-4">
       <div className="min-w-full p-4 bg-gray-50 rounded-lg">
@@ -98,10 +79,10 @@ export const CalibrationsResults = ({
             {data.results.map((result: Result) => (
               <div
                 className="flex flex-col w-full max-w-[140px] p-2 border border-gray-300 bg-white rounded-md shadow-sm"
-                key={result.point_number}
+                key={result?.point_number}
               >
                 <span className="text-center font-semibold text-gray-700 mb-2">
-                  Punto {result.point_number === -1 ? '1 final' : result.point_number}
+                  Punto {result?.point_number === -1 ? '1 final' : result?.point_number}
                 </span>
                 <div className="flex justify-between items-center gap-2">
                   <span className="border border-gray-300 w-full text-center py-1 bg-gray-100 rounded-md">
@@ -123,8 +104,8 @@ export const CalibrationsResults = ({
                 className="p-2 text-center w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                 type="number"
                 value={result.temperature}
-                key={result.point_number}
-                onChange={(e) => handleEdit('temperature', e.currentTarget.value, '', result.point_number)}
+                key={result?.point_number}
+                onChange={(e) => handleEdit('temperature', e.currentTarget.value, '', result?.point_number)}
               />
             ))}
           </div>
@@ -133,7 +114,7 @@ export const CalibrationsResults = ({
             {data.results.map((result) => (
               <div
                 className="flex flex-col w-full max-w-[140px] gap-2"
-                key={result.point_number}
+                key={result?.point_number}
               >
                 {result.calibrations.map((calibration: Calibration, index: number) => (
                   <div
@@ -144,14 +125,14 @@ export const CalibrationsResults = ({
                       className="border border-gray-300 w-full text-center p-2 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                       type="number"
                       value={calibration.initial}
-                      onChange={(e) => handleEdit('initial', e.currentTarget.value, index, result.point_number)}
+                      onChange={(e) => handleEdit('initial', e.currentTarget.value, index, result?.point_number)}
 
                     />
                     <input
                       className="border border-gray-300 w-full text-center p-2 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                       type="number"
                       value={calibration.final}
-                      onChange={(e) => handleEdit('final', e.currentTarget.value, index, result.point_number)}
+                      onChange={(e) => handleEdit('final', e.currentTarget.value, index, result?.point_number)}
                     />
                   </div>
                 ))}
