@@ -153,17 +153,17 @@ export const TableV_01 = ({
               {certificate?.description_pattern?.map(
                 (item, index) => (
                   <tr key={index}>
-                    <td>{renderValue(item.equipment)}</td>
+                    <td>{renderValue(item?.equipment)}</td>
                     <td>
                       {
-                        renderValue(item.code)
+                        renderValue(item?.code)
                       }
                     </td>
                     <td>
-                      {renderValue(item.traceability)}
+                      {renderValue(item?.traceability)}
                     </td>
                     <td>
-                      {renderValue(item.next_calibration)}
+                      {renderValue(item?.next_calibration)}
                     </td>
                   </tr>
                 ),
