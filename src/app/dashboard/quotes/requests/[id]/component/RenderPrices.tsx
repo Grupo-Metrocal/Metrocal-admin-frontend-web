@@ -1,6 +1,6 @@
 'use client'
 import { CInput } from '@/components/CInput'
-import dollarIcon from '@/assets/icons/dollar.svg'
+import nioIcon from '@/assets/icons/nio.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import { Content } from '@/components/Content'
 import { CButton } from '@/components/CButton'
@@ -125,7 +125,7 @@ export const RenderPrices = () => {
             onChange={(e) =>
               dispatch(handlePrice(selectedEquipment.id || 0, e))
             }
-            icon={dollarIcon}
+            icon={nioIcon}
           />
         </div>
         <div className="prices__item">
@@ -167,7 +167,7 @@ export const RenderPrices = () => {
               selectedEquipment.total ? selectedEquipment.total.toFixed(2) : ''
             }
             onChange={(_) => { }}
-            icon={dollarIcon}
+            icon={nioIcon}
             dissabled={true}
           />
         </div>

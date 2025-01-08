@@ -8,7 +8,7 @@ import { RenderEquipmentInfoSelected } from './component/RenderEquipmentInfoSele
 import { RenderEquipment } from './component/RenderEquipment'
 import { RenderClient } from './component/RenderClient'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import dollarIcon from '@/assets/icons/dollar.svg'
+import nioIcon from '@/assets/icons/nio.svg'
 import percentIcon from '@/assets/icons/percent.svg'
 import {
   setSelectedEquipment,
@@ -306,7 +306,7 @@ const Footer = ({ saveQuote }: IFooterProps) => {
           }}
           value={extras.toString()}
           label="Traslado técnico"
-          icon={dollarIcon}
+          icon={nioIcon}
           min={0}
           type="number"
         />
@@ -325,7 +325,7 @@ const Footer = ({ saveQuote }: IFooterProps) => {
           value={subtotal.toString()}
           label="Subtotal"
           dissabled={true}
-          icon={dollarIcon}
+          icon={nioIcon}
           min={0}
           type="number"
         />
@@ -334,7 +334,7 @@ const Footer = ({ saveQuote }: IFooterProps) => {
           value={total.toString()}
           label="Total"
           dissabled={true}
-          icon={dollarIcon}
+          icon={nioIcon}
           min={0}
           type="number"
         />
