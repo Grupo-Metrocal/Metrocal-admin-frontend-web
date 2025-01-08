@@ -87,6 +87,7 @@ export interface IQuote {
   modifications_list_json?: IQuote[]
   modification_number?: number
   currency_type: 'NIO' | 'USD'
+  change_currency_type: 'NIO' | 'USD'
   alt_client_email: string
   alt_client_requested_by: string
   alt_client_phone: string
