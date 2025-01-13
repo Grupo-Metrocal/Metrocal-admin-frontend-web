@@ -54,6 +54,26 @@ export interface Activity {
   status: string
   progress: number
   created_at: string
-  updated_at: any
+  updated_at: string
   responsable: number
+  client_signature: string
+  work_areas: string[]
+  comments_insitu: string[]
+  reviewed: boolean
+  reviewed_user_id: string
+  is_certificate: boolean
+  start_time: string
+  end_time: string
+  finish_date: string
+  service_order: ServiceOrder[]
+}
+
+export interface ServiceOrder {
+  id: number
+  equipments_ids: number[]
+  start_time: string
+  end_time: string
+  finish_date: string
+  created_at: string
+  updated_at?: string
 }

@@ -11,7 +11,7 @@ import { useForm } from '@/hooks/useForm'
 const getRecords = async (page: number, no?: string) => {
 
   return await fetchData({
-    url: `activities/get-finishied-activities/${page}/10/${no}`,
+    url: `activities/service-order/${page}/10/${no}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

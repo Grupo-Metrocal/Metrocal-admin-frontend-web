@@ -160,6 +160,9 @@ export const EquipmentInformation = ({
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
             <option value="30 mm">30 mm</option>
+            <option value="20 mm">20 mm</option>
+            <option value="10 mm">10 mm</option>
+            <option value="5 mm">5 mm</option>
           </select>
         </div>
         <div className="flex flex-col gap-[1em]">

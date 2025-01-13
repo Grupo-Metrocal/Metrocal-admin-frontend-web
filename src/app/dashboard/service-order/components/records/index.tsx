@@ -22,7 +22,7 @@ export type IServicesOrderRecords = {
   no: string
   client_name: string
   end_date: string
-  services_performed: number
+  services_order_quantity: number
   resposable: string
 }
 
@@ -66,7 +66,7 @@ export const ServicesOrderRecords = ({
             no: 'No. Cotización',
             client_name: 'Empresa',
             end_date: 'Fecha de finalización',
-            services_performed: 'Servicios realizados',
+            services_order_quantity: 'Ordenes de Servicios',
             resposable: 'Reponsable de actividad',
           }}
         />

@@ -58,7 +58,7 @@ export const ColumnsServicesOrders = ({
       },
       cell: ({ row }) => {
         return (
-          <div className="capitalize text-center">
+          <div className="capitalize">
             {row.getValue('client_name')}
           </div>
         )
@@ -72,10 +72,10 @@ export const ColumnsServicesOrders = ({
       ),
     },
     {
-      accessorKey: 'services_performed',
-      header: () => <div className="text-center">Servicios realizados</div>,
+      accessorKey: 'services_order_quantity',
+      header: () => <div className="text-center">Ordenes de Servicios</div>,
       cell: ({ row }) => (
-        <div className="text-center">{row.getValue('services_performed')}</div>
+        <div className="text-center">{row.getValue('services_order_quantity')}</div>
       ),
     },
     {
@@ -110,9 +110,9 @@ export const ColumnsServicesOrders = ({
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuItem>
                 <Linking
-                  href={`/dashboard/quotes/view/${payment.quote_request_id}`}
+                  href={`/dashboard/service-order/view/${payment.id}`}
                 >
-                  Ver cotización
+                  Ver ordenes de servicio
                 </Linking>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -130,20 +130,6 @@ export const ColumnsServicesOrders = ({
                 />
               </DropdownMenuItem>
 
-              <DropdownMenuItem
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                }}
-              >
-                <AlertDialogModal
-                  nameButton="Descargar orden de servico"
-                  title="Descargar orden de servico"
-                  description="La descarga del PDF se iniciará automáticamente."
-                  onConfirm={() => handleGeneratePDFServiceOrder({ id: payment.id, no: payment.no, company_name: payment.client_name })}
-                  useButton={false}
-                />
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               {/* <DropdownMenuItem
                 style={{

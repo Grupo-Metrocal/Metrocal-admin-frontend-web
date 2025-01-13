@@ -32,19 +32,17 @@ export const handleGeneratePDFQuote = async ({
 }
 
 export const handleGeneratePDFServiceOrder = async ({
-  id,
-  no,
-  company_name,
+  activityId,
+  serviceOrderId,
 }: {
-  id: number
-  no: string
-  company_name: string
+  activityId: number
+  serviceOrderId: number
 }) => {
   toast.loading('Generando PDF...', {
     description: 'Espere un momento por favor',
   })
   const response = await fetchData({
-    url: `activities/service-order/pdf/${id}`,
+    url: `activities/service-order/pdf/${activityId}/${serviceOrderId}`,
     method: 'GET',
     responseType: 'blob',
   })
@@ -53,7 +51,7 @@ export const handleGeneratePDFServiceOrder = async ({
     const blob = new Blob([response], { type: 'application/pdf' })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(blob)
-    link.download = `Order de servicio - ${no}_${company_name}.pdf`
+    link.download = `Order de servicio.pdf`
     link.click()
     toast.success('PDF generado correctamente')
   } else {
