@@ -363,14 +363,14 @@ export default function Page({ params }: Props) {
 
         <div className="actions">
           <div className='currency-type'>
-            <label htmlFor="currency_type">Tipo de Moneda</label>
-            <select name='currency_type' id='currency_type'
+            <label htmlFor="change_currency_type">Tipo de Moneda</label>
+            <select name='change_currency_type' id='change_currency_type'
               onChange={(e) => handleChangeCurrencyType(e.currentTarget.value)}
             >
               {
                 Object.values(CurrencyType).map((currencyOption, index) => (
                   <option value={currencyOption} key={index}
-                    selected={currencyOption === quote?.currency_type}
+                    selected={currencyOption === quote?.change_currency_type}
                   >{currencyOption}</option>
                 ))
               }
