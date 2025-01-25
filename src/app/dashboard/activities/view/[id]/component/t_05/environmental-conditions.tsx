@@ -18,32 +18,40 @@ export const EnvironmentalConditions = ({
 }: EnvironmentalConditionsProps) => {
   return (
     <div className="flex flex-col space-y-4">
-      <table className="w-full table-auto">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Punto calibrados</th>
-            <th className="border px-4 py-2">Temperatura (ºC) Inicial</th>
-            <th className="border px-4 py-2">Temperatura (ºC) Final</th>
-            <th className="border px-4 py-2">Humedad (%) Inicial</th>
-            <th className="border px-4 py-2">Humedad (%) Final</th>
-            {/* <th className="border px-4 py-2">Equipo utilizado</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {environmental_conditions?.points?.map((point) => (
-            <tr key={point.point_number} className="text-center">
-              <td className="border px-4 py-2">
-                Punto{' '}
-                {point.point_number === -1 ? '1 final' : point.point_number}
-              </td>
-              <td className="border px-4 py-2">{point.temperature.initial}</td>
-              <td className="border px-4 py-2">{point.temperature.final}</td>
-              <td className="border px-4 py-2">{point.humidity.initial}</td>
-              <td className="border px-4 py-2">{point.humidity.final}</td>
+      <div className='flex flex-col gap-4'>
+        <div>
+          <p className="text-sm font-semibold text-gray-500">Patron utilizado</p>
+          <span className="text-sm font-semibold text-gray-800">
+            {environmental_conditions?.pattern || '---'}
+          </span>
+        </div>
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border px-4 py-2">Punto calibrados</th>
+              <th className="border px-4 py-2">Temperatura (ºC) Inicial</th>
+              <th className="border px-4 py-2">Temperatura (ºC) Final</th>
+              <th className="border px-4 py-2">Humedad (%) Inicial</th>
+              <th className="border px-4 py-2">Humedad (%) Final</th>
+              {/* <th className="border px-4 py-2">Equipo utilizado</th> */}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {environmental_conditions?.points?.map((point) => (
+              <tr key={point.point_number} className="text-center">
+                <td className="border px-4 py-2">
+                  Punto{' '}
+                  {point.point_number === -1 ? '1 final' : point.point_number}
+                </td>
+                <td className="border px-4 py-2">{point.temperature.initial}</td>
+                <td className="border px-4 py-2">{point.temperature.final}</td>
+                <td className="border px-4 py-2">{point.humidity.initial}</td>
+                <td className="border px-4 py-2">{point.humidity.final}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <ReportMethodActivity
         method_name={method_name}
         zone={'Condiciones ambientales'}

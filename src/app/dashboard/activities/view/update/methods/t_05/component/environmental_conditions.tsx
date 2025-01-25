@@ -1,6 +1,6 @@
 import { IEnvironmentalConditions } from '../../../../[id]/interface/t_05'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -16,36 +16,82 @@ export const EnvironmentalConditions = ({
   const url = `methods/ni-mcit-t-05/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
 
+  console.log({ data })
+
   const handleEdit = (
     field: string,
     value: number | string,
     cycleNumber: number,
   ) => {
-    if (isNaN(value as number)) {
-      return
+    setData((prev: any) => {
+      if (field === 'pattern') {
+        return { ...prev, pattern: value };
+      }
+    })
+
+    const parsedValue = typeof value === 'string' ? parseFloat(value) : value;
+
+    if (isNaN(parsedValue)) {
+      return;
     }
 
-    setData((prev) => {
-      const points = prev.points?.map((point) => {
+    setData((prev: any) => {
+      const points = prev.points?.map((point: any) => {
         if (point.point_number === cycleNumber) {
-          if (field === 'temperature.initial') {
-            point.temperature.initial = value as number
-          } else if (field === 'temperature.final') {
-            point.temperature.final = value as number
-          } else if (field === 'humidity.initial') {
-            point.humidity.initial = value as number
-          } else if (field === 'humidity.final') {
-            point.humidity.final = value as number
+          const [key, subKey] = field.split('.');
+          if (key && subKey && point[key]) {
+            return {
+              ...point,
+              [key]: {
+                ...point[key],
+                [subKey]: parsedValue,
+              },
+            };
           }
         }
-        return point
-      })
-      return { ...prev, points }
-    })
-  }
+        return point;
+      });
+
+      return { ...prev, points };
+    });
+  };
+
+
+  useEffect(() => {
+    console.log({ data })
+  }, [data])
+
 
   return (
     <div className="flex flex-col space-y-4">
+      <div className="flex flex-col gap-4 py-5">
+        <label htmlFor="pattern" className="text-xs font-semibold">
+          Patrón utilizado
+        </label>
+        <select
+          name="pattern"
+          id="pattern"
+          value={data.pattern}
+          onChange={(e) => handleEdit('pattern', e.target.value, 0)}
+          className="border border-gray-300 rounded-md p-2"
+          aria-label="Seleccione el patrón utilizado"
+        >
+          {[
+            "NI-MCPPT-01",
+            "NI-MCPPT-02",
+            "NI-MCPPT-04",
+            "NI-MCPPT-05",
+            "NI-MCPPT-06",
+            "NI-MCPPT-07",
+            "NI-MCPPT-08",
+          ].map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <table className="w-full table-auto">
         <thead>
           <tr className="bg-gray-200">
