@@ -396,9 +396,9 @@ export const calculateTotal = () => (dispatch: any, getState: any) => {
 export const calculateTotalQuote = () => (dispatch: any, getState: any) => {
   const { subtotal, discount, IVA, extras } = getState().quote
 
-  let totalQuote = subtotal + extras
+  let totalQuote = Number(subtotal)
 
-  const totalDiscount = totalQuote * (discount / 100)
+  const totalDiscount = totalQuote * (Number(discount) / 100)
 
   totalQuote -= totalDiscount
 
@@ -417,7 +417,7 @@ export const calculateSubtotal = () => (dispatch: any, getState: any) => {
   let subtotal = 0
 
   equipment.forEach((item: any) => {
-    if (item.status !== 'rejected') subtotal += item.total
+    if (item.status !== 'rejected') subtotal += Number(item.total)
   })
 
   subtotal = subtotal + Number(extras)

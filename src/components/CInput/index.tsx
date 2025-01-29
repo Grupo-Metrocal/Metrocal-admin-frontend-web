@@ -2,7 +2,7 @@ import React from 'react'
 import './index.scss'
 import Image from 'next/image'
 interface CInputProps {
-  value: string
+  value: string | number
   onChange: (e: any) => void
   placeholder?: string
   className?: string

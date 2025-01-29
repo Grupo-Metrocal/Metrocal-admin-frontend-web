@@ -119,11 +119,11 @@ export const RenderPrices = () => {
             type="number"
             label="Precio unitario"
             value={
-              selectedEquipment.price ? selectedEquipment.price.toString() : ''
+              selectedEquipment?.price ?? ''
             }
             name="price"
             onChange={(e) =>
-              dispatch(handlePrice(selectedEquipment.id || 0, e))
+              dispatch(handlePrice(selectedEquipment.id, e))
             }
             icon={nioIcon}
           />
@@ -134,9 +134,7 @@ export const RenderPrices = () => {
             label="Descuento"
             name="discount"
             value={
-              selectedEquipment?.discount
-                ? selectedEquipment.discount.toString()
-                : ''
+              selectedEquipment?.discount ?? ''
             }
             onChange={(e) =>
               dispatch(handleDiscount(selectedEquipment.id || 0, e))
@@ -150,7 +148,7 @@ export const RenderPrices = () => {
             type='number'
             label="Cantidad"
             value={
-              selectedEquipment?.count?.toString() || ''
+              selectedEquipment?.count
             }
             name="count"
             onChange={e => dispatch(handleCount(
@@ -164,7 +162,7 @@ export const RenderPrices = () => {
             type="number"
             label="Total"
             value={
-              selectedEquipment.total ? selectedEquipment.total.toFixed(2) : ''
+              selectedEquipment?.total?.toFixed(2)
             }
             onChange={(_) => { }}
             icon={nioIcon}
