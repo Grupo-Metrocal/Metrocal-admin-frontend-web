@@ -30,6 +30,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useRouter } from 'next/navigation'
 import { IClient } from '@/app/contactInformation'
 import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
+import { emmitCertificate } from '@/utils/functions'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -49,18 +50,6 @@ const getMethods = async (id: number) => {
     headers: {
       Authorization: `Bearer ${getCookie('token')}`,
     },
-  })
-}
-
-export const emmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
-
-  const url = `methods/${method_name.toLowerCase()}/generate-certificate/send/pdf/${activity_id}/${method_id}`
-
-  return await fetchData({
-    url,
-    headers: {
-      Authorization: `Bearer ${getCookie('token')}`,
-    }
   })
 }
 

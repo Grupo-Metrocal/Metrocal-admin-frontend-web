@@ -22,7 +22,7 @@ import { TableB_01 } from './components/tableB_01'
 import { TableM_01 } from './components/tableM_01'
 import { TableGenericMethod } from './components/table_generic-method'
 import { emmitCertificationsToClient } from '@/utils/functions'
-import { emmitCertificate } from './records/view/[slug]/page'
+import { emmitCertificate } from '@/utils/functions'
 
 const getData = async () => {
   return await fetchData({
