@@ -22,6 +22,7 @@ import { TableB_01 } from './components/tableB_01'
 import { TableM_01 } from './components/tableM_01'
 import { TableGenericMethod } from './components/table_generic-method'
 import { emmitCertificationsToClient } from '@/utils/functions'
+import { emmitCertificate } from './records/view/[slug]/page'
 
 const getData = async () => {
   return await fetchData({
@@ -88,6 +89,23 @@ export default function Page() {
       toast.success('Certificado aprobado')
     } else {
       toast.error('Error al aprobar el certificado')
+    }
+  }
+
+  const reviewAndEmmitCertificate = async () => {
+    await reviewCertificate()
+
+    toast.loading('Enviando certificado...', {
+      duration: 50000
+    })
+
+    const response = await emmitCertificate(certificate.renderer_method, selectedActivity?.id as number, certificate.renderer_method_id)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Se han enviado el certificados')
+    } else {
+      toast.error('Hubo un error al enviar el certificados')
     }
   }
 
@@ -219,15 +237,25 @@ export default function Page() {
               </p>
             )}
 
-            <div className="w-full mb-8">
-              {
-                <AlertDialogModal
-                  onConfirm={() => reviewCertificate()}
-                  title="Antes de aprobar el certificado, verifique que los datos sean correctos"
-                  nameButton="Aprobar certificado"
-                  useButton
-                />
-              }
+            <div className="w-full mb-8 flex gap-6">
+              <AlertDialogModal
+                onConfirm={() => reviewCertificate()}
+                title='Aprobar certificado'
+                description="Antes de aprobar el certificado, verifique que los datos sean correctos"
+                nameButton="Aprobar certificado"
+                useButton
+              />
+
+              <AlertDialogModal
+                onConfirm={() => reviewAndEmmitCertificate()}
+                title="Aprobar y Enviar Certificado"
+                description='El certificado se aprobara y se enviara al correo del cliente, porfavor verifique que los resultados esten correctos.'
+                nameButton="Aprobar y Enviar"
+                useButton
+                buttonStyle={{
+                  backgroundColor: '#22c55e'
+                }}
+              />
             </div>
           </div>
         ) : (

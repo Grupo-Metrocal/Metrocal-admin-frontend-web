@@ -52,7 +52,7 @@ const getMethods = async (id: number) => {
   })
 }
 
-const emmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
+export const emmitCertificate = async (method_name: string, activity_id: number, method_id: number) => {
 
   const url = `methods/${method_name.toLowerCase()}/generate-certificate/send/pdf/${activity_id}/${method_id}`
 
