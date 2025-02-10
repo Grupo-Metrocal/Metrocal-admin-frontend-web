@@ -36,7 +36,7 @@ export const CALIBRATION_METHODS = [
     value: 'NI-MCIT-M-01',
   },
   {
-    label: 'Comp. Directa Trazable',
-    value: 'GENERIC_METHOD',
+    label: 'Condiciones Ambientales',
+    value: 'all',
   },
 ]
