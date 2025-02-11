@@ -3,6 +3,7 @@ import { ICalibrationResults, Calibrations } from '../../../../[id]/interface/m_
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { CInput } from '@/components/CInput'
 import React, { useState } from 'react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const CalibrationsResults = ({
   calibrationResults,
@@ -17,6 +18,7 @@ export const CalibrationsResults = ({
 }) => {
   const url = `methods/ni-mcit-m-01/calibration-results/`
   const [data, setData] = useState(calibrationResults)
+  const { patterns } = usePattern('NI-MCIT-M-01')
 
   const handleEdit = (index: number, field: any, value: any, subField?: number | any) => {
 
@@ -71,8 +73,10 @@ export const CalibrationsResults = ({
                             handleEdit(index, 'patterns', e.target.value, patternIndex)
                           }
                         >
-                          {PATTERNSM01.map((patternOption, optionIndex) => (
-                            <option key={optionIndex} value={patternOption}>{patternOption}</option>
+                          {patterns?.map((patternItem, patternIndex) => (
+                            <option key={patternIndex} disabled={!patternItem.status} className={`${pattern === patternItem.code && 'bg-blue-200'}`}>
+                              {patternItem.code}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -88,11 +92,12 @@ export const CalibrationsResults = ({
                     className="border border-gray-300 rounded-md p-2 h-fit"
                     onChange={(e) => {
                       handleEdit(index, 'mass', e.target.value, null)
-
                     }}
                   >
-                    {PATTERNSM01.map((patternOption, optionIndex) => (
-                      <option key={optionIndex} value={patternOption}>{patternOption}</option>
+                    {patterns?.map((patternItem, patternIndex) => (
+                      <option key={patternIndex} disabled={!patternItem.status} className={`${result.mass === patternItem.code && 'bg-blue-200'}`}>
+                        {patternItem.code}
+                      </option>
                     ))}
                   </select>
                 </div>

@@ -1,3 +1,4 @@
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/t_05'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useEffect, useState } from 'react'
@@ -16,7 +17,7 @@ export const EnvironmentalConditions = ({
   const url = `methods/ni-mcit-t-05/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
 
-  console.log({ data })
+  const { patterns } = usePattern('all')
 
   const handleEdit = (
     field: string,
@@ -76,17 +77,9 @@ export const EnvironmentalConditions = ({
           className="border border-gray-300 rounded-md p-2"
           aria-label="Seleccione el patrón utilizado"
         >
-          {[
-            "NI-MCPPT-01",
-            "NI-MCPPT-02",
-            "NI-MCPPT-04",
-            "NI-MCPPT-05",
-            "NI-MCPPT-06",
-            "NI-MCPPT-07",
-            "NI-MCPPT-08",
-          ].map((option) => (
-            <option key={option} value={option}>
-              {option}
+          {patterns?.map((pattern, patternIndex) => (
+            <option key={patternIndex} disabled={!pattern.status}>
+              {pattern.code}
             </option>
           ))}
         </select>

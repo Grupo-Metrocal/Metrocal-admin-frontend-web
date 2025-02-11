@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { Trash2 } from 'lucide-react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -20,10 +21,11 @@ export const DescriptionPattern = ({
   const { values, handleInputChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-d-02/description-pattern/`
 
-  const [patterns, setPatterns] = useState<string[]>(values.descriptionPattern || []);
+  const [selectedPatterns, setSelectedPatterns] = useState<string[]>(values.descriptionPattern || []);
+  const { patterns } = usePattern('NI-MCIT-D-02')
 
   const handleChangePattern = (pattern: string, index: number) => {
-    setPatterns((prevPatterns) =>
+    setSelectedPatterns((prevPatterns) =>
       prevPatterns.map((item, i) => {
         if (i === index) {
           return pattern;
@@ -34,19 +36,18 @@ export const DescriptionPattern = ({
   };
 
   const addEmptyPattern = () => {
-    setPatterns((prevPatterns) => [...prevPatterns, '']);
+    setSelectedPatterns((prevPatterns) => [...prevPatterns, '']);
   };
 
   const removePattern = (index: number) => {
-    setPatterns((prevPatterns) => prevPatterns.filter((_, i) => i !== index));
+    setSelectedPatterns((prevPatterns) => prevPatterns.filter((_, i) => i !== index));
   };
 
 
   useEffect(() => {
-    handleInputChange({ name: 'descriptionPattern', value: patterns })
-  }, [patterns])
-
-  const PATTERNS_ITEMS = ['NI-MCPD-01', 'NI-MCPD-02', 'NI-MCPD-03']
+    handleInputChange({ name: 'descriptionPattern', value: selectedPatterns })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPatterns])
 
   return (
     <div className="flex flex-col space-y-4">
@@ -56,7 +57,7 @@ export const DescriptionPattern = ({
             <span>Patrones seleccionados</span>
             <div>
               {
-                patterns.length > 0 ? patterns.map((patten, index) => {
+                selectedPatterns.length > 0 ? selectedPatterns.map((patten, index) => {
                   return (
                     <div className="flex gap-4" key={index}>
                       <select
@@ -70,15 +71,12 @@ export const DescriptionPattern = ({
                         className="border border-gray-300 rounded-md p-2 h-fit"
                       >
                         <option value="" disabled selected>Seleccione un patrón</option>
-                        {
-                          PATTERNS_ITEMS.map((item, itemIndex) => {
-                            return (
-                              <option value={item} key={itemIndex}
-                                disabled={patterns.includes(item)}
-                              >{item}</option>
-                            )
-                          })
-                        }
+                        {patterns?.map((pattern, patternIndex) => (
+                          <option key={patternIndex} disabled={!pattern.status || selectedPatterns.includes(pattern.code)}
+                          >
+                            {pattern.code}
+                          </option>
+                        ))}
                       </select>
 
                       <Trash2 className='text-red-400 cursor-pointer' width={20}
@@ -97,7 +95,7 @@ export const DescriptionPattern = ({
                 background: 'white',
                 color: '#333'
               }}
-                disabled={patterns.length >= 3}
+                disabled={selectedPatterns.length >= 3}
               >
                 Agregar patron
               </CButton>

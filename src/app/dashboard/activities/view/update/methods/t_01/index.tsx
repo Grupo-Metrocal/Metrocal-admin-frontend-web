@@ -96,7 +96,7 @@ export const T_01 = ({
           },
           {
             value: 'description_pattern',
-            label: 'Patrón de descripción',
+            label: 'Descipción de patrones',
             Component: () => (
               <DescriptionPattern
                 description_pattern={equipment.description_pattern}

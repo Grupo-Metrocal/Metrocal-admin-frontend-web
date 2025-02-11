@@ -1,12 +1,12 @@
 import { IDescriptionPattern } from '../../../../[id]/interface/v_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { PatternsV01 } from '../constanst/patterns'
 import { CButton } from '@/components/CButton'
 import { ChangeEvent, useState } from 'react'
 import { useForm } from '@/hooks/useForm'
 import { Trash } from 'lucide-react'
 import { toast } from 'sonner'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -21,6 +21,7 @@ export const DescriptionPattern = ({
 }) => {
   const url = `methods/ni-mcit-v-01/description-pattern/`
   const { values, handleSelectChange } = useForm({ pattern: '' })
+  const { patterns } = usePattern('NI-MCIT-V-01')
 
   const [data, setData] = useState<IDescriptionPattern>(
     description_pattern,
@@ -124,10 +125,11 @@ export const DescriptionPattern = ({
             <div className='flex justify-between w-full'>
               <select name="pattern"
                 className="border border-gray-300 rounded-md p-2 h-fit"
-                onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}>
-                {PatternsV01.map((pattern, patternIndex) => (
-                  <option key={patternIndex}>
-                    {pattern}
+                onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}
+              >
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status}>
+                    {pattern.code}
                   </option>
                 ))}
 

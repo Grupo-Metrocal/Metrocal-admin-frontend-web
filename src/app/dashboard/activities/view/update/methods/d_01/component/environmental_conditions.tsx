@@ -5,6 +5,7 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -19,7 +20,7 @@ export const EnvironmentalConditions = ({
 }) => {
   const url = `methods/ni-mcit-d-01/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
-
+  const { patterns } = usePattern('all')
 
   const handleEdit = (
     key: string,
@@ -112,7 +113,7 @@ export const EnvironmentalConditions = ({
             {/* <td className="border px-4 py-2">1</td> */}
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.ta.initial ?? 0}
                 onChange={(e) =>
@@ -122,7 +123,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.ta.end ?? 0}
                 onChange={(e) =>
@@ -132,7 +133,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.hr.initial ?? 0}
                 onChange={(e) =>
@@ -142,7 +143,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.hr.end ?? 0}
                 onChange={(e) =>
@@ -151,18 +152,21 @@ export const EnvironmentalConditions = ({
               />
             </td>
             <td className="border px-4 py-2">
-              <input
+              <select
                 className="w-full p-1 border rounded"
-                type="text"
-                value={data?.equipment_used ?? 0}
-                onChange={(e) =>
-                  handleFieldChange('equipment_used', e.target.value)
-                }
-              />
+                value={data?.equipment_used ?? ""}
+                onChange={(e) => handleFieldChange("equipment_used", e.target.value)}
+              >
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status}>
+                    {pattern.code}
+                  </option>
+                ))}
+              </select>
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.time?.hours ?? 0}
                 onChange={(e) =>
@@ -172,7 +176,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[60px] p-1 border rounded"
                 type="number"
                 value={data?.time?.minute ?? 0}
                 onChange={(e) =>
@@ -182,7 +186,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="p-1 border rounded"
                 type="text"
                 value={data?.stabilization_site}
                 onChange={(e) =>

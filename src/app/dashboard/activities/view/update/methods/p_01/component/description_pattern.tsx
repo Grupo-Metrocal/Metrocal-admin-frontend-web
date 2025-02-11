@@ -2,6 +2,7 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/p_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -16,6 +17,7 @@ export const DescriptionPattern = ({
 }) => {
   const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-p-01/description-pattern/`
+  const { patterns } = usePattern('NI-MCIT-P-01')
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { name, checked } = e.target
@@ -38,13 +40,11 @@ export const DescriptionPattern = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="NI-MCPP-01">NI-MCPP-01</option>
-            <option value="NI-MCPP-02">NI-MCPP-02</option>
-            <option value="NI-MCPP-04">NI-MCPP-04</option>
-            <option value="NI-MCPP-05">NI-MCPP-05</option>
-            <option value="NI-MCPP-06">NI-MCPP-06</option>
-            <option value="NI-MCPP-12">NI-MCPP-12</option>
-            <option value="NI-MCPP-13">NI-MCPP-13</option>
+            {patterns?.map((pattern, patternIndex) => (
+              <option key={patternIndex} disabled={!pattern.status}>
+                {pattern.code}
+              </option>
+            ))}
           </select>
         </div>
         <CInput

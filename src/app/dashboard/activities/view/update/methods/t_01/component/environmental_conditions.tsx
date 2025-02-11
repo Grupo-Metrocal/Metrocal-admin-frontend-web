@@ -1,3 +1,4 @@
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/t_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
@@ -19,13 +20,7 @@ export const EnvironmentalConditions = ({
     environmentalConditions,
   )
 
-  const equipmentOptions = [
-    'NI-MCPPT-01',
-    'NI-MCPPT-02',
-    'NI-MCPPT-04',
-    'NI-MCPPT-05',
-    'NI-MCPPT-06',
-  ]
+  const { patterns } = usePattern('all')
 
   const equipementOPTHPA = ['NI-MCPPT-06']
 
@@ -119,9 +114,9 @@ export const EnvironmentalConditions = ({
                 value={data?.environment.ta.equipment}
                 onChange={(e) => handleEdit('ta', 'equipment', e.target.value)}
               >
-                {equipmentOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status}>
+                    {pattern.code}
                   </option>
                 ))}
               </select>

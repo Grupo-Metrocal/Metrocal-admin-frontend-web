@@ -3,6 +3,7 @@ import { IEnvironmentalConditions } from '../../../../[id]/interface/t_03'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { CInput } from '@/components/CInput'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -16,7 +17,8 @@ export const EnvironmentalConditions = ({
   environmentalConditions: IEnvironmentalConditions
 }) => {
   const url = `methods/ni-mcit-t-03/environmental-conditions/`
-  const { values, handleInputChange } = useForm({ ...environmentalConditions })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...environmentalConditions })
+  const { patterns } = usePattern('all')
 
   return (
     <div className="flex flex-col space-y-4">
@@ -36,22 +38,25 @@ export const EnvironmentalConditions = ({
           type="number"
         />
 
-        <AutocompleteInput
-          requiredLabel
-          value={values.pattern}
-          label="Patron utilizado"
-          name="pattern"
-          onChange={handleInputChange}
-          required
-          placeholder="Escriba o seleccione su patron"
-          list={[
-            { id: 1, name: 'NI-MCPPT-01' },
-            { id: 2, name: 'NI-MCPPT-02' },
-            { id: 3, name: 'NI-MCPPT-05' },
-          ]}
-          keyList="pattern"
-          inputType="string"
-        />
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Patrón utilizado
+          </label>
+          <select
+            name="pattern"
+            id="pattern"
+            defaultValue={values.pattern}
+            value={values.pattern}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            {patterns?.map((pattern, patternIndex) => (
+              <option key={patternIndex} disabled={!pattern.status}>
+                {pattern.code}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div>
         <AlertDialogModal

@@ -3,6 +3,7 @@ import { IDescriptionPattern } from '../../../../[id]/interface/t_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -17,6 +18,7 @@ export const DescriptionPattern = ({
 }) => {
   const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-t-01/description-pattern/`
+  const { patterns } = usePattern('NI-MCIT-T-01')
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target)
@@ -40,15 +42,11 @@ export const DescriptionPattern = ({
             onChange={handleSelectChange}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
-            <option value="NI-MCPT-01">NI-MCPT-01</option>
-            <option value="NI-MCPT-02">NI-MCPT-02</option>
-            <option value="NI-MCPT-37">NI-MCPT-37</option>
-            <option value="NI-MCPT-05">NI-MCPT-05</option>
-            <option value="NI-MCPT-06">NI-MCPT-06</option>
-            <option value="NI-MCPT-41">NI-MCPT-41</option>
-            <option value="NI-MCPT-36">NI-MCPT-36</option>
-            <option value="NI-MCPT-40-1">NI-MCPT-40-1</option>
-            <option value="NI-MCPT-40-2">NI-MCPT-40-2</option>
+            {patterns?.map((pattern, patternIndex) => (
+              <option key={patternIndex} disabled={!pattern.status}>
+                {pattern.code}
+              </option>
+            ))}
           </select>
         </div>
 

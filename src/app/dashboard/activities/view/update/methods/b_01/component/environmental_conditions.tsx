@@ -5,6 +5,7 @@ import {
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -19,15 +20,7 @@ export const EnvironmentalConditions = ({
 }) => {
   const url = `methods/ni-mcit-b-01/enviromental-condition/`
   const [data, setData] = useState(environmentalConditions)
-
-  const enviromentalOptions = [
-    'NI-MCPPT-01',
-    'NI-MCPPT-02',
-    'NI-MCPPT-03',
-    'NI-MCPPT-04',
-    'NI-MCPPT-05',
-    'NI-MCPPT-06',
-  ]
+  const { patterns } = usePattern('all')
 
   const handleEdit = (
     key: string,
@@ -195,9 +188,10 @@ export const EnvironmentalConditions = ({
                   handleFieldChange('equipment_used', e.target.value)
                 }
               >
-                {enviromentalOptions.map((option, index) => (
-                  <option value={option} selected={option === data?.equipment_used
-                  } key={index}>{option}</option>
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status} selected={pattern.code === data.equipment_used}>
+                    {pattern.code}
+                  </option>
                 ))}
               </select>
             </td>

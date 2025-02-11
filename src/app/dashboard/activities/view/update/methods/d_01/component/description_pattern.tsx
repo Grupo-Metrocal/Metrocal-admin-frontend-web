@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { CInput } from '@/components/CInput'
 import { CButton } from '@/components/CButton'
 import { Trash2 } from 'lucide-react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -21,10 +22,11 @@ export const DescriptionPattern = ({
 
   const url = `methods/ni-mcit-d-01/description-pattern/`
 
-  const [patterns, setPatterns] = useState<string[]>(values.descriptionPatterns || []);
+  const [selectedPateerns, setSelectedPatterns] = useState<string[]>(values.descriptionPatterns || []);
+  const { patterns } = usePattern('NI-MCIT-D-01')
 
   const handleChangePattern = (pattern: string, index: number) => {
-    setPatterns((prevPatterns) =>
+    setSelectedPatterns((prevPatterns) =>
       prevPatterns.map((item, i) => {
         if (i === index) {
           return pattern;
@@ -35,19 +37,18 @@ export const DescriptionPattern = ({
   };
 
   const addEmptyPattern = () => {
-    setPatterns((prevPatterns) => [...prevPatterns, '']);
+    setSelectedPatterns((prevPatterns) => [...prevPatterns, '']);
   };
 
   const removePattern = (index: number) => {
-    setPatterns((prevPatterns) => prevPatterns.filter((_, i) => i !== index));
+    setSelectedPatterns((prevPatterns) => prevPatterns.filter((_, i) => i !== index));
   };
 
 
   useEffect(() => {
-    handleInputChange({ name: 'descriptionPatterns', value: patterns })
-  }, [patterns])
-
-  const PATTERNS_ITEMS = ['NI-MCPD-01', 'NI-MCPD-02', 'NI-MCPD-03']
+    handleInputChange({ name: 'descriptionPatterns', value: selectedPateerns })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPateerns])
 
   return (
     <div className="flex flex-col space-y-4">
@@ -57,7 +58,7 @@ export const DescriptionPattern = ({
             <span>Patrones seleccionados</span>
             <div>
               {
-                patterns.length > 0 ? patterns.map((patten, index) => {
+                selectedPateerns.length > 0 ? selectedPateerns.map((patten, index) => {
                   return (
                     <div className="flex gap-4" key={index}>
                       <select
@@ -71,17 +72,12 @@ export const DescriptionPattern = ({
                         className="border border-gray-300 rounded-md p-2 h-fit"
                       >
                         <option value="" disabled selected>Seleccione un patrón</option>
-                        {
-                          PATTERNS_ITEMS.map((item, itemIndex) => {
-                            return (
-                              <option value={item} key={itemIndex}
-                                disabled={patterns.includes(item)}
-                              >{item}</option>
-                            )
-                          })
-                        }
+                        {patterns?.map((pattern, patternIndex) => (
+                          <option key={patternIndex} disabled={!pattern.status || selectedPateerns.includes(pattern.code)}>
+                            {pattern.code}
+                          </option>
+                        ))}
                       </select>
-
                       <Trash2 className='text-red-400 cursor-pointer' width={20}
                         onClick={() => removePattern(index)}
                       />
@@ -98,7 +94,7 @@ export const DescriptionPattern = ({
                 background: 'white',
                 color: '#333'
               }}
-                disabled={patterns.length >= 3}
+                disabled={selectedPateerns.length >= 3}
               >
                 Agregar patron
               </CButton>
@@ -129,7 +125,7 @@ export const DescriptionPattern = ({
           description="¿Estás seguro de guardar las modificaciones?"
           onConfirm={() =>
             handleSaveInformation(
-              { ...values, descriptionPatterns: patterns },
+              { ...values, descriptionPatterns: selectedPateerns },
               url,
               false,
             )

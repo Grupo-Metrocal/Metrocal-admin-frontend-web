@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ILinearityTest } from '../../../../[id]/interface/b_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { linearityOptions } from '../constans/linearityOptions'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const LinearityTest = ({
   linearityTest,
@@ -19,6 +20,8 @@ export const LinearityTest = ({
   const [data, setData] = useState<ILinearityTest>(
     linearityTest,
   )
+
+  const { patterns } = usePattern('NI-MCIT-B-01')
 
   const handleInputChange = (
     newValue: number | string | string[],
@@ -94,14 +97,9 @@ export const LinearityTest = ({
                           handleSelectChange(e.target.value, index, itemIndex)
                         }
                       >
-                        {linearityOptions.map((option, optionIndex) => (
-                          <option
-                            key={optionIndex}
-                            value={option}
-                            className={`${option === item ? 'font-bold' : ''
-                              }`}
-                          >
-                            {option}
+                        {patterns?.map((pattern, patternIndex) => (
+                          <option key={patternIndex} disabled={!pattern.status}>
+                            {pattern.code}
                           </option>
                         ))}
                       </select>

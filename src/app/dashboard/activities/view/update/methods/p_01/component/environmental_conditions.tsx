@@ -2,6 +2,7 @@ import { useForm } from '@/hooks/useForm'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/p_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -16,14 +17,7 @@ export const EnvironmentalConditions = ({
 }) => {
   const url = `methods/ni-mcit-p-01/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
-
-  const equipmentOptions = [
-    'NI-MCPPT-01',
-    'NI-MCPPT-02',
-    'NI-MCPPT-04',
-    'NI-MCPPT-05',
-    'NI-MCPPT-06',
-  ]
+  const { patterns } = usePattern('all')
 
   const equipementOPTHPA = ['NI-MCPPT-06']
 
@@ -57,6 +51,23 @@ export const EnvironmentalConditions = ({
           } else if (field === 'hPa') {
             cycle.hPa.equipement = value as string
           }
+        }
+        return cycle
+      })
+      return { ...prev, cycles }
+    })
+  }
+
+  const handleFieldChange = (
+    field: string,
+    value: number | string,
+  ) => {
+    setData((prev) => {
+      const cycles = prev.cycles?.map((cycle) => {
+        if (field === 'ta') {
+          cycle.ta.equipement = value as string
+        } else if (field === 'hPa') {
+          cycle.hPa.equipement = value as string
         }
         return cycle
       })
@@ -149,20 +160,16 @@ export const EnvironmentalConditions = ({
                   <select
                     value={cycle.ta.equipement}
                     onChange={(e) =>
-                      handleEdit(
-                        'equipement',
-                        'ta',
-                        e.target.value,
-                        cycle.cycle_number,
-                      )
+                      handleFieldChange('ta', e.target.value)
                     }
                   >
-                    {equipmentOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                    {patterns?.map((pattern) => (
+                      <option key={pattern.id} disabled={!pattern.status} value={pattern.code}>
+                        {pattern.code}
                       </option>
                     ))}
                   </select>
+
                 </td>
               )}
               <td className="border px-4 py-2">
@@ -200,11 +207,9 @@ export const EnvironmentalConditions = ({
                   <select
                     value={cycle.hPa.equipement}
                     onChange={(e) =>
-                      handleEdit(
-                        'equipement',
+                      handleFieldChange(
                         'hPa',
                         e.target.value,
-                        cycle.cycle_number,
                       )
                     }
                   >

@@ -2,6 +2,7 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/d_02'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -16,6 +17,7 @@ export const EnvironmentalConditions = ({
 }) => {
   const url = `methods/ni-mcit-d-02/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
+  const { patterns } = usePattern('all')
 
   const handleEdit = (key: string, field: string, value: number | string) => {
     setData((prev) => {
@@ -62,10 +64,9 @@ export const EnvironmentalConditions = ({
     ) {
       toast.dismiss()
       toast.error(
-        `Valor inválido para ${key}: ${value}. ${
-          key === 'hours'
-            ? 'Las horas deben estar entre 0 y 23.'
-            : 'Los minutos deben estar entre 0 y 59.'
+        `Valor inválido para ${key}: ${value}. ${key === 'hours'
+          ? 'Las horas deben estar entre 0 y 23.'
+          : 'Los minutos deben estar entre 0 y 59.'
         }`,
       )
       return
@@ -100,7 +101,7 @@ export const EnvironmentalConditions = ({
             <td className="border px-4 py-2">1</td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.ta.initial ?? 0}
                 onChange={(e) =>
@@ -110,7 +111,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.ta.end ?? 0}
                 onChange={(e) =>
@@ -120,7 +121,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.hr.initial ?? 0}
                 onChange={(e) =>
@@ -130,7 +131,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.cycles.hr.end ?? 0}
                 onChange={(e) =>
@@ -139,18 +140,21 @@ export const EnvironmentalConditions = ({
               />
             </td>
             <td className="border px-4 py-2">
-              <input
-                className="w-full p-1 border rounded"
-                type="text"
-                value={data?.equipment_used ?? 0}
-                onChange={(e) =>
-                  handleFieldChange('equipment_used', e.target.value)
-                }
-              />
+              <select
+                className="p-1 border rounded"
+                value={data?.equipment_used ?? ""}
+                onChange={(e) => handleFieldChange("equipment_used", e.target.value)}
+              >
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status}>
+                    {pattern.code}
+                  </option>
+                ))}
+              </select>
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.time?.hours ?? 0}
                 onChange={(e) =>
@@ -160,7 +164,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="w-[65px] p-1 border rounded"
                 type="number"
                 value={data?.time?.minute ?? 0}
                 onChange={(e) =>
@@ -170,7 +174,7 @@ export const EnvironmentalConditions = ({
             </td>
             <td className="border px-4 py-2">
               <input
-                className="w-full p-1 border rounded"
+                className="p-1 border rounded"
                 type="text"
                 value={data?.stabilization_site}
                 onChange={(e) =>
