@@ -1,6 +1,7 @@
 import { LayoutPage } from "@/components/LayoutPage";
 import { CALIBRATION_METHODS } from "../constants/CalibrationMethods";
 import Link from "next/link";
+import { formatMethodName } from "@/utils/formatMethodName";
 
 export default function Page() {
   return (
@@ -9,7 +10,7 @@ export default function Page() {
         {
           CALIBRATION_METHODS.map((method, index) => (
             <Link key={index} href={`/dashboard/settings/patterns/${method.value}`} className="p-4 bg-white shadow-lg text-center rounded-lg font-semibold hover:bg-[#0199d4] hover:text-white transition-all">
-              <span>{method.label}</span>
+              <span>{formatMethodName({ method: method.label as any })}</span>
             </Link>
           ))
         }

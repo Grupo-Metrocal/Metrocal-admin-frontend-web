@@ -5,6 +5,7 @@ import { useState } from "react";
 import { downloadAlternativeExcelEngine, downloadInternExcelEngine } from "@/utils/downloadExcelEngine";
 import { toast } from "sonner";
 import { getCookie } from "cookies-next";
+import { formatMethodName } from "@/utils/formatMethodName";
 
 interface IProps {
   engineRef: Engine
@@ -73,7 +74,7 @@ export const ItemEngine = ({ engineRef, deleteEngine }: IProps) => {
 
           <div className="flex items-center gap-4">
             <div>
-              <h3 className="text-lg font-semibold text-gray-800">{engine.calibration_method}</h3>
+              <h3 className="text-lg font-semibold text-gray-800">{formatMethodName({ method: engine.calibration_method as any })}</h3>
               {engine.pattern && (
                 <p className="text-sm font-semibold text-gray-600 mt-1">Patrón dedicado: {engine.pattern}</p>
               )}
