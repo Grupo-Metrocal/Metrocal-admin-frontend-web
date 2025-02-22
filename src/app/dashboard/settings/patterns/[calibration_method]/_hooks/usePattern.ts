@@ -15,20 +15,20 @@ export interface Pattern {
   status: boolean
 }
 
-export function usePattern(calibration_method: string) {
+export function usePattern(calibration_method?: string) {
   const [patterns, setPatterns] = useState<Pattern[]>([])
 
   useEffect(() => {
-    if (calibration_method) {
-      getPatterns()
-    }
+    getPatterns()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calibration_method])
 
   const getPatterns = async () => {
     toast.loading('Cargando patrones...')
     const response = await fetchData({
-      url: `patterns/calibration_method/${calibration_method}`,
+      url: calibration_method
+        ? `patterns/calibration_method/${calibration_method}`
+        : 'patterns',
       method: 'GET',
     })
 

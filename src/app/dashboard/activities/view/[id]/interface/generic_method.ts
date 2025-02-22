@@ -51,6 +51,7 @@ export interface IDescriptionPattern {
   creditable?: boolean
   next_calibration: string
   calibration_date: string
+  pattern: string
 }
 
 export interface IMedition {

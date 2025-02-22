@@ -2,6 +2,8 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/generic_method'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
+import { formatMethodName } from '@/utils/formatMethodName'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -16,7 +18,9 @@ export const DescriptionPattern = ({
   description_pattern: IDescriptionPattern
   equipment_id: number
 }) => {
-  const { values, handleInputChange } = useForm({ ...description_pattern })
+  const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
+  const { patterns } = usePattern()
+
   const url = `methods/generic-method/description-pattern/${equipment_id}/`
 
   const handleCheckedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +29,7 @@ export const DescriptionPattern = ({
     handleInputChange({ name, value: checked })
   }
 
+  console.log({ values })
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -67,6 +72,26 @@ export const DescriptionPattern = ({
           onChange={handleInputChange}
           type='date'
         />
+
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="pattern" className="text-xs font-semibold ">
+            Patrón utilizado
+          </label>
+          <select
+            name="pattern"
+            id="pattern"
+            defaultValue={values?.pattern}
+            value={values?.pattern}
+            onChange={handleSelectChange}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            {patterns?.map((pattern, patternIndex) => (
+              pattern.method !== 'all' && <option key={patternIndex} disabled={!pattern.status}>
+                <span>{pattern.code} {' -> '} <span className='text-gray-200'>{formatMethodName({ method: pattern.method as any })}</span></span>
+              </option>
+            ))}
+          </select>
+        </div>
 
       </div>
       <div>
