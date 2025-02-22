@@ -1,6 +1,8 @@
+import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 import { IEnvironmentalConditions } from '../../../../[id]/interface/v_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { useState } from 'react'
+
 
 export const EnvironmentalConditions = ({
   environmentalConditions,
@@ -15,48 +17,64 @@ export const EnvironmentalConditions = ({
 }) => {
   const url = `methods/ni-mcit-v-01/environmental-conditions/`
   const [data, setData] = useState(environmentalConditions)
-
+  const { patterns } = usePattern('all')
   const handleEdit = (
     field: string,
     value: number | string,
-    cycleNumber: number,
+    cycleNumber?: number,
   ) => {
-    if (isNaN(value as number)) {
-      return
+
+    if (!cycleNumber) {
+      setData((prev) => ({
+        ...prev,
+        [field]: value
+      }));
     }
 
-    setData((prev) => {
-      const points = prev.points?.map((point) => {
-        if (point.point_number === cycleNumber) {
-          if (field === 'temperature.initial') {
-            point.temperature.initial = value as number
-          } else if (field === 'temperature.final') {
-            point.temperature.final = value as number
-          } else if (field === 'humidity.initial') {
-            point.humidity.initial = value as number
-          } else if (field === 'humidity.final') {
-            point.humidity.final = value as number
-          } else if (field === 'presion_pa.initial') {
-            point.presion_pa.initial = value as number
-          } else if (field === 'presion_pa.final') {
-            point.presion_pa.final = value as number
-          } else if (field === 'presion_pa.resolution') {
-            point.presion_pa.resolution = value as number
-          } else if (field === 'temperature.resolution') {
-            point.temperature.resolution = value as number
-          } else if (field === 'humidity.resolution') {
-            point.humidity.resolution = value as number
-          }
-        }
-        return point
-      })
-      return { ...prev, points }
-    })
-  }
+    if (typeof value === "string" && Number.isNaN(Number(value))) {
+      return;
+    }
+
+    setData((prev) => ({
+      ...prev,
+      points: prev.points?.map((point) => {
+        if (point.point_number !== cycleNumber) return point;
+
+        const [category, key] = field.split(".");
+        return {
+          ...point,
+          [category]: {
+            ...((point as any)[category]),
+            [key]: value,
+          },
+        };
+      }),
+    }));
+  };
+
 
   return (
     <div className="flex flex-col space-y-4">
       <div className="flex flex-col space-y-4 gap-4">
+        <div className="flex flex-col gap-[1em]">
+          <label htmlFor="unit" className="text-xs font-semibold ">
+            Patrón utilizado
+          </label>
+          <select
+            name="pattern"
+            id="pattern"
+            defaultValue={data.pattern}
+            value={data.pattern}
+            onChange={(e) => handleEdit('pattern', e.target.value)}
+            className="border border-gray-300 rounded-md p-2 h-fit"
+          >
+            {patterns?.map((pattern, patternIndex) => (
+              <option key={patternIndex} disabled={!pattern.status}>
+                {pattern.code}
+              </option>
+            ))}
+          </select>
+        </div>
         {data?.points?.map((point, index) => {
           return (
             <table key={index}>

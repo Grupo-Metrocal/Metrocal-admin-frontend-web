@@ -39,6 +39,7 @@ export interface IEquipmentInformation {
 export interface IEnvironmentalConditions {
   id: number
   points: Point[]
+  pattern: string
 }
 
 export interface Point {
