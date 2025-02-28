@@ -16,20 +16,24 @@ export const handleGeneratePDFCertificate = async ({
     description: 'Espere un momento por favor',
   })
 
-  const response = await fetchData({
+  fetchData({
     url: `methods/download-certificate-pdf/${activity_id}/${method_name}/${method_id}`,
     method: 'GET',
     responseType: 'blob',
   })
+    .then((blob) => {
+      if (!blob || blob.type !== 'application/pdf') {
+        throw new Error('La respuesta no es un PDF válido')
+      }
 
-  if (response) {
-    const blob = new Blob([response], { type: 'application/pdf' })
-    const link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = `certificado-${no}.pdf`
-    link.click()
-    toast.success('PDF generado correctamente')
-  } else {
-    toast.error('Error al generar el PDF')
-  }
+      const link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.download = `certificado-${no}.pdf`
+      link.click()
+      toast.success('PDF generado correctamente')
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+      toast.error(error.message || 'Error al generar el PDF')
+    })
 }

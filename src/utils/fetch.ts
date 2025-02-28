@@ -1,7 +1,7 @@
 interface IFetchData {
   url: string
   method?: string
-  body?: {} | FormData // Añadimos soporte para FormData
+  body?: {} | FormData
   headers?: HeadersInit
   responseType?: 'json' | 'text' | 'blob' | 'formData' | 'arrayBuffer'
   params?: {}
@@ -25,7 +25,8 @@ export const fetchData = async ({
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
       method,
-      body: body instanceof FormData ? body : JSON.stringify(body),
+      body:
+        body instanceof FormData ? body : body ? JSON.stringify(body) : null,
       headers:
         body instanceof FormData
           ? headers
@@ -33,10 +34,14 @@ export const fetchData = async ({
       cache: 'no-cache',
     })
 
-    const data = await response[responseType]()
-    return data
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(errorText || `Error ${response.status}`)
+    }
+
+    return response[responseType]()
   } catch (error) {
     console.error('Fetch error:', error)
-    return false
+    throw error
   }
 }
