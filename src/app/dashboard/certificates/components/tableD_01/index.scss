@@ -45,11 +45,12 @@
         tr {
           th {
             padding: 10px 0;
-            text-align: left;
+            text-align: center;
             font-size: 14px;
             font-weight: 600;
             color: #2f2a2a;
-            border-bottom: 1px solid #999;
+            border: 1px solid #999;
+            background-color: #f0f0f0;
           }
         }
       }
@@ -57,11 +58,11 @@
         tr {
           td {
             padding: 10px 0;
-            text-align: left;
+            text-align: center;
             font-size: 14px;
             font-weight: 400;
             color: #000;
-            border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+            border: 1px solid rgb(0, 0, 0, 0.2);
           }
         }
       }
