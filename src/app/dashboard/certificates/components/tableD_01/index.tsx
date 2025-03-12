@@ -134,36 +134,65 @@ export const TableD_01 = ({ certificate,
         <table>
           <thead>
             <tr>
-              <th>Punto</th>
+              <th rowSpan={2}>Punto</th>
               <th>Valor nominal</th>
               <th>Lectura actual</th>
               <th>Desviación</th>
             </tr>
+            <tr>
+              <th>
+                {renderValue(
+                  certificate.calibrations.calibration_result_outside.nominal_value_outside[0]
+                )}
+              </th>
+              <th>
+                {
+                  renderValue(
+                    certificate.calibrations.calibration_result_outside.current_reading_outside[0]
+                  )
+                }
+              </th>
+              <th>
+                {renderValue(
+                  certificate.calibrations.calibration_result_outside.deviation_outside[0]
+                )}
+              </th>
+            </tr>
           </thead>
           <tbody>
             {certificate.calibrations.calibration_result_outside.current_reading_outside.map(
-              (nominalValue, index) => (
-                <tr key={index}>
-                  <td>
-                    {
-                      index % 2 === 0 ? 'Superior' : 'Inferior'
-                    }
-                  </td>
-                  <td
-                  >
-                    {renderValue(certificate.calibrations.calibration_result_outside.nominal_value_outside[index])}
-                  </td>
-                  <td>
-                    {renderValue(nominalValue)}
-                  </td>
-                  <td
-                  >
-                    {renderValue(certificate.calibrations.calibration_result_outside.deviation_outside[index])}
-                  </td>
-                </tr>
-              )
-            )}
+              (reading, index) => {
+                if (index === 0) return null;
 
+                const adjustedIndex = index - 1;
+                const isFirstRowOfPair = adjustedIndex % 2 === 0;
+                const nominalIndex = Math.floor(adjustedIndex / 2);
+
+                return (
+                  <tr key={index}>
+                    <td>{isFirstRowOfPair ? "Superior" : "Inferior"}</td>
+
+                    {isFirstRowOfPair && (
+                      <td rowSpan={2}>
+                        {renderValue(
+                          certificate.calibrations.calibration_result_outside.nominal_value_outside[nominalIndex + 1]
+                        )}
+                      </td>
+                    )}
+
+                    <td>{renderValue(reading)}</td>
+
+                    {isFirstRowOfPair && (
+                      <td rowSpan={2}>
+                        {renderValue(
+                          certificate.calibrations.calibration_result_outside.deviation_outside[nominalIndex + 1]
+                        )}
+                      </td>
+                    )}
+                  </tr>
+                );
+              }
+            )}
           </tbody>
         </table>
       </section>
@@ -172,34 +201,84 @@ export const TableD_01 = ({ certificate,
         <table>
           <thead>
             <tr>
-              <th>Punto</th>
+              <th rowSpan={2}>Punto</th>
               <th>Valor nominal</th>
               <th>Lectura actual</th>
               <th>Desviación</th>
+            </tr>
+            <tr>
+              <th>
+                {renderValue(
+                  certificate.calibrations.calibration_result_inside.nominal_value_inside[0]
+                )}
+              </th>
+              <th>
+                {
+                  renderValue(
+                    certificate.calibrations.calibration_result_inside.current_reading_inside[0]
+                  )
+                }
+              </th>
+              <th>
+                {renderValue(
+                  certificate.calibrations.calibration_result_inside.deviation_inside[0]
+                )}
+              </th>
             </tr>
           </thead>
           <tbody>
             {
               certificate.calibrations.calibration_result_inside.current_reading_inside.map(
-                (nominalValue, index) => (
-                  <tr key={index}>
-                    <td>
-                      {
-                        index % 2 === 0 ? 'Superior' : 'Inferior'
-                      }
-                    </td>
-                    <td
-                    >
-                      {renderValue(certificate.calibrations.calibration_result_inside.nominal_value_inside[index])}
-                    </td>
-                    <td>
-                      {renderValue(nominalValue)}
-                    </td>
-                    <td>
-                      {renderValue(certificate.calibrations.calibration_result_inside.deviation_inside[index])}
-                    </td>
-                  </tr>
-                )
+                (nominalValue, index) => {
+                  if (index === 0) return null;
+
+                  const adjustedIndex = index - 1;
+                  const isFirstRowOfPair = adjustedIndex % 2 === 0;
+                  const nominalIndex = Math.floor(adjustedIndex / 2);
+
+                  return (
+                    <tr key={index}>
+                      <td>{isFirstRowOfPair ? "Superior" : "Inferior"}</td>
+
+                      {isFirstRowOfPair && (
+                        <td rowSpan={2}>
+                          {renderValue(
+                            certificate.calibrations.calibration_result_inside.nominal_value_inside[nominalIndex + 1]
+                          )}
+                        </td>
+                      )}
+
+                      <td>{renderValue(nominalValue)}</td>
+
+                      {isFirstRowOfPair && (
+                        <td rowSpan={2}>
+                          {renderValue(
+                            certificate.calibrations.calibration_result_inside.deviation_inside[nominalIndex + 1]
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  );
+                }
+                // (
+                //   <tr key={index}>
+                //     <td>
+                //       {
+                //         index % 2 === 0 ? 'Superior' : 'Inferior'
+                //       }
+                //     </td>
+                //     <td
+                //     >
+                //       {renderValue(certificate.calibrations.calibration_result_inside.nominal_value_inside[index])}
+                //     </td>
+                //     <td>
+                //       {renderValue(nominalValue)}
+                //     </td>
+                //     <td>
+                //       {renderValue(certificate.calibrations.calibration_result_inside.deviation_inside[index])}
+                //     </td>
+                //   </tr>
+                // )
               )
             }
           </tbody>
