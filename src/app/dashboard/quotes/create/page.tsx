@@ -310,7 +310,7 @@ export default function Page() {
         </CButton>
       </div>
 
-      <div className="contact-information__body">
+      <div className="contact-information__body w-full">
         <section className="grid grid-cols-2 gap-4 p-4 bg-white rounded">
           <PopoverSelected
             list={
