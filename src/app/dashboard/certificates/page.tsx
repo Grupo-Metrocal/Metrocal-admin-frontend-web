@@ -156,30 +156,29 @@ export default function Page() {
     <LayoutPage
       title="Certificados"
       Footer={() => (
-        <div className="flex justify-end w-full gap-4">
-          {
-            loadingEmmitCertificate && <Backdrop title='Enviando todos los CERTIFICADOS, porfavor espere un momento.' message='Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados.' />
-          }
+        <div className="flex justify-end w-full gap-4 p-4 border-t bg-gray-100 shadow-md">
+          {loadingEmmitCertificate && (
+            <Backdrop
+              title="Enviando todos los CERTIFICADOS, por favor espere..."
+              message="Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados."
+            />
+          )}
           <AlertDialogModal
             onConfirm={() =>
               emmitCertificateToClient((selectedActivity?.id as number) || 0)
             }
-            title="Antes de enviar todos los certificados, debe verificar que los datos sean correctos"
-            description="Una vez enviados los certificados se limpiaran los registros generados"
+            title="Antes de enviar todos los certificados, verifique los datos"
+            description="Una vez enviados, los registros generados se eliminarán."
             nameButton="ENVIAR CERTIFICADOS"
             useButton
           />
         </div>
       )}
     >
-      <Content
-        title="Certificados pendientes"
-        colorTitle="yellow"
-        className="mt-4"
-      >
+      <Content title="Certificados pendientes" colorTitle="yellow" className="mt-4">
         <div className="pending-certificate">
-          <div className="pending-certificate__table">
-            <div className="pending-certificate__table__content">
+          <div className="pending-certificate__table border rounded-lg shadow-md p-4 bg-white">
+            <div className="pending-certificate__table__content overflow-auto max-h-[400px]">
               {loading ? (
                 <div className="flex mt-4 justify-center">
                   <Spinner />
@@ -194,13 +193,13 @@ export default function Page() {
                   />
                 ))
               ) : (
-                <p className="text-center mt-4">
+                <p className="text-center mt-4 text-gray-500">
                   No hay actividades pendientes para certificar
                 </p>
               )}
             </div>
           </div>
-          <div className="pending-certificate__details">
+          <div className="pending-certificate__details border rounded-lg shadow-md p-4 bg-white">
             <SelectedPendingCertify
               selectedActivity={selectedActivity as IPendingActivities}
               loading={loading}
@@ -222,50 +221,45 @@ export default function Page() {
             <Spinner />
           </div>
         ) : certificate?.renderer_method ? (
-          <div className="flex justify-center items-center h-full flex-col gap-8">
+          <div className="flex justify-center items-center h-full flex-col gap-6 p-6 bg-white rounded-lg shadow-md">
             {Renderer ? (
-              <>
-                <Renderer certificate={certificate}
-                  method_name={certificate.renderer_method}
-                  id={certificate.renderer_method_id}
-                />
-
-              </>
+              <Renderer
+                certificate={certificate}
+                method_name={certificate.renderer_method}
+                id={certificate.renderer_method_id}
+              />
             ) : (
-              <p className="text-center mt-4">
+              <p className="text-center mt-4 text-gray-500">
                 Renderizador no encontrado para el método de calibración
               </p>
             )}
 
-            <div className="w-full mb-8 flex gap-6">
+            <div className="w-full flex gap-6 justify-center">
               <AlertDialogModal
-                onConfirm={() => reviewCertificate()}
-                title='Aprobar certificado'
-                description="Antes de aprobar el certificado, verifique que los datos sean correctos"
+                onConfirm={reviewCertificate}
+                title="Aprobar certificado"
+                description="Antes de aprobar el certificado, verifique que los datos sean correctos."
                 nameButton="Aprobar certificado"
                 useButton
               />
 
               <AlertDialogModal
-                onConfirm={() => reviewAndEmmitCertificate()}
+                onConfirm={reviewAndEmmitCertificate}
                 title="Aprobar y Enviar Certificado"
-                description='El certificado se aprobara y se enviara al correo del cliente, porfavor verifique que los resultados esten correctos.'
+                description="El certificado se aprobará y se enviará al correo del cliente. Verifique que los resultados sean correctos."
                 nameButton="Aprobar y Enviar"
                 useButton
                 buttonStyle={{
-                  backgroundColor: '#22c55e'
+                  backgroundColor: "#22c55e",
                 }}
               />
             </div>
           </div>
         ) : (
-          <p className="text-center mt-4">
-            No hay certificado para mostrar, porfavor seleccine un equipo y
-            genere los resultados del certificado
+          <p className="text-center mt-4 text-gray-500">
+            No hay certificado para mostrar. Seleccione un equipo y genere los resultados del certificado.
           </p>
         )}
-
-
       </Content>
     </LayoutPage>
   )

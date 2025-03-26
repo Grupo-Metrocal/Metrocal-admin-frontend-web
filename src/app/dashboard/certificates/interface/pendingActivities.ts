@@ -29,7 +29,7 @@ interface Teammember {
   imageURL: string
   email: string
 }
-interface QuoteRequest {
+export interface QuoteRequest {
   id: number
   no: string
   price: number
