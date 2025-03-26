@@ -128,7 +128,7 @@ export default function RootLayout({
                     </CSheet>
                   </div>
                   <div className="notification" data-badge="+9">
-                    <Image src={notificationIcon} alt="Notification" />
+                    {/* <Image src={notificationIcon} alt="Notification" /> */}
                   </div>
                   <div className="profile">
                     <CSheet
