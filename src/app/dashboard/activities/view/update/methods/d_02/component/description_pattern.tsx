@@ -73,8 +73,8 @@ export const DescriptionPattern = ({
                         <option value="" disabled selected>Seleccione un patrón</option>
                         {patterns?.map((pattern, patternIndex) => (
                           <option key={patternIndex} disabled={!pattern.status || selectedPatterns.includes(pattern.code)}
-                          >
-                            {pattern.code}
+                            value={pattern.code}>
+                            {pattern.code} - {pattern.type}
                           </option>
                         ))}
                       </select>

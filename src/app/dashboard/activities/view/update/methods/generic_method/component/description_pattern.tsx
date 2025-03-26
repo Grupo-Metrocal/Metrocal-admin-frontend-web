@@ -86,8 +86,8 @@ export const DescriptionPattern = ({
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
             {patterns?.map((pattern, patternIndex) => (
-              pattern.method !== 'all' && <option key={patternIndex} disabled={!pattern.status}>
-                <span>{pattern.code} {' -> '} <span className='text-gray-200'>{formatMethodName({ method: pattern.method as any })}</span></span>
+              pattern.method !== 'all' && <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                <span>{pattern.code} - {pattern.type} {' -> '} <span className='text-gray-200'>{formatMethodName({ method: pattern.method as any })}</span></span>
               </option>
             ))}
           </select>

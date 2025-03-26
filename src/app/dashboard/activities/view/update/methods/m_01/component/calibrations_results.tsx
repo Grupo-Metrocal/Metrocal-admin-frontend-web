@@ -74,8 +74,8 @@ export const CalibrationsResults = ({
                           }
                         >
                           {patterns?.map((patternItem, patternIndex) => (
-                            <option key={patternIndex} disabled={!patternItem.status} className={`${pattern === patternItem.code && 'bg-blue-200'}`}>
-                              {patternItem.code}
+                            <option key={patternIndex} disabled={!patternItem.status} className={`${pattern === patternItem.code && 'bg-blue-200'}`} value={patternItem.code}>
+                              {patternItem.code} - {patternItem.type}
                             </option>
                           ))}
                         </select>
@@ -95,8 +95,8 @@ export const CalibrationsResults = ({
                     }}
                   >
                     {patterns?.map((patternItem, patternIndex) => (
-                      <option key={patternIndex} disabled={!patternItem.status} className={`${result.mass === patternItem.code && 'bg-blue-200'}`}>
-                        {patternItem.code}
+                      <option key={patternIndex} disabled={!patternItem.status} className={`${result.mass === patternItem.code && 'bg-blue-200'}`} value={patternItem.code}>
+                        {patternItem.code} - {patternItem.type}
                       </option>
                     ))}
                   </select>

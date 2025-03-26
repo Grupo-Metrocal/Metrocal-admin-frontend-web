@@ -165,7 +165,7 @@ export const EnvironmentalConditions = ({
                   >
                     {patterns?.map((pattern) => (
                       <option key={pattern.id} disabled={!pattern.status} value={pattern.code}>
-                        {pattern.code}
+                        {pattern.code} - {pattern.type}
                       </option>
                     ))}
                   </select>

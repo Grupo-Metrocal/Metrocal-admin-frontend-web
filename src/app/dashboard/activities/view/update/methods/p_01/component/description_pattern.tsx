@@ -41,8 +41,8 @@ export const DescriptionPattern = ({
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
             {patterns?.map((pattern, patternIndex) => (
-              <option key={patternIndex} disabled={!pattern.status}>
-                {pattern.code}
+              <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                {pattern.code} - {pattern.type}
               </option>
             ))}
           </select>

@@ -115,8 +115,8 @@ export const EnvironmentalConditions = ({
                 onChange={(e) => handleEdit('ta', 'equipment', e.target.value)}
               >
                 {patterns?.map((pattern, patternIndex) => (
-                  <option key={patternIndex} disabled={!pattern.status}>
-                    {pattern.code}
+                  <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                    {pattern.code} - {pattern.type}
                   </option>
                 ))}
               </select>

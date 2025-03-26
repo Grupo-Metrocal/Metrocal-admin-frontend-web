@@ -128,8 +128,8 @@ export const DescriptionPattern = ({
                 onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}
               >
                 {patterns?.map((pattern, patternIndex) => (
-                  <option key={patternIndex} disabled={!pattern.status}>
-                    {pattern.code}
+                  <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                    {pattern.code} - {pattern.type}
                   </option>
                 ))}
 
