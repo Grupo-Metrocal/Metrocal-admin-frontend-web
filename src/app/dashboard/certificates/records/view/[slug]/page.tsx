@@ -31,6 +31,7 @@ import { useRouter } from 'next/navigation'
 import { IClient } from '@/app/contactInformation'
 import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
 import { emmitCertificate } from '@/utils/functions'
+import { Backdrop } from '@/components/Backdrop'
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -67,6 +68,7 @@ export default function Page({ params }: IRoot) {
     useState<EquipmentQuoteRequest | null>(null)
   const [stackServices, setStackServices] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [loadingEmmitCertificate, setLoadingEmmitCertificate] = useState<boolean>(false)
   const { values: search, handleInputChange } = useForm({
     search: '',
   })
@@ -119,7 +121,7 @@ export default function Page({ params }: IRoot) {
     toast.loading('Preparando certificado...', {
       description: 'Esto puede tardar unos segundos, por favor espere'
     })
-    setLoading(true)
+    setLoadingEmmitCertificate(true)
 
     emmitCertificate(method_name, activity_id, method_id).then((response) => {
 
@@ -133,7 +135,7 @@ export default function Page({ params }: IRoot) {
         toast.error('Error al emitir el certificado')
       })
       .finally(() => {
-        setLoading(false)
+        setLoadingEmmitCertificate(false)
         toast.dismiss()
       })
   }
@@ -326,6 +328,10 @@ export default function Page({ params }: IRoot) {
             </div>
           )}
         </div>
+
+        {
+          loadingEmmitCertificate && <Backdrop title='Reenviando certificado, porfavor espere un momento.' message='' />
+        }
       </Content>
     </LayoutPage>
   )
