@@ -48,6 +48,7 @@ export default function Page({ params }: IProps) {
               <TableHead>Código</TableHead>
               <TableHead>Trazabilidad</TableHead>
               <TableHead>Siguiente calbiración</TableHead>
+              <TableHead>Tipo</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Acciones</TableHead>
             </TableRow>
@@ -60,6 +61,7 @@ export default function Page({ params }: IProps) {
                   <TableCell>{pattern.code}</TableCell>
                   <TableCell>{pattern.traceability}</TableCell>
                   <TableCell>{pattern.next_calibration}</TableCell>
+                  <TableCell className="capitalize">{pattern.type}</TableCell>
                   <TableHead className={`${pattern.status ? 'bg-green-400' : 'bg-red-400'}`}>
                     {pattern.status ? 'Habilitado' : 'Inhabilitado'}
                   </TableHead>

@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export const CreatePattern = ({ createPattern, calibration_method }: IProps) => {
-  const { values, handleInputChange } = useForm({
+  const { values, handleInputChange, handleSelectChange } = useForm({
     equipment: '',
     traceability: '',
     method: calibration_method,
@@ -64,6 +64,23 @@ export const CreatePattern = ({ createPattern, calibration_method }: IProps) => 
         onChange={handleInputChange}
         required
       />
+
+      <div className="flex flex-col gap-[1em]">
+        <label htmlFor="type" className="text-xs font-semibold ">
+          Tipo
+        </label>
+        <select
+          name="type"
+          id="type"
+          defaultValue={values.type}
+          value={values.type}
+          onChange={handleSelectChange}
+          className="border border-gray-300 rounded-md p-2 h-fit"
+        >
+          <option value="campo">Campo</option>
+          <option value="referencia">Referencia</option>
+        </select>
+      </div>
 
       <div className="mt-10 w-full flex justify-center">
         <CButton onClick={() => createPattern(values)}>

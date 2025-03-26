@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { toast } from 'sonner'
 
+enum PatternType {
+  Campo = 'campo',
+  Referencia = 'Referencia',
+}
+
 export interface Pattern {
   id: number
   method: string
@@ -12,6 +17,7 @@ export interface Pattern {
   pattern_range: string
   next_calibration: string
   brand: string
+  type: PatternType
   status: boolean
 }
 
