@@ -23,6 +23,7 @@ import { TableM_01 } from './components/tableM_01'
 import { TableGenericMethod } from './components/table_generic-method'
 import { emmitCertificationsToClient } from '@/utils/functions'
 import { emmitCertificate } from '@/utils/functions'
+import { Backdrop } from '@/components/Backdrop'
 
 const getData = async () => {
   return await fetchData({
@@ -114,9 +115,6 @@ export default function Page() {
       return toast.error('No se ha seleccionado ninguna actividad')
     }
     setLoadingEmmitCertificate(true)
-    toast.loading('Estamos enviando los certificados a los clientes', {
-      description: 'tiempo estimado de 2 a 7 minutos',
-    })
 
     const response = await emmitCertificationsToClient(activityID)
 
@@ -159,7 +157,9 @@ export default function Page() {
       title="Certificados"
       Footer={() => (
         <div className="flex justify-end w-full gap-4">
-          <div className="">{loadingEmmitCertificate && <Spinner />}</div>
+          {
+            loadingEmmitCertificate && <Backdrop title='Enviando todos los CERTIFICADOS, porfavor espere un momento.' message='Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados.' />
+          }
           <AlertDialogModal
             onConfirm={() =>
               emmitCertificateToClient((selectedActivity?.id as number) || 0)
@@ -264,6 +264,8 @@ export default function Page() {
             genere los resultados del certificado
           </p>
         )}
+
+
       </Content>
     </LayoutPage>
   )

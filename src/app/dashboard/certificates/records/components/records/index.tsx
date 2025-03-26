@@ -1,5 +1,9 @@
 import { DataTableDemo } from '@/components/Table'
 import { ColumnsCertifiedRecords } from '../columnsRecords.tsx'
+import { emmitCertificationsToClient } from '@/utils/functions'
+import { toast } from 'sonner'
+import { useState } from 'react'
+import { Backdrop } from '@/components/Backdrop/index'
 
 interface IProps {
   records: any[]
@@ -35,8 +39,23 @@ export const CertifiedRecords = ({
   loading,
   searchValue,
   handleInputChange,
-
 }: IProps) => {
+  const [loadingEmmitCertificate, setLoadingEmmitCertificate] = useState(false)
+
+  const forwaredCertification = async (id: number) => {
+    setLoadingEmmitCertificate(true)
+
+    const response = await emmitCertificationsToClient(id)
+    toast.dismiss()
+    setLoadingEmmitCertificate(false)
+
+    if (response.success) {
+      toast.success('Se han enviado todos los certificados')
+    } else {
+      toast.error('Hubo un error al enviar los certificados')
+    }
+  }
+
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
       setCurrentPage(currentPage - 1)
@@ -53,7 +72,7 @@ export const CertifiedRecords = ({
     <div className="bg-white p-4 rounded-lg">
       {
         <DataTableDemo<ICertifiedRecordsTable>
-          columns={ColumnsCertifiedRecords({ onDelete: () => { } })}
+          columns={ColumnsCertifiedRecords({ forwaredCertification })}
           searchValue={searchValue}
           handleSearch={handleInputChange}
           data={records ?? []}
@@ -74,6 +93,10 @@ export const CertifiedRecords = ({
             emited_by: 'Emisor',
           }}
         />
+      }
+
+      {
+        loadingEmmitCertificate && <Backdrop title='Enviando todos los CERTIFICADOS, porfavor espere un momento.' message='Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados.' />
       }
     </div>
   )

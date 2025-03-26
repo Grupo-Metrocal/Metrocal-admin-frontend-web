@@ -7,20 +7,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { emmitCertificationsToClient, Linking } from '@/utils/functions'
+import { Linking } from '@/utils/functions'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { ICertifiedRecordsTable } from '../records'
 import { formatDate } from '@/utils/formatDate'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { toast } from 'sonner'
 
 type IColumns = {
-  onDelete: (id: number) => void
+  forwaredCertification: (id: number) => void
 }
 
 export const ColumnsCertifiedRecords = ({
-  onDelete,
+  forwaredCertification
 }: IColumns): ColumnDef<ICertifiedRecordsTable>[] => {
   return [
     {
@@ -146,21 +145,7 @@ export const ColumnsCertifiedRecords = ({
                 }}
               >
                 <AlertDialogModal
-                  onConfirm={async () => {
-                    toast.loading('Reenviando todos los certificados...', {
-                      description: 'Esto puede tardar, porfavor espere...',
-                      duration: 50000
-                    })
-
-                    const response = await emmitCertificationsToClient((payment.id as number) || 0)
-                    toast.dismiss()
-
-                    if (response.success) {
-                      toast.success('Se han enviado todos los certificados')
-                    } else {
-                      toast.error('Hubo un error al enviar los certificados')
-                    }
-                  }}
+                  onConfirm={() => forwaredCertification(payment.id as number)}
                   title="Antes de reenviar todos los certificados, debe verificar que los datos sean correctos"
                   description="Una vez enviados los certificados se limpiaran los registros generados"
                   nameButton="Reenviar Certificados"
