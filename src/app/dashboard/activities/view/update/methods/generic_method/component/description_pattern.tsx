@@ -128,7 +128,7 @@ export const DescriptionPattern = ({
                 onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}
               >
                 {patterns?.map((pattern, patternIndex) => (
-                  <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                  <option key={patternIndex} disabled={!pattern.status} value={pattern.code + ' -> ' + pattern.method}>
                     <span>{pattern.code} - {pattern.type} {' -> '} <span className='text-gray-200'>{formatMethodName({ method: pattern.method as any })}</span></span>
                   </option>
                 ))}
