@@ -133,7 +133,7 @@ export const DescriptionPattern = ({
                   </option>
                 ))}
 
-                <option value="" disabled selected>Seleeciones un patron</option>
+                <option value="" disabled selected>Selecciones un patron</option>
               </select>
               <CButton onClick={() => addPattern(values.pattern)}>+ Agregar</CButton>
 

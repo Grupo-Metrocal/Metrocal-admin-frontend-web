@@ -4,6 +4,10 @@ import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 import { formatMethodName } from '@/utils/formatMethodName'
+import { CButton } from '@/components/CButton'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { Trash } from 'lucide-react'
 
 export const DescriptionPattern = ({
   description_pattern,
@@ -18,7 +22,7 @@ export const DescriptionPattern = ({
   description_pattern: IDescriptionPattern
   equipment_id: number
 }) => {
-  const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
+  const { values, handleInputChange, handleSelectChange, setValues } = useForm({ ...description_pattern })
   const { patterns } = usePattern()
 
   const url = `methods/generic-method/description-pattern/${equipment_id}/`
@@ -29,7 +33,29 @@ export const DescriptionPattern = ({
     handleInputChange({ name, value: checked })
   }
 
-  console.log({ values })
+  const addPattern = (newPattern: string) => {
+    if (!newPattern) return toast('Seleecione un patron')
+
+    setValues((prevData: IDescriptionPattern) => {
+      if (prevData.patterns?.includes(newPattern)) {
+        toast('El patron ya existe')
+        return prevData;
+      }
+
+      return {
+        ...prevData,
+        patterns: prevData.patterns ? [...prevData.patterns, newPattern] : [newPattern],
+      };
+    });
+  };
+
+  const removePattern = (index: number) => {
+    setValues((prevData: IDescriptionPattern) => ({
+      ...prevData,
+      patterns: prevData.patterns.filter((_, i) => i !== index),
+    }));
+  };
+
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -73,7 +99,7 @@ export const DescriptionPattern = ({
           type='date'
         />
 
-        <div className="flex flex-col gap-[1em]">
+        {/* <div className="flex flex-col gap-[1em]">
           <label htmlFor="pattern" className="text-xs font-semibold ">
             Patrón utilizado
           </label>
@@ -91,6 +117,41 @@ export const DescriptionPattern = ({
               </option>
             ))}
           </select>
+        </div> */}
+
+        <div className="my-4 w-full flex flex-col gap-4">
+          <div className='flex flex-col  gap-4'>
+            <span>Agregar patron utilizado</span>
+            <div className='flex justify-between w-full'>
+              <select name="pattern"
+                className="border border-gray-300 rounded-md p-2 h-fit"
+                onChange={handleSelectChange} defaultValue={values.pattern} value={values.pattern}
+              >
+                {patterns?.map((pattern, patternIndex) => (
+                  <option key={patternIndex} disabled={!pattern.status} value={pattern.code}>
+                    <span>{pattern.code} - {pattern.type} {' -> '} <span className='text-gray-200'>{formatMethodName({ method: pattern.method as any })}</span></span>
+                  </option>
+                ))}
+
+                <option value="" disabled selected>Selecciones un patron</option>
+              </select>
+              <CButton onClick={() => addPattern(values.pattern)}>+ Agregar</CButton>
+
+            </div>
+          </div>
+          {
+            values?.patterns || values?.patterns?.length < 1 ? values?.patterns?.map((item: string, itemIndex: number) => {
+              return (
+                <div key={item} className='flex justify-between'>
+                  <span>{item}</span>
+                  <button type="button" className='mr-[40%]' onClick={() => removePattern(itemIndex)}>
+                    <Trash width={18} />
+                  </button>
+                </div>
+              )
+            }) :
+              <span className='bg-gray-100 p-4 block'>No se han agregado patrones</span>
+          }
         </div>
 
       </div>
