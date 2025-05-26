@@ -17,7 +17,9 @@ export const handleGeneratePDFCertificate = async ({
   })
 
   fetchData({
-    url: `methods/download-certificate-pdf/${activity_id}/${method_name}/${method_id}`,
+    url: `methods/download-certificate-pdf/${activity_id}/${formatMethodName(
+      method_name,
+    )}/${method_id}`,
     method: 'GET',
     responseType: 'blob',
   })
@@ -37,3 +39,6 @@ export const handleGeneratePDFCertificate = async ({
       toast.error(error.message || 'Error al generar el PDF')
     })
 }
+
+const formatMethodName = (methodName: string) =>
+  methodName.replaceAll('-', '_').toLocaleUpperCase()
