@@ -124,45 +124,51 @@ export const TableP_01 = ({
       </section>
 
       <section className="table-p-01__result_unid_system">
-        <h2>Resultados en Unidad del Sistema Internacional de Unidades</h2>
+        {
+          certificate.show_table_international_system_units && (
+            <>
+              <h2>Resultados en Unidad del Sistema Internacional de Unidades</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Presión de referencia</th>
-              <th>indicación del equipo</th>
-              <th>Correción</th>
-              <th>Incertidumbre expandida K = 2</th>
-            </tr>
-          </thead>
-          <tbody>
-            {certificate.calibration_results.result_unid_system.reference_pressure.map(
-              (item: any, index: any) => (
-                <tr key={index}>
-                  <td>{item}</td>
-                  <td>
-                    {
-                      renderValue(certificate.calibration_results.result_unid_system
-                        .equipment_indication[index])
-                    }
-                  </td>
-                  <td>
-                    {
-                      renderValue(certificate.calibration_results.result_unid_system
-                        .correction[index])
-                    }
-                  </td>
-                  <td>
-                    {
-                      renderValue(certificate.calibration_results.result_unid_system
-                        .uncertainty[index])
-                    }
-                  </td>
-                </tr>
-              ),
-            )}
-          </tbody>
-        </table>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Presión de referencia</th>
+                    <th>indicación del equipo</th>
+                    <th>Correción</th>
+                    <th>Incertidumbre expandida K = 2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {certificate.calibration_results.result_unid_system.reference_pressure.map(
+                    (item: any, index: any) => (
+                      <tr key={index}>
+                        <td>{item}</td>
+                        <td>
+                          {
+                            renderValue(certificate.calibration_results.result_unid_system
+                              .equipment_indication[index])
+                          }
+                        </td>
+                        <td>
+                          {
+                            renderValue(certificate.calibration_results.result_unid_system
+                              .correction[index])
+                          }
+                        </td>
+                        <td>
+                          {
+                            renderValue(certificate.calibration_results.result_unid_system
+                              .uncertainty[index])
+                          }
+                        </td>
+                      </tr>
+                    ),
+                  )}
+                </tbody>
+              </table>
+            </>
+          )
+        }
 
 
 
