@@ -94,15 +94,12 @@ export const ChangeCertCode = ({ calibration_method, equipment_id, current_certf
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
             <option value="" selected disabled>Seleccione un metodo</option>
-            <option value="NI_MCIT_P_01">NI-MCIT-P-01</option>
-            <option value="NI_MCIT_B_01">NI-MCIT-B-01</option>
-            <option value="NI_MCIT_T_01">NI-MCIT-T-01</option>
-            <option value="NI_MCIT_T_03">NI-MCIT-T-03</option>
-            <option value="NI_MCIT_T_05">NI-MCIT-T-05</option>
-            <option value="NI_MCIT_V_01">NI-MCIT-V-01</option>
-            <option value="NI_MCIT_D_01">NI-MCIT-D-01</option>
-            <option value="NI_MCIT_D_02">NI-MCIT-D-02</option>
-            <option value="NI_MCIT_M_01">NI-MCIT-M-01</option>
+            <option value="NI_MCIT_P_01">NI-MCIT-P (Presión)</option>
+            <option value="NI_MCIT_B_01">NI-MCIT-B (Balanza)</option>
+            <option value="NI_MCIT_T_01">NI-MCIT-T (Temperatura)</option>
+            <option value="NI_MCIT_V_01">NI-MCIT-V (Volumen)</option>
+            <option value="NI_MCIT_D_01">NI-MCIT-D (Dimensional)</option>
+            <option value="NI_MCIT_M_01">NI-MCIT-M (Masas)</option>
           </select>
         </div>
 
