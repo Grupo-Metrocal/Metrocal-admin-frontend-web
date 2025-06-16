@@ -52,6 +52,10 @@ export default function Page() {
     search: '',
   })
 
+  const { values: searchQuote, handleInputChange: handleInputChangeSearchQuote } = useForm({
+    search: '',
+  })
+
   const filterdActivities = useMemo(() => {
     if (filterSelected === 'Todos') {
       return activities.filter((activity) =>
@@ -83,6 +87,13 @@ export default function Page() {
 
     return activities
   }, [activities, filterSelected, search])
+
+  const filteredQuotes = useMemo(() => {
+    return quotes.filter((quote) =>
+      quote.no.includes(searchQuote.search),
+    )
+  }
+    , [quotes, searchQuote])
 
   const router = useRouter()
 
@@ -158,14 +169,29 @@ export default function Page() {
   return (
     <LayoutPage title="Actividades" className="activities_content_layout">
       <Content title="Asignación de actividades" className="w-auto">
-        <h2 className="mb-4 text-[#333]">
-          Cotizaciones aprobadas recientemente:{' '}
-          {quotes && quotes.length > 0 ? quotes.length : 0}
-        </h2>
+        <div>
+          <CInput
+            placeholder="Nombre de la empresa"
+            value={searchQuote.search}
+            name="search"
+            label="Filtrar cotizacion por No. de Cotización"
+            onChange={handleInputChangeSearchQuote}
+            type="text"
+            input_style={{
+              width: '300px',
+              backgroundColor: '#f5f5f5',
+              fontSize: '1em',
+            }}
+          />
+          <h2 className="mb-4 text-[#333]">
+            Cotizaciones aprobadas recientemente:{' '}
+            {quotes && quotes.length > 0 ? quotes.length : 0}
+          </h2>
+        </div>
 
         <CarouselComp className="carousel">
-          {quotes && quotes.length > 0 ? (
-            quotes.map((quote: IQuote) => (
+          {filteredQuotes && filteredQuotes.length > 0 ? (
+            filteredQuotes.map((quote: IQuote) => (
               <CarouselItemComp key={quote.id} className="carousel-item">
                 <QuoteRequestItem
                   quote={quote as any}

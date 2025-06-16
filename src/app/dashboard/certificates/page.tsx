@@ -5,7 +5,7 @@ import { getCookie } from 'cookies-next'
 import { IPendingActivities } from './interface/pendingActivities'
 import { Content } from '@/components/Content'
 import { fetchData } from '@/utils/fetch'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { toast } from 'sonner'
 import { Spinner } from '@/components/Spinner'
 import { ItemPendingCertify } from './components/itemPendingCertify'
@@ -25,6 +25,8 @@ import { emmitCertificationsToClient } from '@/utils/functions'
 import { emmitCertificate } from '@/utils/functions'
 import { Backdrop } from '@/components/Backdrop'
 import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
+import { useForm } from '@/hooks/useForm'
+import { CInput } from '@/components/CInput'
 
 const getData = async () => {
   return await fetchData({
@@ -76,6 +78,9 @@ export default function Page() {
   const [loadingEmmitCertificate, setLoadingEmmitCertificate] =
     useState<boolean>(false)
   const [certificate, setCertificate] = useState<any>({})
+  const { values: search, handleInputChange } = useForm({
+    search: '',
+  })
 
   const reviewCertificate = async () => {
     toast.loading('Aprobando certificado')
@@ -150,6 +155,13 @@ export default function Page() {
       })
   }, [])
 
+  const filteredActivities = useMemo(() => {
+    return pendingActivities.filter((activity) =>
+      activity.quoteRequest.no
+        .includes(search.search),
+    )
+  }, [pendingActivities, search.search])
+
   const Renderer =
     RENDERER_METHOD[certificate.renderer_method as keyof typeof RENDERER_METHOD]
 
@@ -176,16 +188,27 @@ export default function Page() {
         </div>
       )}
     >
-      <Content title="Certificados pendientes" colorTitle="yellow" className="mt-4">
+      <Content title=''>
         <div className="pending-certificate">
-          <div className="pending-certificate__table border rounded-lg shadow-md p-4 bg-white">
-            <div className="pending-certificate__table__content overflow-auto max-h-[400px]">
+          <div className="w-[600px]">
+            <div className='mb-8'>
+              <div className="relative w-full">
+                <CInput
+                  placeholder="Buscar por No. de Cotización"
+                  name='search'
+                  value={search.search}
+                  onChange={handleInputChange}
+                />
+              </div>
+              {/* <h3 className="text-sm font-medium text-gray-500 mb-3">Certificados Pendientes</h3> */}
+            </div>
+            <div className="space-y-2 overflow-auto max-h-[800px] p-4 border-gray-200 border rounded-lg">
               {loading ? (
                 <div className="flex mt-4 justify-center">
                   <Spinner />
                 </div>
-              ) : pendingActivities.length > 0 ? (
-                pendingActivities.map((activity) => (
+              ) : filteredActivities.length > 0 ? (
+                filteredActivities.map((activity) => (
                   <ItemPendingCertify
                     key={activity.id}
                     activity={activity}
@@ -210,7 +233,7 @@ export default function Page() {
             />
           </div>
         </div>
-      </Content>
+      </Content >
 
       <Content
         title="Información del certificado de calibración"
@@ -277,6 +300,6 @@ export default function Page() {
           </p>
         )}
       </Content>
-    </LayoutPage>
+    </LayoutPage >
   )
 }
