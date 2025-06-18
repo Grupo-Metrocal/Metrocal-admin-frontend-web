@@ -116,7 +116,7 @@ export default function Page() {
     }
   }
 
-  const emmitCertificateToClient = async (activityID: number) => {
+  const handleEmmitCertificateToClient = async (activityID: number) => {
     if (activityID === 0) {
       return toast.error('No se ha seleccionado ninguna actividad')
     }
@@ -167,27 +167,14 @@ export default function Page() {
 
   return (
     <LayoutPage
-      title="Certificados"
-      Footer={() => (
-        <div className="flex justify-end w-full gap-4 p-4 border-t bg-gray-100 shadow-md">
-          {loadingEmmitCertificate && (
-            <Backdrop
-              title="Enviando todos los CERTIFICADOS, por favor espere..."
-              message="Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados."
-            />
-          )}
-          <AlertDialogModal
-            onConfirm={() =>
-              emmitCertificateToClient((selectedActivity?.id as number) || 0)
-            }
-            title="Antes de enviar todos los certificados, verifique los datos"
-            description="Una vez enviados, los registros generados se eliminarán."
-            nameButton="ENVIAR CERTIFICADOS"
-            useButton
-          />
-        </div>
-      )}
+      title=""
     >
+      {loadingEmmitCertificate && (
+        <Backdrop
+          title="Enviando todos los CERTIFICADOS, por favor espere..."
+          message="Esto puede tardar unos minutos, dependiendo de la cantidad de certificados aprobados."
+        />
+      )}
       <Content title=''>
         <div className="pending-certificate">
           <div className="w-[600px]">
@@ -230,6 +217,8 @@ export default function Page() {
               setLoadingCalibration={setLoadingCalibration}
               setCertificate={setCertificate}
               loadingCalibration={loadingCalibration}
+              handleEmmitCertificateToClient={handleEmmitCertificateToClient}
+              isLoadingEmmitCertificate={loadingEmmitCertificate}
             />
           </div>
         </div>

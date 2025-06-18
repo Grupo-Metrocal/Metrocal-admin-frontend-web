@@ -4,20 +4,20 @@ import {
   Equipmentquoterequest,
 } from '../../interface/pendingActivities'
 import { Spinner } from '@/components/Spinner'
-import { momentDate } from '@/utils/moment'
 import { formatPrice } from '@/utils/formatPrice'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
 import { toast } from 'sonner'
 import { IP_01 } from '../../interface/p-01'
-import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
-import { CarouselComp } from '@/components/Carousel'
-import { CButton } from '@/components/CButton'
-import metrocalLogo from 'public/metrocal.svg'
 import Link from 'next/link'
-import { PencilLineIcon } from 'lucide-react'
+import { Edit } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { TabServices } from './TabServices'
+import { TabDetails } from './TabDetails'
+import { TabEquipments } from './TabEquipment'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -53,6 +53,8 @@ interface IProps {
   setLoadingCalibration: (loading: boolean) => void
   setCertificate: (certificate: any) => void
   loadingCalibration: boolean
+  handleEmmitCertificateToClient: (id: number) => void
+  isLoadingEmmitCertificate: boolean
 }
 export const SelectedPendingCertify = ({
   selectedActivity,
@@ -60,6 +62,7 @@ export const SelectedPendingCertify = ({
   setLoadingCalibration,
   loadingCalibration: loadingCalibration,
   setCertificate,
+  handleEmmitCertificateToClient
 }: IProps) => {
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
     {} as Equipmentquoterequest,
@@ -70,6 +73,10 @@ export const SelectedPendingCertify = ({
   const [calibrationSelected, setCalibrationSelected] = useState<IP_01>(
     {} as IP_01,
   )
+
+  const certCount = Array.isArray(selectedActivity?.quoteRequest?.equipment_quote_request)
+    ? selectedActivity.quoteRequest.equipment_quote_request.reduce((acc, item) => acc + (item.count || 0), 0)
+    : 0
 
   const handleSelectedService = async (service: Equipmentquoterequest) => {
     setSelectedService(service)
@@ -86,12 +93,8 @@ export const SelectedPendingCertify = ({
     }
   }
 
-  const handleSelectedCalibration = (calibration: IP_01) => {
-    setCalibrationSelected(calibration)
-  }
-
-  const handleGenerateCertificate = async () => {
-    if (!calibrationSelected.id) {
+  const handleGenerateCertificate = async (equipment: IP_01) => {
+    if (!equipment.id) {
       toast('Porfavor selecciona un equipo para generar el certificado')
       return
     }
@@ -107,7 +110,7 @@ export const SelectedPendingCertify = ({
         .split(' ')[0]
         .toLocaleLowerCase(),
       activityID: selectedActivity.id,
-      methodID: calibrationSelected.id,
+      methodID: equipment.id,
     })
 
     toast.dismiss()
@@ -117,7 +120,7 @@ export const SelectedPendingCertify = ({
       setCertificate({
         ...certificate.data,
         renderer_method: selectedService.calibration_method.split(' ')[0],
-        renderer_method_id: calibrationSelected.id,
+        renderer_method_id: equipment.id,
       })
       toast.success('Certificado cargado con éxito')
     } else {
@@ -166,155 +169,71 @@ export const SelectedPendingCertify = ({
       <Spinner />
     </div>
   ) : (
-    <div className="pending-certificate__selected">
-      <div className="client">
-        <div className="client_info">
-          <div className='header'>
-            <h3>Información del cliente</h3>
+    <div>
+      <div className="bg-white border-b border-gray-200 p-6">
+        <div className="flex items-center justify-between">
+          <div className=''>
+            <h2 className="text-2xl font-bold text-gray-900">{selectedActivity.quoteRequest.client.company_name}</h2>
 
-            <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f] p-1 bg-white rounded flex items-center'>
-              <PencilLineIcon width={18} height={18} color='#333' />
-            </Link>
-          </div>
-
-          <div className='body'>
-            <h2>{selectedActivity?.quoteRequest?.client.company_name}</h2>
-            <span>{selectedActivity?.quoteRequest?.no}</span>
-          </div>
-        </div>
-
-        <div className="client__details">
-          <span>Finalizado: {momentDate(selectedActivity?.updated_at)}</span>
-
-          <span>
-            {Array.isArray(selectedActivity?.quoteRequest?.equipment_quote_request)
-              ? selectedActivity.quoteRequest.equipment_quote_request.reduce((acc, item) => acc + (item.count || 0), 0)
-              : 0}{' '}
-            equipos a certificar
-          </span>
-
-
-          <span>
-            Precio total: {formatPrice(selectedActivity?.quoteRequest.price)}
-          </span>
-        </div>
-      </div>
-
-      <div className="team_members">
-        <div className='header'>
-          <h3>Equipo Técnico</h3>
-
-        </div>
-
-        <div className="team_members__content w-full">
-          {selectedActivity?.team_members.length > 0 ? (
-            selectedActivity?.team_members.map((member) => (
-              <div key={member.id} className="team_members__content__item">
-                <Image
-                  src={member.imageURL || metrocalLogo}
-                  alt={member.username}
-                  width={40}
-                  height={40}
-                />
-                <div>
-                  <p>{member.username}</p>
-                  <span>{member.email}</span>
+            <div className="flex items-center gap-4 mt-2">
+              <span className="text-sm text-gray-500">{selectedActivity.quoteRequest.no}</span>
+              {selectedActivity.quoteRequest.price && (
+                <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <span className="font-medium">C$ {formatPrice(selectedActivity.quoteRequest.price)}</span>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className='text-[#999]'>No hay técnicos asignados</p>
-          )}
+              )}
+              <span className="text-sm text-gray-500">
+                {certCount} Equipos a certificar
+              </span>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Link href={`/dashboard/activities/view/${selectedActivity?.id}`} className='text-[#09f] p-1 bg-white rounded flex items-center'
+              target='_blank'
+            >
+              <Button variant="outline" size="sm" className='text-black'>
+                <Edit className="h-4 w-4 mr-2" />
+                Modificar resultados
+              </Button>
+            </Link>
+            <AlertDialogModal
+              onConfirm={() => handleEmmitCertificateToClient(selectedActivity.id)}
+              title="Antes de enviar todos los certificados, verifique los datos"
+              description="Una vez enviados, los registros generados se eliminarán."
+              nameButton="ENVIAR CERTIFICADOS"
+            />
+          </div>
         </div>
       </div>
 
-      <div className="services">
-        <div className="header">
-          <h3>Servicios realizados</h3>
-        </div>
+      <div className='py-6'>
+        <Tabs defaultValue="details" className="space-y-6">
+          <TabsList className='bg-gray-50 p-2'>
+            <TabsTrigger value="details" className='data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:font-semibold'>Detalles</TabsTrigger>
+            <TabsTrigger value="services" className='data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:font-semibold'>Servicios</TabsTrigger>
+            <TabsTrigger value="equipment" className='data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:font-semibold'>Equipos</TabsTrigger>
+          </TabsList>
 
-        <div className="services__content">
-          {selectedActivity?.quoteRequest.equipment_quote_request.map(
-            (item) =>
-            (
-              <div
-                key={item.id}
-                className={`services__content__item ${selectedService.id === item.id
-                  ? 'services__content__item-selected'
-                  : ''
-                  }`}
-                onClick={() => handleSelectedService(item)}
-              >
-                <p>{item.name}</p>
-                <span>{item.calibration_method === 'GENERIC_METHOD' ? 'Comp. Directa Trazable' : item.calibration_method}</span>
-              </div>
-            ),
-          )}
-        </div>
+          <TabsContent value="details" className="space-y-6">
+            <TabDetails selectedActivity={selectedActivity} />
+          </TabsContent>
+
+          <TabsContent value="services" className="space-y-6">
+            <TabServices selectedActivity={selectedActivity} handleSelectedService={handleSelectedService} selectedService={selectedService} />
+          </TabsContent>
+
+          <TabsContent value="equipment" className="space-y-6">
+            <TabEquipments
+              selectedActivity={selectedActivity}
+              selectedService={selectedService}
+              methodsStackSelected={methodsStackSelected}
+              calibrationSelected={calibrationSelected}
+              handleGenerateCertificate={handleGenerateCertificate}
+              loadingCalibration={loadingCalibration}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-
-      <div className="method">
-        <div className="flex justify-between align-middle items-center">
-          <h3>
-            Equipos del servicio calibrados
-            <br />
-            <small className="text-[#999]">
-              Selecciona un equipo para generar los detalles del certificado
-            </small>
-          </h3>
-        </div>
-        <div className="method__content">
-          {loadingMethods ? (
-            <Spinner />
-          ) : (
-            <CarouselComp>
-              {methodsStackSelected?.methods?.map((method: IP_01) => (
-                <CarouselItemComp
-                  key={method.id}
-                  className={`method__content__item ${methodsStackSelected && calibrationSelected.id === method.id
-                    ? 'method__content__item-selected'
-                    : ''
-                    }`}
-                  onClick={() => handleSelectedCalibration(method)}
-                >
-                  <span>
-                    <span className="font-bold">Equipo:</span>{' '}
-                    <span>{method.equipment_information?.device || method.equipment_information?.calibration_object}</span>
-                  </span>
-                  <span>
-                    <span className="font-bold">Código:</span>{' '}
-                    <span>{method.equipment_information?.code || 'N/A'}</span>
-                  </span>
-                  <span>
-                    <span className="font-bold">Certificado:</span>{' '}
-                    <span>{method.certificate_code || 'Sin certificado'}</span>
-                  </span>
-
-                  {method?.review_state && (
-                    <span className="text-green-500">
-                      <strong>APROBADO ✅</strong>
-                    </span>
-                  )}
-                </CarouselItemComp>
-              ))}
-            </CarouselComp>
-          )}
-        </div>
-
-        <div className="mt-8 flex gap-6 items-center">
-          <CButton
-            onClick={handleGenerateCertificate}
-            disabled={loadingCalibration}
-          >
-            Generar certificado
-          </CButton>
-
-          <Link href={`/dashboard/activities/view/update/${calibrationSelected.id}/${selectedService?.calibration_method?.split(' ')[0]}/${selectedActivity?.id}?increase=false`}
-            className='text-[#09f]'>
-            Modificar resultados
-          </Link>
-        </div>
-      </div>
-    </div>
+    </div >
   )
 }
