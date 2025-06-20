@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TabServices } from './TabServices'
 import { TabDetails } from './TabDetails'
 import { TabEquipments } from './TabEquipment'
+import { approveCertificate } from '@/utils/functions'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -56,6 +57,7 @@ interface IProps {
   handleEmmitCertificateToClient: (id: number) => void
   isLoadingEmmitCertificate: boolean
 }
+
 export const SelectedPendingCertify = ({
   selectedActivity,
   loading,
@@ -67,8 +69,7 @@ export const SelectedPendingCertify = ({
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
     {} as Equipmentquoterequest,
   )
-  const [methodsStackSelected, setMethodsStackSelected] = useState<any>()
-  const [loadingMethods, setLoadingMethods] = useState<boolean>(false)
+  const [equipments, setEquipments] = useState<any[]>([])
 
   const [calibrationSelected, setCalibrationSelected] = useState<IP_01>(
     {} as IP_01,
@@ -81,15 +82,27 @@ export const SelectedPendingCertify = ({
   const handleSelectedService = async (service: Equipmentquoterequest) => {
     setSelectedService(service)
 
-    setLoadingMethods(true)
     const methods = await getMethods(service.method_id)
 
-    setLoadingMethods(false)
     if (methods.success) {
-      setMethodsStackSelected({
-        methods: methods.data,
-        service_id: service.id,
-      })
+      setEquipments(methods.data,
+      )
+    }
+  }
+
+  const handleApproveEquipment = async (method_name: string, method_id: number) => {
+    const response = await approveCertificate(method_name.split(' ')[0], method_id)
+
+    if (response.success) {
+      setEquipments((prev) =>
+        prev?.map((method: IP_01) =>
+          method.id === method_id
+            ? { ...method, review_state: true }
+            : method
+        )
+      );
+    } else {
+      toast.error('Hubo un error al aprobar el certificado')
     }
   }
 
@@ -226,10 +239,11 @@ export const SelectedPendingCertify = ({
             <TabEquipments
               selectedActivity={selectedActivity}
               selectedService={selectedService}
-              methodsStackSelected={methodsStackSelected}
+              equipments={equipments}
               calibrationSelected={calibrationSelected}
               handleGenerateCertificate={handleGenerateCertificate}
               loadingCalibration={loadingCalibration}
+              handleApproveEquipment={handleApproveEquipment}
             />
           </TabsContent>
         </Tabs>

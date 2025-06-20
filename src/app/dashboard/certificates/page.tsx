@@ -266,21 +266,7 @@ export default function Page() {
                   backgroundColor: "#22c55e",
                 }}
               />
-              <AlertDialogModal
-                onConfirm={() => handleGeneratePDFCertificate({
-                  method_name: certificate.renderer_method,
-                  method_id: certificate.renderer_method_id,
-                  activity_id: selectedActivity?.id as number,
-                  no: certificate.equipment_information.service_code
-                })}
-                title="Descargar certificado"
-                description="El certificado se descargara automaticamente"
-                nameButton="Descargar certificado"
-                useButton
-                buttonStyle={{
-                  backgroundColor: "gray",
-                }}
-              />
+
             </div>
           </div>
         ) : (

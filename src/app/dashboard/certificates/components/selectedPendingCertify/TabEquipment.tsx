@@ -4,20 +4,24 @@ import { IP_01 } from "../../interface/p-01"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { AlertCircle, Edit, FileText } from "lucide-react"
+import { AlertCircle, Download, Edit, FileText } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { formatDate } from "@/utils/formatDate"
+import { handleGeneratePDFCertificate } from "@/utils/downloadPDFCertificate"
+import { AlertDialogModal } from "@/components/AlertDialogModal"
 
 interface Props {
   selectedActivity: IPendingActivities
   selectedService: Equipmentquoterequest
-  methodsStackSelected: any
+  equipments: any[]
   calibrationSelected: IP_01
   handleGenerateCertificate: (item: IP_01) => void
   loadingCalibration: boolean
+  handleApproveEquipment: (method_name: string, method_id: number) => void
 }
 
-export const TabEquipments = ({ selectedActivity, selectedService, methodsStackSelected, calibrationSelected, handleGenerateCertificate, loadingCalibration }: Props) => {
+export const TabEquipments = ({ selectedActivity, selectedService, equipments, handleGenerateCertificate, loadingCalibration, handleApproveEquipment }: Props) => {
+
   return (
     <Card>
       <CardHeader>
@@ -31,7 +35,7 @@ export const TabEquipments = ({ selectedActivity, selectedService, methodsStackS
       <CardContent className="max-h-[500px] overflow-auto">
         {selectedService ? (
           <div className="space-y-4">
-            {methodsStackSelected?.methods
+            {equipments && equipments
               .map((item: IP_01) => (
                 <div key={item.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
                   <div className="flex items-start justify-between mb-4">
@@ -57,7 +61,7 @@ export const TabEquipments = ({ selectedActivity, selectedService, methodsStackS
                     </div>
                     <div className="flex gap-2">
                       <Link target="_blank" href={`/dashboard/activities/view/update/${item.id}/${selectedService?.calibration_method?.split(' ')[0]}/${selectedActivity?.id}?increase=false`}
-                        className='text-[#09f]'>
+                      >
                         <Button
                           variant="outline"
                           size="sm"
@@ -66,6 +70,26 @@ export const TabEquipments = ({ selectedActivity, selectedService, methodsStackS
                           Modificar
                         </Button>
                       </Link>
+
+                      {
+                        !item.review_state && (
+                          <AlertDialogModal
+                            onConfirm={() => handleApproveEquipment(selectedService.calibration_method, item.id)}
+                            title="Aprobar Certificado"
+                            description="Antes de aprobar el certificado, verifique que los datos sean correctos."
+                            nameButton="Aprobar"
+                            useButton
+                            buttonStyle={{
+                              backgroundColor: "#333",
+                              color: "white",
+                              boxShadow: 'none',
+                              fontSize: '1em',
+                              fontWeight: '500',
+                              padding: ".5em 1em"
+                            }}
+                          />
+                        )
+                      }
 
                       <Button
                         size="sm"
@@ -76,6 +100,17 @@ export const TabEquipments = ({ selectedActivity, selectedService, methodsStackS
                       >
                         <FileText className="h-4 w-4 mr-1" />
                         Generar Certificado
+                      </Button>
+
+                      <Button variant='outline' size='sm'
+                        onClick={() => handleGeneratePDFCertificate({
+                          method_id: item.id,
+                          no: item.certificate_code ?? '',
+                          activity_id: selectedActivity.id,
+                          method_name: selectedService.calibration_method.split(' ')[0]
+                        })}
+                      >
+                        <Download className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>

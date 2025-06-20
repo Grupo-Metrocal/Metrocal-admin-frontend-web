@@ -168,3 +168,19 @@ export const emmitCertificate = async (method_name: string, activity_id: number,
     }
   })
 }
+
+export const approveCertificate = async (method_name: string, method_id: number) => {
+  return await fetchData({
+    url: 'methods/review-method',
+    method: 'POST',
+    body: {
+      method_name: method_name.replaceAll('-', '_'),
+      method_id,
+      token: getCookie('token'),
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`,
+    },
+  })
+}
