@@ -1,35 +1,25 @@
 'use client'
 import { fetchData } from '@/utils/fetch'
 import { getCookie } from 'cookies-next'
-import { LayoutPage } from '@/components/LayoutPage'
-import { Content } from '@/components/Content'
 import { formatPrice } from '@/utils/formatPrice'
 import { Data, TeamMember, EquipmentQuoteRequest } from './interface'
 import { useEffect, useState, useMemo } from 'react'
-import DonutChartComp from '@/components/DonutChart'
 import { ItemUser } from './component/ItemUser'
 import { toast } from 'sonner'
-import { CarouselComp } from '@/components/Carousel'
-import { CarouselItemComp } from '@/components/Carousel/CarouselItem'
 import { Spinner } from '@/components/Spinner'
-import { CInput } from '@/components/CInput'
 import { useForm } from '@/hooks/useForm'
 import { Modal } from '@/components/Modal'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle, Download, Edit3, MoreHorizontal, Plus, Search, Settings } from 'lucide-react'
+import { AlertTriangle, MoreHorizontal, Plus, Search } from 'lucide-react'
 import { P_01 } from './component/p_01'
 import { T_03 } from './component/t_03'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import Link from 'next/link'
-// import { ReviewActivity } from './component/ReviewActivity'
 import { T_01 } from './component/t_01'
 import { T_05 } from './component/t_05'
 import { D_01 } from './component/d_01'
@@ -39,17 +29,13 @@ import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
 import { AddEquipmentToActivity } from './component/AddEquipmentToQuote'
-import { CButton } from '@/components/CButton'
-import { ChangeCertCode } from './component/changeCertCode'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatMethodName } from '@/utils/formatMethodName'
-import { ActionItem } from './component/itemFromSelectedService/actions'
 import { ItemSelectedService } from './component/itemFromSelectedService/item'
 import { Input } from '@/components/ui/input'
 import { IP_01 } from './interface/p_01'
 import { Progress } from '@/components/ui/progress'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { formatDate } from '@/utils/formatDate'
 
 const getData = async (id: string) => {
@@ -403,7 +389,9 @@ export default function Page({ params }: IRoot) {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{selectedService?.name}</h1>
-                <p className="font-medium text-gray-600">Método: {selectedService?.calibration_method}</p>
+                <p className="font-medium text-gray-600">Método: {formatMethodName({
+                  method: selectedService?.calibration_method as any
+                })}</p>
               </div>
               <div className="flex space-x-3">
                 {/* <Button variant="outline">
