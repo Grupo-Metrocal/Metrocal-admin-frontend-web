@@ -4,7 +4,7 @@ export interface IP_01 {
   status: string
   report_status: boolean
   report_messages: string[]
-  ceritificate_code: string
+  certificate_code: string
   ceritificate_id: string
   created_at: string
   updated_at: string
@@ -29,6 +29,7 @@ export interface IEquipmentInformation {
   height_difference: number
   resolution: number
   scale: number
+  calibration_object?: string
 }
 
 export interface IEnvironmentalConditions {

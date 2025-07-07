@@ -60,16 +60,12 @@ export interface EquipmentQuoteRequest {
 export interface ApprovedBy {
   id: number
   username: string
-  password: string
   email: string
   created_at: string
-  imageURL: any
-  notification_token: any
 }
 
 export interface TeamMember {
   id: number
   username: string
   email: string
-  imageURL: any
 }
