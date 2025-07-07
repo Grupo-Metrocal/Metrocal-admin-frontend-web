@@ -1,42 +1,54 @@
 'use client'
-import { fetchData } from '@/utils/fetch'
-import { getCookie } from 'cookies-next'
-import { formatPrice } from '@/utils/formatPrice'
-import { Data, TeamMember, EquipmentQuoteRequest } from './interface'
-import { useEffect, useState, useMemo } from 'react'
-import { ItemUser } from './component/ItemUser'
+
+/* External libraries */
 import { toast } from 'sonner'
-import { Spinner } from '@/components/Spinner'
-import { useForm } from '@/hooks/useForm'
-import { Modal } from '@/components/Modal'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+import { getCookie } from 'cookies-next'
 import { AlertTriangle, MoreHorizontal, Plus, Search } from 'lucide-react'
+
+/* React hooks */
+import { useEffect, useState, useMemo } from 'react'
+import dynamic from 'next/dynamic'
+
+/* Custom hooks */
+import { useForm } from '@/hooks/useForm'
+
+/* Utils */
+import { fetchData } from '@/utils/fetch'
+import { formatPrice } from '@/utils/formatPrice'
+import { formatMethodName } from '@/utils/formatMethodName'
+
+/* UI Components */
+import { Spinner } from '@/components/Spinner'
+import { Modal } from '@/components/Modal'
+import { AlertDialogModal } from '@/components/AlertDialogModal'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+
+/* Local components */
+import { AddEquipmentToActivity } from './component/AddEquipmentToQuote'
+import { ItemSelectedService } from './component/itemFromSelectedService/item'
 import { P_01 } from './component/p_01'
 import { T_03 } from './component/t_03'
-import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { T_01 } from './component/t_01'
 import { T_05 } from './component/t_05'
 import { D_01 } from './component/d_01'
+import { D_02 } from './component/d_02'
 import { V_01 } from './component/v_01'
 import { M_01 } from './component/m_01'
-import { D_02 } from './component/d_02'
 import { B_01 } from './component/b_01'
 import { Generic_method } from './component/generic_method'
-import { AddEquipmentToActivity } from './component/AddEquipmentToQuote'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { formatMethodName } from '@/utils/formatMethodName'
-import { ItemSelectedService } from './component/itemFromSelectedService/item'
-import { Input } from '@/components/ui/input'
-import { IP_01 } from './interface/p_01'
-import { Progress } from '@/components/ui/progress'
-import { formatDate } from '@/utils/formatDate'
+
+const QuoteInformation = dynamic(() => import('./component/sidebars/quoteInformation'))
+const ServiceSummnary = dynamic(() => import('./component/sidebars/serviceSummary'))
+const TeamMember = dynamic(() => import('./component/sidebars/teamMembers'))
+const ProgressActivity = dynamic(() => import('./component/sidebars/progressActivity'))
+
+/* Types */
+import type { Data, TeamMember, EquipmentQuoteRequest } from './interface'
+
 
 const getData = async (id: string) => {
   const response = await fetchData({
@@ -273,24 +285,36 @@ export default function Page({ params }: IRoot) {
   }
 
   useEffect(() => {
-    getData(id).then((response) => {
-      if (response.success) {
-        setData(response.data)
-        setTeamMember(response.data.team_members)
-        setResponsable(response.data.responsable)
+    const fetchDataAsync = async () => {
+      try {
+        const response = await getData(id)
+        if (response.success && response.data) {
+          setData(response.data)
+          setTeamMember(response.data.team_members || [])
+          setResponsable(response.data.responsable || 0)
 
-        const service = response.data.quote_request.equipment_quote_request[0]
-        handleSelectedService(service)
-      } else {
-        toast.error('Error al obtener la información')
+          const services = response.data.quote_request?.equipment_quote_request || []
+          if (services.length > 0) {
+            handleSelectedService(services[0])
+          }
+        } else {
+          toast.error('Error al obtener la información')
+        }
+      } catch (err) {
+        toast.error('Ocurrió un error al conectarse al servidor')
       }
-    })
+    }
+
+    fetchDataAsync()
   }, [id])
+
 
   useEffect(() => {
     if (responsable) {
       const user = teamMember.find((user) => user.id === responsable)
-      user && setResponsable(user.id)
+      if (user && user.id !== responsable) {
+        setResponsable(user.id)
+      }
     }
   }, [teamMember, responsable])
 
@@ -300,16 +324,20 @@ export default function Page({ params }: IRoot) {
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-gray-900">Servicios de Calibración</h2>
-            <Modal
-              title="Estas agregando un servicio a la cotización"
-              description="Por favor recargue la pagina para poder mostrar los nuevos metodos generados"
-              Component={() => <AddEquipmentToActivity quoteId={data?.quote_request.id || 0} />}
-            >
-              <Button size="sm" className="text-white bg-blue-600 hover:bg-blue-700">
-                <Plus className="h-4 w-4 mr-2" />
-                Agregar
-              </Button>
-            </Modal>
+            {data?.quote_request && (
+              <Modal
+                title="Estas agregando un servicio a la cotización"
+                description="Por favor recargue la página para poder mostrar los nuevos métodos generados"
+                Component={() => (
+                  <AddEquipmentToActivity quoteId={data.quote_request.id} />
+                )}
+              >
+                <Button size="sm" className="text-white bg-blue-600 hover:bg-blue-700">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Agregar
+                </Button>
+              </Modal>
+            )}
           </div>
 
           <div className="space-y-3">
@@ -452,13 +480,11 @@ export default function Page({ params }: IRoot) {
                               key={service.id}
                               title="Detalles del equipo"
                               Component={() => {
-                                const selectedMethod =
-                                  selectedService?.calibration_method?.split(' ')[0] || ''
-
-                                const Renderer =
-                                  RENDERER_METHOD[
-                                  selectedMethod as keyof typeof RENDERER_METHOD
-                                  ]
+                                const selectedMethod = useMemo(
+                                  () => selectedService?.calibration_method?.split(' ')[0] ?? 'GENERIC_METHOD',
+                                  [selectedService]
+                                )
+                                const Renderer = RENDERER_METHOD[selectedMethod as keyof typeof RENDERER_METHOD] ?? Generic_method
 
                                 return Renderer ? (
                                   <Renderer
@@ -474,14 +500,19 @@ export default function Page({ params }: IRoot) {
                               }}
                               className='w-full'
                             >
-                              <ItemSelectedService key={service.id} service={service} selectedService={selectedService} activityId={data?.id || -1} handleDeleteEquipment={handleDeleteEquipment} />
+                              <ItemSelectedService key={service?.id} service={service} selectedService={selectedService} activityId={data?.id || 0} handleDeleteEquipment={handleDeleteEquipment} />
                             </Modal>
                           ))
                             : (
                               <div className="grid place-items-center h-full w-full">
                                 <p className="text-center flex items-center gap-2 justify-center flex-col">
-                                  <span className={`font-bold ${selectedService?.isResolved ? 'bg-green-500' : 'bg-red-500'}
-                                   rounded-full w-[20px] h-[20px] text-white flex justify-center items-center`}>
+                                  <span
+                                    className={[
+                                      'font-bold',
+                                      selectedService?.isResolved ? 'bg-green-500' : 'bg-red-500',
+                                      'rounded-full w-[20px] h-[20px] text-white flex justify-center items-center',
+                                    ].join(' ')}
+                                  >
                                     !
                                   </span>
                                   <span>
@@ -499,99 +530,17 @@ export default function Page({ params }: IRoot) {
             </div>
             {/* Right Sidebar */}
             <div className="space-y-6">
-              <Card className='bg-white'>
-                <CardHeader>
-                  <CardTitle className="text-lg">Resumen del Servicio</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-blue-600 mb-1">{selectedService?.count}</div>
-                      <p className="text-sm text-gray-500">Total de equipos</p>
-                    </div>
+              {data && selectedService && (
+                <>
+                  <ServiceSummnary data={data} selectedService={selectedService} stackServices={stackServices} />
 
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Certificados</span>
-                        <Badge className="bg-green-100 text-green-800">
-                          {stackServices.filter((e: IP_01) => e.certificate_code !== "").length}
-                        </Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Pendientes</span>
-                        <Badge className="bg-yellow-100 text-yellow-800">
-                          {stackServices.filter((e: IP_01) => e.certificate_code === "" || null).length}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  {/* <ProgressActivity progress={Number(data.progress ?? 0)} /> */}
 
-              <Card className='bg-white'>
-                <CardContent>
-                  <div className="pt-4">
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className='font-semibold'>Progreso de la Actividad</span>
-                      <span>{data?.progress}</span>
-                    </div>
-                    <Progress value={data?.progress ?? 0} className="h-2" />
-                  </div>
-                </CardContent>
-              </Card>
+                  <TeamMember data={data} responsable={responsable} onChangeResponsable={onChangeResponsable} onDeleteUserFromActivity={onDeleteUserFromActivity} />
 
-              <Card className='bg-white'>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center justify-between">
-                    Equipo de Trabajo
-                    <Badge variant="outline" className="text-xs">
-                      {data?.team_members.length} miembros
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {data?.team_members.map((member) => (
-                      <ItemUser
-                        key={member.id}
-                        member={member}
-                        activityID={data?.id || 0}
-                        responsable={responsable}
-                        onDeleteUserFromActivity={onDeleteUserFromActivity}
-                        onChangeResponsable={onChangeResponsable}
-                      />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className='bg-white'>
-                <CardHeader>
-                  <CardTitle className="text-lg">Información de la Cotización</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className='font-semibold'>
-                    <label className="text-xs font-medium text-gray-500">Código</label>
-                    <p className="text-sm text-gray-900">{data?.quote_request?.no}</p>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-gray-500">Precio Total</label>
-                    <p className="text-sm text-gray-900">{`C$ ${formatPrice(data?.quote_request.price)}`}</p>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-gray-500">Creado</label>
-                    <p className="text-sm text-gray-900">{formatDate(data?.created_at || '')}</p>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-gray-500">Última actualización</label>
-                    <p className="text-sm text-gray-900">{formatDate(data?.updated_at)}</p>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-gray-500">Aprobado por</label>
-                    <p className="text-sm text-gray-900">{data?.quote_request.approved_by.username}</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  <QuoteInformation data={data} />
+                </>
+              )}
             </div>
           </div>
         </div>
