@@ -410,82 +410,75 @@ export default function Page({ params }: IRoot) {
         </div>
       </aside>
 
-      <main className="flex-1 p-6">
-        <div className="max-w-8xl mx-auto">
+      <main className="flex-1 p-4 sm:p-6">
+        <div className="max-w-screen-3xl mx-auto px-4 sm:px-4 lg:px-6">
           {/* Service Header */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{selectedService?.name}</h1>
-                <p className="font-medium text-gray-600">Método: {formatMethodName({
-                  method: selectedService?.calibration_method as any
-                })}</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+                  {selectedService?.name}
+                </h1>
+                <p className="font-medium text-gray-600 text-sm sm:text-base">
+                  Método: {formatMethodName({ method: selectedService?.calibration_method as any })}
+                </p>
               </div>
-              <div className="flex space-x-3">
-                {/* <Button variant="outline">
-                  <Download className="h-4 w-4 mr-2" />
-                  Exportar Orden de Servicio
-                </Button> */}
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 <AlertDialogModal
-                  title='Confirmar revision de servicio'
-                  description='Al confirmar la revision habilitara la revision de certificados.'
-                  nameButton='Confirmar Revisión'
+                  title="Confirmar revisión de servicio"
+                  description="Al confirmar la revisión, habilitará la revisión de certificados."
+                  nameButton="Confirmar Revisión"
                   onConfirm={() => sendReview(Number(id), selectedService?.id || 0)}
                 />
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 2xl:grid-cols-4 gap-6">
             {/* Equipment Section */}
-            <div className="lg:col-span-3">
-              <Card className='bg-white'>
+            <div className="2xl:col-span-3 xl:col-span-2">
+              <Card className="bg-white">
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-xl">Equipos Asociados</CardTitle>
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                          placeholder="Codigo de certificado..."
-                          value={search.search}
-                          name='search'
-                          onChange={(e) => handleInputChange(e.target)}
-                          className="pl-10 w-64"
-                        />
-                      </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <CardTitle className="text-lg sm:text-xl">Equipos Asociados</CardTitle>
+                    <div className="relative w-full sm:w-auto">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Input
+                        placeholder="Código de certificado..."
+                        value={search.search}
+                        name="search"
+                        onChange={(e) => handleInputChange(e.target)}
+                        className="pl-10 w-full sm:w-64"
+                      />
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div>
-                    {!stackServices.length && selectedService?.calibration_method !== '(N/A)' ? (
-                      <div className="h-[400px] w-full grid place-items-center">
-                        <p className="text-center flex items-center gap-2 justify-center flex-col">
-                          <span className=" font-bold bg-[#333] rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">
-                            !
-                          </span>
+                    {!stackServices.length && selectedService?.calibration_method !== "(N/A)" ? (
+                      <div className="h-[300px] sm:h-[400px] w-full grid place-items-center text-center">
+                        <p className="flex items-center gap-2 flex-col">
+                          <span className="font-bold bg-gray-800 rounded-full w-[20px] h-[20px] text-white flex justify-center items-center">!</span>
                           <span>Seleccione un servicio para ver más detalles</span>
                         </p>
                       </div>
                     ) : (
-                      <div className='grid grid-cols-2 gap-4 max-h-[75vh] overflow-auto'>
+                      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4 max-h-[70vh] overflow-auto">
                         {loading ? (
                           <div className="grid place-items-center h-full w-full">
                             <Spinner />
                           </div>
-                        ) : (
-                          selectedService?.calibration_method !== '(N/A)' ? filteredServices.map((service) => (
+                        ) : selectedService?.calibration_method !== "(N/A)" ? (
+                          filteredServices.map((service) => (
                             <Modal
                               key={service.id}
                               title="Detalles del equipo"
                               Component={() => {
                                 const selectedMethod = useMemo(
-                                  () => selectedService?.calibration_method?.split(' ')[0] ?? 'GENERIC_METHOD',
+                                  () => selectedService?.calibration_method?.split(" ")[0] ?? "GENERIC_METHOD",
                                   [selectedService]
                                 )
                                 const Renderer = RENDERER_METHOD[selectedMethod as keyof typeof RENDERER_METHOD] ?? Generic_method
-
                                 return Renderer ? (
                                   <Renderer
                                     {...service}
@@ -498,29 +491,36 @@ export default function Page({ params }: IRoot) {
                                   <p>No existe un renderizador para este método</p>
                                 )
                               }}
-                              className='w-full'
+                              className="w-full"
                             >
-                              <ItemSelectedService key={service?.id} service={service} selectedService={selectedService} activityId={data?.id || 0} handleDeleteEquipment={handleDeleteEquipment} />
+                              <ItemSelectedService
+                                key={service?.id}
+                                service={service}
+                                selectedService={selectedService}
+                                activityId={data?.id || 0}
+                                handleDeleteEquipment={handleDeleteEquipment}
+                              />
                             </Modal>
                           ))
-                            : (
-                              <div className="grid place-items-center h-full w-full">
-                                <p className="text-center flex items-center gap-2 justify-center flex-col">
-                                  <span
-                                    className={[
-                                      'font-bold',
-                                      selectedService?.isResolved ? 'bg-green-500' : 'bg-red-500',
-                                      'rounded-full w-[20px] h-[20px] text-white flex justify-center items-center',
-                                    ].join(' ')}
-                                  >
-                                    !
-                                  </span>
-                                  <span>
-                                    {selectedService?.isResolved ? 'Este servicio ya fue completado por el tecnico' : 'Este servicio aun no ha sido resuelto'}
-                                  </span>
-                                </p>
-                              </div>
-                            )
+                        ) : (
+                          <div className="grid place-items-center h-full w-full">
+                            <p className="text-center flex items-center gap-2 justify-center flex-col">
+                              <span
+                                className={[
+                                  "font-bold",
+                                  selectedService?.isResolved ? "bg-green-500" : "bg-red-500",
+                                  "rounded-full w-[20px] h-[20px] text-white flex justify-center items-center",
+                                ].join(" ")}
+                              >
+                                !
+                              </span>
+                              <span>
+                                {selectedService?.isResolved
+                                  ? "Este servicio ya fue completado por el técnico"
+                                  : "Este servicio aún no ha sido resuelto"}
+                              </span>
+                            </p>
+                          </div>
                         )}
                       </div>
                     )}
@@ -528,23 +528,30 @@ export default function Page({ params }: IRoot) {
                 </CardContent>
               </Card>
             </div>
+
             {/* Right Sidebar */}
-            <div className="space-y-6">
+            <div className="lg:col-span-1 flex flex-col gap-4">
               {data && selectedService && (
                 <>
-                  <ServiceSummnary data={data} selectedService={selectedService} stackServices={stackServices} />
-
-                  {/* <ProgressActivity progress={Number(data.progress ?? 0)} /> */}
-
-                  <TeamMember data={data} responsable={responsable} onChangeResponsable={onChangeResponsable} onDeleteUserFromActivity={onDeleteUserFromActivity} />
-
+                  <ServiceSummnary
+                    data={data}
+                    selectedService={selectedService}
+                    stackServices={stackServices}
+                  />
+                  <TeamMember
+                    data={data}
+                    responsable={responsable}
+                    onChangeResponsable={onChangeResponsable}
+                    onDeleteUserFromActivity={onDeleteUserFromActivity}
+                  />
                   <QuoteInformation data={data} />
                 </>
               )}
             </div>
           </div>
         </div>
-      </main>
-    </div>
+
+      </main >
+    </div >
   )
 }
