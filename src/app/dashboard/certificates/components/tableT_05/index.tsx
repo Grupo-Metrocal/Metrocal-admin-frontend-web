@@ -32,6 +32,10 @@ export const TableT_05 = ({
             <span>{certificate.equipment_information.calibration_date}</span>
           </div>
           <div>
+            <p>Fecha de siguiente calibración:</p>
+            <span>{certificate.equipment_information.next_calibration_date}</span>
+          </div>
+          <div>
             <p>Equipo calibrado:</p>
             <span>{certificate.equipment_information.device}</span>
           </div>

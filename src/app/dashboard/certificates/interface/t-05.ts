@@ -59,6 +59,7 @@ export interface EquipmentInformation {
   applicant: string
   address: string
   calibration_location: string
+  next_calibration_date: string
 }
 
 export interface EnvironmentalConditions {
