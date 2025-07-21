@@ -432,8 +432,7 @@ export default function Page({ params }: IRoot) {
                                     }}
                                     useButton={true}
                                     onConfirm={() => handleDisableQuoteService(data?.quote_request?.id || 0, service.id)}
-                                  >
-                                  </AlertDialogModal>
+                                  />
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
