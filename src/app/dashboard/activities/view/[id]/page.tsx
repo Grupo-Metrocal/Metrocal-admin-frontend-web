@@ -213,6 +213,10 @@ export default function Page({ params }: IRoot) {
   }
 
   const handleSelectedService = async (service: any) => {
+    if (service.status === 'disabled') {
+      return toast('Este servicio está desactivado')
+    }
+
     if (!service.calibration_method) {
       return toast.error('Este servicio no contiene metodos asociados')
     }
@@ -284,6 +288,44 @@ export default function Page({ params }: IRoot) {
     }
   }
 
+  const handleDisableQuoteService = async (quoteId: number, equipmentId: number) => {
+    toast.loading('Cambiando estado del servicio')
+
+    const response = await fetchData({
+      url: `quotes/disable-quote-service/${quoteId}/${equipmentId}`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${getCookie('token')}`,
+        'Content-Type': 'application/json',
+      }
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Estado del servicio actualizado')
+      setData((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            quote_request: {
+              ...prev.quote_request,
+              equipment_quote_request: prev.quote_request.equipment_quote_request.map((service) =>
+                service.id === equipmentId ? { ...service, status: 'disabled' } : service,
+              ),
+            },
+          }
+        }
+        return prev
+      })
+    } else {
+      toast.error('Error al cambiar el estado del servicio', {
+        description: response.details || response.message,
+      })
+      return null
+    }
+  }
+
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
@@ -351,64 +393,86 @@ export default function Page({ params }: IRoot) {
                       }`}
                     onClick={() => handleSelectedService(service)}
                   >
-                    <CardContent>
-                      <div className="flex justify-between flex-col gap-3">
-                        <div className='flex gap-2 items-center justify-between'>
-                          <div className='flex items-center space-x-3'>
-                            <div className='flex-1 min-w-0'>
-                              <h3 className='font-semibold text-gray-900'>{service.name}</h3>
-                              <p className='text-sm text-gray-500'>{service.type_service}</p>
+                    {
+                      service.status === 'disabled' ? (
+                        <CardContent className="flex items-center justify-between">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-gray-900 line-through">{service.name}</h3>
+                            <p className="text-sm text-gray-500">{service.type_service}</p>
+                          </div>
+                          <Badge variant="outline" className="bg-red-50 text-red-800 border-red-500">
+                            Desactivado
+                          </Badge>
+                        </CardContent>
+                      ) : (
+                        <CardContent>
+                          <div className="flex justify-between flex-col gap-3">
+                            <div className='flex gap-2 items-center justify-between'>
+                              <div className='flex items-center space-x-3'>
+                                <div className='flex-1 min-w-0'>
+                                  <h3 className='font-semibold text-gray-900'>{service.name}</h3>
+                                  <p className='text-sm text-gray-500'>{service.type_service}</p>
+                                </div>
+                              </div>
+
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button variant="ghost" size="sm" className='border'>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className='bg-white'>
+                                  <AlertDialogModal
+                                    title='Desactivar Servicio'
+                                    description='¿Estás seguro de que deseas desactivar este servicio?, esto no eliminará el servicio, solo lo desactivará para que no se muestre en la lista de servicios activos y no se podra activar nuevamente.'
+                                    nameButtonConfirm='Desactivar'
+                                    nameButton='Desactivar Servicio'
+                                    buttonStyle={{
+                                      backgroundColor: 'tomato'
+                                    }}
+                                    useButton={true}
+                                    onConfirm={() => handleDisableQuoteService(data?.quote_request?.id || 0, service.id)}
+                                  >
+                                  </AlertDialogModal>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </div>
-                          </div>
 
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm" className='border'>
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className='bg-white'>
-                              <DropdownMenuItem className="text-red-600">
-                                <AlertTriangle className="h-4 w-4 mr-2" />
-                                Desactivar servicio
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-
-                        <div className="flex flex-col gap-4">
-                          <div className='flex items-center justify-between'>
-                            <span className='text-xs text-gray-500'>
-                              {service.count} • Equipos
-                            </span>
-                            <Badge variant={'outline'} className={`${service.review_status === "pending" ? "bg-yellow-50 text-yellow-800 border-yellow-900" : "bg-green-50 text-green-800 border-green-500"
-                              }`}>
-                              {
-                                service.review_status === "pending" ? "Sin Revisión" : "Revisado"
-                              }
-                            </Badge>
-                          </div>
-                          <div className='flex items-center justify-between'>
-                            <span className="text-xs text-gray-500">
-                              {
-                                formatMethodName({
-                                  method: service.calibration_method as any
-                                })
-                              }
-                            </span>
-                            <span className='text-xs font-medium text-gray-900'>
-                              {`C$ ${formatPrice(service.total)}`}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                            <div className="flex flex-col gap-4">
+                              <div className='flex items-center justify-between'>
+                                <span className='text-xs text-gray-500'>
+                                  {service.count} • Equipos
+                                </span>
+                                <Badge variant={'outline'} className={`${service.review_status === "pending" ? "bg-yellow-50 text-yellow-800 border-yellow-900" : "bg-green-50 text-green-800 border-green-500"
+                                  }`}>
+                                  {
+                                    service.review_status === "pending" ? "Sin Revisión" : "Revisado"
+                                  }
+                                </Badge>
+                              </div>
+                              <div className='flex items-center justify-between'>
+                                <span className="text-xs text-gray-500">
+                                  {
+                                    formatMethodName({
+                                      method: service.calibration_method as any
+                                    })
+                                  }
+                                </span>
+                                <span className='text-xs font-medium text-gray-900'>
+                                  {`C$ ${formatPrice(service.total)}`}
+                                </span>
+                              </div>
+                            </div>
+                          </div >
+                        </CardContent >
+                      )
+                    }
+                  </Card >
                 )
               })}
-          </div>
-        </div>
-      </aside>
+          </div >
+        </div >
+      </aside >
 
       <main className="flex-1 p-4 sm:p-6">
         <div className="max-w-screen-3xl mx-auto px-4 sm:px-4 lg:px-6">
