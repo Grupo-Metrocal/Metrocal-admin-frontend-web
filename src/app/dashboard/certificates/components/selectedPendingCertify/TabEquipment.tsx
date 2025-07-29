@@ -130,8 +130,8 @@ export const TabEquipments = ({ selectedActivity, selectedService, equipments, h
                     </div>
                     <div>
                       <Label className="text-xs font-medium text-gray-500">Próxima Calibración:</Label>
-                      <p className={`font-medium ${!item.description_pattern.next_calibration ? "text-yellow-600" : ""}`}>
-                        {item.description_pattern.next_calibration ? formatDate(item.description_pattern.next_calibration) : "No especificada"}
+                      <p className={`font-medium ${!item.description_pattern?.next_calibration ? "text-yellow-600" : ""}`}>
+                        {item.description_pattern?.next_calibration ? formatDate(item.description_pattern?.next_calibration) : "No especificada"}
                       </p>
                     </div>
                   </div>
