@@ -258,6 +258,7 @@ const Footer = ({ saveQuote }: IFooterProps) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
       },
       body: {
         id,
