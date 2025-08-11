@@ -144,6 +144,31 @@ export default function Page() {
     }
   }
 
+
+  const handleFinishActivity = async (id: number) => {
+    toast.loading('Finalizando actividad')
+
+    const response = await fetchData({
+      url: `activities/finished-activity/${id}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
+      },
+    })
+
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Actividad finalizada')
+      setActivities((prev) => prev.filter((activity) => activity.id !== id))
+    } else {
+      toast.error('Hubo un error al finalizar la actividad', {
+        description: response.details,
+      })
+    }
+  }
+
   useEffect(() => {
     getData().then((response) => {
       if (response.success) {
@@ -171,7 +196,7 @@ export default function Page() {
       <Content title="Asignación de actividades" className="w-auto">
         <div>
           <CInput
-            placeholder="Nombre de la empresa"
+            placeholder="No. de Cotización"
             value={searchQuote.search}
             name="search"
             label="Filtrar cotizacion por No. de Cotización"
@@ -256,6 +281,7 @@ export default function Page() {
                   key={activity.id}
                   activity={activity}
                   onDelete={handleDeleteActivity}
+                  finishActivity={handleFinishActivity}
                 />
               ))
             ) : (

@@ -26,9 +26,10 @@ import { MoreHorizontal } from 'lucide-react'
 interface IProps {
   activity: IActivity
   onDelete: (id: number) => void
+  finishActivity: (id: number) => void
 }
 
-export const ActivityItem = ({ activity, onDelete }: IProps) => {
+export const ActivityItem = ({ activity, onDelete, finishActivity }: IProps) => {
   const [responsable, setResponsable] = useState<ITeammember>({
     id: -1,
     username: '',
@@ -257,7 +258,7 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
         </div>
 
         <div className="actions">
-          <ActionActivityItem activity={activity} onDelete={onDelete} />
+          <ActionActivityItem activity={activity} onDelete={onDelete} finishActivity={finishActivity} />
         </div>
       </div>
 
@@ -348,11 +349,13 @@ export const ActivityItem = ({ activity, onDelete }: IProps) => {
 type PropsActionItemActivity = {
   activity: IActivity
   onDelete: (id: number) => void
+  finishActivity: (id: number) => void
 }
 
 export const ActionActivityItem = ({
   onDelete,
   activity,
+  finishActivity
 }: PropsActionItemActivity) => {
   return (
     <DropdownMenu>
@@ -379,6 +382,21 @@ export const ActionActivityItem = ({
           <Link href={`/dashboard/quotes/view/${activity.quote_request?.id}`}>
             Ver cotización
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+        >
+          <AlertDialogModal
+            nameButton="Finalizar Actividad"
+            onConfirm={() => {
+              finishActivity(activity.id)
+            }}
+            title="Al finalizar la actividad, se cerraran los servicios y pasar a registros"
+            description="Esta acción no se puede deshacer"
+            useButton={false}
+          />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
