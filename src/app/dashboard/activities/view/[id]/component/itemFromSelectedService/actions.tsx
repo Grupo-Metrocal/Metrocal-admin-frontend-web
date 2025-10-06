@@ -23,6 +23,7 @@ export const ActionItem = ({
   stackId,
   selectedService
 }: IPropsActions) => {
+  console.log({ equipment })
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="border">

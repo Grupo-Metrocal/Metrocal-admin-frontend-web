@@ -61,10 +61,11 @@ export const ChangeCertCode = ({ calibration_method, equipment_id, current_certf
       getAlternativeRecordIndex(values.fromMethodName.replaceAll('-', '_'))
         .then((response) => {
           toast.dismiss()
+          console.log({ response })
 
           if (response.success) {
             toast.success('Certificado extraido correctamente')
-            setNewCertCode(response.data.certificate_code)
+            setNewCertCode(response.data.last_record_index)
           } else {
             toast.error('Registros no encontrados')
             setNewCertCode('')
@@ -100,11 +101,15 @@ export const ChangeCertCode = ({ calibration_method, equipment_id, current_certf
             <option value="NI_MCIT_V_01">NI-MCIT-V (Volumen)</option>
             <option value="NI_MCIT_D_01">NI-MCIT-D (Dimensional)</option>
             <option value="NI_MCIT_M_01">NI-MCIT-M (Masas)</option>
+            <option value="NI_MCIT_F">NI-MCIT-F (Fuerza)</option>
+            <option value="NI_MCIT_FQ">NI-MCIT-FQ (Físico Químico)</option>
+            <option value="NI_MCIT_H">NI-MCIT-H (Humedad)</option>
+            <option value="NI_MCIT_VE">NI-MCIT-VE (Variables Eléctricas)</option>
           </select>
         </div>
 
-        <div>
-          <h3>Codigo extraido: <span className="font-semibold">{newCertCode}</span></h3>
+        <div className="mt-4">
+          <h3>Ultimo consecutivo extraido: <span className="font-semibold">{newCertCode}</span></h3>
         </div>
       </div>
 

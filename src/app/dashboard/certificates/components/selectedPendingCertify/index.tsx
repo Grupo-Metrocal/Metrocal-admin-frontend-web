@@ -19,6 +19,7 @@ import { TabServices } from './TabServices'
 import { TabDetails } from './TabDetails'
 import { TabEquipments } from './TabEquipment'
 import { approveCertificate } from '@/utils/functions'
+import { handlePreviewPDFCertificate } from '@/utils/previewPDFCertificate'
 
 const getMethods = async (id: number) => {
   return await fetchData({
@@ -56,6 +57,8 @@ interface IProps {
   loadingCalibration: boolean
   handleEmmitCertificateToClient: (id: number) => void
   isLoadingEmmitCertificate: boolean
+  setPdfPreviewUrl: (url: string | null) => void
+  setCertificateNo: (no: string) => void
 }
 
 export const SelectedPendingCertify = ({
@@ -64,7 +67,9 @@ export const SelectedPendingCertify = ({
   setLoadingCalibration,
   loadingCalibration: loadingCalibration,
   setCertificate,
-  handleEmmitCertificateToClient
+  handleEmmitCertificateToClient,
+  setPdfPreviewUrl,
+  setCertificateNo
 }: IProps) => {
   const [selectedService, setSelectedService] = useState<Equipmentquoterequest>(
     {} as Equipmentquoterequest,
@@ -141,6 +146,36 @@ export const SelectedPendingCertify = ({
         description: certificate.details || '',
       })
       setCertificate({})
+    }
+  }
+
+  const handlePreviewCertificate = async (equipment: IP_01) => {
+    if (!equipment.id) {
+      toast('Porfavor selecciona un equipo para ver el certificado')
+      return
+    }
+
+    setLoadingCalibration(true)
+
+    const result = await handlePreviewPDFCertificate({
+      method_name: selectedService.calibration_method.split(' ')[0],
+      method_id: equipment.id,
+      activity_id: selectedActivity.id,
+      no: equipment.certificate_code ?? '',
+    })
+
+    setLoadingCalibration(false)
+
+    if (result.success && result.url) {
+      setPdfPreviewUrl(result.url)
+      setCertificateNo(equipment.certificate_code ?? '')
+      setCertificate({
+        renderer_method: selectedService.calibration_method.split(' ')[0],
+        renderer_method_id: equipment.id,
+      })
+    } else {
+      setPdfPreviewUrl(null)
+      setCertificateNo('')
     }
   }
 
@@ -244,6 +279,7 @@ export const SelectedPendingCertify = ({
               handleGenerateCertificate={handleGenerateCertificate}
               loadingCalibration={loadingCalibration}
               handleApproveEquipment={handleApproveEquipment}
+              handlePreviewCertificate={handlePreviewCertificate}
             />
           </TabsContent>
         </Tabs>

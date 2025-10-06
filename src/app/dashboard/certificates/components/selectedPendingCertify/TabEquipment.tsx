@@ -18,9 +18,10 @@ interface Props {
   handleGenerateCertificate: (item: IP_01) => void
   loadingCalibration: boolean
   handleApproveEquipment: (method_name: string, method_id: number) => void
+  handlePreviewCertificate: (item: IP_01) => void
 }
 
-export const TabEquipments = ({ selectedActivity, selectedService, equipments, handleGenerateCertificate, loadingCalibration, handleApproveEquipment }: Props) => {
+export const TabEquipments = ({ selectedActivity, selectedService, equipments, handleGenerateCertificate, loadingCalibration, handleApproveEquipment, handlePreviewCertificate }: Props) => {
 
   return (
     <Card>
@@ -95,11 +96,11 @@ export const TabEquipments = ({ selectedActivity, selectedService, equipments, h
                         size="sm"
                         variant="default"
                         className="bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => handleGenerateCertificate(item)}
+                        onClick={() => handlePreviewCertificate(item)}
                         disabled={loadingCalibration}
                       >
                         <FileText className="h-4 w-4 mr-1" />
-                        Generar Certificado
+                        Ver Certificado
                       </Button>
 
                       <Button variant='outline' size='sm'

@@ -10,23 +10,14 @@ import { toast } from 'sonner'
 import { Spinner } from '@/components/Spinner'
 import { ItemPendingCertify } from './components/itemPendingCertify'
 import { SelectedPendingCertify } from './components/selectedPendingCertify'
-import { TableP_01 } from './components/tableP_01'
-import { TableT_01 } from './components/tableT_01'
-import { TableT_03 } from './components/tableT_03'
-import { TableT_05 } from './components/tableT_05'
-import { TableV_01 } from './components/tableV_01'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { TableD_01 } from './components/tableD_01'
-import { TableD_02 } from './components/tableD_02'
-import { TableB_01 } from './components/tableB_01'
-import { TableM_01 } from './components/tableM_01'
-import { TableGenericMethod } from './components/table_generic-method'
 import { emmitCertificationsToClient } from '@/utils/functions'
 import { emmitCertificate } from '@/utils/functions'
 import { Backdrop } from '@/components/Backdrop'
-import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
 import { useForm } from '@/hooks/useForm'
 import { CInput } from '@/components/CInput'
+import { CertificatePdfPreview } from './components/certificatePdfPreview'
+import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
 
 const getData = async () => {
   return await fetchData({
@@ -54,19 +45,6 @@ const approveCertificate = async (method_name: string, method_id: number) => {
   })
 }
 
-const RENDERER_METHOD = {
-  'NI-MCIT-P-01': TableP_01,
-  'NI-MCIT-T-01': TableT_01,
-  'NI-MCIT-V-01': TableV_01,
-  'NI-MCIT-T-03': TableT_03,
-  'NI-MCIT-T-05': TableT_05,
-  'NI-MCIT-D-01': TableD_01,
-  'NI-MCIT-D-02': TableD_02,
-  'NI-MCIT-B-01': TableB_01,
-  'NI-MCIT-M-01': TableM_01,
-  'GENERIC_METHOD': TableGenericMethod,
-}
-
 export default function Page() {
   const [pendingActivities, setPendingActivities] = useState<
     IPendingActivities[]
@@ -78,6 +56,8 @@ export default function Page() {
   const [loadingEmmitCertificate, setLoadingEmmitCertificate] =
     useState<boolean>(false)
   const [certificate, setCertificate] = useState<any>({})
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null)
+  const [certificateNo, setCertificateNo] = useState<string>('')
   const { values: search, handleInputChange } = useForm({
     search: '',
   })
@@ -162,9 +142,6 @@ export default function Page() {
     )
   }, [pendingActivities, search.search])
 
-  const Renderer =
-    RENDERER_METHOD[certificate.renderer_method as keyof typeof RENDERER_METHOD]
-
   return (
     <LayoutPage
       title=""
@@ -219,59 +196,49 @@ export default function Page() {
               loadingCalibration={loadingCalibration}
               handleEmmitCertificateToClient={handleEmmitCertificateToClient}
               isLoadingEmmitCertificate={loadingEmmitCertificate}
+              setPdfPreviewUrl={setPdfPreviewUrl}
+              setCertificateNo={setCertificateNo}
             />
           </div>
         </div>
       </Content >
 
       <Content
-        title="Información del certificado de calibración"
+        title=""
         colorTitle="green"
-        className="mt-4 w-full min-h-[200px]"
+        className="mt-4 w-full"
       >
         {loadingCalibration ? (
           <div className="flex mt-4 justify-center">
             <Spinner />
           </div>
-        ) : certificate?.renderer_method ? (
-          <div className="flex justify-center items-center h-full flex-col gap-6 p-6 bg-white rounded-lg shadow-md">
-            {Renderer ? (
-              <Renderer
-                certificate={certificate}
-                method_name={certificate.renderer_method}
-                id={certificate.renderer_method_id}
-              />
-            ) : (
-              <p className="text-center mt-4 text-gray-500">
-                Renderizador no encontrado para el método de calibración
-              </p>
-            )}
-
-            <div className="w-full flex gap-6 justify-center">
-              <AlertDialogModal
-                onConfirm={reviewCertificate}
-                title="Aprobar certificado"
-                description="Antes de aprobar el certificado, verifique que los datos sean correctos."
-                nameButton="Aprobar certificado"
-                useButton
-              />
-
-              <AlertDialogModal
-                onConfirm={reviewAndEmmitCertificate}
-                title="Aprobar y Enviar Certificado"
-                description="El certificado se aprobará y se enviará al correo del cliente. Verifique que los resultados sean correctos."
-                nameButton="Aprobar y Enviar"
-                useButton
-                buttonStyle={{
-                  backgroundColor: "#22c55e",
-                }}
-              />
-
-            </div>
+        ) : pdfPreviewUrl ? (
+          <div className="p-6 bg-white rounded-lg shadow-md">
+            <CertificatePdfPreview
+              pdfUrl={pdfPreviewUrl}
+              certificateNo={certificateNo}
+              onClose={() => {
+                setPdfPreviewUrl(null)
+                setCertificateNo('')
+                setCertificate({})
+              }}
+              onDownload={() => {
+                if (certificate?.renderer_method && certificate?.renderer_method_id && selectedActivity?.id) {
+                  handleGeneratePDFCertificate({
+                    method_name: certificate.renderer_method,
+                    method_id: certificate.renderer_method_id,
+                    activity_id: selectedActivity.id,
+                    no: certificateNo,
+                  })
+                }
+              }}
+              onApprove={reviewCertificate}
+              onApproveAndSend={reviewAndEmmitCertificate}
+            />
           </div>
         ) : (
           <p className="text-center mt-4 text-gray-500">
-            No hay certificado para mostrar. Seleccione un equipo y genere los resultados del certificado.
+            No hay certificado para mostrar. Seleccione un equipo y haga clic en &quot;Ver Certificado&quot; para cargar la vista previa.
           </p>
         )}
       </Content>
