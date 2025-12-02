@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Download, X, CheckCircle, Send } from 'lucide-react'
+import { Download, X, CheckCircle, Send, FileSpreadsheet } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
 
@@ -8,6 +8,7 @@ interface CertificatePdfPreviewProps {
   certificateNo?: string
   onClose?: () => void
   onDownload?: () => void
+  onDownloadExcel?: () => void
   onApprove?: () => void
   onApproveAndSend?: () => void
 }
@@ -17,6 +18,7 @@ export const CertificatePdfPreview = ({
   certificateNo,
   onClose,
   onDownload,
+  onDownloadExcel,
   onApprove,
   onApproveAndSend,
 }: CertificatePdfPreviewProps) => {
@@ -58,6 +60,18 @@ export const CertificatePdfPreview = ({
             >
               <Download className="h-4 w-4" />
               Descargar PDF
+            </Button>
+          )}
+
+          {onDownloadExcel && (
+            <Button
+              variant="outline"
+              size="default"
+              onClick={onDownloadExcel}
+              className="gap-2 hover:bg-green-50 hover:border-green-300"
+            >
+              <FileSpreadsheet className="h-4 w-4" />
+              Descargar Excel
             </Button>
           )}
 

@@ -195,7 +195,7 @@ export const SelectedPendingCertify = ({
     if (resopnse.success) {
       toast.success('Se han generado y enviado los certificados', {
         description:
-          'cliente: ' + selectedActivity.quoteRequest.client.company_name,
+          'cliente: ' + (selectedActivity.quoteRequest?.client?.company_name || 'N/A'),
       })
     } else {
       toast.error('Error al generar los certificados', {
@@ -205,7 +205,7 @@ export const SelectedPendingCertify = ({
   }
 
   useEffect(() => {
-    if (selectedActivity) {
+    if (selectedActivity && selectedActivity.quoteRequest?.equipment_quote_request?.[0]) {
       handleSelectedService(
         selectedActivity.quoteRequest.equipment_quote_request[0],
       )
@@ -221,13 +221,13 @@ export const SelectedPendingCertify = ({
       <div className="bg-white border-b border-gray-200 p-6">
         <div className="flex items-center justify-between">
           <div className=''>
-            <h2 className="text-2xl font-bold text-gray-900">{selectedActivity.quoteRequest.client.company_name}</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{selectedActivity?.quoteRequest?.client?.company_name || 'Sin nombre de empresa'}</h2>
 
             <div className="flex items-center gap-4 mt-2">
-              <span className="text-sm text-gray-500">{selectedActivity.quoteRequest.no}</span>
-              {selectedActivity.quoteRequest.price && (
+              <span className="text-sm text-gray-500">{selectedActivity?.quoteRequest?.no}</span>
+              {selectedActivity?.quoteRequest?.price && (
                 <div className="flex items-center gap-1 text-sm text-gray-600">
-                  <span className="font-medium">C$ {formatPrice(selectedActivity.quoteRequest.price)}</span>
+                  <span className="font-medium">C$ {formatPrice(selectedActivity?.quoteRequest?.price || 0)}</span>
                 </div>
               )}
               <span className="text-sm text-gray-500">

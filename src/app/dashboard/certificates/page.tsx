@@ -17,7 +17,7 @@ import { Backdrop } from '@/components/Backdrop'
 import { useForm } from '@/hooks/useForm'
 import { CInput } from '@/components/CInput'
 import { CertificatePdfPreview } from './components/certificatePdfPreview'
-import { handleGeneratePDFCertificate } from '@/utils/downloadPDFCertificate'
+import { handleGeneratePDFCertificate, handleDownloadExcelCertificate } from '@/utils/downloadPDFCertificate'
 
 const getData = async () => {
   return await fetchData({
@@ -225,6 +225,16 @@ export default function Page() {
               onDownload={() => {
                 if (certificate?.renderer_method && certificate?.renderer_method_id && selectedActivity?.id) {
                   handleGeneratePDFCertificate({
+                    method_name: certificate.renderer_method,
+                    method_id: certificate.renderer_method_id,
+                    activity_id: selectedActivity.id,
+                    no: certificateNo,
+                  })
+                }
+              }}
+              onDownloadExcel={() => {
+                if (certificate?.renderer_method && certificate?.renderer_method_id && selectedActivity?.id) {
+                  handleDownloadExcelCertificate({
                     method_name: certificate.renderer_method,
                     method_id: certificate.renderer_method_id,
                     activity_id: selectedActivity.id,
