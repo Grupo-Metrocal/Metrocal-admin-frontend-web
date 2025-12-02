@@ -34,6 +34,47 @@ export default function RecordsPage() {
     total_data: 0,
   })
 
+  const returnToReview = async (id: number) => {
+    toast.loading('Devolviendo certificado a revisión...')
+
+    try {
+      const response = await fetchData({
+        url: `activities/update-fields/certificate/${id}`,
+        method: 'POST',
+        body: {
+          is_certificate: false,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('token')}`,
+        },
+      })
+
+      toast.dismiss()
+
+      if (response.success) {
+        toast.success('Certificado devuelto a revisión correctamente')
+        const data = await getRecords(currentPage, values.search)
+        if (data.success) {
+          setRecords(data.data)
+          setPagination({
+            current_page: data.current_page,
+            total_pages: data.total_pages,
+            total_data: data.total_data,
+          })
+        }
+      } else {
+        toast.error('Hubo un error al devolver el certificado a revisión', {
+          description: response.details || 'Error desconocido',
+        })
+      }
+    } catch (error) {
+      toast.dismiss()
+      toast.error('Hubo un error al devolver el certificado a revisión')
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     const timeOut = setTimeout(() => {
       getRecords(currentPage, values.search)
@@ -101,6 +142,7 @@ export default function RecordsPage() {
                 pagination={pagination}
                 setCurrentPage={setCurrentPage}
                 loading={loading}
+                returnToReview={returnToReview}
               />
             }
           </div>

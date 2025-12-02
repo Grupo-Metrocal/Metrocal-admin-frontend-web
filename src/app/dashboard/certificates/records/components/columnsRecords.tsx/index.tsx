@@ -16,10 +16,12 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 
 type IColumns = {
   forwaredCertification: (id: number) => void
+  returnToReview: (id: number) => void
 }
 
 export const ColumnsCertifiedRecords = ({
-  forwaredCertification
+  forwaredCertification,
+  returnToReview
 }: IColumns): ColumnDef<ICertifiedRecordsTable>[] => {
   return [
     {
@@ -149,6 +151,23 @@ export const ColumnsCertifiedRecords = ({
                   title="Antes de reenviar todos los certificados, debe verificar que los datos sean correctos"
                   description="Una vez enviados los certificados se limpiaran los registros generados"
                   nameButton="Reenviar Certificados"
+                  buttonStyle={{
+                    fontWeight: 'bold',
+                  }}
+                  useButton={false}
+                />
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <AlertDialogModal
+                  onConfirm={() => returnToReview(payment.id as number)}
+                  title="¿Estás seguro de devolver este certificado a revisión?"
+                  description="El certificado será devuelto a revisión y podrá ser modificado nuevamente"
+                  nameButton="Devolver a Revisión"
                   buttonStyle={{
                     fontWeight: 'bold',
                   }}

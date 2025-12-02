@@ -17,6 +17,7 @@ interface IProps {
   loading: boolean
   searchValue: string
   handleInputChange: (target: any) => void
+  returnToReview: (id: number) => void
 }
 
 export type ICertifiedRecordsTable = {
@@ -39,6 +40,7 @@ export const CertifiedRecords = ({
   loading,
   searchValue,
   handleInputChange,
+  returnToReview,
 }: IProps) => {
   const [loadingEmmitCertificate, setLoadingEmmitCertificate] = useState(false)
 
@@ -72,7 +74,7 @@ export const CertifiedRecords = ({
     <div className="bg-white p-4 rounded-lg">
       {
         <DataTableDemo<ICertifiedRecordsTable>
-          columns={ColumnsCertifiedRecords({ forwaredCertification })}
+          columns={ColumnsCertifiedRecords({ forwaredCertification, returnToReview })}
           searchValue={searchValue}
           handleSearch={handleInputChange}
           data={records ?? []}
