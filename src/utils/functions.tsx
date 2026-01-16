@@ -20,6 +20,7 @@ export const deleteQuoteRequest = async (id: number) => {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookie('token')}`,
     },
   })
 
