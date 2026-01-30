@@ -82,7 +82,7 @@ export const DescriptionPattern = ({
         <CInput
           label="Observaciones"
           name="observation"
-          value={data.observation}
+          value={data?.observation}
           onChange={handleInputChange}
         />
 
@@ -95,7 +95,7 @@ export const DescriptionPattern = ({
               type="checkbox"
               name="creditable"
               id="creditable"
-              checked={data.creditable}
+              checked={data?.creditable}
               onChange={handleInputChange}
               className="mr-2 text-blue-500 form-checkbox focus:ring-blue-500 h-4 w-4"
             />
@@ -106,7 +106,7 @@ export const DescriptionPattern = ({
         <CInput
           label="Fecha de siguiente calibración"
           name="next_calibration"
-          value={data.next_calibration}
+          value={data?.next_calibration}
           onChange={handleInputChange}
           type='date'
         />
@@ -114,7 +114,7 @@ export const DescriptionPattern = ({
         <CInput
           label="Fecha de calibración"
           name="calibration_date"
-          value={data.calibration_date}
+          value={data?.calibration_date}
           onChange={handleInputChange}
           type='date'
         />

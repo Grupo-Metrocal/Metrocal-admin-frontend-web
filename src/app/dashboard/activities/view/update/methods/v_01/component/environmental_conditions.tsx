@@ -63,8 +63,8 @@ export const EnvironmentalConditions = ({
           <select
             name="pattern"
             id="pattern"
-            defaultValue={data.pattern}
-            value={data.pattern}
+            defaultValue={data?.pattern}
+            value={data?.pattern}
             onChange={(e) => handleEdit('pattern', e.target.value)}
             className="border border-gray-300 rounded-md p-2 h-fit"
           >
