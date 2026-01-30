@@ -42,14 +42,14 @@ export const DescriptionPattern = ({
     if (!newPattern) return toast('Seleecione un patron')
 
     setData((prevData) => {
-      if (prevData.patterns?.includes(newPattern)) {
+      if (prevData?.patterns?.includes(newPattern)) {
         toast('El patron ya existe')
         return prevData;
       }
 
       return {
         ...prevData,
-        patterns: prevData.patterns ? [...prevData.patterns, newPattern] : [newPattern],
+        patterns: prevData?.patterns ? [...prevData.patterns, newPattern] : [newPattern],
       };
     });
   };
