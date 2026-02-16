@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ChangeCertCode } from "../changeCertCode"
 import { AlertDialogModal } from "@/components/AlertDialogModal"
 import { EquipmentQuoteRequest } from '../../interface'
+import { handleGeneratePDFAnnotationSheet } from '@/utils/downloadPDFAnnotationSheet'
 
 interface IPropsActions {
   equipment: any
@@ -60,6 +61,20 @@ export const ActionItem = ({
             Component={() => <ChangeCertCode calibration_method={calibration_method} current_certficate_code={equipment.certificate_code} equipment_id={equipment.id} />}
           />
         </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault()
+            handleGeneratePDFAnnotationSheet({
+              idActivity: activityID,
+              idMethod: equipment.id,
+              stackId: stackId,
+              calibrationMethod: calibration_method,
+            })
+          }}
+        >
+          Descargar Anotación de Resultados
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={(e) => {

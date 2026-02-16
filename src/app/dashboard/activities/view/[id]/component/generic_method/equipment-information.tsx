@@ -36,7 +36,7 @@ export const EquipmentInformation = ({
         />
         <Item
           title="Intervalo de escala"
-          value={equipment_information?.scale_interval.toString()}
+          value={equipment_information?.scale_interval?.toString()}
         />
         <Item title="Código" value={equipment_information?.code} />
         <Item
