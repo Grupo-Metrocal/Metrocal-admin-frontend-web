@@ -17,6 +17,7 @@ import { IClientsRecordsTable } from './components/records'
 import { useAppSelector, useAppDispatch } from '@/redux/hook'
 import { setRowSelectionTable } from '@/redux/features/data_table/rowSelection'
 import { BulkEmailModal } from './components/BulkEmailModal'
+import * as XLSX from 'xlsx'
 
 const getRecords = async (page: number, company_name?: string) => {
   return await fetchData({
@@ -40,47 +41,35 @@ const getAllClients = async () => {
   })
 }
 
-const exportToCSV = (clients: any[]) => {
-  const headers = [
-    'ID',
-    'Empresa',
-    'Correo',
-    'Solicitante',
-    'Teléfono',
-    'Dirección',
-    'No. RUC',
-    'Teléfono empresa',
-    'Fecha de creación',
-  ]
+const exportToExcel = (clients: any[], filename = 'clientes') => {
+  const rows = clients.map((c) => ({
+    ID: c.id ?? '',
+    Empresa: c.company_name ?? '',
+    Correo: c.email ?? '',
+    Solicitante: c.requested_by ?? '',
+    Teléfono: c.phone ?? '',
+    Dirección: c.address ?? '',
+    'No. RUC': c.no_ruc ?? '',
+    'Teléfono empresa': c.company_phone ?? '',
+    'Fecha de creación': c.created_at
+      ? new Date(c.created_at).toLocaleDateString('es-NI')
+      : '',
+  }))
 
-  const rows = clients.map((c) => [
-    c.id ?? '',
-    c.company_name ?? '',
-    c.email ?? '',
-    c.requested_by ?? '',
-    c.phone ?? '',
-    c.address ?? '',
-    c.no_ruc ?? '',
-    c.company_phone ?? '',
-    c.created_at ? new Date(c.created_at).toLocaleDateString('es-NI') : '',
-  ])
+  const ws = XLSX.utils.json_to_sheet(rows)
 
-  const escape = (value: any) => {
-    const str = String(value)
-    return str.includes(',') || str.includes('"') || str.includes('\n')
-      ? `"${str.replace(/"/g, '""')}"`
-      : str
-  }
+  // Ajustar ancho de columnas automáticamente
+  const colWidths = Object.keys(rows[0] || {}).map((key) => ({
+    wch: Math.max(
+      key.length,
+      ...rows.map((r: any) => String(r[key] ?? '').length),
+    ),
+  }))
+  ws['!cols'] = colWidths
 
-  const csv = [headers, ...rows].map((row) => row.map(escape).join(',')).join('\n')
-
-  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = `clientes_${new Date().toISOString().slice(0, 10)}.csv`
-  link.click()
-  URL.revokeObjectURL(url)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Clientes')
+  XLSX.writeFile(wb, `${filename}_${new Date().toISOString().slice(0, 10)}.xlsx`)
 }
 export default function RecordsPage() {
   const router = useRouter()
@@ -140,8 +129,8 @@ export default function RecordsPage() {
   }
 
   const handleBulkExportCSV = () => {
-    exportToCSV(selectedClients)
-    toast.success(`${selectedClients.length} clientes exportados`)
+    exportToExcel(selectedClients, 'clientes_seleccionados')
+    toast.success(`${selectedClients.length} clientes exportados a Excel`)
     clearSelection()
   }
 
@@ -163,8 +152,8 @@ export default function RecordsPage() {
 
       const clients = Array.isArray(data) ? data : (data?.data ?? [])
       if (clients.length > 0) {
-        exportToCSV(clients)
-        toast.success(`${clients.length} clientes exportados correctamente`)
+        exportToExcel(clients)
+        toast.success(`${clients.length} clientes exportados a Excel correctamente`)
       } else {
         toast.error('No se pudieron obtener los clientes para exportar')
       }
@@ -287,7 +276,7 @@ export default function RecordsPage() {
               className="flex items-center gap-2"
             >
               <FileDown className="h-4 w-4" />
-              {exportingCSV ? 'Exportando...' : 'Exportar CSV'}
+              {exportingCSV ? 'Exportando...' : 'Exportar Excel'}
             </Button>
           </div>
 
@@ -340,7 +329,7 @@ export default function RecordsPage() {
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
           >
             <FileDown className="h-3.5 w-3.5" />
-            Exportar
+            Excel
           </button>
 
           <button
