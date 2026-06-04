@@ -150,7 +150,7 @@ export default function RecordsPage() {
   }
 
   const handleBulkTag = () => {
-    toast.info('Etiquetado masivo próximamente disponible')
+    toast('Etiquetado masivo próximamente disponible')
   }
 
   const handleExportCSV = async () => {
