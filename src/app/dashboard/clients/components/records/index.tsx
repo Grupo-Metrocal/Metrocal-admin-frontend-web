@@ -14,6 +14,7 @@ interface IProps {
   loading: boolean
   handleSearchChange: (target: any) => void
   searchValue: string
+  onRowClick?: (client: IClientsRecordsTable) => void
 }
 
 export type IClientsRecordsTable = {
@@ -35,6 +36,7 @@ export const ClientRecords = ({
   handleDeleteClient,
   searchValue,
   handleSearchChange,
+  onRowClick,
 }: IProps) => {
   const handlePreviousPage = () => {
     if (pagination.current_page > 1) {
@@ -71,6 +73,7 @@ export const ClientRecords = ({
             address: 'Dirección',
             quote_requests: 'Cotizaciones solicitadas',
           }}
+          onRowClick={onRowClick}
         />
       }
     </div>

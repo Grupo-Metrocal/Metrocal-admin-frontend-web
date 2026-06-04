@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Loader2 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -56,6 +56,7 @@ export type DataTableProps<T> = {
   search_placeholder?: string
   filter_columns?: Record<string, string>
   filters?: filter[]
+  onRowClick?: (row: T) => void
 }
 export function DataTableDemo<T>({
   data,
@@ -70,6 +71,7 @@ export function DataTableDemo<T>({
   search_placeholder,
   filter_columns,
   filters,
+  onRowClick,
 }: DataTableProps<T>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -113,13 +115,18 @@ export function DataTableDemo<T>({
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder={search_placeholder ?? 'Buscar'}
-          value={searchValue}
-          onChange={(e) => handleSearch(e.target)}
-          className="max-w-sm"
-          name="search"
-        />
+        <div className="relative max-w-sm w-full">
+          <Input
+            placeholder={search_placeholder ?? 'Buscar'}
+            value={searchValue}
+            onChange={(e) => handleSearch(e.target)}
+            className="w-full pr-8"
+            name="search"
+          />
+          {isLoading && (
+            <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-[#0199d4]" />
+          )}
+        </div>
         <div className="flex items-center space-x-2 ml-auto">
           {filters && (
             <DropdownMenu>
@@ -182,10 +189,13 @@ export function DataTableDemo<T>({
           </DropdownMenu>
         </div>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border relative">
         {isLoading && (
-          <div className="w-full h-4 bg-gray-200 rounded overflow-hidden">
-            <div className="h-full bg-blue-500 animate-pulse"></div>
+          <div className="absolute inset-0 z-10 bg-white/70 backdrop-blur-[1px] flex items-center justify-center rounded-md">
+            <div className="flex items-center gap-2.5 bg-white shadow-lg rounded-xl px-4 py-2.5 border border-gray-100">
+              <Loader2 className="h-4 w-4 animate-spin text-[#0199d4]" />
+              <span className="text-sm font-medium text-gray-600">Cargando...</span>
+            </div>
           </div>
         )}
         <Table>
@@ -213,6 +223,14 @@ export function DataTableDemo<T>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  onClick={(e) => {
+                    if (!onRowClick) return
+                    const target = e.target as HTMLElement
+                    if (target.closest('button, input, a, [role="checkbox"], [data-radix-collection-item]')) return
+                    onRowClick(row.original)
+                  }}
+                  style={onRowClick ? { cursor: 'pointer' } : undefined}
+                  className={onRowClick ? 'hover:bg-[#f0faff]' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

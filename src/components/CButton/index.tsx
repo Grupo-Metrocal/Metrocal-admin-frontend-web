@@ -9,6 +9,7 @@ interface CButtonProps {
   uppercase?: boolean
   widht?: 'full' | 'auto'
   style?: React.CSSProperties
+  variant?: 'primary' | 'danger' | 'ghost'
 }
 
 export const CButton = ({
@@ -20,6 +21,7 @@ export const CButton = ({
   uppercase,
   widht = 'auto',
   style,
+  variant = 'primary',
 }: CButtonProps) => {
   return (
     <button
@@ -29,6 +31,7 @@ export const CButton = ({
       disabled={disabled}
       data-uppercase={uppercase}
       data-width={widht}
+      data-variant={variant}
       style={style}
     >
       {children}

@@ -1,37 +1,88 @@
 import { IClient } from '@/app/contactInformation'
-import pencilIcon from '@/assets/icons/pencil.svg'
 import './index.scss'
-import Image from 'next/image'
 import Link from 'next/link'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  User,
+  FileText,
+  Calendar,
+  Pencil,
+} from 'lucide-react'
 
 interface IProps {
   client: IClient
 }
+
 export const ClientRenderer = ({ client }: IProps) => {
+  const initials = (client.company_name || '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase() || '?'
+
   return (
-    <div className="renderer-client relative">
-      <Link
-        href={`/dashboard/clients/update/${client.id}`}
-        passHref
-        className="bg-[#09f] p-2 rounded-full w-fit absolute right-0 top-0 hover:bg-[#0af] cursor-pointer"
-      >
-        <Image src={pencilIcon} alt="pencil icon" />
-      </Link>
-      <Item label="Empresa" value={client.company_name} />
-      <Item label="Solicitante" value={client.requested_by} />
-      <Item label="Email" value={client.email} />
-      <Item label="Teléfono" value={client.phone} />
-      <Item label="Dirección" value={client.address} />
-      <Item label="No. RUC" value={client.no_ruc} />
+    <div className="renderer-client">
+      <div className="renderer-client__header">
+        <div className="renderer-client__avatar">{initials}</div>
+        <div className="renderer-client__header-info">
+          <h2 className="renderer-client__name">{client.company_name}</h2>
+          <span className="renderer-client__badge">Cliente activo</span>
+        </div>
+      </div>
+
+      <div className="renderer-client__body">
+        <InfoItem icon={<Mail />} label="Correo electrónico" value={client.email} />
+        <InfoItem icon={<Phone />} label="Teléfono" value={client.phone} />
+        <InfoItem icon={<User />} label="Solicitante" value={client.requested_by} />
+        <InfoItem icon={<MapPin />} label="Dirección" value={client.address} />
+        <InfoItem icon={<FileText />} label="No. RUC" value={client.no_ruc} />
+        {client.created_at && (
+          <InfoItem
+            icon={<Calendar />}
+            label="Fecha de registro"
+            value={new Date(client.created_at).toLocaleDateString('es-NI', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          />
+        )}
+      </div>
+
+      <div className="renderer-client__footer">
+        <Link
+          href={`/dashboard/clients/update/${client.id}`}
+          className="renderer-client__edit-btn"
+        >
+          <Pencil size={15} />
+          Editar información
+        </Link>
+      </div>
     </div>
   )
 }
 
-const Item = ({ label, value }: { label: string; value?: string }) => {
+const InfoItem = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode
+  label: string
+  value?: string
+}) => {
+  if (!value) return null
   return (
-    <div className="client-info__item">
-      <span className="client-info__item__label">{label}:</span>
-      <span className="client-info__item__value">{value || ''}</span>
+    <div className="renderer-client__item">
+      <div className="renderer-client__item-icon">{icon}</div>
+      <div className="renderer-client__item-content">
+        <span className="renderer-client__item-label">{label}</span>
+        <span className="renderer-client__item-value">{value}</span>
+      </div>
     </div>
   )
 }

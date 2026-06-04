@@ -147,7 +147,11 @@ export default function Page({ params }: IProps) {
   }, [id, currentPage])
 
   return (
-    <LayoutPage title="Detalles del cliente">
+    <LayoutPage
+      title="Detalles del cliente"
+      subTitle={!loadingClient && client.company_name ? client.company_name : ''}
+      rollBack
+    >
       {loadingClient ? (
         <div className="w-full flex justify-center h-[300px] items-center">
           <Spinner />
