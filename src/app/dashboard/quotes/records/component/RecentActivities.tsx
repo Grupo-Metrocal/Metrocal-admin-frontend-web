@@ -1,8 +1,8 @@
-import { Content } from '@/components/Content'
 import { fetchData } from '@/utils/fetch'
 import { formatDate } from '@/utils/formatDate'
 import { getCookie } from '@/utils/auth'
 import { formatPrice } from '@/utils/formatPrice'
+import { Activity, Building2, DollarSign, User } from 'lucide-react'
 
 const getData = async (lastActivities: number) => {
   return await fetchData({
@@ -15,39 +15,53 @@ const getData = async (lastActivities: number) => {
 }
 
 export const RecentActivities = async () => {
-  const response = await getData(5)
+  const response = await getData(6)
+  const items: any[] = response?.data ?? []
 
   return (
-    <Content
-      title="Actividades recientes"
-      colorTitle="red"
-      className="recent-activities"
-    >
-      <div className="recent-activities__container">
-        <header className="recent-activities__header">
-          <div className="recent-activities__header--title">
-            <span>Fecha</span>
-            <span>Empresa</span>
-            <span>Precio</span>
-            <span>Revisado por</span>
-          </div>
-        </header>
-
-        <div className="recent-activities__body">
-          {!response?.data ? (
-            <div> No hay actividades recientes </div>
-          ) : (
-            response?.data.map((item: any) => (
-              <div key={item.id} className="item">
-                <span>{formatDate(item.created_at)}</span>
-                <span>{item.company_name}</span>
-                <span className="price">{formatPrice(item.price)}</span>
-                <span>{item.approved_by}</span>
-              </div>
-            ))
-          )}
+    <div className="recent-act">
+      <div className="recent-act__header">
+        <div className="recent-act__header-icon">
+          <Activity size={15} />
         </div>
+        <div>
+          <h3 className="recent-act__title">Actividades recientes</h3>
+          <p className="recent-act__sub">Últimas cotizaciones procesadas</p>
+        </div>
+        {items.length > 0 && (
+          <span className="recent-act__count">{items.length}</span>
+        )}
       </div>
-    </Content>
+
+      <div className="recent-act__body">
+        {items.length === 0 ? (
+          <div className="recent-act__empty">
+            <Activity size={24} />
+            <p>Sin actividades recientes</p>
+          </div>
+        ) : (
+          items.map((item: any) => (
+            <div key={item.id} className="recent-act__item">
+              <div className="recent-act__item-avatar">
+                <Building2 size={14} />
+              </div>
+              <div className="recent-act__item-info">
+                <span className="recent-act__item-company">{item.company_name}</span>
+                <span className="recent-act__item-meta">
+                  <User size={10} />
+                  {item.approved_by}
+                  <span className="recent-act__item-sep">·</span>
+                  {formatDate(item.created_at)}
+                </span>
+              </div>
+              <span className="recent-act__item-price">
+                <DollarSign size={11} />
+                {formatPrice(item.price)}
+              </span>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
   )
 }

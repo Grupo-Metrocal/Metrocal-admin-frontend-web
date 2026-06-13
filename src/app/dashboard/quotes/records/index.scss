@@ -1,72 +1,278 @@
 @use '@/sass/index' as *;
-.quotes-records {
-  .quotes-records__recent {
+
+/* ─────────────────────────────────────────────
+   Top row: activity feed + chart — mismo alto
+───────────────────────────────────────────── */
+.rec-top {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch; /* ambas columnas comparten la misma altura */
+}
+
+.rec-top__activities,
+.rec-top__chart {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Table section
+───────────────────────────────────────────── */
+.rec-table {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+
+  &__head {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 1em;
-    gap: 1em;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
 
-    .recent-activities {
-      width: 100% !important;
+  &__head-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2563eb;
+    flex-shrink: 0;
+  }
 
-      &__container {
-        height: 150px;
-        overflow-y: auto;
-      }
+  &__head-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+  }
 
-      &__header {
-        &--title {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-          color: #999;
-        }
-      }
+  &__head-sub {
+    font-size: 0.73rem;
+    color: #9ca3af;
+    margin-top: 0.15rem;
+  }
 
-      &__body {
-        margin-top: 1em;
-        div {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-          border-bottom: 1px solid rgb(204, 204, 204, 0.5);
-          padding: 1em 0;
-
-          .price {
-            color: #3d9b35;
-          }
-        }
-      }
-    }
-    .recent-quotes {
-      width: 100%;
-      max-width: 350px;
-    }
+  &__body {
+    padding: 0 1.25rem 1.25rem;
   }
 }
 
-@include mobile {
-  .quotes-records {
-    .quotes-records__recent {
-      flex-direction: column;
-      .recent-activities {
-        width: 100% !important;
-        &__header {
-          width: 600px;
-          &--title {
-            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-          }
-        }
+/* ─────────────────────────────────────────────
+   Activity feed card
+───────────────────────────────────────────── */
+.recent-act {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* se estira para llenar la celda del grid */
 
-        &__body {
-          width: 600px;
-          div {
-            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-          }
-        }
-      }
-      .recent-quotes {
-        width: 100%;
-        max-width: 100%;
-      }
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid #f1f5f9;
+    flex-shrink: 0;
+  }
+
+  &__header-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #fef2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 0.87rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  &__sub {
+    font-size: 0.71rem;
+    color: #9ca3af;
+    margin-top: 0.15rem;
+  }
+
+  &__count {
+    margin-left: auto;
+    font-size: 0.69rem;
+    font-weight: 700;
+    background: #fef2f2;
+    color: #dc2626;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    gap: 0.5rem;
+    color: #d1d5db;
+
+    p {
+      font-size: 0.8rem;
+      color: #9ca3af;
     }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.85rem 1.4rem;
+    transition: background 0.12s;
+
+    &:hover { background: #f9fafb; }
+    & + & { border-top: 1px solid #f8fafc; }
+  }
+
+  &__item-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  &__item-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  &__item-company {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__item-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+
+  &__item-sep { opacity: 0.35; }
+
+  &__item-price {
+    display: flex;
+    align-items: center;
+    gap: 0.12rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 0.22rem 0.5rem;
+    border-radius: 7px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Chart card — misma altura que actividades
+───────────────────────────────────────────── */
+.recent-chart {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* se estira para igualar la altura de la columna izquierda */
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid #f1f5f9;
+    flex-shrink: 0;
+  }
+
+  &__header-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: #ecfdf5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #059669;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 0.87rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  &__sub {
+    font-size: 0.71rem;
+    color: #9ca3af;
+    margin-top: 0.15rem;
+  }
+
+  &__total {
+    margin-left: auto;
+    font-size: 0.69rem;
+    font-weight: 700;
+    background: #ecfdf5;
+    color: #059669;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+  }
+
+  &__body {
+    flex: 1; /* ocupa todo el espacio restante de la card */
+    padding: 1.25rem 1.4rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Responsive
+───────────────────────────────────────────── */
+@include mobile {
+  .rec-top {
+    grid-template-columns: 1fr;
   }
 }

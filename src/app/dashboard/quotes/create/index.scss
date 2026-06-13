@@ -1,9 +1,19 @@
 @use '@/sass/index' as *;
 
+/* ── wrapper that removes default CInput label so we render our own ── */
+.c-input-wrapper {
+  .c-input {
+    label {
+      display: none;
+    }
+  }
+}
+
+/* ── Equipment table ── */
 .register-equipment__body {
   font-weight: 500;
-  background: white;
-  padding: 1em;
+  padding: 1.25em 3.5em 1.5em 1.5em;
+
   .table {
     width: 100%;
 
@@ -12,90 +22,124 @@
         display: flex;
         justify-content: space-around;
         font-weight: 600;
+        font-size: 0.8em;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding-bottom: 0.75em;
       }
+
       &__th {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 1em;
         align-items: center;
-        margin-top: 1em;
-        padding: 0.5em 0;
-        border-bottom: 1px solid #eaeaea;
+        margin-top: 0.5em;
+        padding: 0.6em 0;
+        border-top: 1px solid #f3f4f6;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 0.75em;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
       }
     }
 
     &__body {
       &__tr {
-        border-bottom: 1px solid #eaeaea;
-        padding: 2em 0;
+        border-bottom: 1px solid #f3f4f6;
+        padding: 1.25em 0;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 1em;
         align-items: center;
-        animation: fadeIn 0.5s ease-in-out;
+        animation: fadeIn 0.35s ease-in-out;
         position: relative;
 
         @keyframes fadeIn {
           from {
             opacity: 0;
+            transform: translateY(4px);
           }
           to {
             opacity: 1;
+            transform: translateY(0);
           }
         }
 
         .delete-equipment {
           position: absolute;
-          right: -40px;
+          right: -36px;
+
           button {
             cursor: pointer;
             background: none;
             outline: none !important;
             border: none;
+            color: #ef4444;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+
+            &:hover {
+              opacity: 1;
+            }
           }
         }
 
         &__td {
           &__btn {
-            padding: 0.5em 1em;
+            padding: 0.6em 1em;
             width: 100%;
             text-align: start;
             background: none;
             outline: none;
             border: none;
-            color: #999;
+            color: #9ca3af;
             font-family: 'Montserrat', sans-serif;
             position: relative;
-            font-weight: bold;
-            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.25s ease-in-out;
             cursor: pointer;
 
             &::after {
               content: '';
               position: absolute;
-              width: 4px;
+              width: 3px;
               border-radius: 30px;
               height: 100%;
               top: 0;
               left: 0;
-              background-color: #999;
+              background-color: #d1d5db;
+              transition: background-color 0.25s;
             }
 
             &:hover {
-              color: #555;
+              color: #6b7280;
+
               &::after {
-                background-color: #555;
+                background-color: $primary-color;
               }
             }
           }
 
           select {
             font-family: 'Montserrat', sans-serif;
-            padding: 0.5em 1em;
-            border: 1px solid #ffffff !important;
+            padding: 0.5em 0.75em;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 8px;
             outline: none !important;
             cursor: pointer;
             width: 100%;
+            font-size: 0.85em;
+            color: #374151;
+            background: #fff;
+            transition: border-color 0.2s;
+
+            &:focus {
+              border-color: $primary-color !important;
+            }
           }
 
           input,
@@ -103,22 +147,23 @@
             font-family: 'Montserrat', sans-serif;
             background: none;
             outline: none;
-            width: 90%;
-
-            margin-top: 0.5em;
-            padding: 0.8em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 0.9em;
-            transition: all 0.3s ease-in-out;
+            width: 95%;
+            margin-top: 0.25em;
+            padding: 0.65em 0.75em;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #374151;
+            transition: border-color 0.2s;
 
             &:focus {
               border-color: $primary-color;
             }
 
             &:disabled {
-              background-color: #eee;
+              background-color: #f9fafb;
               cursor: not-allowed;
+              color: #9ca3af;
             }
           }
         }

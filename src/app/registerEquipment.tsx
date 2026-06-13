@@ -1,8 +1,8 @@
-import RemoveIcon from '@/assets/icons/remove.svg'
 import Image from 'next/image'
 import { CButton } from '@/components/CButton'
 import vectorIcon from '@/assets/icons/vector.svg'
 import { AutocompleteInput } from '@/components/AutocompleteInput'
+import { Trash2 } from 'lucide-react'
 import type { TAuthorizedServices } from './page'
 
 interface IState {
@@ -122,26 +122,22 @@ export const renderTableTr = ({
   state,
   authorizedServices,
 }: ITableTrProps) => {
-  const equipmentList = authorizedServices.map(
-    (service: TAuthorizedServices) => {
-      return service.equipment
-        ? {
-          id: service.id,
-          name: service.equipment,
-        }
-        : { id: 0, name: '' }
-    },
-  )
+  const equipmentList = authorizedServices
+    .filter((service: TAuthorizedServices) => !!service.equipment)
+    .map((service: TAuthorizedServices) => ({
+      id: service.id,
+      name: service.equipment,
+    }))
 
-
-  const rangeList = authorizedServices.map((service: TAuthorizedServices) => {
-    return state?.name === service.equipment && service.measuring_range !== ''
-      ? {
-        id: service.id,
-        name: service.measuring_range,
-      }
-      : { id: 0, name: '' }
-  })
+  const rangeList = authorizedServices
+    .filter(
+      (service: TAuthorizedServices) =>
+        state?.name === service.equipment && service.measuring_range !== '',
+    )
+    .map((service: TAuthorizedServices) => ({
+      id: service.id,
+      name: service.measuring_range,
+    }))
 
   return (
     <div className="table__body__tr" key={key} id={'tr' + id.toString()}>
@@ -185,7 +181,7 @@ export const renderTableTr = ({
           className="register-equipment__body__autocomplete"
           value={state?.name}
           placeholder="nombre del equipo"
-          keyList="equipmentList"
+          keyList={`equipmentList-${id}`}
         />
       </div>
       <div className="table__body__tr__td">
@@ -227,7 +223,7 @@ export const renderTableTr = ({
           name="measuring_range"
           value={state?.measuring_range}
           placeholder="(0 - 100) mm"
-          keyList="rangeList"
+          keyList={`rangeList-${id}`}
         />
       </div>
 
@@ -241,14 +237,31 @@ export const renderTableTr = ({
         />
       </div>
 
-      <div className="delete-equipment">
-        <button
-          className="delete-equipment__btn"
-          onClick={() => deleteEquipment(id)}
-        >
-          <Image src={RemoveIcon} alt="remove" />
-        </button>
-      </div>
+      <button
+        title="Eliminar equipo"
+        onClick={() => deleteEquipment(id)}
+        className="delete-equipment__btn"
+        style={{
+          position: 'absolute',
+          right: '-42px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: '6px',
+          borderRadius: '8px',
+          color: '#ef4444',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'background 0.15s',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = '#fee2e2')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+      >
+        <Trash2 size={16} />
+      </button>
     </div>
   )
 }

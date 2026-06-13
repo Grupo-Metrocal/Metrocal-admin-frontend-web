@@ -1,11 +1,7 @@
-import { IQuote } from "../../../requests/[id]/page";
-import { formatDate } from "@/utils/formatDate";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
-import messageIcon from '@/assets/icons/comment.svg'
-import Image from "next/image";
-import { handleGeneratePDFromModifiedQuoteList } from "@/utils/downloadPDFromModifiedQuoteList";
+import { IQuote } from '../../../requests/[id]/page'
+import { formatDate } from '@/utils/formatDate'
+import { Download, Calendar, MessageSquare, Tag } from 'lucide-react'
+import { handleGeneratePDFromModifiedQuoteList } from '@/utils/downloadPDFromModifiedQuoteList'
 
 interface IProps {
   quote: IQuote
@@ -13,35 +9,42 @@ interface IProps {
 }
 
 export const RegisterQuoteItem = ({ quote, index }: IProps) => {
+  const versionLabel = `v${index + 1}`
+  const hasMessage = !!quote.quote_modification_message
+
   return (
-    <div className="shadow-lg w-60 p-4 rounded flex flex-col gap-2 relative">
-      <div className="flex justify-between gap-2 items-center">
-        <h3 className="text-base">{quote.no}</h3>
-        <Popover>
-          <PopoverTrigger>
-            <Image src={messageIcon} alt="Icono Mensaje de modificación" width={20} />
-          </PopoverTrigger>
-          <PopoverContent className="bg-white p-4 shadow-lg w-full z-20">
-            <p className="w-96">{quote.quote_modification_message || 'No hay mensaje'}</p>
-          </PopoverContent>
-        </Popover>
-      </div >
-
-
-      <div className="flex justify-between gap-2 items-center">
-        <span className="text-gray-400">{formatDate(quote.updated_at)}</span>
-
-        <Button variant={"outline"} onClick={async () => {
-          return await handleGeneratePDFromModifiedQuoteList({
-            id: quote.id,
-            no: quote.no,
-            company_name: quote.client.company_name,
-            index
-          })
-        }}>
-          <Download width={17} />
-        </Button>
+    <div className="qv__mod-item">
+      <div className="qv__mod-item-header">
+        <div className="qv__mod-item-version">
+          <Tag size={11} />
+          {versionLabel}
+        </div>
+        <span className="qv__mod-item-no">{quote.no}</span>
+        <button
+          className="qv__mod-item-dl"
+          title="Descargar PDF"
+          onClick={async () =>
+            handleGeneratePDFromModifiedQuoteList({
+              id: quote.id,
+              no: quote.no,
+              company_name: quote.client.company_name,
+              index,
+            })
+          }
+        >
+          <Download size={13} />
+        </button>
       </div>
-    </div >
+
+      <div className="qv__mod-item-date">
+        <Calendar size={11} />
+        {formatDate(quote.updated_at)}
+      </div>
+
+      <div className={`qv__mod-item-msg${!hasMessage ? ' qv__mod-item-msg--empty' : ''}`}>
+        <MessageSquare size={11} />
+        <span>{quote.quote_modification_message || 'Sin mensaje de modificación'}</span>
+      </div>
+    </div>
   )
 }

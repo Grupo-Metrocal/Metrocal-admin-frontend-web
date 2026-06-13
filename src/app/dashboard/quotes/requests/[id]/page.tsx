@@ -29,9 +29,13 @@ import { Modal } from '@/components/Modal'
 import { CButton } from '@/components/CButton'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { formatPrice } from '@/utils/formatPrice'
-import { Content } from '@/components/Content'
 import { AddEquipmentToQuoteButton } from './component/AddEquipmentButton'
 import { AddEquipmentToQuote } from './component/AddEquipmentToQuote'
+import {
+  FileText, Building2, Wrench, DollarSign,
+  CheckCircle2, Clock, XCircle, AlertCircle,
+  MessageSquare, Receipt, X,
+} from 'lucide-react'
 
 export interface IEquipmentQuoteRequest {
   id: number
@@ -94,185 +98,205 @@ export interface IQuote {
 }
 
 export interface IRoot {
-  params: {
-    id: string
-  }
+  params: { id: string }
 }
 
-const getQuote = async (id: string) => {
-  const response = await fetchData({
-    url: `quotes/request/${id}`,
-    headers: {
-      Authorization: `Bearer ${getCookie('token')}`,
-    },
-  })
-  return response
+const STATUS_MAP: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
+  done:     { label: 'Aprobado',  color: '#059669', bg: '#ecfdf5', icon: <CheckCircle2 size={13} /> },
+  pending:  { label: 'Pendiente', color: '#dc2626', bg: '#fef2f2', icon: <Clock        size={13} /> },
+  waiting:  { label: 'En espera', color: '#d97706', bg: '#fffbeb', icon: <AlertCircle  size={13} /> },
+  rejected: { label: 'Rechazado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle      size={13} /> },
+  canceled: { label: 'Cancelado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle      size={13} /> },
 }
+
+const getQuote = async (id: string) =>
+  fetchData({
+    url: `quotes/request/${id}`,
+    headers: { Authorization: `Bearer ${getCookie('token')}` },
+  })
 
 export default function Page({ params }: IRoot) {
   const equipment = useAppSelector((state) => state.quote.equipment)
   const client = useAppSelector((state) => state.quote.client)
   const { loading, toggleLoading } = useLoading()
-  const selectedEquipment = useAppSelector(
-    (state) => state.quote.selectedEquipment,
-  )
+  const selectedEquipment = useAppSelector((state) => state.quote.selectedEquipment)
+  const status = useAppSelector((state) => state.quote.status)
+  const no = useAppSelector((state) => state.quote.no)
 
   const [quote, setQuote] = useState<IQuote>()
   const [saveQuote, setSaveQuote] = useState<any>()
 
-  const status = useAppSelector((state) => state.quote.status)
-
   const dispatch = useAppDispatch()
-  useState<IEquipmentQuoteRequest>()
-
   const id = params.id
 
   const handleSelectEquipment = (id: number) => {
-    const equipmentSelected = equipment.find((item) => item.id === id)
-    dispatch(setSelectedEquipment(equipmentSelected))
+    const found = equipment.find((item) => item.id === id)
+    dispatch(setSelectedEquipment(found))
     dispatch(calculateTotal())
   }
 
   useEffect(() => {
     toggleLoading()
-    const getQuoteRequest = async () => {
-      const response = await getQuote(id)
-
-      if (response.success) {
-        setQuote(response.data as IQuote)
-        setSaveQuote(response.data)
-        dispatch(handleDispatchOnLoad(response.data as IQuote))
-      }
-    }
-    getQuoteRequest.call(null).finally(() => toggleLoading())
+    getQuote(id)
+      .then((res) => {
+        if (res.success) {
+          setQuote(res.data as IQuote)
+          setSaveQuote(res.data)
+          dispatch(handleDispatchOnLoad(res.data as IQuote))
+        }
+      })
+      .finally(() => toggleLoading())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dispatch])
+
+  const statusCfg = STATUS_MAP[status ?? 'pending'] ?? STATUS_MAP.pending
 
   return (
     <LayoutPage
       title="Cotizaciones / solicitudes"
-      rollBack={true}
+      rollBack
       Footer={() => <Footer saveQuote={saveQuote} />}
-      subTitle={
-        status && status === 'waiting'
-          ? 'En espera de aprobación del cliente'
-          : status === 'done'
-            ? 'Cotización aprobada'
-            : status === 'rejected'
-              ? 'Cotización rechazada'
-              : ''
-      }
     >
-
-      {
-        quote?.quote_modification_status === 'pending' && (
-          <Content title='Información sobre modificación de cotización'>
-            <p>
-              {quote?.quote_modification_message}
-            </p>
-          </Content>
-        )
-      }
-
-      <div className="only-quote">
-        <section className='h-fit'>
-          <div
-            className={`equipment-container`}
-          >
-            {loading ? (
-              equipment?.map((equipment, index) => (
-                <RenderEquipment
-                  key={index}
-                  equipment={equipment}
-                  status={equipment.discount > 0}
-                  onClick={() => handleSelectEquipment(equipment.id)}
-                  selected={selectedEquipment?.id === equipment.id}
-                />
-              ))
-            ) : (
-              <Spinner />
-            )}
+      {/* ── Top bar ── */}
+      <div className="qreq__topbar">
+        <div className="qreq__topbar-left">
+          <div className="qreq__topbar-icon">
+            <FileText size={18} />
           </div>
-
-          {
-            loading && equipment?.length > 0 && (
-              <AddEquipmentToQuoteButton
-                Component={() => <AddEquipmentToQuote quoteId={id} />}
-              />
-            )
-
-          }
-        </section>
-
-        <section className="only-quote__body">
-          <div className="only-quote__body__client">
-            <RenderClient client={client && client}
-              alt_client_email={quote?.alt_client_email}
-              alt_client_phone={quote?.alt_client_phone}
-              alt_client_requested_by={quote?.alt_client_requested_by}
-            />
+          <div>
+            <p className="qreq__topbar-label">Revisión de cotización</p>
+            <h1 className="qreq__topbar-no">{no || `#${id}`}</h1>
           </div>
-          <div className="only-quote__body__info">
-            <RenderEquipmentInfoSelected equipment={selectedEquipment} />
-          </div>
-          <div className="only-quote__body__prices">
-            <RenderPrices />
-          </div>
-        </section>
+          {status && (
+            <span className="qreq__status-badge" style={{ color: statusCfg.color, background: statusCfg.bg }}>
+              {statusCfg.icon}{statusCfg.label}
+            </span>
+          )}
+        </div>
+        <div className="qreq__topbar-meta">
+          <span className="qreq__topbar-meta-text">
+            {equipment.length} equipo{equipment.length !== 1 ? 's' : ''}
+          </span>
+        </div>
       </div>
+
+      {/* ── Modification banner ── */}
+      {quote?.quote_modification_status === 'pending' && (
+        <div className="qreq__mod-banner">
+          <MessageSquare size={15} className="qreq__mod-banner-icon" />
+          <div>
+            <p className="qreq__mod-banner-title">Solicitud de modificación pendiente</p>
+            <p className="qreq__mod-banner-msg">{quote.quote_modification_message}</p>
+          </div>
+        </div>
+      )}
+
+      {/* ── Main content ── */}
+      {!loading ? (
+        <div className="qreq__loading"><Spinner /></div>
+      ) : (
+        <div className="qreq__body">
+
+          {/* Left — equipment list */}
+          <aside className="qreq__sidebar">
+            <div className="qreq__sidebar-header">
+              <Wrench size={14} style={{ color: '#059669' }} />
+              <span>Equipos</span>
+            </div>
+            <div className="qreq__equip-list">
+              {equipment.map((eq) => (
+                <RenderEquipment
+                  key={eq.id}
+                  equipment={eq}
+                  status={eq.discount > 0}
+                  onClick={() => handleSelectEquipment(eq.id)}
+                  selected={selectedEquipment?.id === eq.id}
+                />
+              ))}
+            </div>
+            <AddEquipmentToQuoteButton
+              Component={() => <AddEquipmentToQuote quoteId={id} />}
+            />
+          </aside>
+
+          {/* Right — detail panels */}
+          <div className="qreq__main">
+
+            {/* Client */}
+            <div className="qreq__card">
+              <div className="qreq__card-header">
+                <Building2 size={14} style={{ color: '#dc2626' }} />
+                <span className="qreq__card-title">Información del cliente</span>
+              </div>
+              <div className="qreq__card-body">
+                <RenderClient
+                  client={client}
+                  alt_client_email={quote?.alt_client_email}
+                  alt_client_phone={quote?.alt_client_phone}
+                  alt_client_requested_by={quote?.alt_client_requested_by}
+                />
+              </div>
+            </div>
+
+            {/* Equipment detail + prices — una sola card */}
+            {selectedEquipment ? (
+              <div className="qreq__card">
+                <div className="qreq__card-header">
+                  <Wrench size={14} style={{ color: '#2563eb' }} />
+                  <span className="qreq__card-title">Detalle del equipo</span>
+                  <span className="qreq__card-sub">{selectedEquipment.name}</span>
+                </div>
+                <div className="qreq__card-body">
+                  <RenderEquipmentInfoSelected equipment={selectedEquipment} />
+                </div>
+
+                {/* Prices section integrada */}
+                <div className="qreq__card-prices-section">
+                  <div className="qreq__card-prices-header">
+                    <DollarSign size={13} style={{ color: '#7c3aed' }} />
+                    <span>Precio del servicio</span>
+                  </div>
+                  <div className="qreq__card-body">
+                    <RenderPrices />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="qreq__card qreq__card--empty">
+                <Wrench size={28} />
+                <p>Selecciona un equipo de la lista para revisar y asignar precios</p>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
     </LayoutPage>
   )
 }
-interface IFooterProps {
-  saveQuote: any
-}
-const Footer = ({ saveQuote }: IFooterProps) => {
-  const {
-    id,
-    total,
-    IVA,
-    IVAValue,
-    discount,
-    discountvalue,
-    subtotal,
-    equipment,
-    extras,
-  } = useAppSelector((state) => state.quote)
 
+/* ── Footer ── */
+interface IFooterProps { saveQuote: any }
+
+const Footer = ({ saveQuote }: IFooterProps) => {
+  const { id, total, IVA, IVAValue, discount, discountvalue, subtotal, equipment, extras } =
+    useAppSelector((state) => state.quote)
   const dispatch = useAppDispatch()
   const searchParams = useSearchParams()
   const route = useRouter()
 
   const handleApproveQuote = async () => {
-    if (!isAllEquipmentReviewed())
-      return toast.error('Debe revisar todos los equipos')
-    const increase = searchParams.get('increase') === 'true' ? true : false
+    if (!isAllEquipmentReviewed()) return toast.error('Debe revisar todos los equipos')
+    const increase = searchParams.get('increase') === 'true'
 
-
-    toast.loading('Aprobando cotización', {
-      description: 'Espere un momento por favor...',
-    })
+    toast.loading('Aprobando cotización', { description: 'Espere un momento por favor...' })
 
     const response = await fetchData({
       url: 'quotes/request/update',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('token')}`,
-      },
-      body: {
-        id,
-        price: Number(total),
-        tax: Number(IVA),
-        general_discount: Number(discount),
-        extras: Number(extras),
-        status: 'waiting',
-        authorized_token: getCookie('token'),
-        modifiedQuote: saveQuote
-      },
-      params: {
-        increase
-      }
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getCookie('token')}` },
+      body: { id, price: Number(total), tax: Number(IVA), general_discount: Number(discount), extras: Number(extras), status: 'waiting', authorized_token: getCookie('token'), modifiedQuote: saveQuote },
+      params: { increase },
     })
 
     toast.dismiss()
@@ -284,141 +308,84 @@ const Footer = ({ saveQuote }: IFooterProps) => {
     }
   }
 
-  const isAllEquipmentReviewed = () => {
-    const reviewed = equipment.filter((item) => item.status === 'pending')
-    return reviewed.length === 0
-  }
+  const isAllEquipmentReviewed = () => equipment.filter((item) => item.status === 'pending').length === 0
+  const reviewed = equipment.filter((e) => e.status !== 'pending').length
+  const allReviewed = reviewed === equipment.length && equipment.length > 0
 
   return (
-    <div className="only-quote__footer">
-      <div className="only-quote__footer__prices">
-        <CInput
-          onChange={(e) => dispatch(handleIVA(e))}
-          value={IVA.toString()}
-          label="IVA"
-          label_span={formatPrice(IVAValue)}
-          label_span_style={{ color: 'orange' }}
-          icon={percentIcon}
-          min={0}
-          type="number"
-        />
-        <CInput
-          onChange={(e) => {
-            dispatch(handleChangeExtras(e.value))
-          }}
-          value={extras.toString()}
-          label="Traslado técnico"
-          icon={nioIcon}
-          min={0}
-          type="number"
-        />
-        <CInput
-          onChange={(e) => dispatch(handleDiscountQuote(e))}
-          value={discount?.toString()}
-          label="Descuento"
-          label_span={formatPrice(discountvalue)}
-          label_span_style={{ color: 'orange' }}
-          icon={percentIcon}
-          min={0}
-          type="number"
-        />
-        <CInput
-          onChange={(e) => { }}
-          value={subtotal.toString()}
-          label="Subtotal"
-          dissabled={true}
-          icon={nioIcon}
-          min={0}
-          type="number"
-        />
-        <CInput
-          onChange={(e) => { }}
-          value={total.toString()}
-          label="Total"
-          dissabled={true}
-          icon={nioIcon}
-          min={0}
-          type="number"
-        />
+    <div className="qreq__footer">
+
+      {/* Left: editable financial inputs */}
+      <div className="qreq__footer-inputs">
+        <div className="qreq__footer-input-group">
+          <label className="qreq__footer-input-label">IVA <span>{formatPrice(IVAValue)}</span></label>
+          <CInput onChange={(e) => dispatch(handleIVA(e))} value={IVA.toString()} icon={percentIcon} min={0} type="number" label="" />
+        </div>
+        <div className="qreq__footer-input-group">
+          <label className="qreq__footer-input-label">Traslado técnico</label>
+          <CInput onChange={(e) => dispatch(handleChangeExtras(e.value))} value={extras.toString()} icon={nioIcon} min={0} type="number" label="" />
+        </div>
+        <div className="qreq__footer-input-group">
+          <label className="qreq__footer-input-label">Descuento <span>{formatPrice(discountvalue)}</span></label>
+          <CInput onChange={(e) => dispatch(handleDiscountQuote(e))} value={discount?.toString()} icon={percentIcon} min={0} type="number" label="" />
+        </div>
       </div>
-      <div className="only-quote__footer__buttons">
+
+      {/* Center: totals as KPIs */}
+      <div className="qreq__footer-kpis">
+        <div className="qreq__footer-kpi">
+          <span className="qreq__footer-kpi-label">Subtotal</span>
+          <span className="qreq__footer-kpi-value">{formatPrice(subtotal)}</span>
+        </div>
+        <div className="qreq__footer-kpi qreq__footer-kpi--total">
+          <span className="qreq__footer-kpi-label">Total</span>
+          <span className="qreq__footer-kpi-value">{formatPrice(total)}</span>
+        </div>
+        <div className="qreq__footer-kpi">
+          <span className="qreq__footer-kpi-label">Revisados</span>
+          <span className="qreq__footer-kpi-value" style={{ color: allReviewed ? '#059669' : '#d97706' }}>
+            {reviewed}/{equipment.length}
+          </span>
+        </div>
+      </div>
+
+      {/* Right: action buttons */}
+      <div className="qreq__footer-actions">
         <Modal
           nameButton="Rechazar cotización"
           title="Rechazar cotización"
           description="Una vez rechazada la cotización no podrá volver a editarla."
-          buttonStyle={{
-            boxShadow: 'none',
-            color: 'tomato',
-            backgroundColor: '#fff',
-            border: '1px solid #999',
-            padding: '0.5rem 1rem',
-            borderRadius: '5px',
-            fontWeight: 600,
-          }}
-          Component={() => (
-            <CommentRejectedQuote
-              id={id}
-              total={total}
-              IVA={IVA}
-              discount={discount}
-            />
-          )}
+          buttonStyle={{ boxShadow: 'none', color: '#dc2626', backgroundColor: '#fff', border: '1px solid #e2e8f0', padding: '0.55rem 1.1rem', borderRadius: '9px', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer' }}
+          Component={() => <CommentRejectedQuote id={id} total={total} IVA={IVA} discount={discount} />}
         />
         <AlertDialogModal
           nameButton="Aprobar cotización"
           onConfirm={handleApproveQuote}
           title="Aprobar cotización"
           description="Una vez aprobada la cotización se enviará un correo al cliente con la cotización aprobada."
-          buttonStyle={{
-            boxShadow: 'none',
-          }}
+          buttonStyle={{ boxShadow: 'none', background: '#2563eb', borderRadius: '9px', fontSize: '0.82rem', padding: '0.55rem 1.1rem' }}
         />
       </div>
     </div>
   )
 }
 
-const CommentRejectedQuote = ({
-  id,
-  total,
-  IVA,
-  discount,
-}: {
-  id: number
-  total: number
-  IVA: number
-  discount: number
-}) => {
+/* ── Reject modal content ── */
+const CommentRejectedQuote = ({ id, total, IVA, discount }: { id: number; total: number; IVA: number; discount: number }) => {
   const { values, handleInputChange } = useForm({ comment: '' })
   const searchParams = useSearchParams()
   const route = useRouter()
 
   const handleRejectQuote = () => {
-    toast.loading('Rechazando cotización', {
-      description: 'Espere un momento por favor...',
-    })
-
-    const increase = searchParams.get('increase') === 'true' ? true : false
-
+    toast.loading('Rechazando cotización', { description: 'Espere un momento por favor...' })
+    const increase = searchParams.get('increase') === 'true'
 
     fetchData({
       url: 'quotes/request/rejected-review',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        id,
-        status: 'rejected',
-        price: Number(total),
-        tax: Number(IVA),
-        general_discount: Number(discount),
-        authorized_token: getCookie('token'),
-        rejected_comment: values.comment,
-      },
-      params: {
-        increase
-      }
+      headers: { 'Content-Type': 'application/json' },
+      body: { id, status: 'rejected', price: Number(total), tax: Number(IVA), general_discount: Number(discount), authorized_token: getCookie('token'), rejected_comment: values.comment },
+      params: { increase },
     })
       .then((response) => {
         toast.dismiss()
@@ -429,34 +396,26 @@ const CommentRejectedQuote = ({
           toast.error('Error al rechazar la cotización')
         }
       })
-      .catch((_) => {
-        toast.error('Error al rechazar la cotización')
-      })
+      .catch(() => toast.error('Error al rechazar la cotización'))
   }
 
   return (
-    <div>
-      <div className="flex flex-col gap-2">
-        <textarea
-          name="comment"
-          id="comment"
-          className="w-full h-24 border mt-2 mb-8 border-gray-300 rounded-md resize-none p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Escribe un comentario"
-          onChange={(e) => handleInputChange(e.target)}
-        >
-          {values.comment}
-        </textarea>
-      </div>
-
-      <div className="flex justify-end gap-2">
+    <div className="qreq__reject-form">
+      <textarea
+        name="comment"
+        className="qreq__reject-textarea"
+        placeholder="Escribe el motivo del rechazo..."
+        onChange={(e) => handleInputChange(e.target)}
+      >
+        {values.comment}
+      </textarea>
+      <div className="qreq__reject-actions">
         <CButton
-          onClick={() => handleRejectQuote()}
-          style={{
-            backgroundColor: 'tomato',
-          }}
+          onClick={handleRejectQuote}
+          style={{ backgroundColor: '#dc2626', boxShadow: 'none' }}
           disabled={values.comment.trim() === ''}
         >
-          Rechazar cotización
+          Confirmar rechazo
         </CButton>
       </div>
     </div>

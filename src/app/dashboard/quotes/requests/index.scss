@@ -1,99 +1,157 @@
 @use '@/sass/index' as *;
 
-.quotes-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4em;
-  margin-top: 1.5em;
+.kanban {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 
-  &__section {
+  /* ── Page header ── */
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  &__header-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  &__header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+  }
+
+  &__header-sub {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin-top: 0.1rem;
+  }
+
+  &__header-total {
+    margin-left: auto;
+  }
+
+  &__total-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+  }
+
+  /* ── Board ── */
+  &__board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  /* ── Column ── */
+  &__col {
     display: flex;
     flex-direction: column;
-    position: relative;
+    gap: 0.75rem;
+  }
 
-    h3 {
-      margin-bottom: 1.5em;
-      position: relative;
-      padding-left: 1em;
-      font-weight: 700;
-      font-size: 1em;
-      color: #333;
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 6px;
-        border-radius: 30px;
-        height: 100%;
-      }
+  &__col-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 12px;
+    border: 1px solid;
+  }
 
-      &[data-status='pending'] {
-        &::after {
-          background: #d5303e;
-        }
-      }
+  &__col-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
 
-      &[data-status='waiting'] {
-        &::after {
-          background: #ff8000;
-        }
-      }
+  &__col-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex: 1;
+    letter-spacing: 0.01em;
+  }
 
-      &[data-status='done'] {
-        &::after {
-          background: #00b894;
-        }
-      }
+  &__col-count {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fff;
+    padding: 0.15rem 0.55rem;
+    border-radius: 20px;
+    min-width: 1.4rem;
+    text-align: center;
+  }
+
+  /* ── Column body ── */
+  &__col-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-height: 80px;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2.5rem 1rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 1px dashed #e5e7eb;
+
+    p {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      font-weight: 500;
     }
   }
 
-  &__section--pending,
-  &__section--waiting {
-    .quotes-container__list {
-      position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        // dashed line right
-        top: 0;
-        right: -2em;
-        width: 0;
-        height: 100%;
-        border-right: 2px solid #c2c2c2;
-      }
-    }
-  }
-
-  &__section--done,
-  &__section--waiting {
-    .quotes-container__list {
-      position: relative;
-
-      &::after {
-        content: '';
-        position: absolute;
-        // dashed line right
-        top: 0;
-        left: -2.15em;
-        width: 0;
-        height: 100%;
-        border-right: 2px solid #c2c2c2;
-      }
-    }
+  &__empty-icon {
+    opacity: 0.4;
+    display: flex;
   }
 }
 
 @include mobile {
-  .quotes-container {
-    grid-template-columns: 1fr;
-    gap: 2em;
+  .kanban {
+    padding: 1rem;
 
-    &__section {
-      h3 {
-        font-size: 1.2em;
-      }
+    &__board {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    &__header-sub {
+      display: none;
     }
   }
 }

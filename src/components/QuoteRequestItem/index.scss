@@ -1,61 +1,149 @@
-.quotes-container__item {
-  background-color: #fff;
+.quote-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  margin-bottom: 2em;
-  padding: 1.5em;
+  gap: 0.65rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
   position: relative;
-  border-radius: 10px;
-  height: 185px;
-  color: #333;
-  font-weight: 600;
-  font-size: 0.9em;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  h4 {
-    font-weight: 700;
-    font-size: 1em;
-  }
+  overflow: hidden;
 
-  &::after {
+  &::before {
     content: '';
     position: absolute;
-    top: 27%;
+    top: 0;
     left: 0;
-    width: 4px;
-    border-radius: 30px;
-    height: 40px;
+    width: 3px;
+    height: 100%;
+    border-radius: 0 2px 2px 0;
   }
 
-  &[data-status='pending'] {
-    &::after {
-      background: #d5303e;
-    }
+  &[data-status='pending']::before    { background: #dc2626; }
+  &[data-status='waiting']::before    { background: #f59e0b; }
+  &[data-status='done']::before       { background: #10b981; }
+  &[data-status='modification']::before { background: #7c3aed; }
+  &[data-status='rejected']::before   { background: #9ca3af; }
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09);
+    transform: translateY(-2px);
   }
 
-  &[data-status='waiting'] {
-    &::after {
-      background: #ff8000;
-    }
-  }
-
-  &[data-status='done'] {
-    &::after {
-      background: #00b894;
-    }
-  }
-
-  .status-info,
-  .action {
+  /* ── Top row ── */
+  &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    span {
-      color: #999;
-    }
+    gap: 0.5rem;
   }
-  .action {
+
+  &__badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  &__date {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    flex-shrink: 0;
+  }
+
+  /* ── Company row ── */
+  &__body {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__company-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  &__company-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  &__company-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__no {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  /* ── Modification message ── */
+  &__message {
+    font-size: 0.72rem;
+    color: #7c3aed;
+    background: #f5f3ff;
+    border-radius: 8px;
+    padding: 0.4rem 0.65rem;
+    font-style: italic;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Footer ── */
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f3f4f6;
     margin-top: auto;
+  }
+
+  &__services {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.01em;
   }
 }
