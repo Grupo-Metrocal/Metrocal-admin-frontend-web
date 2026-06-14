@@ -1,57 +1,75 @@
 .statistics-card {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 1em;
-  gap: 1em;
-  width: 100% !important;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  min-width: 330px;
+  gap: 1rem;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: fit-content !important;
+  max-height: none !important;
+  flex-shrink: 0;
 
-  .header {
+  &__header {
     display: flex;
-    align-items: center !important;
-    text-align: center;
-    justify-content: space-between;
-    padding: 0;
-    gap: 1em;
+    align-items: center;
+    gap: 0.75rem;
+  }
 
-    .icon {
-      background-color: #b1e5fd;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  &__icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #b1e5fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 
-      img {
-        width: 28px;
-        height: 28px;
-      }
-    }
-
-    .stats {
-      display: flex;
-      flex-direction: row;
-      gap: 0.5em;
-      border-radius: 10px;
-      padding: 0.3em;
-      font-size: 1em;
-      font-weight: 600;
-    }
-
-    .title {
-      font-size: 1.2em;
-      color: #777;
+    img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
     }
   }
 
-  .content {
+  &__title {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    &--up {
+      background: rgba(84, 218, 63, 0.12);
+      color: #42b030;
+    }
+
+    &--down {
+      background: rgba(255, 99, 71, 0.12);
+      color: #ff6347;
+    }
+  }
+
+  &__content {
     text-align: center;
+
     span {
-      font-size: 2em;
-      font-weight: 600;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
     }
   }
 }

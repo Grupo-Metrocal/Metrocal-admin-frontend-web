@@ -1,0 +1,95 @@
+@use '@/sass/index' as *;
+
+/* ── Overview card ── */
+.certrec__overview {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  height: fit-content;
+  align-self: flex-start;
+}
+
+.certrec__overview-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.4rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.certrec__overview-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #f3e8ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c3aed;
+  flex-shrink: 0;
+}
+
+.certrec__overview-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.certrec__overview-sub {
+  font-size: 0.71rem;
+  color: #9ca3af;
+  margin-top: 0.1rem;
+}
+
+
+/* ── Table card ── */
+.certrec__table {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e9edf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  &__head-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #7c3aed;
+    flex-shrink: 0;
+  }
+
+  &__head-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  &__head-sub {
+    font-size: 0.73rem;
+    color: #9ca3af;
+    margin-top: 0.1rem;
+  }
+
+  &__body {
+    padding: 0 1.25rem 1.25rem;
+  }
+}
+
+/* ── Responsive ── */
+@include mobile {
+  .certrec__stats {
+    grid-template-columns: 1fr;
+  }
+}

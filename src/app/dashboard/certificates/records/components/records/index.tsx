@@ -71,7 +71,7 @@ export const CertifiedRecords = ({
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg">
+    <div>
       {
         <DataTableDemo<ICertifiedRecordsTable>
           columns={ColumnsCertifiedRecords({ forwaredCertification, returnToReview })}

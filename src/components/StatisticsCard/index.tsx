@@ -1,7 +1,6 @@
 import './index.scss'
-import arrowDownIcon from '@/assets/icons/arrow_down.svg'
-import arrowUpIcon from '@/assets/icons/arrow_up.svg'
 import Image from 'next/image'
+import { TrendingUp, TrendingDown } from 'lucide-react'
 
 interface StatisticsCardProps {
   title: string
@@ -12,6 +11,7 @@ interface StatisticsCardProps {
   typeIconStats?: string
   className?: string
 }
+
 export const StatisticsCard = ({
   title,
   headerIcon,
@@ -21,47 +21,36 @@ export const StatisticsCard = ({
   className,
   backgroundHeaderIcon,
 }: StatisticsCardProps) => {
+  const isIncrease = typeIconStats === 'increase'
+  const hasStats = statsValue !== undefined && statsValue !== null && statsValue !== 0
+  const formatted = hasStats
+    ? (Number.isInteger(statsValue) ? statsValue : statsValue!.toFixed(2))
+    : null
+
   return (
-    <div className={`statistics-card ${className}`}>
-      <div className="header">
+    <div className={`statistics-card${className ? ` ${className}` : ''}`}>
+      <div className="statistics-card__header">
         <div
-          className="icon"
-          style={{
-            backgroundColor: backgroundHeaderIcon,
-          }}
+          className="statistics-card__icon"
+          style={{ backgroundColor: backgroundHeaderIcon ?? '#b1e5fd' }}
         >
           {headerIcon && (
-            <Image src={headerIcon} alt="certificate" width={28} height={28} />
+            <Image src={headerIcon} alt={title} width={24} height={24} />
           )}
         </div>
-        <div className="title">{title}</div>
-        <div
-          className="stats"
-          style={{
-            backgroundColor:
-              typeIconStats === 'increase'
-                ? 'rgb(84, 218, 63, 0.1)'
-                : 'rgb(255, 99, 71, 0.1)',
-            color: typeIconStats === 'increase' ? '#42B030' : '#FF6347',
-          }}
-        >
-          {statsValue && (
-            <Image
-              src={typeIconStats === 'increase' ? arrowUpIcon : arrowDownIcon}
-              alt="arrow-up"
-              width={13}
-              height={13}
-            />
-          )}
-          {statsValue && (
-            <span>{`${
-              Number.isInteger(statsValue) ? statsValue : statsValue.toFixed(2)
-            }% este mes`}</span>
-          )}
-        </div>
+
+        <span className="statistics-card__title">{title}</span>
+
+        {hasStats && (
+          <div className={`statistics-card__badge statistics-card__badge--${isIncrease ? 'up' : 'down'}`}>
+            {isIncrease ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+            <span>{formatted}%</span>
+          </div>
+        )}
       </div>
-      <div className="content">
-        <span>{contentValue}</span>
+
+      <div className="statistics-card__content">
+        <span>{contentValue ?? '—'}</span>
       </div>
     </div>
   )

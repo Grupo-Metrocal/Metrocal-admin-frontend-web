@@ -433,6 +433,10 @@ html, body { overflow-x: hidden; }
 ───────────────────────────────────────── */
 .content-container {
   flex: 1;
+  align-self: stretch;
+  display: block;
+  height: fit-content;
+  min-height: 0;
 }
 
 /* ─────────────────────────────────────────

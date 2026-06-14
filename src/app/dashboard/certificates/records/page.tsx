@@ -1,4 +1,5 @@
 'use client'
+import './index.scss'
 import { LayoutPage } from '@/components/LayoutPage'
 import { Spinner } from '@/components/Spinner'
 import { fetchData } from '@/utils/fetch'
@@ -132,8 +133,18 @@ export default function RecordsPage() {
       ) : (
         <>
           <StatisticsActivity />
-          <div>
-            {
+
+          <div className="certrec__table">
+            <div className="certrec__table__head">
+              <div className="certrec__table__head-dot" />
+              <div>
+                <h2 className="certrec__table__head-title">Historial de Certificaciones</h2>
+                <p className="certrec__table__head-sub">
+                  Búsqueda, filtros y acciones sobre certificaciones emitidas
+                </p>
+              </div>
+            </div>
+            <div className="certrec__table__body">
               <CertifiedRecords
                 records={records}
                 searchValue={values.search}
@@ -144,7 +155,7 @@ export default function RecordsPage() {
                 loading={loading}
                 returnToReview={returnToReview}
               />
-            }
+            </div>
           </div>
         </>
       )}

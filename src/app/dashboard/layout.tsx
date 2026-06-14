@@ -15,7 +15,6 @@ import menuLinesIcon from '@/assets/icons/menu-lines.svg'
 import { useState } from 'react'
 import { Modal } from '@/components/Modal'
 import { Logout } from './ComponentLayout/Logout'
-import logoutIcon from '@/assets/icons/logout.svg'
 import { Plus, LogOut, ChevronDown } from 'lucide-react'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
@@ -70,8 +69,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     nameButton=""
                     size="sm"
                     Component={() => <Logout />}
-                    icon={logoutIcon}
-                    marginIcon="0"
                     buttonStyle={{
                       background: 'none', boxShadow: 'none', padding: '0.4rem',
                       borderRadius: '7px', border: '1px solid #f1f5f9',
@@ -79,7 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       cursor: 'pointer', color: '#94a3b8', minWidth: 0,
                     }}
                   >
-                    <LogOut size={15} />
+                    <LogOut size={15} color="#dc2626" />
                   </Modal>
                 </div>
               </div>
