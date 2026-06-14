@@ -23,10 +23,10 @@ export const QuoteRequestItem = ({
   onClickModify,
 }: IProps) => {
   const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; border: string }> = {
-    pending:  { label: 'Por revisar',  color: '#dc2626', bg: '#fef2f2',  border: '#dc2626' },
-    waiting:  { label: 'En espera',    color: '#d97706', bg: '#fffbeb',  border: '#f59e0b' },
-    done:     { label: 'Aprobado',     color: '#059669', bg: '#ecfdf5',  border: '#10b981' },
-    rejected: { label: 'Rechazado',    color: '#6b7280', bg: '#f9fafb',  border: '#d1d5db' },
+    pending: { label: 'Por revisar', color: '#dc2626', bg: '#fef2f2', border: '#dc2626' },
+    waiting: { label: 'En espera', color: '#d97706', bg: '#fffbeb', border: '#f59e0b' },
+    done: { label: 'Aprobado', color: '#059669', bg: '#ecfdf5', border: '#10b981' },
+    rejected: { label: 'Rechazado', color: '#6b7280', bg: '#f9fafb', border: '#d1d5db' },
   }
 
   const isModification = quote.quote_modification_status === 'pending'
@@ -34,7 +34,7 @@ export const QuoteRequestItem = ({
 
   const statusLabel = isModification ? 'Solicitud de modificación' : config.label
   const statusColor = isModification ? '#7c3aed' : config.color
-  const statusBg    = isModification ? '#f5f3ff' : config.bg
+  const statusBg = isModification ? '#f5f3ff' : config.bg
 
   let services = 0
   quote.equipment_quote_request.forEach((item) => { services += item.count })
@@ -76,7 +76,7 @@ export const QuoteRequestItem = ({
 
       {/* Modification message */}
       {isModification && quote.quote_modification_message && (
-        <p className="quote-card__message">"{quote.quote_modification_message}"</p>
+        <p className="quote-card__message">&ldquo;{quote.quote_modification_message}&rdquo;</p>
       )}
 
       {/* Footer: services count + action button */}

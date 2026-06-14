@@ -69,7 +69,7 @@ export const RenderEquipment = ({ equipment, onClick, selected }: IProps) => {
             <AlertDialogHeader>
               <AlertDialogTitle>Eliminar servicio</AlertDialogTitle>
               <AlertDialogDescription>
-                ¿Estás seguro de eliminar <strong>"{equipment.name}"</strong> de la cotización? Esta acción no se puede deshacer.
+                ¿Estás seguro de eliminar <strong>&ldquo;{equipment.name}&rdquo;</strong> de la cotización? Esta acción no se puede deshacer.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

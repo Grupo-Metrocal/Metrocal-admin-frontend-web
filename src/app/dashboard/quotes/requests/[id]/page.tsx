@@ -95,6 +95,8 @@ export interface IQuote {
   alt_client_email: string
   alt_client_requested_by: string
   alt_client_phone: string
+  alt_client_company_name?: string
+  alt_client_address?: string
 }
 
 export interface IRoot {

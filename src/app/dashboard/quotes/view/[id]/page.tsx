@@ -34,11 +34,11 @@ interface IQuotes extends IQuote {
 }
 
 const STATUS_MAP: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
-  done:     { label: 'Aprobado',  color: '#059669', bg: '#ecfdf5', icon: <CheckCircle2 size={13} /> },
-  pending:  { label: 'Pendiente', color: '#dc2626', bg: '#fef2f2', icon: <Clock        size={13} /> },
-  waiting:  { label: 'En espera', color: '#d97706', bg: '#fffbeb', icon: <AlertCircle  size={13} /> },
-  rejected: { label: 'Rechazado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle      size={13} /> },
-  canceled: { label: 'Cancelado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle      size={13} /> },
+  done: { label: 'Aprobado', color: '#059669', bg: '#ecfdf5', icon: <CheckCircle2 size={13} /> },
+  pending: { label: 'Pendiente', color: '#dc2626', bg: '#fef2f2', icon: <Clock size={13} /> },
+  waiting: { label: 'En espera', color: '#d97706', bg: '#fffbeb', icon: <AlertCircle size={13} /> },
+  rejected: { label: 'Rechazado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle size={13} /> },
+  canceled: { label: 'Cancelado', color: '#6b7280', bg: '#f9fafb', icon: <XCircle size={13} /> },
 }
 
 export default function Page({ params }: IRoot) {
@@ -63,10 +63,10 @@ export default function Page({ params }: IRoot) {
       .finally(() => setLoading(false))
   }, [id])
 
-  const status    = data?.status ?? 'pending'
+  const status = data?.status ?? 'pending'
   const statusCfg = STATUS_MAP[status] ?? STATUS_MAP.pending
-  const canEdit   = !((status === 'pending' || status === 'waiting') && isDateOutOfRange(data?.created_at ?? '', 30))
-  const hasMods   = (data?.modifications_list_json?.length ?? 0) > 0 && (data?.modification_number ?? 0) > 0
+  const canEdit = !((status === 'pending' || status === 'waiting') && isDateOutOfRange(data?.created_at ?? '', 30))
+  const hasMods = (data?.modifications_list_json?.length ?? 0) > 0 && (data?.modification_number ?? 0) > 0
 
   return (
     <LayoutPage title="Cotización" rollBack>
@@ -168,9 +168,9 @@ export default function Page({ params }: IRoot) {
                 </div>
 
                 <div className="qv__details">
-                  <DetailRow icon={<Hash size={13} />}       label="N° de cotización" value={data?.no ?? '—'} />
-                  <DetailRow icon={<BadgeCheck size={13} />} label="Revisado por"     value={data?.approved_by?.username ?? 'Aún no aprobada'} />
-                  <DetailRow icon={<Calendar size={13} />}   label="Fecha de creación" value={formatDate(data?.created_at ?? '')} />
+                  <DetailRow icon={<Hash size={13} />} label="N° de cotización" value={data?.no ?? '—'} />
+                  <DetailRow icon={<BadgeCheck size={13} />} label="Revisado por" value={data?.approved_by?.username ?? 'Aún no aprobada'} />
+                  <DetailRow icon={<Calendar size={13} />} label="Fecha de creación" value={formatDate(data?.created_at ?? '')} />
                 </div>
               </div>
 
@@ -198,8 +198,8 @@ export default function Page({ params }: IRoot) {
                         </div>
                         <div className="qv__equip-item-stats">
                           <EquipStat label="Precio unitario" value={formatPrice(eq.price)} />
-                          <EquipStat label="Cantidad"        value={String(eq.count)} />
-                          <EquipStat label="Descuento"       value={`${eq.discount}%`} />
+                          <EquipStat label="Cantidad" value={String(eq.count)} />
+                          <EquipStat label="Descuento" value={`${eq.discount}%`} />
                           <EquipStat label="Total" value={formatPrice(eq.total)} highlight />
                         </div>
                       </div>
@@ -223,13 +223,13 @@ export default function Page({ params }: IRoot) {
                   </div>
                 </div>
                 <div className="qv__client-fields">
-                  <ClientField icon={<Building2 size={13} />} label="Empresa"        value={data?.client?.company_name} />
-                  <ClientField icon={<MapPin size={13} />}    label="Dirección"      value={data?.client?.address} />
-                  <ClientField icon={<Phone size={13} />}     label="Teléfono"       value={data?.alt_client_phone || data?.client?.phone} />
-                  <ClientField icon={<Mail size={13} />}      label="Correo"         value={data?.alt_client_email || data?.client?.email} />
-                  <ClientField icon={<User size={13} />}      label="Solicitado por" value={data?.alt_client_requested_by || data?.client?.requested_by} />
-                  <ClientField icon={<Hash size={13} />}      label="No. RUC"        value={data?.client?.no_ruc} />
-                  <ClientField icon={<Calendar size={13} />}  label="Cliente desde"  value={formatDate(data?.client?.created_at ?? '')} />
+                  <ClientField icon={<Building2 size={13} />} label="Empresa" value={data?.client?.company_name} />
+                  <ClientField icon={<MapPin size={13} />} label="Dirección" value={data?.client?.address} />
+                  <ClientField icon={<Phone size={13} />} label="Teléfono" value={data?.alt_client_phone || data?.client?.phone} />
+                  <ClientField icon={<Mail size={13} />} label="Correo" value={data?.alt_client_email || data?.client?.email} />
+                  <ClientField icon={<User size={13} />} label="Solicitado por" value={data?.alt_client_requested_by || data?.client?.requested_by} />
+                  <ClientField icon={<Hash size={13} />} label="No. RUC" value={data?.client?.no_ruc} />
+                  <ClientField icon={<Calendar size={13} />} label="Cliente desde" value={formatDate(data?.client?.created_at ?? '')} />
                 </div>
               </div>
 
@@ -245,13 +245,13 @@ export default function Page({ params }: IRoot) {
                   </div>
                   <div className="qv__client-fields">
                     {data.alt_client_company_name && (
-                      <ClientField icon={<Building2 size={13} />} label="Empresa"   value={data.alt_client_company_name} />
+                      <ClientField icon={<Building2 size={13} />} label="Empresa" value={data.alt_client_company_name} />
                     )}
                     {data.alt_client_address && (
-                      <ClientField icon={<MapPin size={13} />}    label="Dirección" value={data.alt_client_address} />
+                      <ClientField icon={<MapPin size={13} />} label="Dirección" value={data.alt_client_address} />
                     )}
                     {data.alt_client_email && (
-                      <ClientField icon={<Mail size={13} />}      label="E-mail"    value={data.alt_client_email} />
+                      <ClientField icon={<Mail size={13} />} label="E-mail" value={data.alt_client_email} />
                     )}
                   </div>
                 </div>
