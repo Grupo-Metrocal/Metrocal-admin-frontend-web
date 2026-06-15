@@ -75,6 +75,8 @@ export interface IDescriptionPattern {
   creditable: boolean
   show_table_international_system_units: boolean
   next_calibration: string
+  calibration_date?: string
+  conversion_unit?: string
 }
 
 export interface ICalibrationResults {

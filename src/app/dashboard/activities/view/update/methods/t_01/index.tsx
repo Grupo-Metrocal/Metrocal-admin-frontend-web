@@ -100,6 +100,7 @@ export const T_01 = ({
             Component: () => (
               <DescriptionPattern
                 description_pattern={equipment.description_pattern}
+                equipment_unit={equipment.equipment_information?.unit}
                 handleSaveInformation={handleSaveInformation}
               />
             ),

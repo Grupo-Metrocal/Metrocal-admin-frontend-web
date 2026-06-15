@@ -2,11 +2,17 @@ import { useForm } from '@/hooks/useForm'
 import { IDescriptionPattern } from '../../../../[id]/interface/t_01'
 import { CInput } from '@/components/CInput'
 import { AlertDialogModal } from '@/components/AlertDialogModal'
-import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
+
+// Only °C equipment has an available conversion sheet (°F and K)
+const getConversionOptions = (equipmentUnit?: string): string[] => {
+  if (equipmentUnit === '°C') return ['°F', 'K']
+  return []
+}
 
 export const DescriptionPattern = ({
   description_pattern,
+  equipment_unit,
   handleSaveInformation,
 }: {
   handleSaveInformation: (
@@ -15,6 +21,7 @@ export const DescriptionPattern = ({
     useActivityID?: boolean,
   ) => void
   description_pattern: IDescriptionPattern
+  equipment_unit?: string
 }) => {
   const { values, handleInputChange, handleSelectChange } = useForm({ ...description_pattern })
   const url = `methods/ni-mcit-t-01/description-pattern/`
@@ -92,6 +99,28 @@ export const DescriptionPattern = ({
               certificado?
             </label>
           </div>
+
+          {getConversionOptions(equipment_unit).length > 0 && (
+            <div className="mt-4 flex flex-col gap-2">
+              <label htmlFor="conversion_unit" className="text-xs font-semibold">
+                Unidad de conversión para el certificado
+              </label>
+              <select
+                name="conversion_unit"
+                id="conversion_unit"
+                value={values.conversion_unit ?? ''}
+                onChange={handleSelectChange}
+                className="border border-gray-300 rounded-md p-2 h-fit text-sm"
+              >
+                <option value="">— Sin conversión —</option>
+                {getConversionOptions(equipment_unit).map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <CInput
             label="Fecha de siguiente calibración"

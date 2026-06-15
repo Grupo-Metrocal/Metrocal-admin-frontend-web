@@ -33,6 +33,12 @@ export const DescriptionPattern = ({
             {description_pattern?.show_table_international_system_units ? 'SI' : 'No mostrar'}
           </div>
           <div>
+            <span className="font-semibold">Unidad de conversión:</span>{' '}
+            {description_pattern?.conversion_unit
+              ? description_pattern.conversion_unit
+              : 'Sin conversión definida'}
+          </div>
+          <div>
             <span className="font-semibold">Fecha de siguiente calibración:</span>{' '}
             {description_pattern?.next_calibration ? formatDate(description_pattern?.next_calibration) : 'No definido'}
           </div>
