@@ -97,6 +97,7 @@ export interface IQuote {
   alt_client_phone: string
   alt_client_company_name?: string
   alt_client_address?: string
+  observations?: string
 }
 
 export interface IRoot {
@@ -127,6 +128,7 @@ export default function Page({ params }: IRoot) {
 
   const [quote, setQuote] = useState<IQuote>()
   const [saveQuote, setSaveQuote] = useState<any>()
+  const [observations, setObservations] = useState<string>('')
 
   const dispatch = useAppDispatch()
   const id = params.id
@@ -144,6 +146,7 @@ export default function Page({ params }: IRoot) {
         if (res.success) {
           setQuote(res.data as IQuote)
           setSaveQuote(res.data)
+          setObservations((res.data as IQuote).observations ?? '')
           dispatch(handleDispatchOnLoad(res.data as IQuote))
         }
       })
@@ -157,7 +160,7 @@ export default function Page({ params }: IRoot) {
     <LayoutPage
       title="Cotizaciones / solicitudes"
       rollBack
-      Footer={() => <Footer saveQuote={saveQuote} />}
+      Footer={() => <Footer saveQuote={saveQuote} observations={observations} />}
     >
       {/* ── Top bar ── */}
       <div className="qreq__topbar">
@@ -224,35 +227,58 @@ export default function Page({ params }: IRoot) {
           {/* Right — detail panels */}
           <div className="qreq__main">
 
-            {/* Client */}
-            <div className="qreq__card">
-              <div className="qreq__card-header">
-                <Building2 size={14} style={{ color: '#dc2626' }} />
-                <span className="qreq__card-title">Información del cliente</span>
+            {/* ── Sección: Información general ── */}
+            <p className="qreq__section-label">Información general</p>
+            <div className="qreq__info-row">
+
+              {/* Client */}
+              <div className="qreq__card">
+                <div className="qreq__card-header">
+                  <Building2 size={14} style={{ color: '#dc2626' }} />
+                  <span className="qreq__card-title">Información del cliente</span>
+                </div>
+                <div className="qreq__card-body">
+                  <RenderClient
+                    client={client}
+                    alt_client_email={quote?.alt_client_email}
+                    alt_client_phone={quote?.alt_client_phone}
+                    alt_client_requested_by={quote?.alt_client_requested_by}
+                  />
+                </div>
               </div>
-              <div className="qreq__card-body">
-                <RenderClient
-                  client={client}
-                  alt_client_email={quote?.alt_client_email}
-                  alt_client_phone={quote?.alt_client_phone}
-                  alt_client_requested_by={quote?.alt_client_requested_by}
-                />
+
+              {/* Observaciones del servicio */}
+              <div className="qreq__card">
+                <div className="qreq__card-header">
+                  <MessageSquare size={14} style={{ color: '#7c3aed' }} />
+                  <span className="qreq__card-title">Observaciones del servicio</span>
+                  <span className="qreq__card-sub">Opcional · incluido en el PDF</span>
+                </div>
+                <div className="qreq__card-body qreq__card-body--full">
+                  <textarea
+                    className="qreq__obs-textarea"
+                    placeholder="Escribe observaciones generales del servicio: condiciones especiales, acuerdos, instrucciones de entrega, etc."
+                    value={observations}
+                    onChange={(e) => setObservations(e.target.value)}
+                  />
+                </div>
               </div>
+
             </div>
 
-            {/* Equipment detail + prices — una sola card */}
+            {/* ── Sección: Detalle del equipo ── */}
+            <p className="qreq__section-label">Detalle del equipo</p>
             {selectedEquipment ? (
               <div className="qreq__card">
                 <div className="qreq__card-header">
                   <Wrench size={14} style={{ color: '#2563eb' }} />
-                  <span className="qreq__card-title">Detalle del equipo</span>
-                  <span className="qreq__card-sub">{selectedEquipment.name}</span>
+                  <span className="qreq__card-title">{selectedEquipment.name}</span>
+                  <span className="qreq__card-sub">{selectedEquipment.type_service}</span>
                 </div>
                 <div className="qreq__card-body">
                   <RenderEquipmentInfoSelected equipment={selectedEquipment} />
                 </div>
 
-                {/* Prices section integrada */}
                 <div className="qreq__card-prices-section">
                   <div className="qreq__card-prices-header">
                     <DollarSign size={13} style={{ color: '#7c3aed' }} />
@@ -278,9 +304,9 @@ export default function Page({ params }: IRoot) {
 }
 
 /* ── Footer ── */
-interface IFooterProps { saveQuote: any }
+interface IFooterProps { saveQuote: any; observations: string }
 
-const Footer = ({ saveQuote }: IFooterProps) => {
+const Footer = ({ saveQuote, observations }: IFooterProps) => {
   const { id, total, IVA, IVAValue, discount, discountvalue, subtotal, equipment, extras } =
     useAppSelector((state) => state.quote)
   const dispatch = useAppDispatch()
@@ -297,7 +323,7 @@ const Footer = ({ saveQuote }: IFooterProps) => {
       url: 'quotes/request/update',
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getCookie('token')}` },
-      body: { id, price: Number(total), tax: Number(IVA), general_discount: Number(discount), extras: Number(extras), status: 'waiting', authorized_token: getCookie('token'), modifiedQuote: saveQuote },
+      body: { id, price: Number(total), tax: Number(IVA), general_discount: Number(discount), extras: Number(extras), status: 'waiting', authorized_token: getCookie('token'), modifiedQuote: saveQuote, observations },
       params: { increase },
     })
 

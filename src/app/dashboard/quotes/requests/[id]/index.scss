@@ -316,7 +316,31 @@
 .qreq__main {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 0.6rem;
+}
+
+/* ── Section label ── */
+.qreq__section-label {
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+/* ── Info row: 2 cards side by side, same height ── */
+.qreq__info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+
+  .qreq__card {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* ── Cards ── */
@@ -366,6 +390,17 @@
 
 .qreq__card-body {
   padding: 1.1rem 1.3rem;
+
+  &--full {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .qreq__obs-textarea {
+      flex: 1;
+      min-height: 130px;
+    }
+  }
 }
 
 /* ── Client grid ── */
@@ -692,6 +727,10 @@
     order: 1;
   }
 
+  .qreq__info-row {
+    grid-template-columns: 1fr;
+  }
+
   .qreq__equip-form-row {
     flex-direction: column;
   }
@@ -727,5 +766,34 @@
 
   .qreq__client-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Observaciones del servicio ── */
+.qreq__obs-textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.83rem;
+  font-family: inherit;
+  color: #1e293b;
+  line-height: 1.6;
+  background: #f8fafc;
+  transition: border-color 0.15s, background 0.15s;
+  outline: none;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #94a3b8;
+    font-size: 0.8rem;
+  }
+
+  &:focus {
+    border-color: #7c3aed;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
   }
 }
