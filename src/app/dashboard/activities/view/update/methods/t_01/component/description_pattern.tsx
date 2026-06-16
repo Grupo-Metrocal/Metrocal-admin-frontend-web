@@ -5,8 +5,12 @@ import { AlertDialogModal } from '@/components/AlertDialogModal'
 import { usePattern } from '@/app/dashboard/settings/patterns/[calibration_method]/_hooks/usePattern'
 
 // Only °C equipment has an available conversion sheet (°F and K)
+// Normalize the unit string to handle encoding differences between environments (e.g. º vs °)
+const isCelsius = (unit?: string) =>
+  !!unit && unit.replace(/[°º]/g, '').trim().toUpperCase() === 'C'
+
 const getConversionOptions = (equipmentUnit?: string): string[] => {
-  if (equipmentUnit === '°C') return ['°F', 'K']
+  if (isCelsius(equipmentUnit)) return ['°F', 'K']
   return []
 }
 
