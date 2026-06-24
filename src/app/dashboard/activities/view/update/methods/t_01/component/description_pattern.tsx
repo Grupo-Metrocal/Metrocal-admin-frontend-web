@@ -104,27 +104,25 @@ export const DescriptionPattern = ({
             </label>
           </div>
 
-          {getConversionOptions(equipment_unit).length > 0 && (
-            <div className="mt-4 flex flex-col gap-2">
-              <label htmlFor="conversion_unit" className="text-xs font-semibold">
-                Unidad de conversión para el certificado
-              </label>
-              <select
-                name="conversion_unit"
-                id="conversion_unit"
-                value={values.conversion_unit ?? ''}
-                onChange={handleSelectChange}
-                className="border border-gray-300 rounded-md p-2 h-fit text-sm"
-              >
-                <option value="">— Sin conversión —</option>
-                {getConversionOptions(equipment_unit).map((unit) => (
-                  <option key={unit} value={unit}>
-                    {unit}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+          <div className="mt-4 flex flex-col gap-2">
+            <label htmlFor="conversion_unit" className="text-xs font-semibold">
+              Unidad de conversión para el certificado
+            </label>
+            <select
+              name="conversion_unit"
+              id="conversion_unit"
+              value={values.conversion_unit ?? ''}
+              onChange={handleSelectChange}
+              className="border border-gray-300 rounded-md p-2 h-fit text-sm"
+            >
+              <option value="">— Sin conversión —</option>
+              {getConversionOptions(equipment_unit).map((unit) => (
+                <option key={unit} value={unit}>
+                  {unit}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <CInput
             label="Fecha de siguiente calibración"
